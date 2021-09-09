@@ -1,0 +1,27 @@
+name: BaugRPG
+version: 1.0
+author: BaugIndustries
+main: org.baugindustries.baugrpg.Main
+api-version: 1.16
+description: A performance enhancing plugin that has absolutely no LOTR rpg elements dont check.
+
+commands:
+  resetrace:
+   aliases: [rr]
+   usage: /resetrace, /rr
+   description: This resets race for debugging purposes
+  setrace:
+   aliases: [sr]
+   usage: /setrace, /sr
+   description: This sets race if you clicked out of the race selection menu
+  chat:
+   usage: /chat <Channel>
+   description: Change which chat channel you are in
+  racewizard:
+   usage: /racewizard
+   aliases: [rw]
+   description: Assigns you to the wizard race (Op only)
+  baugscroll:
+   usage: /baugscroll, /scrollsofbaug, /bs, /sb
+   aliases: [bs, scrollsofbaug, sb]
+   description: Opens a hub menu that will give you any and all information you need to know to play on a BaugRPG server
