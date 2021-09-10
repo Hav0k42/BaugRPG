@@ -11,6 +11,8 @@ import org.baugindustries.baugrpg.commands.RaceWizard;
 import org.baugindustries.baugrpg.commands.ResetRace;
 import org.baugindustries.baugrpg.commands.SetRace;
 import org.baugindustries.baugrpg.commands.Tpa;
+import org.baugindustries.baugrpg.commands.Tpaccept;
+import org.baugindustries.baugrpg.commands.Tpdeny;
 import org.baugindustries.baugrpg.listeners.OnJoinListener;
 import org.baugindustries.baugrpg.listeners.OnQuitListener;
 import org.baugindustries.baugrpg.listeners.PlayerCloseInventoryListener;
@@ -40,6 +42,8 @@ public class Main extends JavaPlugin {
 		 new RaceWizard(this);//The Wizard race will serve as an "operator" race in the BaugRPG plugin, and should be reserved for admins, and people that will oversee RP events.
 		 new BaugScroll(this);
 		 new Tpa(this);
+		 new Tpaccept(this);
+		 new Tpdeny(this);
 		 
 		 
 		 

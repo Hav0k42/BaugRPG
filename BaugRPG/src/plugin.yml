@@ -29,3 +29,11 @@ commands:
    usage: /tpa <Player>, /tpask <Player>
    aliases: [tpask]
    description: Requests to teleport to another player
+  tpaccept:
+   usage: /tpaccept, /tpayes, /tpyes
+   aliases: [tpayes, tpyes]
+   description: Accepts a teleport request.
+  tpdeny:
+   usage: /tpdeny, /tpno, /tpano
+   aliases: [tpno, tpano]
+   description: Denys a teleport request.

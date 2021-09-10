@@ -16,7 +16,7 @@ public class Tpa implements CommandExecutor {
 	
 	public Tpa(Main plugin) {
 		this.plugin = plugin;
-		plugin.getCommand("setrace").setExecutor(this);
+		plugin.getCommand("tpa").setExecutor(this);
 	}
 
 	@Override
