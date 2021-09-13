@@ -21,9 +21,12 @@ public class ScrollsOfBaugWizardsInventoryListener implements Listener{
 			Player player = (Player)event.getWhoClicked();
 			if (event.getClickedInventory() != null) {
 				if (event.getView().getTitle().equals("Scrolls of Baug")) {
+					if (event.getSlot() == 11) {//Player clicked on the Feature Management Item
+						
+					}
 					
-						event.setCancelled(true);
 					
+					event.setCancelled(true);
 				}
 			}
 		}

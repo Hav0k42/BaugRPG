@@ -135,6 +135,14 @@ public class BaugScroll implements CommandExecutor {
 					infoItem.setItemMeta(infoItemMeta);
 					inventory.setItem(0, infoItem);
 					
+					ItemStack featureManagementItem = new ItemStack(Material.WRITABLE_BOOK);
+					ItemMeta featureManagementItemMeta = infoItem.getItemMeta();
+					featureManagementItemMeta.setDisplayName(ChatColor.AQUA + "Feature Management");
+					List<String> featureManagementItemLore = Arrays.asList(ChatColor.LIGHT_PURPLE + "Turn certain features on and off, according to how you wish to run your server.");
+					featureManagementItemMeta.setLore(featureManagementItemLore);
+					featureManagementItem.setItemMeta(featureManagementItemMeta);
+					inventory.setItem(11, featureManagementItem);
+					
 					player.openInventory(inventory);
 					
 					plugin.getServer().getPluginManager().registerEvents(new ScrollsOfBaugWizardsInventoryListener(plugin), plugin);
