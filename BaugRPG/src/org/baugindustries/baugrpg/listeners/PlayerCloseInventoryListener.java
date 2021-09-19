@@ -1,6 +1,10 @@
 package org.baugindustries.baugrpg.listeners;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.baugindustries.baugrpg.Main;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,9 +23,9 @@ public class PlayerCloseInventoryListener implements Listener{
 	public void leave(InventoryCloseEvent event) {
 		//TODO: Check if any players are looking at an inventory, then only do this if they're not
 		boolean temp = false;
-		Player[] onlinePlayers = (Player[]) plugin.getServer().getOnlinePlayers().toArray();
-		for (int i = 0; i < plugin.getServer().getOnlinePlayers().size(); i++) {
-			if (onlinePlayers[i].getInventory().getType() == InventoryType.CHEST) {
+		List<Player> allOnlinePlayers = plugin.getOnlinePlayers();
+		for (int i = 0; i < allOnlinePlayers.size(); i++) {
+			if (allOnlinePlayers.get(i).getInventory().getType() == InventoryType.CHEST) {
 				temp = true;
 			}
 		}

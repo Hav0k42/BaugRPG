@@ -152,6 +152,17 @@ public class Main extends JavaPlugin {
 	}
 	
 	
+	public List<Player> getOnlinePlayers() {
+		List<Player> allOnlinePlayers = new ArrayList<Player>();//this line doesnt work
+		OfflinePlayer[] allOfflinePlayers = getServer().getOfflinePlayers();
+		for (int i = 0; i < allOfflinePlayers.length; i++) {
+			if (allOfflinePlayers[i].isOnline()) {
+				allOnlinePlayers.add(allOfflinePlayers[i].getPlayer());
+			}
+		}
+		return allOnlinePlayers;
+	}
+	
 	
 	
 	
