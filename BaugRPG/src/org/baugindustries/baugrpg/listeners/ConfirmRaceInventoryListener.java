@@ -35,7 +35,7 @@ public class ConfirmRaceInventoryListener implements Listener{
 			if (event.getClickedInventory() != null) {
 				if (event.getView().getTitle().equals("Confirm Selection")) {
 					
-						if (event.getSlot() == 15) {//No
+						if (event.getSlot() == 15 && event.getCurrentItem().equals(plugin.createItem(Material.RED_STAINED_GLASS_PANE, 1, ChatColor.RED + "No", null))) {//No
 
 							int inventorySize = 54;
 							String inventoryName = "Choose Your Race";
@@ -84,7 +84,7 @@ public class ConfirmRaceInventoryListener implements Listener{
 							
 							InventoryClickEvent.getHandlerList().unregister(this);
 							plugin.getServer().getPluginManager().registerEvents(new ChooseRaceInventoryListener(plugin), plugin);
-						} else if (event.getSlot() == 11) {//Yes
+						} else if (event.getSlot() == 11 && event.getCurrentItem().equals(plugin.createItem(Material.LIME_STAINED_GLASS_PANE, 1, ChatColor.GREEN + "Yes", null))) {//Yes
 							
 							PersistentDataContainer data = event.getWhoClicked().getPersistentDataContainer();
 							ItemMeta raceInfoMeta = event.getInventory().getItem(4).getItemMeta();

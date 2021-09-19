@@ -33,13 +33,8 @@ public class ElvesCommunismEnderChestListListener implements Listener{
 			Player player = (Player)event.getWhoClicked();
 			if (event.getClickedInventory() != null) {
 				if (event.getView().getTitle().equals("Elves Ender Chests")) {
-				
-						ItemStack backItemTest = new ItemStack(Material.RED_STAINED_GLASS_PANE);
-						ItemMeta backItemTestMeta = backItemTest.getItemMeta();
-						backItemTestMeta.setDisplayName("Go Back");
-						backItemTest.setItemMeta(backItemTestMeta);
 						
-						if (event.getCurrentItem().getItemMeta().equals(backItemTestMeta)) {//Open the previous menu
+						if (event.getCurrentItem().equals(plugin.createItem(Material.RED_STAINED_GLASS_PANE, 1, "Go Back", null))) {//Open the previous menu
 							int inventorySize = 9;
 							String inventoryName = "Elves Communism Hub";
 							Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);

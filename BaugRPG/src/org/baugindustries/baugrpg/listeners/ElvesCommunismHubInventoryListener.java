@@ -89,7 +89,7 @@ public class ElvesCommunismHubInventoryListener implements Listener {
 						
 						
 						
-						if (event.getSlot() == 3) {//Player wants to access other elves' inventories.
+						if (event.getCurrentItem().equals(plugin.createItem(Material.CHEST, 1, "Inventories", Arrays.asList(ChatColor.LIGHT_PURPLE + "Access other Elves' Inventories")))) {//Player wants to access other elves' inventories.
 							String inventoryName = "Elves Inventories";
 							Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
 							
@@ -130,7 +130,7 @@ public class ElvesCommunismHubInventoryListener implements Listener {
 							plugin.getServer().getPluginManager().registerEvents(new ElvesCommunismInventoryListListener(plugin), plugin);
 							
 							
-						} else if (event.getSlot() == 5) {//Player wants to access other elves' ender chests.
+						} else if (event.getCurrentItem().equals(plugin.createItem(Material.ENDER_CHEST, 1, "Ender Chests", Arrays.asList(ChatColor.LIGHT_PURPLE + "Access other Elves' Ender Chests")))) {//Player wants to access other elves' ender chests.
 							
 							String inventoryName = "Elves Ender Chests";
 							Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
@@ -172,7 +172,7 @@ public class ElvesCommunismHubInventoryListener implements Listener {
 							
 							
 						
-						} else if (event.getSlot() == 0) {
+						} else if (event.getCurrentItem().equals(plugin.createItem(Material.RED_STAINED_GLASS_PANE, 1, "Go Back", null))) {
 							player.performCommand("baugscroll");
 						}
 						

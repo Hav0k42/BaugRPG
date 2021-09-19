@@ -32,12 +32,7 @@ public class ScrollsOfBaugElvesInventoryListener implements Listener{
 			if (event.getClickedInventory() != null) {
 				if (event.getView().getTitle().equals("Scrolls of Baug")) {
 					
-					ItemStack sharedInventoriesItem = new ItemStack(Material.CHEST);
-					ItemMeta sharedInventoriesItemMeta = sharedInventoriesItem.getItemMeta();
-					sharedInventoriesItemMeta.setDisplayName(ChatColor.GOLD + "Shared Inventories");
-					List<String> sharedInventoriesItemLore = Arrays.asList(ChatColor.LIGHT_PURPLE + "Access fellow Elves' inventories and ender chests");
-					sharedInventoriesItemMeta.setLore(sharedInventoriesItemLore);
-					sharedInventoriesItem.setItemMeta(sharedInventoriesItemMeta);
+					ItemStack sharedInventoriesItem = plugin.createItem(Material.CHEST, 1, ChatColor.GOLD + "Shared Inventories", Arrays.asList(ChatColor.LIGHT_PURPLE + "Access fellow Elves' inventories and ender chests"));
 						
 						if (event.getSlot() == 11 && event.getCurrentItem().equals(sharedInventoriesItem)) {//Player clicked on the Shared Inventory Chest
 							player.sendMessage("Yep");
@@ -50,27 +45,20 @@ public class ScrollsOfBaugElvesInventoryListener implements Listener{
 								inventory.setItem(i, new ItemStack(Material.AIR));
 							}
 
-							ItemStack backItem = new ItemStack(Material.RED_STAINED_GLASS_PANE);
-							ItemMeta backItemMeta = backItem.getItemMeta();
-							backItemMeta.setDisplayName("Go Back");
-							backItem.setItemMeta(backItemMeta);
-							inventory.setItem(0, backItem);
 							
-							ItemStack openInventoriesItem = new ItemStack(Material.CHEST);
-							ItemMeta openInventoriesItemMeta = openInventoriesItem.getItemMeta();
-							openInventoriesItemMeta.setDisplayName("Inventories");
-							List<String> openInventoriesItemLore = Arrays.asList(ChatColor.LIGHT_PURPLE + "Access other Elves' Inventories");
-							openInventoriesItemMeta.setLore(openInventoriesItemLore);
-							openInventoriesItem.setItemMeta(openInventoriesItemMeta);
-							inventory.setItem(3, openInventoriesItem);
+							inventory.setItem(0, plugin.createItem(Material.RED_STAINED_GLASS_PANE, 1, "Go Back", null));
 							
-							ItemStack openEnderChestsItem = new ItemStack(Material.ENDER_CHEST);
-							ItemMeta openEnderChestsItemMeta = openEnderChestsItem.getItemMeta();
-							openEnderChestsItemMeta.setDisplayName("Ender Chests");
-							List<String> openEnderChestsItemLore = Arrays.asList(ChatColor.LIGHT_PURPLE + "Access other Elves' Ender Chests");
-							openEnderChestsItemMeta.setLore(openEnderChestsItemLore);
-							openEnderChestsItem.setItemMeta(openEnderChestsItemMeta);
-							inventory.setItem(5, openEnderChestsItem);
+							inventory.setItem(3, plugin.createItem(
+									Material.CHEST, 
+									1, 
+									"Inventories", 
+									Arrays.asList(ChatColor.LIGHT_PURPLE + "Access other Elves' Inventories")));
+							
+							inventory.setItem(5, plugin.createItem(
+									Material.ENDER_CHEST, 
+									1, 
+									"Ender Chests", 
+									Arrays.asList(ChatColor.LIGHT_PURPLE + "Access other Elves' Ender Chests")));
 							
 							event.getWhoClicked().openInventory(inventory);
 							

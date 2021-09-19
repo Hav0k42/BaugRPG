@@ -133,7 +133,7 @@ public class BaugScroll implements CommandExecutor {
 							Material.WRITABLE_BOOK,
 							1,
 							ChatColor.AQUA + "Feature Management", 
-							Arrays.asList(ChatColor.LIGHT_PURPLE + "Turn certain features on and off, according to how you wish to run your server.")));
+							Arrays.asList(ChatColor.LIGHT_PURPLE + "Turn certain features on and off,", "according to how you wish to run your server.")));
 					
 					player.openInventory(inventory);
 					

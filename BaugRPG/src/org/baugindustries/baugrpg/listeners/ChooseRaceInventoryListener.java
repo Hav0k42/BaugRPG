@@ -34,13 +34,13 @@ public class ChooseRaceInventoryListener implements Listener{
 					
 						
 						String chosenRace = "";
-						if (event.getSlot() == 28) {//Men
+						if (event.getSlot() == 28 && event.getCurrentItem().equals(plugin.createItem(Material.NETHERITE_SWORD, 1, ChatColor.DARK_AQUA + "Men", Arrays.asList(ChatColor.LIGHT_PURPLE + "Masters of the sword and horse combat,", "Men prefer to live in flat open areas", "with lots of room to roam about.")))) {//Men
 							chosenRace = "Men";
-						} else if (event.getSlot() == 30) {//Elves
+						} else if (event.getSlot() == 30 && event.getCurrentItem().equals(plugin.createItem(Material.BOW, 1, ChatColor.DARK_GREEN + "Elves", Arrays.asList(ChatColor.LIGHT_PURPLE + "Masters of the bow and ranged combat", "Elves reside in wooded areas", "due to their love of nature.")))) {//Elves
 							chosenRace = "Elves";
-						} else if (event.getSlot() == 32) {//Dwarves
+						} else if (event.getSlot() == 32 && event.getCurrentItem().equals(plugin.createItem(Material.NETHERITE_AXE, 1, ChatColor.DARK_PURPLE + "Dwarves", Arrays.asList(ChatColor.LIGHT_PURPLE + "Masters of the axe and melee combat", "Dwarves dwell within the earth", "constantly delving for the riches beneath the surface.")))) {//Dwarves
 							chosenRace = "Dwarves";
-						} else if (event.getSlot() == 34) {//Orcs
+						} else if (event.getSlot() == 34 && event.getCurrentItem().equals(plugin.createItem(Material.NETHERITE_HELMET, 1, ChatColor.DARK_RED + "Orcs", Arrays.asList(ChatColor.LIGHT_PURPLE + "Masters of iron forged weaponry and brutal combat", "Orcs smoulder in the fires of hell", "for they cannot go to the surface.")))) {//Orcs
 							chosenRace = "Orcs";
 						}
 						
