@@ -3,6 +3,7 @@ package org.baugindustries.baugrpg;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.baugindustries.baugrpg.commands.BaugScroll;
@@ -17,14 +18,19 @@ import org.baugindustries.baugrpg.listeners.OnJoinListener;
 import org.baugindustries.baugrpg.listeners.OnQuitListener;
 import org.baugindustries.baugrpg.listeners.PlayerCloseInventoryListener;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import net.md_5.bungee.api.ChatColor;
 
 public class Main extends JavaPlugin {
 
@@ -132,7 +138,18 @@ public class Main extends JavaPlugin {
 	
 	
 	
-	
+	public ItemStack createItem(Material material, int amount, String displayName, List<String> loreInfo) {
+		
+		ItemStack item = new ItemStack(material);
+		item.setAmount(amount);
+		ItemMeta itemMeta = item.getItemMeta();
+		itemMeta.setDisplayName(displayName);
+		List<String> itemLore = loreInfo;
+		itemMeta.setLore(itemLore);
+		item.setItemMeta(itemMeta);
+		
+		return item;
+	}
 	
 	
 	

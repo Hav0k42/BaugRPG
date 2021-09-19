@@ -15,6 +15,7 @@ public class PlayerCloseInventoryListener implements Listener{
 	
 	@EventHandler
 	public void leave(InventoryCloseEvent event) {
+		//TODO: Check if any players are looking at an inventory, then only do this if they're not
 		for (int i = 0; i < InventoryClickEvent.getHandlerList().getRegisteredListeners().length; i++) {
 			InventoryClickEvent.getHandlerList().unregister(InventoryClickEvent.getHandlerList().getRegisteredListeners()[i]);
 		}

@@ -60,13 +60,12 @@ public class BaugScroll implements CommandExecutor {
 				
 				if (race == 1) {//Men
 					
-					ItemStack infoItem = new ItemStack(Material.NETHER_STAR);
-					ItemMeta infoItemMeta = infoItem.getItemMeta();
-					infoItemMeta.setDisplayName(ChatColor.GOLD + "Scrolls of Baug");
-					List<String> infoItemLore = Arrays.asList(ChatColor.LIGHT_PURPLE + "This menu gives you access to any and", "and all information you need to know to play on this server");
-					infoItemMeta.setLore(infoItemLore);
-					infoItem.setItemMeta(infoItemMeta);
-					inventory.setItem(0, infoItem);
+					
+					inventory.setItem(0, plugin.createItem(
+							Material.NETHER_STAR,
+							1,
+							ChatColor.GOLD + "Scrolls of Baug", 
+							Arrays.asList(ChatColor.LIGHT_PURPLE + "This menu gives you access to any and", "all information you need to know to play on this server")));
 					
 					
 					
@@ -76,22 +75,18 @@ public class BaugScroll implements CommandExecutor {
 					
 				} else if (race == 2) {//Elves
 					
-					ItemStack infoItem = new ItemStack(Material.NETHER_STAR);
-					ItemMeta infoItemMeta = infoItem.getItemMeta();
-					infoItemMeta.setDisplayName(ChatColor.GOLD + "Scrolls of Baug");
-					List<String> infoItemLore = Arrays.asList(ChatColor.LIGHT_PURPLE + "This menu gives you access to any and", "and all information you need to know to play on this server");
-					infoItemMeta.setLore(infoItemLore);
-					infoItem.setItemMeta(infoItemMeta);
-					inventory.setItem(0, infoItem);
+					inventory.setItem(0, plugin.createItem(
+							Material.NETHER_STAR,
+							1,
+							ChatColor.GOLD + "Scrolls of Baug", 
+							Arrays.asList(ChatColor.LIGHT_PURPLE + "This menu gives you access to any and", "all information you need to know to play on this server")));
 					
+					inventory.setItem(11, plugin.createItem(
+							Material.CHEST,
+							1,
+							ChatColor.GOLD + "Shared Inventories",
+							Arrays.asList(ChatColor.LIGHT_PURPLE + "Access fellow Elves' inventories and ender chests")));
 					
-					ItemStack sharedInventoriesItem = new ItemStack(Material.CHEST);
-					ItemMeta sharedInventoriesItemMeta = infoItem.getItemMeta();
-					sharedInventoriesItemMeta.setDisplayName(ChatColor.GOLD + "Shared Inventories");
-					List<String> sharedInventoriesItemLore = Arrays.asList(ChatColor.LIGHT_PURPLE + "Access fellow Elves' inventories and ender chests");
-					sharedInventoriesItemMeta.setLore(sharedInventoriesItemLore);
-					sharedInventoriesItem.setItemMeta(sharedInventoriesItemMeta);
-					inventory.setItem(11, sharedInventoriesItem);
 					
 					player.openInventory(inventory);
 					
@@ -99,13 +94,12 @@ public class BaugScroll implements CommandExecutor {
 					
 				} else if (race == 3) {//Dwarves
 					
-					ItemStack infoItem = new ItemStack(Material.NETHER_STAR);
-					ItemMeta infoItemMeta = infoItem.getItemMeta();
-					infoItemMeta.setDisplayName(ChatColor.GOLD + "Scrolls of Baug");
-					List<String> infoItemLore = Arrays.asList(ChatColor.LIGHT_PURPLE + "This menu gives you access to any and", "and all information you need to know to play on this server");
-					infoItemMeta.setLore(infoItemLore);
-					infoItem.setItemMeta(infoItemMeta);
-					inventory.setItem(0, infoItem);
+					inventory.setItem(0, plugin.createItem(
+							Material.NETHER_STAR,
+							1,
+							ChatColor.GOLD + "Scrolls of Baug", 
+							Arrays.asList(ChatColor.LIGHT_PURPLE + "This menu gives you access to any and", "all information you need to know to play on this server")));
+					
 					
 					player.openInventory(inventory);
 					
@@ -113,13 +107,12 @@ public class BaugScroll implements CommandExecutor {
 					
 				} else if (race == 4) {//Orcs
 					
-					ItemStack infoItem = new ItemStack(Material.NETHER_STAR);
-					ItemMeta infoItemMeta = infoItem.getItemMeta();
-					infoItemMeta.setDisplayName(ChatColor.GOLD + "Scrolls of Baug");
-					List<String> infoItemLore = Arrays.asList(ChatColor.LIGHT_PURPLE + "This menu gives you access to any and", "and all information you need to know to play on this server");
-					infoItemMeta.setLore(infoItemLore);
-					infoItem.setItemMeta(infoItemMeta);
-					inventory.setItem(0, infoItem);
+					inventory.setItem(0, plugin.createItem(
+							Material.NETHER_STAR,
+							1,
+							ChatColor.GOLD + "Scrolls of Baug", 
+							Arrays.asList(ChatColor.LIGHT_PURPLE + "This menu gives you access to any and", "all information you need to know to play on this server")));
+					
 					
 					player.openInventory(inventory);
 					
@@ -127,21 +120,20 @@ public class BaugScroll implements CommandExecutor {
 					
 				} else if (race == 5) {//Wizards
 					
-					ItemStack infoItem = new ItemStack(Material.NETHER_STAR);
-					ItemMeta infoItemMeta = infoItem.getItemMeta();
-					infoItemMeta.setDisplayName(ChatColor.GOLD + "Scrolls of Baug");
-					List<String> infoItemLore = Arrays.asList(ChatColor.LIGHT_PURPLE + "Welcome to the power menu.", "", "This menu gives you access to every feature", "given to the other races on this server", "You can use these to spy on your subjects", "and play god as you please", "", "Your job is to control the populous without them knowing.", "You are the final boss of the BaugRPG");
-					infoItemMeta.setLore(infoItemLore);
-					infoItem.setItemMeta(infoItemMeta);
-					inventory.setItem(0, infoItem);
 					
-					ItemStack featureManagementItem = new ItemStack(Material.WRITABLE_BOOK);
-					ItemMeta featureManagementItemMeta = infoItem.getItemMeta();
-					featureManagementItemMeta.setDisplayName(ChatColor.AQUA + "Feature Management");
-					List<String> featureManagementItemLore = Arrays.asList(ChatColor.LIGHT_PURPLE + "Turn certain features on and off, according to how you wish to run your server.");
-					featureManagementItemMeta.setLore(featureManagementItemLore);
-					featureManagementItem.setItemMeta(featureManagementItemMeta);
-					inventory.setItem(11, featureManagementItem);
+					inventory.setItem(0, plugin.createItem(
+							Material.NETHER_STAR,
+							1,
+							ChatColor.GOLD + "Scrolls of Baug", 
+							Arrays.asList(ChatColor.LIGHT_PURPLE + "Welcome to the power menu.", "", "This menu gives you access to every feature", "given to the other races on this server", "You can use these to spy on your subjects",
+									"and play god as you please", "", "Your job is to control the populous without them knowing.", "You are the final boss of the BaugRPG")));
+					
+					
+					inventory.setItem(11, plugin.createItem(
+							Material.WRITABLE_BOOK,
+							1,
+							ChatColor.AQUA + "Feature Management", 
+							Arrays.asList(ChatColor.LIGHT_PURPLE + "Turn certain features on and off, according to how you wish to run your server.")));
 					
 					player.openInventory(inventory);
 					

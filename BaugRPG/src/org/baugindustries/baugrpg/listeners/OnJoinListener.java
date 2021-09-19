@@ -61,53 +61,40 @@ public class OnJoinListener implements Listener{
 			Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
 			
 			for (int i = 0; i < inventorySize; i++) {
-				ItemStack backgroundItem = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
-				ItemMeta backgroundItemMeta = backgroundItem.getItemMeta();
-				backgroundItemMeta.setDisplayName(" ");
-				backgroundItem.setItemMeta(backgroundItemMeta);
-				inventory.setItem(i, backgroundItem);
+				inventory.setItem(i, plugin.createItem(Material.BLACK_STAINED_GLASS_PANE, 1, " ", null));
 			}
 			
 			
-			ItemStack infoItem = new ItemStack(Material.NETHER_STAR);
-			ItemMeta infoItemMeta = infoItem.getItemMeta();
-			infoItemMeta.setDisplayName(ChatColor.YELLOW + "Choose Your Race");
-			List<String> infoItemLore = Arrays.asList(ChatColor.LIGHT_PURPLE + "This race will determine the way you build", "the way you play, and the way you", "interact with players on this server.", "", "It cannot be changed later.");
-			infoItemMeta.setLore(infoItemLore);
-			infoItem.setItemMeta(infoItemMeta);
-			inventory.setItem(13, infoItem);
-
-			ItemStack chooseMenItem = new ItemStack(Material.NETHERITE_SWORD);
-			ItemMeta chooseMenItemMeta = chooseMenItem.getItemMeta();
-			chooseMenItemMeta.setDisplayName(ChatColor.DARK_AQUA + "Men");
-			List<String> chooseMenItemLore = Arrays.asList(ChatColor.LIGHT_PURPLE + "Masters of the sword and horse combat,", "Men prefer to live in flat open areas", "with lots of room to roam about.");
-			chooseMenItemMeta.setLore(chooseMenItemLore);
-			chooseMenItem.setItemMeta(chooseMenItemMeta);
-			inventory.setItem(28, chooseMenItem);
 			
-			ItemStack chooseElvesItem = new ItemStack(Material.BOW);
-			ItemMeta chooseElvesItemMeta = chooseElvesItem.getItemMeta();
-			chooseElvesItemMeta.setDisplayName(ChatColor.DARK_GREEN + "Elves");
-			List<String> chooseElvesItemLore = Arrays.asList(ChatColor.LIGHT_PURPLE + "Masters of the bow and ranged combat", "Elves reside in wooded areas", "due to their love of nature.");
-			chooseElvesItemMeta.setLore(chooseElvesItemLore);
-			chooseElvesItem.setItemMeta(chooseElvesItemMeta);
-			inventory.setItem(30, chooseElvesItem);
+			inventory.setItem(13, plugin.createItem(
+					Material.NETHER_STAR, 
+					1, 
+					ChatColor.YELLOW + "Choose Your Race", 
+					Arrays.asList(ChatColor.LIGHT_PURPLE + "This race will determine the way you build", "the way you play, and the way you", "interact with players on this server.", "", "It cannot be changed later.")));
 			
-			ItemStack chooseDwarvesItem = new ItemStack(Material.NETHERITE_AXE);
-			ItemMeta chooseDwarvesItemMeta = chooseDwarvesItem.getItemMeta();
-			chooseDwarvesItemMeta.setDisplayName(ChatColor.DARK_PURPLE + "Dwarves");
-			List<String> chooseDwarvesItemLore = Arrays.asList(ChatColor.LIGHT_PURPLE + "Masters of the axe and melee combat", "Dwarves dwell within the earth", "constantly delving for the riches beneath the surface.");
-			chooseDwarvesItemMeta.setLore(chooseDwarvesItemLore);
-			chooseDwarvesItem.setItemMeta(chooseDwarvesItemMeta);
-			inventory.setItem(32, chooseDwarvesItem);
+			inventory.setItem(28, plugin.createItem(
+					Material.NETHERITE_SWORD, 
+					1, 
+					ChatColor.DARK_AQUA + "Men", 
+					Arrays.asList(ChatColor.LIGHT_PURPLE + "Masters of the sword and horse combat,", "Men prefer to live in flat open areas", "with lots of room to roam about.")));
+				
+			inventory.setItem(30, plugin.createItem(
+					Material.BOW, 
+					1, 
+					ChatColor.DARK_GREEN + "Elves", 
+					Arrays.asList(ChatColor.LIGHT_PURPLE + "Masters of the bow and ranged combat", "Elves reside in wooded areas", "due to their love of nature.")));
 			
-			ItemStack chooseOrcsItem = new ItemStack(Material.NETHERITE_HELMET);
-			ItemMeta chooseOrcsItemMeta = chooseOrcsItem.getItemMeta();
-			chooseOrcsItemMeta.setDisplayName(ChatColor.DARK_RED + "Orcs");
-			List<String> chooseOrcsItemLore = Arrays.asList(ChatColor.LIGHT_PURPLE + "Masters of iron forged weaponry and brutal combat", "Orcs smoulder in the fires of hell", "for they cannot go to the surface.");
-			chooseOrcsItemMeta.setLore(chooseOrcsItemLore);
-			chooseOrcsItem.setItemMeta(chooseOrcsItemMeta);
-			inventory.setItem(34, chooseOrcsItem);
+			inventory.setItem(32, plugin.createItem(
+					Material.NETHERITE_AXE, 
+					1, 
+					ChatColor.DARK_PURPLE + "Dwarves", 
+					Arrays.asList(ChatColor.LIGHT_PURPLE + "Masters of the axe and melee combat", "Dwarves dwell within the earth", "constantly delving for the riches beneath the surface.")));
+			
+			inventory.setItem(34, plugin.createItem(
+					Material.NETHERITE_HELMET, 
+					1, 
+					ChatColor.DARK_RED + "Orcs", 
+					Arrays.asList(ChatColor.LIGHT_PURPLE + "Masters of iron forged weaponry and brutal combat", "Orcs smoulder in the fires of hell", "for they cannot go to the surface.")));
 
 			
 			

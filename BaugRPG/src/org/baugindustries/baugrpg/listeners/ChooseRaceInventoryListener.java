@@ -49,32 +49,19 @@ public class ChooseRaceInventoryListener implements Listener{
 							String inventoryName = "Confirm Selection";
 							Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
 							for (int i = 0; i < inventorySize; i++) {
-								ItemStack backgroundItem = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
-								ItemMeta backgroundItemMeta = backgroundItem.getItemMeta();
-								backgroundItemMeta.setDisplayName(" ");
-								backgroundItem.setItemMeta(backgroundItemMeta);
-								inventory.setItem(i, backgroundItem);
+								inventory.setItem(i, plugin.createItem(Material.BLACK_STAINED_GLASS_PANE, 1, " ", null));
 							}
 							
-							ItemStack infoItem = new ItemStack(Material.NETHER_STAR);
-							ItemMeta infoItemMeta = infoItem.getItemMeta();
-							infoItemMeta.setDisplayName(ChatColor.YELLOW + "Confirm Selection");
-							List<String> infoItemLore = Arrays.asList(ChatColor.LIGHT_PURPLE + "Are you sure you want to choose " + chosenRace + "?");
-							infoItemMeta.setLore(infoItemLore);
-							infoItem.setItemMeta(infoItemMeta);
-							inventory.setItem(4, infoItem);
 							
-							ItemStack denySelectionItem = new ItemStack(Material.RED_STAINED_GLASS_PANE);
-							ItemMeta denySelecitonItemMeta = denySelectionItem.getItemMeta();
-							denySelecitonItemMeta.setDisplayName(ChatColor.RED + "No");
-							denySelectionItem.setItemMeta(denySelecitonItemMeta);
-							inventory.setItem(15, denySelectionItem);
+							inventory.setItem(4, plugin.createItem(
+									Material.NETHER_STAR, 
+									1, 
+									ChatColor.YELLOW + "Confirm Selection", 
+									Arrays.asList(ChatColor.LIGHT_PURPLE + "Are you sure you want to choose " + chosenRace + "?")));
 							
-							ItemStack confirmSelectionItem = new ItemStack(Material.LIME_STAINED_GLASS_PANE);
-							ItemMeta confirmSelecitonItemMeta = confirmSelectionItem.getItemMeta();
-							confirmSelecitonItemMeta.setDisplayName(ChatColor.GREEN + "Yes");
-							confirmSelectionItem.setItemMeta(confirmSelecitonItemMeta);
-							inventory.setItem(11, confirmSelectionItem);
+							inventory.setItem(11, plugin.createItem(Material.LIME_STAINED_GLASS_PANE, 1, ChatColor.GREEN + "Yes", null));
+							
+							inventory.setItem(15, plugin.createItem(Material.RED_STAINED_GLASS_PANE, 1, ChatColor.RED + "No", null));
 							
 							
 							player.openInventory(inventory);

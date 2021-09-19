@@ -32,8 +32,15 @@ public class ScrollsOfBaugElvesInventoryListener implements Listener{
 			if (event.getClickedInventory() != null) {
 				if (event.getView().getTitle().equals("Scrolls of Baug")) {
 					
+					ItemStack sharedInventoriesItem = new ItemStack(Material.CHEST);
+					ItemMeta sharedInventoriesItemMeta = sharedInventoriesItem.getItemMeta();
+					sharedInventoriesItemMeta.setDisplayName(ChatColor.GOLD + "Shared Inventories");
+					List<String> sharedInventoriesItemLore = Arrays.asList(ChatColor.LIGHT_PURPLE + "Access fellow Elves' inventories and ender chests");
+					sharedInventoriesItemMeta.setLore(sharedInventoriesItemLore);
+					sharedInventoriesItem.setItemMeta(sharedInventoriesItemMeta);
 						
-						if (event.getSlot() == 11) {//Player clicked on the Shared Inventory Chest
+						if (event.getSlot() == 11 && event.getCurrentItem().equals(sharedInventoriesItem)) {//Player clicked on the Shared Inventory Chest
+							player.sendMessage("Yep");
 							int inventorySize = 9;
 							String inventoryName = "Elves Communism Hub";
 							Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
