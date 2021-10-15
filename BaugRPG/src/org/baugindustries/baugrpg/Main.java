@@ -137,7 +137,6 @@ public class Main extends JavaPlugin {
 	
 	
 	
-	
 	public ItemStack createItem(Material material, int amount, String displayName, List<String> loreInfo) {
 		
 		ItemStack item = new ItemStack(material);

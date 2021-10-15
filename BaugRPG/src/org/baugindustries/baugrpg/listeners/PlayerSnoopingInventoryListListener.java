@@ -1,57 +1,61 @@
 package org.baugindustries.baugrpg.listeners;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 import org.baugindustries.baugrpg.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 import net.md_5.bungee.api.ChatColor;
 
-public class ScrollsOfBaugWizardsInventoryListener implements Listener{
+public class PlayerSnoopingInventoryListListener implements Listener{
 
 	
 	private Main plugin;
-	public ScrollsOfBaugWizardsInventoryListener(Main plugin) {
+	public PlayerSnoopingInventoryListListener(Main plugin) {
 		this.plugin = plugin;
 	}
-	
 	
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent event) {
 		if (event.getWhoClicked() instanceof Player) {
 			Player player = (Player)event.getWhoClicked();
 			if (event.getClickedInventory() != null) {
-				if (event.getView().getTitle().equals("Scrolls of Baug")) {
+				if (event.getView().getTitle().equals("Players Inventories")) {
 					
-					
-					
-					
-					
-					
-					if (event.getSlot() == 11 && event.getCurrentItem().equals(plugin.createItem(
-					Material.WRITABLE_BOOK,
-					1,
-					ChatColor.AQUA + "Feature Management", 
-					Arrays.asList(ChatColor.LIGHT_PURPLE + "Turn certain features on and off,", "according to how you wish to run your server.")))) {//Player clicked on the Feature Management Item
 						
 						
 						
 						
 						
-					} else if (event.getSlot() == 12 && event.getCurrentItem().equals(plugin.createItem(
-					Material.CHEST,
-					1,
-					ChatColor.AQUA + "Inventory Snooping", 
-					Arrays.asList(ChatColor.LIGHT_PURPLE +  "Access every players' inventories and ender chests")))) {//Player clicked on the Inventory Snooping Item
 						
-						if (plugin.getServer().getPluginManager().isPluginEnabled("OpenInv")) {
+						
+						ItemStack backItemTest = new ItemStack(Material.RED_STAINED_GLASS_PANE);
+						ItemMeta backItemTestMeta = backItemTest.getItemMeta();
+						backItemTestMeta.setDisplayName("Go Back");
+						backItemTest.setItemMeta(backItemTestMeta);
+						
+						if (event.getCurrentItem().getItemMeta().equals(backItemTestMeta)) {//Open the previous menu
 							int inventorySize = 9;
 							String inventoryName = "Inventory Snooping Hub";
 							Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
@@ -80,16 +84,18 @@ public class ScrollsOfBaugWizardsInventoryListener implements Listener{
 							
 							InventoryClickEvent.getHandlerList().unregister(this);
 							plugin.getServer().getPluginManager().registerEvents(new PlayerSnoopingHubInventoryListener(plugin), plugin);
-						} else {
-							player.sendMessage(ChatColor.RED + "The supporting plugin for this feature is not installed.\nPlease install the OpenInv plugin.\n" + ChatColor.YELLOW + "https://dev.bukkit.org/projects/openinv");
+						} else if (event.getCurrentItem().getType().equals(Material.PLAYER_HEAD)) {//View Selected Player's Inventory
+							ItemStack selectedPlayerHead = event.getCurrentItem();
+							SkullMeta selectedPlayerHeadMeta = (SkullMeta)selectedPlayerHead.getItemMeta();
+							OfflinePlayer selectedOfflinePlayer = plugin.getServer().getOfflinePlayer(selectedPlayerHeadMeta.getOwningPlayer().getUniqueId());//theres a possibility this does not work.
+							
+							InventoryClickEvent.getHandlerList().unregister(this);
+							player.performCommand("oi " + selectedOfflinePlayer.getName());
 						}
+						event.setCancelled(true);
 					}
-					
-					
-					event.setCancelled(true);
 				}
 			}
 		}
-		
 	}
-}
+

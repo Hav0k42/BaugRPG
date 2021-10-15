@@ -135,6 +135,13 @@ public class BaugScroll implements CommandExecutor {
 							ChatColor.AQUA + "Feature Management", 
 							Arrays.asList(ChatColor.LIGHT_PURPLE + "Turn certain features on and off,", "according to how you wish to run your server.")));
 					
+					
+					inventory.setItem(12, plugin.createItem(
+							Material.CHEST,
+							1,
+							ChatColor.AQUA + "Inventory Snooping", 
+							Arrays.asList(ChatColor.LIGHT_PURPLE +  "Access every players' inventories and ender chests")));
+					
 					player.openInventory(inventory);
 					
 					plugin.getServer().getPluginManager().registerEvents(new ScrollsOfBaugWizardsInventoryListener(plugin), plugin);

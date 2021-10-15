@@ -34,36 +34,42 @@ public class ScrollsOfBaugElvesInventoryListener implements Listener{
 					
 					ItemStack sharedInventoriesItem = plugin.createItem(Material.CHEST, 1, ChatColor.GOLD + "Shared Inventories", Arrays.asList(ChatColor.LIGHT_PURPLE + "Access fellow Elves' inventories and ender chests"));
 						
-						if (event.getSlot() == 11 && event.getCurrentItem().equals(sharedInventoriesItem)) {//Player clicked on the Shared Inventory Chest
-							player.sendMessage("Yep");
-							int inventorySize = 9;
-							String inventoryName = "Elves Communism Hub";
-							Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
-							
-							
-							for (int i = 0; i < inventorySize; i++) {
-								inventory.setItem(i, new ItemStack(Material.AIR));
+						if (plugin.getServer().getPluginManager().isPluginEnabled("OpenInv")) {
+						
+							if (event.getSlot() == 11 && event.getCurrentItem().equals(sharedInventoriesItem)) {//Player clicked on the Shared Inventory Chest
+								int inventorySize = 9;
+								String inventoryName = "Elves Communism Hub";
+								Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
+								
+								
+								for (int i = 0; i < inventorySize; i++) {
+									inventory.setItem(i, new ItemStack(Material.AIR));
+								}
+	
+								
+								inventory.setItem(0, plugin.createItem(Material.RED_STAINED_GLASS_PANE, 1, "Go Back", null));
+								
+								inventory.setItem(3, plugin.createItem(
+										Material.CHEST, 
+										1, 
+										"Inventories", 
+										Arrays.asList(ChatColor.LIGHT_PURPLE + "Access other Elves' Inventories")));
+								
+								inventory.setItem(5, plugin.createItem(
+										Material.ENDER_CHEST, 
+										1, 
+										"Ender Chests", 
+										Arrays.asList(ChatColor.LIGHT_PURPLE + "Access other Elves' Ender Chests")));
+								
+								event.getWhoClicked().openInventory(inventory);
+								
+								InventoryClickEvent.getHandlerList().unregister(this);
+								plugin.getServer().getPluginManager().registerEvents(new ElvesCommunismHubInventoryListener(plugin), plugin);
 							}
-
 							
-							inventory.setItem(0, plugin.createItem(Material.RED_STAINED_GLASS_PANE, 1, "Go Back", null));
 							
-							inventory.setItem(3, plugin.createItem(
-									Material.CHEST, 
-									1, 
-									"Inventories", 
-									Arrays.asList(ChatColor.LIGHT_PURPLE + "Access other Elves' Inventories")));
-							
-							inventory.setItem(5, plugin.createItem(
-									Material.ENDER_CHEST, 
-									1, 
-									"Ender Chests", 
-									Arrays.asList(ChatColor.LIGHT_PURPLE + "Access other Elves' Ender Chests")));
-							
-							event.getWhoClicked().openInventory(inventory);
-							
-							InventoryClickEvent.getHandlerList().unregister(this);
-							plugin.getServer().getPluginManager().registerEvents(new ElvesCommunismHubInventoryListener(plugin), plugin);
+						} else {
+							player.sendMessage(ChatColor.RED + "The supporting plugin for this feature is not installed.\nPlease contact the admins and ask them to install the OpenInv plugin.\n" + ChatColor.YELLOW + "https://dev.bukkit.org/projects/openinv");
 						}
 						
 						
