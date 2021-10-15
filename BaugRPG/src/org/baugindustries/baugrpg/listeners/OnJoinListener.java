@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.baugindustries.baugrpg.Main;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ChooseRaceInventoryListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

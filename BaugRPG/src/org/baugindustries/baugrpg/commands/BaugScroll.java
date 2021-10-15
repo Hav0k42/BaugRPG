@@ -6,12 +6,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.baugindustries.baugrpg.Main;
-import org.baugindustries.baugrpg.listeners.ChooseRaceInventoryListener;
-import org.baugindustries.baugrpg.listeners.ScrollsOfBaugDwarvesInventoryListener;
-import org.baugindustries.baugrpg.listeners.ScrollsOfBaugElvesInventoryListener;
-import org.baugindustries.baugrpg.listeners.ScrollsOfBaugMenInventoryListener;
-import org.baugindustries.baugrpg.listeners.ScrollsOfBaugOrcsInventoryListener;
-import org.baugindustries.baugrpg.listeners.ScrollsOfBaugWizardsInventoryListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ChooseRaceInventoryListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Dwarves.ScrollsOfBaugDwarvesInventoryListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Elves.ScrollsOfBaugElvesInventoryListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Men.ScrollsOfBaugMenInventoryListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Orcs.ScrollsOfBaugOrcsInventoryListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.ScrollsOfBaugWizardsInventoryListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
