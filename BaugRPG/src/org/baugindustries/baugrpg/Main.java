@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import org.baugindustries.baugrpg.commands.BaugScroll;
@@ -37,6 +38,8 @@ public class Main extends JavaPlugin {
 
 	
 	public ChatChannelManager channelManager;
+	public HashMap<Player, Player> tpaHashMap = new HashMap<Player, Player>();
+	public HashMap<Player, Player> tpahereHashMap = new HashMap<Player, Player>();
 	
 	@Override
 	public void onEnable() {

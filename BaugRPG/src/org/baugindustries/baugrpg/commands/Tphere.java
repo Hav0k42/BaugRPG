@@ -11,13 +11,15 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import net.md_5.bungee.api.ChatColor;
+
 public class Tphere implements CommandExecutor {
 
 	private Main plugin;
 	
 	public Tphere(Main plugin) {
 		this.plugin = plugin;
-		plugin.getCommand("tpa").setExecutor(this);
+		plugin.getCommand("tphere").setExecutor(this);
 	}
 
 	@Override
@@ -44,7 +46,15 @@ public class Tphere implements CommandExecutor {
 				Boolean checkFlag = false;
 				for (int i = 0; i < allOnlinePlayers.size(); i ++) {
 					if (args[0].toLowerCase().equals(allOnlinePlayers.get(i).getName().toLowerCase())) {
-						//tphere request message to found player
+						if (allOnlinePlayers.get(i).getName().equals(player.getName())) {
+							player.sendMessage(ChatColor.YELLOW + "You cannot request to teleport to yourself.");
+							return true;
+						}
+						
+						plugin.tpahereHashMap.put(allOnlinePlayers.get(i), player);
+						allOnlinePlayers.get(i).sendMessage(ChatColor.YELLOW + player.getName() + " wishes you teleport to them. Type " + ChatColor.DARK_PURPLE + "/tpaccept" + ChatColor.YELLOW + " to accept.");
+						player.sendMessage(ChatColor.YELLOW + "Request sent successfully");
+						
 						checkFlag = true;
 						break;
 					}
