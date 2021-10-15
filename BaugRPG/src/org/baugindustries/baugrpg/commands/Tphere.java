@@ -11,11 +11,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class Tpa implements CommandExecutor {
+public class Tphere implements CommandExecutor {
 
 	private Main plugin;
 	
-	public Tpa(Main plugin) {
+	public Tphere(Main plugin) {
 		this.plugin = plugin;
 		plugin.getCommand("tpa").setExecutor(this);
 	}
@@ -39,12 +39,12 @@ public class Tpa implements CommandExecutor {
 		
 		if (player.hasPermission("minecraft.command.help")) {//Consider changing this to check if the admins have allowed tpa
 			if (args.length == 0) {
-				player.sendMessage("Incorrect Usage: Correct usage is /tpa <Player>");
+				player.sendMessage("Incorrect Usage: Correct usage is /tphere <Player>");
 			} else {
 				Boolean checkFlag = false;
 				for (int i = 0; i < allOnlinePlayers.size(); i ++) {
 					if (args[0].toLowerCase().equals(allOnlinePlayers.get(i).getName().toLowerCase())) {
-						//tp request message to found player
+						//tphere request message to found player
 						checkFlag = true;
 						break;
 					}

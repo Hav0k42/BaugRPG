@@ -29,6 +29,10 @@ commands:
    usage: /tpa <Player>, /tpask <Player>
    aliases: [tpask]
    description: Requests to teleport to another player
+  tpa:
+   usage: /tphere <Player>, /tph <Player>
+   aliases: [tph]
+   description: Requests another player teleport to you.
   tpaccept:
    usage: /tpaccept, /tpayes, /tpyes
    aliases: [tpayes, tpyes]
