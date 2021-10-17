@@ -45,11 +45,13 @@ public class Main extends JavaPlugin {
 	public ChatChannelManager channelManager;
 	public HashMap<Player, Player> tpaHashMap = new HashMap<Player, Player>();
 	public HashMap<Player, Player> tpahereHashMap = new HashMap<Player, Player>();
-	public ScoreboardManager manager = Bukkit.getScoreboardManager();
-	public Scoreboard board = manager.getMainScoreboard();
+	public ScoreboardManager manager;
+	public Scoreboard board;
 	
 	@Override
 	public void onEnable() {
+		 manager = Bukkit.getScoreboardManager();
+		 board = manager.getMainScoreboard();
 		 this.getServer().getPluginManager().registerEvents(new OnJoinListener(this), this);
 		 this.getServer().getPluginManager().registerEvents(new OnQuitListener(this), this);
 		 this.getServer().getPluginManager().registerEvents(new PlayerCloseInventoryListener(this), this);
