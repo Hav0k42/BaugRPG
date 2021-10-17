@@ -10,6 +10,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import net.md_5.bungee.api.ChatColor;
+
 
 public class RaceWizard implements CommandExecutor {
 	
@@ -34,7 +36,7 @@ public class RaceWizard implements CommandExecutor {
 			if (data.has(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER)) {
 				player.sendMessage("You already have a race assigned.");
 			} else {
-
+				plugin.board.getTeam("Wizards").addPlayer(player);
 				data.set(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER, 5);//Wizard: 5
 			}
 			return true;

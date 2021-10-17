@@ -19,6 +19,8 @@ import org.baugindustries.baugrpg.commands.Tphere;
 import org.baugindustries.baugrpg.listeners.OnJoinListener;
 import org.baugindustries.baugrpg.listeners.OnQuitListener;
 import org.baugindustries.baugrpg.listeners.PlayerCloseInventoryListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Dwarves.PlayerKillListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Men.HorseListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -31,8 +33,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.ScoreboardManager;
+import org.bukkit.scoreboard.Team;
 
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 
 public class Main extends JavaPlugin {
 
@@ -40,12 +45,16 @@ public class Main extends JavaPlugin {
 	public ChatChannelManager channelManager;
 	public HashMap<Player, Player> tpaHashMap = new HashMap<Player, Player>();
 	public HashMap<Player, Player> tpahereHashMap = new HashMap<Player, Player>();
+	public ScoreboardManager manager = Bukkit.getScoreboardManager();
+	public Scoreboard board = manager.getMainScoreboard();
 	
 	@Override
 	public void onEnable() {
 		 this.getServer().getPluginManager().registerEvents(new OnJoinListener(this), this);
 		 this.getServer().getPluginManager().registerEvents(new OnQuitListener(this), this);
 		 this.getServer().getPluginManager().registerEvents(new PlayerCloseInventoryListener(this), this);
+		 this.getServer().getPluginManager().registerEvents(new HorseListener(this), this);
+		 this.getServer().getPluginManager().registerEvents(new PlayerKillListener(this), this);
 		 new ResetRace(this);
 		 new SetRace(this);
 		 new Chat(this);
@@ -56,7 +65,30 @@ public class Main extends JavaPlugin {
 		 new Tpaccept(this);
 		 new Tpdeny(this);
 		 
+		 if (board.getTeam("Men") == null) {
+			 Team menTeam = board.registerNewTeam("Men");
+			 menTeam.setColor(ChatColor.DARK_AQUA);
+		 }
 		 
+		 if (board.getTeam("Elves") == null) {
+			 Team elfTeam = board.registerNewTeam("Elves");
+			 elfTeam.setColor(ChatColor.DARK_GREEN);
+		 }
+		 
+		 if (board.getTeam("Dwarves") == null) {
+			 Team dwarfTeam = board.registerNewTeam("Dwarves");
+			 dwarfTeam.setColor(ChatColor.DARK_PURPLE);
+		 }
+		 
+		 if (board.getTeam("Orcs") == null) {
+			 Team orcTeam = board.registerNewTeam("Orcs");
+			 orcTeam.setColor(ChatColor.DARK_RED);
+		 }
+		 
+		 if (board.getTeam("Wizards") == null) {
+			 Team wizardTeam = board.registerNewTeam("Wizards");
+			 wizardTeam.setColor(ChatColor.AQUA);
+		 }
 		 
 		 getServer().getPluginManager().registerEvents(new ChatChannel(this), this);
 		 

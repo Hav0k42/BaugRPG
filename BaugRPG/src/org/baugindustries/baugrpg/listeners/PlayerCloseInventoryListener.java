@@ -21,18 +21,18 @@ public class PlayerCloseInventoryListener implements Listener{
 	
 	@EventHandler
 	public void leave(InventoryCloseEvent event) {
-		//TODO: Check if any players are looking at an inventory, then only do this if they're not
-		boolean temp = false;
-		List<Player> allOnlinePlayers = plugin.getOnlinePlayers();
-		for (int i = 0; i < allOnlinePlayers.size(); i++) {
-			if (allOnlinePlayers.get(i).getInventory().getType() == InventoryType.CHEST) {
-				temp = true;
-			}
-		}
-		if (!temp) {
-			for (int i = 0; i < InventoryClickEvent.getHandlerList().getRegisteredListeners().length; i++) {
-				InventoryClickEvent.getHandlerList().unregister(InventoryClickEvent.getHandlerList().getRegisteredListeners()[i]);
-			}
-		}
+//		//TODO: Check if any players are looking at an inventory, then only do this if they're not
+//		boolean temp = false;
+//		List<Player> allOnlinePlayers = plugin.getOnlinePlayers();
+//		for (int i = 0; i < allOnlinePlayers.size(); i++) {
+//			if (allOnlinePlayers.get(i).getInventory().getType() == InventoryType.CHEST) {
+//				temp = true;
+//			}
+//		}
+//		if (!temp) {
+//			for (int i = 0; i < InventoryClickEvent.getHandlerList().getRegisteredListeners().length; i++) {
+//				InventoryClickEvent.getHandlerList().unregister(InventoryClickEvent.getHandlerList().getRegisteredListeners()[i]);
+//			}
+//		}
     }
 }

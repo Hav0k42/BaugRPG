@@ -13,6 +13,8 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.craftbukkit.libs.org.apache.http.impl.execchain.ProtocolExec;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -31,8 +33,12 @@ public class OnJoinListener implements Listener{
 	public OnJoinListener(Main plugin) {
 		this.plugin = plugin;
 	}
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
+		
+		
+		
 		
 		
 		//Update player's inventory if it was tampered with while they were offline.
@@ -107,6 +113,26 @@ public class OnJoinListener implements Listener{
 			
 			
 			
+		} else {//Player has joined before, update their username to display their race.
+			int race = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
+			Player player = event.getPlayer();
+			switch (race) {
+				case 1://Men
+					plugin.board.getTeam("Men").addPlayer(player);
+					break;
+				case 2://Elves
+					plugin.board.getTeam("Elves").addPlayer(player);
+					break;
+				case 3://Dwarves
+					plugin.board.getTeam("Dwarves").addPlayer(player);
+					break;
+				case 4://Orcs
+					plugin.board.getTeam("Orcs").addPlayer(player);
+					break;
+				case 5://Wizards
+					plugin.board.getTeam("Wizards").addPlayer(player);
+					break;
+			}
 		}
 	}
 }

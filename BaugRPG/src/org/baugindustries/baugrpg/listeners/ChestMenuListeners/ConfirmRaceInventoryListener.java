@@ -28,6 +28,7 @@ public class ConfirmRaceInventoryListener implements Listener{
 	}
 	
 	
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent event) {
 		if (event.getWhoClicked() instanceof Player) {
@@ -103,6 +104,28 @@ public class ConfirmRaceInventoryListener implements Listener{
 							
 							InventoryClickEvent.getHandlerList().unregister(this);
 							player.closeInventory();
+							
+							
+							int race = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
+							switch (race) {
+								case 1://Men
+									plugin.board.getTeam("Men").addPlayer(player);
+									break;
+								case 2://Elves
+									plugin.board.getTeam("Elves").addPlayer(player);
+									break;
+								case 3://Dwarves
+									plugin.board.getTeam("Dwarves").addPlayer(player);
+									break;
+								case 4://Orcs
+									plugin.board.getTeam("Orcs").addPlayer(player);
+									break;
+								case 5://Wizards
+									plugin.board.getTeam("Wizards").addPlayer(player);
+									break;
+							}
+							
+							
 						}
 						event.setCancelled(true);
 					}

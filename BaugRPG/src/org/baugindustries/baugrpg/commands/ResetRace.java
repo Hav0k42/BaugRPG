@@ -13,6 +13,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import net.md_5.bungee.api.ChatColor;
+
 public class ResetRace implements CommandExecutor {
 	
 	private Main plugin;
@@ -22,6 +24,7 @@ public class ResetRace implements CommandExecutor {
 		plugin.getCommand("resetrace").setExecutor(this);
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (!(sender instanceof Player)) {
@@ -37,6 +40,8 @@ public class ResetRace implements CommandExecutor {
 				data.remove(new NamespacedKey(plugin, "Race"));
 				
 				player.sendMessage("Your race has been reset");
+				
+				plugin.board.getTeam(plugin.board.getPlayerTeam(player).getName()).removePlayer(player);//removes player from team they're currently on
 			} else {
 				player.sendMessage("You already didn't have a race assigned.");
 			}
