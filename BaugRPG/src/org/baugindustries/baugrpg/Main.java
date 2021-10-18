@@ -19,6 +19,7 @@ import org.baugindustries.baugrpg.commands.Tphere;
 import org.baugindustries.baugrpg.listeners.OnJoinListener;
 import org.baugindustries.baugrpg.listeners.OnQuitListener;
 import org.baugindustries.baugrpg.listeners.PlayerCloseInventoryListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Dwarves.MinecartListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Dwarves.PlayerKillListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Men.HorseListener;
 import org.bukkit.Bukkit;
@@ -57,6 +58,7 @@ public class Main extends JavaPlugin {
 		 this.getServer().getPluginManager().registerEvents(new PlayerCloseInventoryListener(this), this);
 		 this.getServer().getPluginManager().registerEvents(new HorseListener(this), this);
 		 this.getServer().getPluginManager().registerEvents(new PlayerKillListener(this), this);
+		 this.getServer().getPluginManager().registerEvents(new MinecartListener(this), this);
 		 new ResetRace(this);
 		 new SetRace(this);
 		 new Chat(this);
