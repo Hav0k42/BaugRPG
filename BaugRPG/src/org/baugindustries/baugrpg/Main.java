@@ -189,6 +189,23 @@ public class Main extends JavaPlugin {
 		return item;
 	}
 	
+	public ItemStack createItem(Material material, int amount, String displayName) {
+		
+		ItemStack item = new ItemStack(material);
+		item.setAmount(amount);
+		ItemMeta itemMeta = item.getItemMeta();
+		itemMeta.setDisplayName(displayName);
+		item.setItemMeta(itemMeta);
+		
+		return item;
+	}
+	
+	public ItemStack createItem(Material material, int amount) {
+		ItemStack item = new ItemStack(material);
+		item.setAmount(amount);
+		return item;
+	}
+	
 	
 	public List<Player> getOnlinePlayers() {
 		List<Player> allOnlinePlayers = new ArrayList<Player>();//this line doesnt work

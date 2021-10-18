@@ -37,7 +37,7 @@ public class PlayerKillListener implements Listener{
 			}
 			
 			if (killerRace == 3 && playerRace == 2) {//Dwarf killed an elf
-				killer.getWorld().dropItemNaturally(player.getLocation(), plugin.createItem(Material.GOLD_INGOT, 1 + (int)(Math.random() * 3), null, null));
+				killer.getWorld().dropItemNaturally(player.getLocation(), plugin.createItem(Material.GOLD_INGOT, 1 + (int)(Math.random() * 3)));
 			}
 		}
 	}
