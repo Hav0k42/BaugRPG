@@ -48,6 +48,9 @@ public class ChatChannelManager {
 	
 	
 	public String getChannelName(Player player) {
+		if (playerChannel.get(player) == null) {
+			playerChannel.put(player, "Global Chat");
+		}
 		String channelName = playerChannel.get(player);
 		return channelName;
 	}

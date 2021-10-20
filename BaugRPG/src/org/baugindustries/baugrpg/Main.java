@@ -21,7 +21,9 @@ import org.baugindustries.baugrpg.listeners.OnQuitListener;
 import org.baugindustries.baugrpg.listeners.PlayerCloseInventoryListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Dwarves.MinecartMoveListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Dwarves.PlayerKillListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Elves.ElfEatMeat;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Men.HorseListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Orcs.OrcEatMeat;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -59,6 +61,8 @@ public class Main extends JavaPlugin {
 		 this.getServer().getPluginManager().registerEvents(new HorseListener(this), this);
 		 this.getServer().getPluginManager().registerEvents(new PlayerKillListener(this), this);
 		 this.getServer().getPluginManager().registerEvents(new MinecartMoveListener(this), this);
+		 this.getServer().getPluginManager().registerEvents(new ElfEatMeat(this), this);
+		 this.getServer().getPluginManager().registerEvents(new OrcEatMeat(this), this);
 		 new ResetRace(this);
 		 new SetRace(this);
 		 new Chat(this);
