@@ -1,4 +1,4 @@
-package org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Orcs;
+package org.baugindustries.baugrpg.listeners;
 
 import org.baugindustries.baugrpg.Main;
 import org.bukkit.Material;
