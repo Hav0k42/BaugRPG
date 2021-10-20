@@ -3,13 +3,11 @@ package org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Me
 import org.baugindustries.baugrpg.Main;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -24,11 +22,11 @@ public class HorseListener implements Listener{
 	
 	
 	@EventHandler
-	public void onPlayerInteractEntity (PlayerInteractEntityEvent event) {
-	    if (event.getRightClicked() instanceof AbstractHorse) {
+	public void onPlayerInteractEntity (VehicleEnterEvent event) {
+	    if (event.getVehicle() instanceof AbstractHorse) {
 
-	        AbstractHorse horse = (AbstractHorse) event.getRightClicked();
-	        Player player = event.getPlayer();
+	        AbstractHorse horse = (AbstractHorse) event.getVehicle();
+	        Player player = (Player) event.getEntered();
 	        
 	        if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER) == 1) {//Check if the player is of the race of Men
 	        	horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue() * buffedHorseSpeed);

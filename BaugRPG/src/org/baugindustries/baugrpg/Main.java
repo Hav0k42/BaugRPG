@@ -21,8 +21,8 @@ import org.baugindustries.baugrpg.listeners.OnJoinListener;
 import org.baugindustries.baugrpg.listeners.OnQuitListener;
 import org.baugindustries.baugrpg.listeners.OrcEatMeat;
 import org.baugindustries.baugrpg.listeners.PlayerCloseInventoryListener;
+import org.baugindustries.baugrpg.listeners.PlayerDeathListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Dwarves.MinecartMoveListener;
-import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Dwarves.PlayerKillListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Men.HorseListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -35,6 +35,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
@@ -59,7 +60,7 @@ public class Main extends JavaPlugin {
 		 this.getServer().getPluginManager().registerEvents(new OnQuitListener(this), this);
 		 this.getServer().getPluginManager().registerEvents(new PlayerCloseInventoryListener(this), this);
 		 this.getServer().getPluginManager().registerEvents(new HorseListener(this), this);
-		 this.getServer().getPluginManager().registerEvents(new PlayerKillListener(this), this);
+		 this.getServer().getPluginManager().registerEvents(new PlayerDeathListener(this), this);
 		 this.getServer().getPluginManager().registerEvents(new MinecartMoveListener(this), this);
 		 this.getServer().getPluginManager().registerEvents(new ElfEatMeat(this), this);
 		 this.getServer().getPluginManager().registerEvents(new OrcEatMeat(this), this);
@@ -102,6 +103,37 @@ public class Main extends JavaPlugin {
 		 
 		 channelManager = new ChatChannelManager();
 		 
+		 orcLight();
+		 
+		 
+		 
+		 
+	}
+	
+	void orcLight() {
+		this.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {//check if any orcs are in sunlight
+			 
+			  public void run() {
+			     Player[] OnlinePlayers = getServer().getOnlinePlayers().toArray(new Player[getServer().getOnlinePlayers().size()]);
+			     for (int i = 0; i < OnlinePlayers.length; i++) {
+			    	 Player p = OnlinePlayers[i];
+			    	 if (p.getPlayer().getPersistentDataContainer().has(new NamespacedKey(Main.this, "Race"), PersistentDataType.INTEGER)) {
+			    		 int race = p.getPlayer().getPersistentDataContainer().get(new NamespacedKey(Main.this, "Race"), PersistentDataType.INTEGER);
+			    		 if (race == 4) {//Player is an orc
+			    			 int skyLight = p.getLocation().getBlock().getLightFromSky();
+			    			 if (skyLight > 3) {
+				    			 if (!p.getWorld().hasStorm()) {
+				    				 if (!(p.getWorld().getTime() < 23500 && p.getWorld().getTime() > 12500)) {
+				    					 p.setFireTicks(skyLight * 20);
+				    				 }
+				    			 }
+			    			 }
+			    			 orcLight();
+			    		 }
+			    	 }
+			     }
+			  }
+			}, 5L);
 	}
 	
 	public void onDisable() {
