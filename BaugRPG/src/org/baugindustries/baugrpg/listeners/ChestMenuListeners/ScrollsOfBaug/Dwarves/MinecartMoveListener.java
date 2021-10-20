@@ -11,6 +11,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.bukkit.event.vehicle.VehicleMoveEvent;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.util.Vector;
 
 public class MinecartMoveListener implements Listener{
 	private Main plugin;
@@ -25,7 +26,12 @@ public class MinecartMoveListener implements Listener{
             Minecart minecart = (Minecart) event.getVehicle();
             
             if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER) == 3) {//Check if the player is of the race of Dwarf
-            	minecart.setVelocity(minecart.getVelocity().multiply(10));
+            	Vector velocity = new Vector();
+            	velocity.setX(10 * (minecart.getVelocity().getX()));
+            	velocity.setY(minecart.getVelocity().getY());
+            	velocity.setZ(10 * (minecart.getVelocity().getZ()));
+            	minecart.setVelocity(velocity);
+            	
             }
         }
     }
