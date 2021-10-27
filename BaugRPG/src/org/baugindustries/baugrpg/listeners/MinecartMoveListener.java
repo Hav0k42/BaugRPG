@@ -1,4 +1,4 @@
-package org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Dwarves;
+package org.baugindustries.baugrpg.listeners;
 
 import org.baugindustries.baugrpg.Main;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Elves.CommunismHub.ElvesCommunismHubInventoryListener;
@@ -22,17 +22,19 @@ public class MinecartMoveListener implements Listener{
 	@EventHandler
     public void enter(VehicleMoveEvent event) {
         if (event.getVehicle() instanceof Minecart) {
-            Player player = (Player) event.getVehicle().getPassenger();
-            Minecart minecart = (Minecart) event.getVehicle();
-            
-            if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER) == 3) {//Check if the player is of the race of Dwarf
-            	Vector velocity = new Vector();
-            	velocity.setX(10 * (minecart.getVelocity().getX()));
-            	velocity.setY(minecart.getVelocity().getY());
-            	velocity.setZ(10 * (minecart.getVelocity().getZ()));
-            	minecart.setVelocity(velocity);
-            	
-            }
+        	if (event.getVehicle().getPassenger() != null && event.getVehicle().getPassenger() instanceof Player) {
+	            Player player = (Player) event.getVehicle().getPassenger();
+	            Minecart minecart = (Minecart) event.getVehicle();
+	            
+	            if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER) == 3) {//Check if the player is of the race of Dwarf
+	            	Vector velocity = new Vector();
+	            	velocity.setX(10 * (minecart.getVelocity().getX()));
+	            	velocity.setY(minecart.getVelocity().getY());
+	            	velocity.setZ(10 * (minecart.getVelocity().getZ()));
+	            	minecart.setVelocity(velocity);
+	            	
+	            }
+        	}
         }
     }
 }
