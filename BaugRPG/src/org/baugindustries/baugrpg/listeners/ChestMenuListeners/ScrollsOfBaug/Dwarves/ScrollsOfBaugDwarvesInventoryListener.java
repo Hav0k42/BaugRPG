@@ -43,7 +43,7 @@ public class ScrollsOfBaugDwarvesInventoryListener implements Listener{
 						Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
 						
 						for (int i = 0; i < inventorySize; i++) {
-							inventory.setItem(i, new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE));
+							inventory.setItem(i, new ItemStack(Material.BLACK_STAINED_GLASS_PANE));
 						}
 						
 						inventory.setItem(3, new ItemStack(Material.AIR));
