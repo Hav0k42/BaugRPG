@@ -16,6 +16,8 @@ import org.baugindustries.baugrpg.commands.Tpa;
 import org.baugindustries.baugrpg.commands.Tpaccept;
 import org.baugindustries.baugrpg.commands.Tpdeny;
 import org.baugindustries.baugrpg.commands.Tphere;
+import org.baugindustries.baugrpg.commands.econ.Balance;
+import org.baugindustries.baugrpg.commands.econ.Pay;
 import org.baugindustries.baugrpg.listeners.ElfEatMeat;
 import org.baugindustries.baugrpg.listeners.HorseListener;
 import org.baugindustries.baugrpg.listeners.MinecartMoveListener;
@@ -30,16 +32,21 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import java.util.logging.Logger;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.RegisteredServiceProvider;
+import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.scoreboard.Team;
+
+import net.milkbowl.vault.economy.*;
 
 import org.bukkit.ChatColor;
 
@@ -52,8 +59,11 @@ public class Main extends JavaPlugin {
 	public ScoreboardManager manager;
 	public Scoreboard board;
 	
+	public Economy econ = null;
+	
 	@Override
 	public void onEnable() {
+		 final Logger log = Logger.getLogger("Minecraft");
 		 manager = Bukkit.getScoreboardManager();
 		 board = manager.getMainScoreboard();
 		 this.getServer().getPluginManager().registerEvents(new OnJoinListener(this), this);
@@ -64,6 +74,8 @@ public class Main extends JavaPlugin {
 		 this.getServer().getPluginManager().registerEvents(new MinecartMoveListener(this), this);
 		 this.getServer().getPluginManager().registerEvents(new ElfEatMeat(this), this);
 		 this.getServer().getPluginManager().registerEvents(new OrcEatMeat(this), this);
+		 new Pay(this);
+		 new Balance(this);
 		 new ResetRace(this);
 		 new SetRace(this);
 		 new Chat(this);
@@ -106,7 +118,17 @@ public class Main extends JavaPlugin {
 		 orcLight();
 		 
 		 
+		 File file = new File(this.getDataFolder() + File.separator + "econ.yml");
+	 	 FileConfiguration config = YamlConfiguration.loadConfiguration(file);
 		 
+		 //Check to see if the file already exists. If not, create it.
+		 if (!file.exists()) {
+			 try {
+				 file.createNewFile();
+			 } catch (IOException e) {
+				 e.printStackTrace();
+			 }
+		 }
 		 
 	}
 	

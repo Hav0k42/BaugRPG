@@ -52,6 +52,6 @@ public class ResetRace implements CommandExecutor {
 			
 		}
 		
-		return false;
+		return true;
 	}
 }

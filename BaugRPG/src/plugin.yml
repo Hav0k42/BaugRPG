@@ -41,3 +41,10 @@ commands:
    usage: /tpdeny, /tpno, /tpano
    aliases: [tpno, tpano]
    description: Denys a teleport request.
+  balance:
+   usage: /balance, /bal, /wallet
+   aliases: [bal, wallet]
+   description: Displays your balance.
+  pay:
+   usage: /pay <Player> <Amount>
+   description: Pays another player a certain amount of money

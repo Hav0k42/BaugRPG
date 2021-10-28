@@ -3,6 +3,7 @@ package org.baugindustries.baugrpg.listeners;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,7 +38,19 @@ public class OnJoinListener implements Listener{
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		
-		
+		//Check if player is listed in wallet yml.
+		File econfile = new File(plugin.getDataFolder() + File.separator + "econ.yml");
+	 	FileConfiguration econconfig = YamlConfiguration.loadConfiguration(econfile);
+	 	if (econconfig.get(event.getPlayer().getUniqueId().toString()) == null) {
+	 		econconfig.set(event.getPlayer().getUniqueId().toString(), 0);
+	 	}
+	 	
+	 	try {
+			econconfig.save(econfile);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		

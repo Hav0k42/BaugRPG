@@ -73,7 +73,7 @@ private Main plugin;
 		
 		
 		
-		return false;
+		return true;
 	}
 	
 }

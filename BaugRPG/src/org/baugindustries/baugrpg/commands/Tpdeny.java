@@ -39,7 +39,7 @@ private Main plugin;
 				return true;
 			}
 		}
-		return false;
+		return true;
 	}
 	
 }

@@ -67,7 +67,7 @@ public class Tpa implements CommandExecutor {
 		} else {
 			player.sendMessage("You do not have permission to execute this command");
 		}
-		return false;
+		return true;
 	}
 	
 }
