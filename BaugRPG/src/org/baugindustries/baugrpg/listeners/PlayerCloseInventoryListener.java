@@ -42,7 +42,6 @@ public class PlayerCloseInventoryListener implements Listener{
 			}
 		} else if (event.getView().getTitle().equals("Feature Management") && event.getView().getTopInventory().getSize() == 54) {
 			InventoryClickEvent.getHandlerList().unregister(plugin.featureManagement);
-			player.sendMessage("check " + InventoryClickEvent.getHandlerList().getRegisteredListeners().length);
 		}
     }
 }
