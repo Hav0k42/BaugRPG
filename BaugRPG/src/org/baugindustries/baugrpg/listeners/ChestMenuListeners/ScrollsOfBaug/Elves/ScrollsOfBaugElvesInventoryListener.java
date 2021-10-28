@@ -37,7 +37,7 @@ public class ScrollsOfBaugElvesInventoryListener implements Listener{
 						
 						if (plugin.getServer().getPluginManager().isPluginEnabled("OpenInv")) {
 						
-							if (event.getSlot() == 11 && event.getCurrentItem().equals(sharedInventoriesItem)) {//Player clicked on the Shared Inventory Chest
+							if (event.getSlot() == 12 && event.getCurrentItem().equals(sharedInventoriesItem)) {//Player clicked on the Shared Inventory Chest
 								int inventorySize = 9;
 								String inventoryName = "Elves Communism Hub";
 								Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);

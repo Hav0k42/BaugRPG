@@ -67,7 +67,11 @@ public class BaugScroll implements CommandExecutor {
 							ChatColor.GOLD + "Scrolls of Baug", 
 							Arrays.asList(ChatColor.LIGHT_PURPLE + "This menu gives you access to any and", "all information you need to know to play on this server")));
 					
-					
+					inventory.setItem(11, plugin.createItem(
+							Material.OAK_SAPLING,
+							1,
+							ChatColor.GOLD + "Skill Tree",
+							Arrays.asList(ChatColor.LIGHT_PURPLE + "Upgrade active and passive skills", "based on your class and race.")));
 					
 					player.openInventory(inventory);
 					
@@ -82,6 +86,12 @@ public class BaugScroll implements CommandExecutor {
 							Arrays.asList(ChatColor.LIGHT_PURPLE + "This menu gives you access to any and", "all information you need to know to play on this server")));
 					
 					inventory.setItem(11, plugin.createItem(
+							Material.OAK_SAPLING,
+							1,
+							ChatColor.GOLD + "Skill Tree",
+							Arrays.asList(ChatColor.LIGHT_PURPLE + "Upgrade active and passive skills", "based on your class and race.")));
+					
+					inventory.setItem(12, plugin.createItem(
 							Material.CHEST,
 							1,
 							ChatColor.GOLD + "Shared Inventories",
@@ -100,6 +110,17 @@ public class BaugScroll implements CommandExecutor {
 							ChatColor.GOLD + "Scrolls of Baug", 
 							Arrays.asList(ChatColor.LIGHT_PURPLE + "This menu gives you access to any and", "all information you need to know to play on this server")));
 					
+					inventory.setItem(11, plugin.createItem(
+							Material.OAK_SAPLING,
+							1,
+							ChatColor.GOLD + "Skill Tree",
+							Arrays.asList(ChatColor.LIGHT_PURPLE + "Upgrade active and passive skills", "based on your class and race.")));
+					
+					inventory.setItem(12, plugin.createItem(
+							Material.GOLD_INGOT,
+							1,
+							ChatColor.GOLD + "Bank Deposit",
+							Arrays.asList(ChatColor.LIGHT_PURPLE + "Convert gold ingots to Dwarven Gold.")));
 					
 					player.openInventory(inventory);
 					
@@ -112,8 +133,13 @@ public class BaugScroll implements CommandExecutor {
 							1,
 							ChatColor.GOLD + "Scrolls of Baug", 
 							Arrays.asList(ChatColor.LIGHT_PURPLE + "This menu gives you access to any and", "all information you need to know to play on this server")));
-					
-					
+
+					inventory.setItem(11, plugin.createItem(
+							Material.OAK_SAPLING,
+							1,
+							ChatColor.GOLD + "Skill Tree",
+							Arrays.asList(ChatColor.LIGHT_PURPLE + "Upgrade active and passive skills", "based on your class and race.")));
+
 					player.openInventory(inventory);
 					
 					plugin.getServer().getPluginManager().registerEvents(new ScrollsOfBaugOrcsInventoryListener(plugin), plugin);
