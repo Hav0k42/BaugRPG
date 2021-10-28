@@ -89,7 +89,7 @@ public class SetRace implements CommandExecutor {
 				
 				player.openInventory(inventory);
 				
-				plugin.getServer().getPluginManager().registerEvents(new ChooseRaceInventoryListener(plugin), plugin);
+				plugin.getServer().getPluginManager().registerEvents(plugin.chooseRaceInventoryListener, plugin);
 			}
 			return true;
 		} else {

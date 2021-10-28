@@ -1,11 +1,15 @@
 package org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 
 import org.baugindustries.baugrpg.Main;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.PlayerSnooping.PlayerSnoopingHubInventoryListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -42,10 +46,33 @@ public class ScrollsOfBaugWizardsInventoryListener implements Listener{
 					ChatColor.AQUA + "Feature Management", 
 					Arrays.asList(ChatColor.LIGHT_PURPLE + "Turn certain features on and off,", "according to how you wish to run your server.")))) {//Player clicked on the Feature Management Item
 						
+						File file = new File(plugin.getDataFolder() + File.separator + "config.yml");
+					 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
 						
+					 	if (!config.contains("allowTpa")) {
+					 		config.set("allowTpa", true);
+					 		try {
+								config.save(file);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+					 	}
 						
+						int inventorySize = 54;
+						String inventoryName = "Feature Management";
+						Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
 						
+						inventory.setItem(11, plugin.createItem(
+								Material.ENDER_EYE, 
+								1, 
+								"TPA", 
+								Arrays.asList(ChatColor.LIGHT_PURPLE + "Allow Players to teleport.", config.get("allowTpa").toString())));
 						
+						event.getWhoClicked().openInventory(inventory);
+						
+						InventoryClickEvent.getHandlerList().unregister(this);
+						plugin.getServer().getPluginManager().registerEvents(plugin.featureManagement, plugin);
 					} else if (event.getSlot() == 12 && event.getCurrentItem().equals(plugin.createItem(
 					Material.CHEST,
 					1,
@@ -80,7 +107,7 @@ public class ScrollsOfBaugWizardsInventoryListener implements Listener{
 							event.getWhoClicked().openInventory(inventory);
 							
 							InventoryClickEvent.getHandlerList().unregister(this);
-							plugin.getServer().getPluginManager().registerEvents(new PlayerSnoopingHubInventoryListener(plugin), plugin);
+							plugin.getServer().getPluginManager().registerEvents(plugin.playerSnoopingHubInventoryListener, plugin);
 						} else {
 							player.sendMessage(ChatColor.RED + "The supporting plugin for this feature is not installed.\nPlease install the OpenInv plugin.\n" + ChatColor.YELLOW + "https://dev.bukkit.org/projects/openinv");
 						}

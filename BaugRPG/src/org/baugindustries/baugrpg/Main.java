@@ -26,6 +26,21 @@ import org.baugindustries.baugrpg.listeners.OnQuitListener;
 import org.baugindustries.baugrpg.listeners.OrcEatMeat;
 import org.baugindustries.baugrpg.listeners.PlayerCloseInventoryListener;
 import org.baugindustries.baugrpg.listeners.PlayerDeathListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ChooseRaceInventoryListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ConfirmRaceInventoryListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Dwarves.GoldConversionMenu;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Dwarves.ScrollsOfBaugDwarvesInventoryListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Elves.ScrollsOfBaugElvesInventoryListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Elves.CommunismHub.ElvesCommunismEnderChestListListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Elves.CommunismHub.ElvesCommunismHubInventoryListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Elves.CommunismHub.ElvesCommunismInventoryListListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Men.ScrollsOfBaugMenInventoryListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Orcs.ScrollsOfBaugOrcsInventoryListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.FeatureManagement;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.ScrollsOfBaugWizardsInventoryListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.PlayerSnooping.PlayerSnoopingEnderChestListListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.PlayerSnooping.PlayerSnoopingHubInventoryListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.PlayerSnooping.PlayerSnoopingInventoryListListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -59,6 +74,38 @@ public class Main extends JavaPlugin {
 	public ScoreboardManager manager;
 	public Scoreboard board;
 	
+	
+	//Listeners
+	public OnJoinListener onJoinListener = new OnJoinListener(this);
+	public OnQuitListener onQuitListener = new OnQuitListener(this);
+	public PlayerCloseInventoryListener playerCloseInventoryListener = new PlayerCloseInventoryListener(this);
+	public HorseListener horseListener = new HorseListener(this);
+	public PlayerDeathListener playerDeathListener = new PlayerDeathListener(this);
+	public MinecartMoveListener minecartMoveListener = new MinecartMoveListener(this);
+	public ElfEatMeat elfEatMeat = new ElfEatMeat(this);
+	public OrcEatMeat orcEatMeat = new OrcEatMeat(this);
+	
+	
+	public ChooseRaceInventoryListener chooseRaceInventoryListener = new ChooseRaceInventoryListener(this);
+	public ConfirmRaceInventoryListener confirmRaceInventoryListener = new ConfirmRaceInventoryListener(this);
+	public GoldConversionMenu goldConversionMenu = new GoldConversionMenu(this);
+	public ScrollsOfBaugDwarvesInventoryListener scrollsOfBaugDwarvesInventoryListener = new ScrollsOfBaugDwarvesInventoryListener(this);
+	public ScrollsOfBaugElvesInventoryListener scrollsOfBaugElvesInventoryListener = new ScrollsOfBaugElvesInventoryListener(this);
+	public ElvesCommunismEnderChestListListener elvesCommunismEnderChestListListener = new ElvesCommunismEnderChestListListener(this);
+	public ElvesCommunismHubInventoryListener elvesCommunismHubInventoryListener = new ElvesCommunismHubInventoryListener(this);
+	public ElvesCommunismInventoryListListener elvesCommunismInventoryListListener = new ElvesCommunismInventoryListListener(this);
+	public ScrollsOfBaugMenInventoryListener scrollsOfBaugMenInventoryListener = new ScrollsOfBaugMenInventoryListener(this);
+	public ScrollsOfBaugOrcsInventoryListener scrollsOfBaugOrcsInventoryListener = new ScrollsOfBaugOrcsInventoryListener(this);
+	public FeatureManagement featureManagement = new FeatureManagement(this);
+	public ScrollsOfBaugWizardsInventoryListener scrollsOfBaugWizardsInventoryListener = new ScrollsOfBaugWizardsInventoryListener(this);
+	public PlayerSnoopingEnderChestListListener playerSnoopingEnderChestListListener = new PlayerSnoopingEnderChestListListener(this);
+	public PlayerSnoopingHubInventoryListener playerSnoopingHubInventoryListener = new PlayerSnoopingHubInventoryListener(this);
+	public PlayerSnoopingInventoryListListener playerSnoopingInventoryListListener = new PlayerSnoopingInventoryListListener(this);
+	
+	
+	
+	
+	
 	public Economy econ = null;
 	
 	@Override
@@ -66,14 +113,14 @@ public class Main extends JavaPlugin {
 		 final Logger log = Logger.getLogger("Minecraft");
 		 manager = Bukkit.getScoreboardManager();
 		 board = manager.getMainScoreboard();
-		 this.getServer().getPluginManager().registerEvents(new OnJoinListener(this), this);
-		 this.getServer().getPluginManager().registerEvents(new OnQuitListener(this), this);
-		 this.getServer().getPluginManager().registerEvents(new PlayerCloseInventoryListener(this), this);
-		 this.getServer().getPluginManager().registerEvents(new HorseListener(this), this);
-		 this.getServer().getPluginManager().registerEvents(new PlayerDeathListener(this), this);
-		 this.getServer().getPluginManager().registerEvents(new MinecartMoveListener(this), this);
-		 this.getServer().getPluginManager().registerEvents(new ElfEatMeat(this), this);
-		 this.getServer().getPluginManager().registerEvents(new OrcEatMeat(this), this);
+		 this.getServer().getPluginManager().registerEvents(onJoinListener, this);
+		 this.getServer().getPluginManager().registerEvents(onQuitListener, this);
+		 this.getServer().getPluginManager().registerEvents(playerCloseInventoryListener, this);
+		 this.getServer().getPluginManager().registerEvents(horseListener, this);
+		 this.getServer().getPluginManager().registerEvents(playerDeathListener, this);
+		 this.getServer().getPluginManager().registerEvents(minecartMoveListener, this);
+		 this.getServer().getPluginManager().registerEvents(elfEatMeat, this);
+		 this.getServer().getPluginManager().registerEvents(orcEatMeat, this);
 		 new Pay(this);
 		 new Balance(this);
 		 new ResetRace(this);
@@ -130,6 +177,18 @@ public class Main extends JavaPlugin {
 			 }
 		 }
 		 
+		 
+		 File configfile = new File(this.getDataFolder() + File.separator + "config.yml");
+	 	 FileConfiguration configconfig = YamlConfiguration.loadConfiguration(file);
+		 
+		 //Check to see if the file already exists. If not, create it.
+		 if (!file.exists()) {
+			 try {
+				 file.createNewFile();
+			 } catch (IOException e) {
+				 e.printStackTrace();
+			 }
+		 }
 	}
 	
 	void orcLight() {

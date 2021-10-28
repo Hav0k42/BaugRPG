@@ -84,7 +84,7 @@ public class ConfirmRaceInventoryListener implements Listener{
 							event.getWhoClicked().openInventory(inventory);
 							
 							InventoryClickEvent.getHandlerList().unregister(this);
-							plugin.getServer().getPluginManager().registerEvents(new ChooseRaceInventoryListener(plugin), plugin);
+							plugin.getServer().getPluginManager().registerEvents(plugin.chooseRaceInventoryListener, plugin);
 						} else if (event.getSlot() == 11 && event.getCurrentItem().equals(plugin.createItem(Material.LIME_STAINED_GLASS_PANE, 1, ChatColor.GREEN + "Yes", null))) {//Yes
 							
 							PersistentDataContainer data = event.getWhoClicked().getPersistentDataContainer();

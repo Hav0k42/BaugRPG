@@ -121,7 +121,7 @@ public class OnJoinListener implements Listener{
 			
 			event.getPlayer().openInventory(inventory);
 			
-			plugin.getServer().getPluginManager().registerEvents(new ChooseRaceInventoryListener(plugin), plugin);
+			plugin.getServer().getPluginManager().registerEvents(plugin.chooseRaceInventoryListener, plugin);
 			
 			
 			

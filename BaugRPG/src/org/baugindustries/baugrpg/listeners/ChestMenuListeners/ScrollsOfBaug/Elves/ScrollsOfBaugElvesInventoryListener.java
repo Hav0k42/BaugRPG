@@ -65,7 +65,7 @@ public class ScrollsOfBaugElvesInventoryListener implements Listener{
 								event.getWhoClicked().openInventory(inventory);
 								
 								InventoryClickEvent.getHandlerList().unregister(this);
-								plugin.getServer().getPluginManager().registerEvents(new ElvesCommunismHubInventoryListener(plugin), plugin);
+								plugin.getServer().getPluginManager().registerEvents(plugin.elvesCommunismHubInventoryListener, plugin);
 							}
 							
 							

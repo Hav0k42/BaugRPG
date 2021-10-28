@@ -75,7 +75,7 @@ public class BaugScroll implements CommandExecutor {
 					
 					player.openInventory(inventory);
 					
-					plugin.getServer().getPluginManager().registerEvents(new ScrollsOfBaugMenInventoryListener(plugin), plugin);
+					plugin.getServer().getPluginManager().registerEvents(plugin.scrollsOfBaugMenInventoryListener, plugin);
 					
 				} else if (race == 2) {//Elves
 					
@@ -100,7 +100,7 @@ public class BaugScroll implements CommandExecutor {
 					
 					player.openInventory(inventory);
 					
-					plugin.getServer().getPluginManager().registerEvents(new ScrollsOfBaugElvesInventoryListener(plugin), plugin);
+					plugin.getServer().getPluginManager().registerEvents(plugin.scrollsOfBaugElvesInventoryListener, plugin);
 					
 				} else if (race == 3) {//Dwarves
 					
@@ -124,7 +124,7 @@ public class BaugScroll implements CommandExecutor {
 					
 					player.openInventory(inventory);
 					
-					plugin.getServer().getPluginManager().registerEvents(new ScrollsOfBaugDwarvesInventoryListener(plugin), plugin);
+					plugin.getServer().getPluginManager().registerEvents(plugin.scrollsOfBaugDwarvesInventoryListener, plugin);
 					
 				} else if (race == 4) {//Orcs
 					
@@ -142,7 +142,7 @@ public class BaugScroll implements CommandExecutor {
 
 					player.openInventory(inventory);
 					
-					plugin.getServer().getPluginManager().registerEvents(new ScrollsOfBaugOrcsInventoryListener(plugin), plugin);
+					plugin.getServer().getPluginManager().registerEvents(plugin.scrollsOfBaugOrcsInventoryListener, plugin);
 					
 				} else if (race == 5) {//Wizards
 					
@@ -170,7 +170,7 @@ public class BaugScroll implements CommandExecutor {
 					
 					player.openInventory(inventory);
 					
-					plugin.getServer().getPluginManager().registerEvents(new ScrollsOfBaugWizardsInventoryListener(plugin), plugin);
+					plugin.getServer().getPluginManager().registerEvents(plugin.scrollsOfBaugWizardsInventoryListener, plugin);
 					
 				}
 				

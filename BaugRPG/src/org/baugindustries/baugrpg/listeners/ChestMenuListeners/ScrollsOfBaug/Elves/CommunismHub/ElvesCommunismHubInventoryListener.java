@@ -127,7 +127,7 @@ public class ElvesCommunismHubInventoryListener implements Listener {
 							event.getWhoClicked().openInventory(inventory);
 							
 							InventoryClickEvent.getHandlerList().unregister(this);
-							plugin.getServer().getPluginManager().registerEvents(new ElvesCommunismInventoryListListener(plugin), plugin);
+							plugin.getServer().getPluginManager().registerEvents(plugin.elvesCommunismInventoryListListener, plugin);
 							
 							
 						} else if (event.getCurrentItem().equals(plugin.createItem(Material.ENDER_CHEST, 1, "Ender Chests", Arrays.asList(ChatColor.LIGHT_PURPLE + "Access other Elves' Ender Chests")))) {//Player wants to access other elves' ender chests.
@@ -168,7 +168,7 @@ public class ElvesCommunismHubInventoryListener implements Listener {
 							event.getWhoClicked().openInventory(inventory);
 							
 							InventoryClickEvent.getHandlerList().unregister(this);
-							plugin.getServer().getPluginManager().registerEvents(new ElvesCommunismEnderChestListListener(plugin), plugin);
+							plugin.getServer().getPluginManager().registerEvents(plugin.elvesCommunismEnderChestListListener, plugin);
 							
 							
 						

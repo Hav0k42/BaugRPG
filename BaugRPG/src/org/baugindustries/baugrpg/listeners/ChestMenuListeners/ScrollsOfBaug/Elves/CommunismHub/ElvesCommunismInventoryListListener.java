@@ -85,7 +85,7 @@ public class ElvesCommunismInventoryListListener implements Listener{
 							
 							
 							InventoryClickEvent.getHandlerList().unregister(this);
-							plugin.getServer().getPluginManager().registerEvents(new ElvesCommunismHubInventoryListener(plugin), plugin);
+							plugin.getServer().getPluginManager().registerEvents(plugin.elvesCommunismHubInventoryListener, plugin);
 						} else if (event.getCurrentItem().getType().equals(Material.PLAYER_HEAD)) {//View Selected Player's Inventory
 							ItemStack selectedPlayerHead = event.getCurrentItem();
 							SkullMeta selectedPlayerHeadMeta = (SkullMeta)selectedPlayerHead.getItemMeta();

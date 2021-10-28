@@ -127,7 +127,7 @@ public class PlayerSnoopingHubInventoryListener implements Listener {
 							event.getWhoClicked().openInventory(inventory);
 							
 							InventoryClickEvent.getHandlerList().unregister(this);
-							plugin.getServer().getPluginManager().registerEvents(new PlayerSnoopingInventoryListListener(plugin), plugin);
+							plugin.getServer().getPluginManager().registerEvents(plugin.playerSnoopingInventoryListListener, plugin);
 							
 							
 						} else if (event.getCurrentItem().equals(plugin.createItem(Material.ENDER_CHEST, 1, "Ender Chests", Arrays.asList(ChatColor.LIGHT_PURPLE + "Access other players' Ender Chests")))) {//Player wants to access other players' ender chests.
@@ -168,7 +168,7 @@ public class PlayerSnoopingHubInventoryListener implements Listener {
 							event.getWhoClicked().openInventory(inventory);
 							
 							InventoryClickEvent.getHandlerList().unregister(this);
-							plugin.getServer().getPluginManager().registerEvents(new PlayerSnoopingEnderChestListListener(plugin), plugin);
+							plugin.getServer().getPluginManager().registerEvents(plugin.playerSnoopingEnderChestListListener, plugin);
 							
 							
 						

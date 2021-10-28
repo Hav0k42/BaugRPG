@@ -66,7 +66,7 @@ public class ChooseRaceInventoryListener implements Listener{
 							
 							player.openInventory(inventory);
 							InventoryClickEvent.getHandlerList().unregister(this);
-							plugin.getServer().getPluginManager().registerEvents(new ConfirmRaceInventoryListener(plugin), plugin);
+							plugin.getServer().getPluginManager().registerEvents(plugin.confirmRaceInventoryListener, plugin);
 						}
 						
 						event.setCancelled(true);

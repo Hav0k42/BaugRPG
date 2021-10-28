@@ -62,7 +62,7 @@ public class ElvesCommunismEnderChestListListener implements Listener{
 							event.getWhoClicked().openInventory(inventory);
 							
 							InventoryClickEvent.getHandlerList().unregister(this);
-							plugin.getServer().getPluginManager().registerEvents(new ElvesCommunismHubInventoryListener(plugin), plugin);
+							plugin.getServer().getPluginManager().registerEvents(plugin.elvesCommunismHubInventoryListener, plugin);
 						} else if (event.getCurrentItem().getType().equals(Material.PLAYER_HEAD)) {
 							ItemStack selectedPlayerHead = event.getCurrentItem();
 							SkullMeta selectedPlayerHeadMeta = (SkullMeta)selectedPlayerHead.getItemMeta();

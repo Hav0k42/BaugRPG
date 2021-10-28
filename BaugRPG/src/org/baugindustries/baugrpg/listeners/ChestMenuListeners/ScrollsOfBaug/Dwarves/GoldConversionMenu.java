@@ -68,6 +68,9 @@ public class GoldConversionMenu implements Listener{
 					if (event.getSlot() != 3 && event.getClickedInventory().getSize() == 9) {
 						event.setCancelled(true);
 					}
+					if (event.getClick().isShiftClick() && event.getCurrentItem().getType().equals(Material.LIGHT_GRAY_STAINED_GLASS_PANE)) {
+						event.setCancelled(true);
+					}
 				}
 			}
 		}
