@@ -18,6 +18,8 @@ import org.baugindustries.baugrpg.commands.Tpdeny;
 import org.baugindustries.baugrpg.commands.Tphere;
 import org.baugindustries.baugrpg.commands.econ.Balance;
 import org.baugindustries.baugrpg.commands.econ.Pay;
+import org.baugindustries.baugrpg.listeners.ChestBreakListener;
+import org.baugindustries.baugrpg.listeners.ChestOpenListener;
 import org.baugindustries.baugrpg.listeners.ElfEatMeat;
 import org.baugindustries.baugrpg.listeners.HorseListener;
 import org.baugindustries.baugrpg.listeners.MinecartMoveListener;
@@ -26,6 +28,8 @@ import org.baugindustries.baugrpg.listeners.OnQuitListener;
 import org.baugindustries.baugrpg.listeners.OrcEatMeat;
 import org.baugindustries.baugrpg.listeners.PlayerCloseInventoryListener;
 import org.baugindustries.baugrpg.listeners.PlayerDeathListener;
+import org.baugindustries.baugrpg.listeners.SignBreakListener;
+import org.baugindustries.baugrpg.listeners.SignShopListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ChooseRaceInventoryListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ConfirmRaceInventoryListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Dwarves.GoldConversionMenu;
@@ -71,6 +75,8 @@ public class Main extends JavaPlugin {
 	public ChatChannelManager channelManager;
 	public HashMap<Player, Player> tpaHashMap = new HashMap<Player, Player>();
 	public HashMap<Player, Player> tpahereHashMap = new HashMap<Player, Player>();
+	public HashMap<Player, Integer> signChatEscape = new HashMap<Player, Integer>();
+	public HashMap<Player, List<String>> signData = new HashMap<Player, List<String>>();
 	public ScoreboardManager manager;
 	public Scoreboard board;
 	
@@ -84,6 +90,12 @@ public class Main extends JavaPlugin {
 	public MinecartMoveListener minecartMoveListener = new MinecartMoveListener(this);
 	public ElfEatMeat elfEatMeat = new ElfEatMeat(this);
 	public OrcEatMeat orcEatMeat = new OrcEatMeat(this);
+	public SignShopListener signShopListener = new SignShopListener(this);
+	public SignBreakListener signBreakListener = new SignBreakListener(this);
+	public ChestBreakListener chestBreakListener = new ChestBreakListener(this);
+	public ChestOpenListener chestOpenListener = new ChestOpenListener(this);
+	
+	
 	
 	
 	public ChooseRaceInventoryListener chooseRaceInventoryListener = new ChooseRaceInventoryListener(this);
@@ -121,6 +133,10 @@ public class Main extends JavaPlugin {
 		 this.getServer().getPluginManager().registerEvents(minecartMoveListener, this);
 		 this.getServer().getPluginManager().registerEvents(elfEatMeat, this);
 		 this.getServer().getPluginManager().registerEvents(orcEatMeat, this);
+		 this.getServer().getPluginManager().registerEvents(signShopListener, this);
+		 this.getServer().getPluginManager().registerEvents(signBreakListener, this);
+		 this.getServer().getPluginManager().registerEvents(chestBreakListener, this);
+		 this.getServer().getPluginManager().registerEvents(chestOpenListener, this);
 		 new Pay(this);
 		 new Balance(this);
 		 new ResetRace(this);
@@ -177,14 +193,26 @@ public class Main extends JavaPlugin {
 			 }
 		 }
 		 
-		 
-		 File configfile = new File(this.getDataFolder() + File.separator + "config.yml");
-	 	 FileConfiguration configconfig = YamlConfiguration.loadConfiguration(file);
+		 File signfile = new File(this.getDataFolder() + File.separator + "shops.yml");
+	 	 FileConfiguration signconfig = YamlConfiguration.loadConfiguration(signfile);
 		 
 		 //Check to see if the file already exists. If not, create it.
-		 if (!file.exists()) {
+		 if (!signfile.exists()) {
 			 try {
-				 file.createNewFile();
+				 signfile.createNewFile();
+			 } catch (IOException e) {
+				 e.printStackTrace();
+			 }
+		 }
+		 
+		 
+		 File configfile = new File(this.getDataFolder() + File.separator + "config.yml");
+	 	 FileConfiguration configconfig = YamlConfiguration.loadConfiguration(configfile);
+		 
+		 //Check to see if the file already exists. If not, create it.
+		 if (!configfile.exists()) {
+			 try {
+				 configfile.createNewFile();
 			 } catch (IOException e) {
 				 e.printStackTrace();
 			 }
@@ -216,6 +244,17 @@ public class Main extends JavaPlugin {
 			  }
 			}, 5L);
 	}
+
+	public boolean isInteger( String input ) {
+	    try {
+	        Integer.parseInt( input );
+	        return true;
+	    }
+	    catch( Exception e ) {
+	        return false;
+	    }
+	}
+	
 	
 	public void onDisable() {
 		//Save player's inventory to YML file
