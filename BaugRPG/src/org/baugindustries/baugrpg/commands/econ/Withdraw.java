@@ -46,7 +46,7 @@ public class Withdraw implements CommandExecutor {
 			 	int balance = (int) econconfig.get(uuid);
 				int bankbal = (int) bankconfig.get(uuid);
 				
-				if (bankbal > toWithdraw) {
+				if (bankbal >= toWithdraw) {
 					econconfig.set(uuid, balance + toWithdraw);
 					bankconfig.set(uuid, bankbal - toWithdraw);
 					try {

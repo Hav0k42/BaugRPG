@@ -46,7 +46,7 @@ public class Deposit implements CommandExecutor {
 			 	int balance = (int) econconfig.get(uuid);
 				int bankbal = (int) bankconfig.get(uuid);
 				
-				if (balance > toDeposit) {
+				if (balance >= toDeposit) {
 					econconfig.set(uuid, balance - toDeposit);
 					bankconfig.set(uuid, bankbal + toDeposit);
 					try {
