@@ -12,6 +12,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.sun.tools.javac.util.List;
@@ -26,6 +27,11 @@ public class ChestOpenListener implements Listener{
 	
 	@EventHandler
 	public void onInteractChest(PlayerInteractEvent event) {
+		
+		if (!(event.getAction().equals(Action.LEFT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK))) {
+			return;
+		}
+		
 		File signfile = new File(plugin.getDataFolder() + File.separator + "shops.yml");
 	 	FileConfiguration signconfig = YamlConfiguration.loadConfiguration(signfile);
 		

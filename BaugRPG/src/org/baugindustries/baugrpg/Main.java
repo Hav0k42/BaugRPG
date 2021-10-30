@@ -18,9 +18,11 @@ import org.baugindustries.baugrpg.commands.Tpdeny;
 import org.baugindustries.baugrpg.commands.Tphere;
 import org.baugindustries.baugrpg.commands.econ.Balance;
 import org.baugindustries.baugrpg.commands.econ.Pay;
+import org.baugindustries.baugrpg.listeners.BlockExplodeListener;
 import org.baugindustries.baugrpg.listeners.ChestBreakListener;
 import org.baugindustries.baugrpg.listeners.ChestOpenListener;
 import org.baugindustries.baugrpg.listeners.ElfEatMeat;
+import org.baugindustries.baugrpg.listeners.EntityExplodeListener;
 import org.baugindustries.baugrpg.listeners.HorseListener;
 import org.baugindustries.baugrpg.listeners.MinecartMoveListener;
 import org.baugindustries.baugrpg.listeners.OnJoinListener;
@@ -94,6 +96,8 @@ public class Main extends JavaPlugin {
 	public SignBreakListener signBreakListener = new SignBreakListener(this);
 	public ChestBreakListener chestBreakListener = new ChestBreakListener(this);
 	public ChestOpenListener chestOpenListener = new ChestOpenListener(this);
+	public BlockExplodeListener blockExplodeListener = new BlockExplodeListener(this);
+	public EntityExplodeListener entityExplodeListener = new EntityExplodeListener(this);
 	
 	
 	
@@ -137,6 +141,8 @@ public class Main extends JavaPlugin {
 		 this.getServer().getPluginManager().registerEvents(signBreakListener, this);
 		 this.getServer().getPluginManager().registerEvents(chestBreakListener, this);
 		 this.getServer().getPluginManager().registerEvents(chestOpenListener, this);
+		 this.getServer().getPluginManager().registerEvents(blockExplodeListener, this);
+		 this.getServer().getPluginManager().registerEvents(entityExplodeListener, this);
 		 new Pay(this);
 		 new Balance(this);
 		 new ResetRace(this);

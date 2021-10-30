@@ -23,6 +23,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -37,6 +38,11 @@ public class SignShopListener implements Listener{
 	
 	@EventHandler
 	public void onClickSign(PlayerInteractEvent event) {
+		
+		if (!(event.getAction().equals(Action.LEFT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK))) {
+			return;
+		}
+		
 		Player player = (Player) event.getPlayer();
 		if (event.getClickedBlock().getState() instanceof Sign) {
 			Sign sign = (Sign)event.getClickedBlock().getState();
@@ -129,8 +135,8 @@ public class SignShopListener implements Listener{
 												for (int i = 0; i < chestShop.getInventory().getSize(); i++) {
 													if (chestShop.getInventory().getItem(i) != null && chestShop.getInventory().getItem(i).getType().equals(goodsType.getType())) {
 														if (chestShop.getInventory().getItem(i).getAmount() + goodsCount < 10) {
-															chestShop.getInventory().setItem(i, null);
 															goodsCount += chestShop.getInventory().getItem(i).getAmount();
+															chestShop.getInventory().setItem(i, null);
 															break;
 														} else {
 															ItemStack newItem = chestShop.getInventory().getItem(i);
@@ -142,10 +148,26 @@ public class SignShopListener implements Listener{
 													}
 												}
 											}
-											player.getWorld().dropItem(player.getLocation(), plugin.createItem(goodsType.getType(), 10));
+											Inventory contents = player.getInventory();
+											
+											int nullCount = 0;
+											for (int i = 0; i < contents.getContents().length; i++) {
+												if (contents.getContents()[i] == null) {
+													nullCount++;
+												}
+											}
+											if (nullCount < 1) {
+												player.sendMessage(ChatColor.RED + "Your inventory is full");
+												chestShop.getInventory().addItem(plugin.createItem(goodsType.getType(), 10));
+												return;
+											} else {
+												player.getInventory().addItem(plugin.createItem(goodsType.getType(), 10));
+											}
 											econconfig.set(player.getUniqueId().toString(), customerBal - (buyPrice * 10));
 											econconfig.set(player2.getUniqueId().toString(), vendorBal + (buyPrice * 10));
 											player.sendMessage(ChatColor.YELLOW + "Purchased 10 items. Your new balance is: " + (customerBal - (buyPrice * 10)) + ".");
+											
+											
 											try {
 												econconfig.save(econfile);
 											} catch (IOException e) {
@@ -179,7 +201,21 @@ public class SignShopListener implements Listener{
 													}
 												}
 											}
-											chestShop.getInventory().addItem(plugin.createItem(goodsType.getType(), 10));
+											Inventory contents = chestShop.getInventory();
+											
+											int nullCount = 0;
+											for (int i = 0; i < contents.getContents().length; i++) {
+												if (contents.getContents()[i] == null) {
+													nullCount++;
+												}
+											}
+											if (nullCount < 1) {
+												player.sendMessage(ChatColor.RED + "This chestshop is full");
+												player.getInventory().addItem(plugin.createItem(goodsType.getType(), 10));
+												return;
+											} else {
+												chestShop.getInventory().addItem(plugin.createItem(goodsType.getType(), 10));
+											}
 											econconfig.set(player.getUniqueId().toString(), customerBal + (sellPrice * 10));
 											econconfig.set(player2.getUniqueId().toString(), vendorBal - (sellPrice * 10));
 											player.sendMessage(ChatColor.YELLOW + "Sold 10 items. Your new balance is: " + (customerBal + (sellPrice * 10)) + ".");
@@ -209,7 +245,23 @@ public class SignShopListener implements Listener{
 												}
 											}
 											
-											player.getWorld().dropItem(player.getLocation(), plugin.createItem(goodsType.getType(), 1));
+											Inventory contents = player.getInventory();
+											
+											int nullCount = 0;
+											for (int i = 0; i < contents.getContents().length; i++) {
+												if (contents.getContents()[i] == null) {
+													nullCount++;
+												}
+											}
+											if (nullCount < 1) {
+												player.sendMessage(ChatColor.RED + "Your inventory is full");
+												chestShop.getInventory().addItem(plugin.createItem(goodsType.getType(), 1));
+												return;
+											} else {
+												player.getInventory().addItem(plugin.createItem(goodsType.getType(), 1));
+											}
+											
+											
 											econconfig.set(player.getUniqueId().toString(), customerBal - (buyPrice));
 											econconfig.set(player2.getUniqueId().toString(), vendorBal + (buyPrice));
 											player.sendMessage(ChatColor.YELLOW + "Purchased item. Your new balance is: " + (customerBal - buyPrice) + ".");
@@ -236,7 +288,22 @@ public class SignShopListener implements Listener{
 														break;
 													}
 												}
-											chestShop.getInventory().addItem(plugin.createItem(goodsType.getType(), 1));
+											Inventory contents = chestShop.getInventory();
+											
+											int nullCount = 0;
+											for (int i = 0; i < contents.getContents().length; i++) {
+												if (contents.getContents()[i] == null) {
+													nullCount++;
+												}
+											}
+											if (nullCount < 1) {
+												player.sendMessage(ChatColor.RED + "This chestshop is full");
+												player.getInventory().addItem(plugin.createItem(goodsType.getType(), 1));
+												return;
+											} else {
+												chestShop.getInventory().addItem(plugin.createItem(goodsType.getType(), 1));
+											}
+											
 											econconfig.set(player.getUniqueId().toString(), customerBal + sellPrice);
 											econconfig.set(player2.getUniqueId().toString(), vendorBal - sellPrice);
 											player.sendMessage(ChatColor.YELLOW + "Sold item. Your new balance is: " + (customerBal + sellPrice) + ".");

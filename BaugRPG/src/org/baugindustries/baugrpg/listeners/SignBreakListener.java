@@ -15,6 +15,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
+import net.md_5.bungee.api.ChatColor;
+
 public class SignBreakListener implements Listener{
 	private Main plugin;
 	public SignBreakListener(Main plugin) {
@@ -34,7 +36,7 @@ public class SignBreakListener implements Listener{
 		 	if (signconfig.contains(title)) {//sign is a registered sign shop
 		 		OfflinePlayer player2 = plugin.getServer().getOfflinePlayer(UUID.fromString((String) signconfig.get(title+"owner")));
 		 		if (!player.getUniqueId().equals(player2.getUniqueId())) {
-		 			player.sendMessage("You cannot break this sign shop");
+		 			player.sendMessage(ChatColor.RED + "You cannot break this sign shop");
 		 			event.setCancelled(true);
 		 		} else {
 		 			signconfig.set(title, null);

@@ -41,7 +41,7 @@ public class ChatChannel implements Listener {
 					List<String> signData = new ArrayList<String>();
 					signData.add(shopname);
 					plugin.signData.put(p, signData);
-					p.sendMessage(ChatColor.GREEN + "How much do you want to people to buy the item for? >");
+					p.sendMessage(ChatColor.GREEN + "How much do you want people to buy the item for? >");
 					plugin.signChatEscape.put(p, 2);
 					break;
 				case 2:
@@ -51,7 +51,7 @@ public class ChatChannel implements Listener {
 						signData = plugin.signData.get(p);
 						signData.add("Buy: " + buyAmount);
 						plugin.signData.put(p, signData);
-						p.sendMessage(ChatColor.GREEN + "How much do you want to people to sell the item for? >");
+						p.sendMessage(ChatColor.GREEN + "How much do you want people to sell the item for? >");
 						plugin.signChatEscape.put(p, 3);
 					} else {
 						p.sendMessage(ChatColor.GREEN + "Thats not a number... Try again >");
