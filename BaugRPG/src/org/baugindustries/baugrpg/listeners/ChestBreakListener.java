@@ -40,7 +40,7 @@ public class ChestBreakListener implements Listener{
 			if (signconfig.contains(title)) {
 				Location chestLocation = new Location(player.getWorld(), (int)signconfig.get(title + "chestX"), (int)signconfig.get(title + "chestY"), (int)signconfig.get(title + "chestZ"));
 				if (chestLocation.equals(event.getBlock().getLocation())) {
-					if (!player.equals(plugin.getServer().getPlayer(UUID.fromString((String) signconfig.get(title+"owner"))))) {
+					if (!player.getUniqueId().equals((UUID.fromString((String) signconfig.get(title+"owner"))))) {
 						player.sendMessage(ChatColor.RED + "This chest is locked.");
 						event.setCancelled(true);
 					}

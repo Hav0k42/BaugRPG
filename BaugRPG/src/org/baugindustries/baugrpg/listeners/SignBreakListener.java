@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.baugindustries.baugrpg.Main;
 import org.baugindustries.baugrpg.SignData;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Sign;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -30,9 +31,9 @@ public class SignBreakListener implements Listener{
 			File signfile = new File(plugin.getDataFolder() + File.separator + "shops.yml");
 		 	FileConfiguration signconfig = YamlConfiguration.loadConfiguration(signfile);
 		 	
-		 	if (signconfig.contains(event.getBlock().getLocation().toString())) {//sign is a registered sign shop
-		 		Player player2 = plugin.getServer().getPlayer(UUID.fromString((String) signconfig.get(title+"owner")));
-		 		if (!player.equals(player2)) {
+		 	if (signconfig.contains(title)) {//sign is a registered sign shop
+		 		OfflinePlayer player2 = plugin.getServer().getOfflinePlayer(UUID.fromString((String) signconfig.get(title+"owner")));
+		 		if (!player.getUniqueId().equals(player2.getUniqueId())) {
 		 			player.sendMessage("You cannot break this sign shop");
 		 			event.setCancelled(true);
 		 		} else {
