@@ -51,6 +51,19 @@ public class OnJoinListener implements Listener{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	 	
+	 	File bankfile = new File(plugin.getDataFolder() + File.separator + "bank.yml");
+	 	FileConfiguration bankconfig = YamlConfiguration.loadConfiguration(bankfile);
+	 	if (bankconfig.get(event.getPlayer().getUniqueId().toString()) == null) {
+	 		bankconfig.set(event.getPlayer().getUniqueId().toString(), 0);
+	 	}
+	 	
+	 	try {
+			bankconfig.save(econfile);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		

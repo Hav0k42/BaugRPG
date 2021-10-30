@@ -47,4 +47,13 @@ commands:
    description: Displays your balance.
   pay:
    usage: /pay <Player> <Amount>
-   description: Pays another player a certain amount of money
+   description: Pays another player a certain amount of dwarven gold.
+  bankbal:
+   usage: /bankbal
+   description: Shows the amount of dwarven gold in the bank.
+  withdraw:
+   usage: /withdraw <Amount>
+   description: Withdraws amount of dwarven gold from the bank and puts it in your wallet.
+  deposit:
+   usage: /deposit <Amount>
+   description: Deposits amount of dwarven gold from your wallet and puts it in the bank.

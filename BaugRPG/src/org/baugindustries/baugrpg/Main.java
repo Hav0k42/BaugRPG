@@ -199,6 +199,18 @@ public class Main extends JavaPlugin {
 			 }
 		 }
 		 
+		 File bankfile = new File(this.getDataFolder() + File.separator + "bank.yml");
+	 	 FileConfiguration bankconfig = YamlConfiguration.loadConfiguration(bankfile);
+		 
+		 //Check to see if the file already exists. If not, create it.
+		 if (!bankfile.exists()) {
+			 try {
+				 bankfile.createNewFile();
+			 } catch (IOException e) {
+				 e.printStackTrace();
+			 }
+		 }
+		 
 		 File signfile = new File(this.getDataFolder() + File.separator + "shops.yml");
 	 	 FileConfiguration signconfig = YamlConfiguration.loadConfiguration(signfile);
 		 
