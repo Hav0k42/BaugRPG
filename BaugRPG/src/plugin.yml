@@ -57,3 +57,6 @@ commands:
   deposit:
    usage: /deposit <Amount>
    description: Deposits amount of dwarven gold from your wallet and puts it in the bank.
+  setbal:
+   usage: /setbal <Player> <Amount>
+   description: Sets the amount of dwarven gold in a players wallet.

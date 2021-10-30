@@ -17,7 +17,11 @@ import org.baugindustries.baugrpg.commands.Tpaccept;
 import org.baugindustries.baugrpg.commands.Tpdeny;
 import org.baugindustries.baugrpg.commands.Tphere;
 import org.baugindustries.baugrpg.commands.econ.Balance;
+import org.baugindustries.baugrpg.commands.econ.BankBal;
+import org.baugindustries.baugrpg.commands.econ.Deposit;
 import org.baugindustries.baugrpg.commands.econ.Pay;
+import org.baugindustries.baugrpg.commands.econ.SetBal;
+import org.baugindustries.baugrpg.commands.econ.Withdraw;
 import org.baugindustries.baugrpg.listeners.BlockExplodeListener;
 import org.baugindustries.baugrpg.listeners.ChestBreakListener;
 import org.baugindustries.baugrpg.listeners.ChestOpenListener;
@@ -154,6 +158,10 @@ public class Main extends JavaPlugin {
 		 new Tphere(this);
 		 new Tpaccept(this);
 		 new Tpdeny(this);
+		 new BankBal(this);
+		 new Withdraw(this);
+		 new Deposit(this);
+		 new SetBal(this);
 		 
 		 if (board.getTeam("Men") == null) {
 			 Team menTeam = board.registerNewTeam("Men");
