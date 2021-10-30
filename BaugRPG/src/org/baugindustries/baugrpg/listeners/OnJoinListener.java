@@ -59,7 +59,7 @@ public class OnJoinListener implements Listener{
 	 	}
 	 	
 	 	try {
-			bankconfig.save(econfile);
+			bankconfig.save(bankfile);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
