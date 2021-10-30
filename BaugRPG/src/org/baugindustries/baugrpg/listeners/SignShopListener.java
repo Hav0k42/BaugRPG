@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.baugindustries.baugrpg.Main;
 import org.baugindustries.baugrpg.SignData;
@@ -38,6 +39,7 @@ public class SignShopListener implements Listener{
 		Player player = (Player) event.getPlayer();
 		if (event.getClickedBlock().getState() instanceof Sign) {
 			Sign sign = (Sign)event.getClickedBlock().getState();
+			String title = sign.getLocation().getBlockX() + "" + sign.getLocation().getBlockY() + "" + sign.getLocation().getBlockZ();
 			
 			BlockFace signFace = ((Directional)sign.getBlockData()).getFacing();
 			Block blockBehindSign = null;
@@ -75,8 +77,11 @@ public class SignShopListener implements Listener{
 					
 					
 				 	
-				 	signconfig.set(sign.getLocation().getBlockX() + "" + sign.getLocation().getBlockY() + "" + sign.getLocation().getBlockZ(), new SignData(player, player.getItemInHand().getType(), blockBehindSign.getLocation()));
-				 	
+				 	signconfig.set(title, player.getItemInHand().getType().toString());
+				 	signconfig.set(title + "owner", player.getUniqueId().toString());
+				 	signconfig.set(title + "chestX", blockBehindSign.getLocation().getBlockX());
+				 	signconfig.set(title + "chestY", blockBehindSign.getLocation().getBlockY());
+				 	signconfig.set(title + "chestZ", blockBehindSign.getLocation().getBlockZ());
 					
 				 	try {
 						signconfig.save(signfile);
@@ -94,14 +99,13 @@ public class SignShopListener implements Listener{
 					plugin.signChatEscape.put(player, 1);
 				}
 			} else {
-				if (signconfig.contains(event.getClickedBlock().getLocation().getBlockX() + "" + event.getClickedBlock().getLocation().getBlockY() + "" + event.getClickedBlock().getLocation().getBlockZ())) {//sign is a registered sign shop
+				if (signconfig.contains(title)) {//sign is a registered sign shop
 					
 					int buyPrice = Integer.parseInt(sign.getLine(2).substring(4));
 					int sellPrice = Integer.parseInt(sign.getLine(2).substring(5));
 					int customerBal = (int)econconfig.get(player.getUniqueId().toString());
-					SignData signData = (SignData)signconfig.get(sign.getLocation().toVector().toString());
-					Player player2 = signData.getOwner();
-					ItemStack goodsType = new ItemStack(signData.getType());
+					Player player2 = plugin.getServer().getPlayer(UUID.fromString((String) signconfig.get(title+"owner")));
+					ItemStack goodsType = new ItemStack((Material)signconfig.get(title));
 					int vendorBal = (int)econconfig.get(player2.getUniqueId().toString());
 					
 					

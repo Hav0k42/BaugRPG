@@ -2,6 +2,7 @@ package org.baugindustries.baugrpg.listeners;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 import org.baugindustries.baugrpg.Main;
 import org.baugindustries.baugrpg.SignData;
@@ -24,17 +25,18 @@ public class SignBreakListener implements Listener{
 		Player player = event.getPlayer();
 		if (event.getBlock().getState() instanceof Sign) {
 			Sign sign = (Sign)event.getBlock().getState();
+			String title = sign.getLocation().getBlockX() + "" + sign.getLocation().getBlockY() + "" + sign.getLocation().getBlockZ();
 			
 			File signfile = new File(plugin.getDataFolder() + File.separator + "shops.yml");
 		 	FileConfiguration signconfig = YamlConfiguration.loadConfiguration(signfile);
 		 	
 		 	if (signconfig.contains(event.getBlock().getLocation().toString())) {//sign is a registered sign shop
-		 		SignData signData = (SignData)signconfig.get(sign.getLocation().toString());
-		 		if (!player.equals(signData.getOwner())) {
+		 		Player player2 = plugin.getServer().getPlayer(UUID.fromString((String) signconfig.get(title+"owner")));
+		 		if (!player.equals(player2)) {
 		 			player.sendMessage("You cannot break this sign shop");
 		 			event.setCancelled(true);
 		 		} else {
-		 			signconfig.set(event.getBlock().getLocation().getBlockX() + "" + event.getBlock().getLocation().getBlockY() + "" + event.getBlock().getLocation().getBlockZ(), null);
+		 			signconfig.set(title, null);
 		 			try {
 						signconfig.save(signfile);
 					} catch (IOException e) {

@@ -2,7 +2,7 @@ package org.baugindustries.baugrpg.listeners;
 
 import java.io.File;
 import java.util.ArrayList;
-
+import java.util.UUID;
 
 import org.baugindustries.baugrpg.Main;
 import org.baugindustries.baugrpg.SignData;
@@ -36,10 +36,11 @@ public class ChestOpenListener implements Listener{
 		loc.add(event.getClickedBlock().getLocation().add(0, 0, -1));
 		loc.add(event.getClickedBlock().getLocation().add(0, 0, 1));
 		for (int i = 0; i < loc.size(); i++) {
-			if (signconfig.contains(loc.get(i).toString())) {
-				SignData signData = (SignData)signconfig.get(loc.get(i).getBlockX() + "" + loc.get(i).getBlockY() + "" + loc.get(i).getBlockZ());
-				if (signData.getChestLocation().equals(event.getClickedBlock().getLocation())) {
-					if (!player.equals(signData.getOwner())) {
+			String title = loc.get(i).getBlockX() + "" + loc.get(i).getBlockY() + "" + loc.get(i).getBlockZ();
+			if (signconfig.contains(title)) {
+				Location chestLocation = new Location(player.getWorld(), (int)signconfig.get(title + "chestX"), (int)signconfig.get(title + "chestY"), (int)signconfig.get(title + "chestZ"));
+				if (chestLocation.equals(event.getClickedBlock().getLocation())) {
+					if (!player.equals(plugin.getServer().getPlayer(UUID.fromString((String) signconfig.get(title+"owner"))))) {
 						player.sendMessage(ChatColor.RED + "This chest is locked.");
 						event.setCancelled(true);
 					}
@@ -47,6 +48,5 @@ public class ChestOpenListener implements Listener{
 				
 			}
 		}
-		
 	}
 }
