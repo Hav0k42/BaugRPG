@@ -16,7 +16,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
-import com.sun.tools.javac.util.List;
 
 import net.md_5.bungee.api.ChatColor;
 

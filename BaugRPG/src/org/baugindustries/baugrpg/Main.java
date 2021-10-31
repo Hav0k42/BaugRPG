@@ -71,8 +71,6 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.scoreboard.Team;
 
-import net.milkbowl.vault.economy.*;
-
 import org.bukkit.ChatColor;
 
 public class Main extends JavaPlugin {
@@ -126,7 +124,7 @@ public class Main extends JavaPlugin {
 	
 	
 	
-	public Economy econ = null;
+
 	
 	@Override
 	public void onEnable() {
