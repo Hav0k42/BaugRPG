@@ -38,6 +38,7 @@ import org.baugindustries.baugrpg.listeners.SignBreakListener;
 import org.baugindustries.baugrpg.listeners.SignShopListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ChooseRaceInventoryListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ConfirmRaceInventoryListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.SkillTreeMenu;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Dwarves.GoldConversionMenu;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Dwarves.ScrollsOfBaugDwarvesInventoryListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Elves.ScrollsOfBaugElvesInventoryListener;
@@ -119,6 +120,7 @@ public class Main extends JavaPlugin {
 	public PlayerSnoopingEnderChestListListener playerSnoopingEnderChestListListener = new PlayerSnoopingEnderChestListListener(this);
 	public PlayerSnoopingHubInventoryListener playerSnoopingHubInventoryListener = new PlayerSnoopingHubInventoryListener(this);
 	public PlayerSnoopingInventoryListListener playerSnoopingInventoryListListener = new PlayerSnoopingInventoryListListener(this);
+	public SkillTreeMenu skillTreeMenuDwarves = new SkillTreeMenu(this);
 	
 	
 	
@@ -243,30 +245,32 @@ public class Main extends JavaPlugin {
 		 }
 	}
 	
-	void orcLight() {
-		this.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {//check if any orcs are in sunlight
-			 
-			  public void run() {
-			     Player[] OnlinePlayers = getServer().getOnlinePlayers().toArray(new Player[getServer().getOnlinePlayers().size()]);
-			     for (int i = 0; i < OnlinePlayers.length; i++) {
-			    	 Player p = OnlinePlayers[i];
-			    	 if (p.getPlayer().getPersistentDataContainer().has(new NamespacedKey(Main.this, "Race"), PersistentDataType.INTEGER)) {
-			    		 int race = p.getPlayer().getPersistentDataContainer().get(new NamespacedKey(Main.this, "Race"), PersistentDataType.INTEGER);
-			    		 if (race == 4) {//Player is an orc
-			    			 int skyLight = p.getLocation().getBlock().getLightFromSky();
-			    			 if (skyLight > 3) {
-				    			 if (!p.getWorld().hasStorm()) {
-				    				 if (!(p.getWorld().getTime() < 23500 && p.getWorld().getTime() > 12500)) {
-				    					 p.setFireTicks(skyLight * 20);
-				    				 }
-				    			 }
+	Runnable orcLightRunnable = new Runnable() {//check if any orcs are in sunlight
+		 
+		  public void run() {
+		     Player[] OnlinePlayers = getServer().getOnlinePlayers().toArray(new Player[getServer().getOnlinePlayers().size()]);
+		     for (int i = 0; i < OnlinePlayers.length; i++) {
+		    	 Player p = OnlinePlayers[i];
+		    	 if (p.getPlayer().getPersistentDataContainer().has(new NamespacedKey(Main.this, "Race"), PersistentDataType.INTEGER)) {
+		    		 int race = p.getPlayer().getPersistentDataContainer().get(new NamespacedKey(Main.this, "Race"), PersistentDataType.INTEGER);
+		    		 if (race == 4) {//Player is an orc
+		    			 int skyLight = p.getLocation().getBlock().getLightFromSky();
+		    			 if (skyLight > 3) {
+			    			 if (!p.getWorld().hasStorm()) {
+			    				 if (!(p.getWorld().getTime() < 23500 && p.getWorld().getTime() > 12500)) {
+			    					 p.setFireTicks(skyLight * 20);
+			    				 }
 			    			 }
-			    			 orcLight();
-			    		 }
-			    	 }
-			     }
-			  }
-			}, 5L);
+		    			 }
+//		    			 orcLight();
+		    		 }
+		    	 }
+		     }
+		  }
+		};
+	
+	void orcLight() {
+		this.getServer().getScheduler().scheduleSyncRepeatingTask(this, orcLightRunnable, 5L, 5L);
 	}
 
 	public boolean isInteger( String input ) {
