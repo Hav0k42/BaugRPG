@@ -4,6 +4,7 @@ author: BaugIndustries
 main: org.baugindustries.baugrpg.Main
 api-version: 1.17
 description: A performance enhancing plugin that has absolutely no LOTR rpg elements dont check.
+depend: [ProtocolLib]
 
 commands:
   resetrace:

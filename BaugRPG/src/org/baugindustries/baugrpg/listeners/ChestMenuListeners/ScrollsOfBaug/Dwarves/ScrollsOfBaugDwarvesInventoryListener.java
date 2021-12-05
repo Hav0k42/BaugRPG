@@ -37,7 +37,38 @@ public class ScrollsOfBaugDwarvesInventoryListener implements Listener{
 							ChatColor.GOLD + "Bank Deposit",
 							Arrays.asList(ChatColor.LIGHT_PURPLE + "Convert gold ingots to Dwarven Gold."));
 					
-					if (event.getSlot() == 12 && event.getCurrentItem().equals(depositItem)) {
+					ItemStack skillTreeItem = plugin.createItem(
+							Material.OAK_SAPLING,
+							1,
+							ChatColor.GOLD + "Skill Tree",
+							Arrays.asList(ChatColor.LIGHT_PURPLE + "Upgrade active and passive skills", "based on your class and race."));
+					
+					if (event.getSlot() == 11 && event.getCurrentItem().equals(skillTreeItem)) {
+						int inventorySize = 9;
+						String inventoryName = "Skill Trees";
+						Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
+						
+						inventory.setItem(0, plugin.createItem(Material.RED_STAINED_GLASS_PANE, 1, ChatColor.RED + "Back"));
+						
+						inventory.setItem(3, plugin.createItem(
+								Material.OAK_SAPLING,
+								1, 
+								ChatColor.GOLD + "General Skills", 
+								Arrays.asList(ChatColor.LIGHT_PURPLE + "Passive skills every player can use.")));
+						
+						inventory.setItem(5, plugin.createItem(
+								Material.NETHERITE_AXE,
+								1, 
+								ChatColor.GOLD + "Race Skills", 
+								Arrays.asList(ChatColor.LIGHT_PURPLE + "Race specific skills that are more speciallized.")));
+						
+						event.getWhoClicked().openInventory(inventory);
+						
+						InventoryClickEvent.getHandlerList().unregister(this);
+						plugin.getServer().getPluginManager().registerEvents(plugin.skillTreeMenu, plugin);
+						
+						
+					} else if (event.getSlot() == 12 && event.getCurrentItem().equals(depositItem)) {
 						int inventorySize = 9;
 						String inventoryName = "Dwarven Gold Deposit";
 						Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);

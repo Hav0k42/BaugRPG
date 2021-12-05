@@ -37,6 +37,7 @@ public class OnJoinListener implements Listener{
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
+		Player player = event.getPlayer();
 		
 		//Check if player is listed in wallet yml.
 		File econfile = new File(plugin.getDataFolder() + File.separator + "econ.yml");
@@ -64,21 +65,77 @@ public class OnJoinListener implements Listener{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	 	
+	 	
 		
-		
-		
-		//Update player's inventory if it was tampered with while they were offline.
-		File file = new File(plugin.getDataFolder() + File.separator + "inventoryData" + File.separator + event.getPlayer().getUniqueId() + ".yml");
-		FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-		if (file.exists()) {
-			List<ItemStack> inventoryContentsList = (List<ItemStack>) config.get("Inventory");
-			ItemStack[] inventoryContents = new ItemStack[inventoryContentsList.size()];
-			for (int i = 0; i < inventoryContentsList.size(); i++) {
-				inventoryContents[i] = inventoryContentsList.get(i);
+	 	File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + event.getPlayer().getUniqueId() + ".yml");
+	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
+		 
+		//Check to see if the file already exists. If not, create it.
+		if (!skillsfile.exists()) {
+			try {
+				skillsfile.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-			event.getPlayer().getInventory().setContents(inventoryContents);
-			event.getPlayer().updateInventory();
+			
+			skillsconfig.set("skillPoints", 0);
+			skillsconfig.set("speed", 0);
+			skillsconfig.set("jump", 0);
+			skillsconfig.set("damage", 0);
+			skillsconfig.set("resistance", 0);
+			skillsconfig.set("mining", 0);
+			skillsconfig.set("regen", 0);
+			skillsconfig.set("swim", 0);
+			
+			skillsconfig.set("speedOn", false);
+			skillsconfig.set("jumpOn", false);
+			skillsconfig.set("damageOn", false);
+			skillsconfig.set("resistanceOn", false);
+			skillsconfig.set("miningOn", false);
+			skillsconfig.set("regenOn", false);
+			skillsconfig.set("swimOn", false);
+			
+			try {
+				skillsconfig.save(skillsfile);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			float maxSpeed = 0.35f;
+			
+			if (skillsconfig.getBoolean("speedOn")) {
+				player.setWalkSpeed((((maxSpeed - 0.2f) / 10f) * skillsconfig.getInt("speed"))+ 0.2f);
+				player.setFlySpeed((((maxSpeed - 0.2f) / 10f) * skillsconfig.getInt("speed")) + 0.2f);
+			} else {
+				player.setWalkSpeed(0.2f);
+				player.setFlySpeed(0.2f);
+			}
+			
+			if (skillsconfig.getBoolean("regenOn")) {
+				player.setSaturatedRegenRate((int)(((skillsconfig.getInt("regen") * -5f) / 9f) + (95f/9f)));
+				player.setUnsaturatedRegenRate((int)(((skillsconfig.getInt("regen") * -40f) / 9f) + (760f/9f)));
+			} else {
+				player.setSaturatedRegenRate(10);
+				player.setUnsaturatedRegenRate(80);
+			}
 		}
+		
+		//old code
+	 	
+//		//Update player's inventory if it was tampered with while they were offline.
+//		File file = new File(plugin.getDataFolder() + File.separator + "inventoryData" + File.separator + event.getPlayer().getUniqueId() + ".yml");
+//		FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+//		if (file.exists()) {
+//			List<ItemStack> inventoryContentsList = (List<ItemStack>) config.get("Inventory");
+//			ItemStack[] inventoryContents = new ItemStack[inventoryContentsList.size()];
+//			for (int i = 0; i < inventoryContentsList.size(); i++) {
+//				inventoryContents[i] = inventoryContentsList.get(i);
+//			}
+//			event.getPlayer().getInventory().setContents(inventoryContents);
+//			event.getPlayer().updateInventory();
+//		}
 		
 		
 		
@@ -141,7 +198,6 @@ public class OnJoinListener implements Listener{
 			
 		} else {//Player has joined before, update their username to display their race.
 			int race = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
-			Player player = event.getPlayer();
 			switch (race) {
 				case 1://Men
 					plugin.board.getTeam("Men").addPlayer(player);

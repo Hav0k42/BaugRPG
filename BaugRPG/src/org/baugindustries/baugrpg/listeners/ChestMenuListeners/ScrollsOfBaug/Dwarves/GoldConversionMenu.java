@@ -43,7 +43,7 @@ public class GoldConversionMenu implements Listener{
 							ChatColor.GREEN + "CONFIRM", 
 							Arrays.asList(ChatColor.LIGHT_PURPLE + "Place gold ingots to the left, ", "and click here to confirm conversion."));
 					
-					if (event.getCurrentItem().equals(confirmItem)) {
+					if (event.getCurrentItem() != null && event.getCurrentItem().equals(confirmItem)) {
 						if (event.getView().getTopInventory().getItem(3) != null && event.getView().getTopInventory().getItem(3).getType().equals(Material.GOLD_INGOT)) {
 							File file = new File(plugin.getDataFolder() + File.separator + "econ.yml");
 						 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);

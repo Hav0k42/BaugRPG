@@ -2,6 +2,7 @@ package org.baugindustries.baugrpg;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -32,12 +33,17 @@ import org.baugindustries.baugrpg.listeners.MinecartMoveListener;
 import org.baugindustries.baugrpg.listeners.OnJoinListener;
 import org.baugindustries.baugrpg.listeners.OnQuitListener;
 import org.baugindustries.baugrpg.listeners.OrcEatMeat;
+import org.baugindustries.baugrpg.listeners.PlayerAttackListener;
 import org.baugindustries.baugrpg.listeners.PlayerCloseInventoryListener;
+import org.baugindustries.baugrpg.listeners.PlayerDamageListener;
 import org.baugindustries.baugrpg.listeners.PlayerDeathListener;
+import org.baugindustries.baugrpg.listeners.PlayerJumpListener;
+import org.baugindustries.baugrpg.listeners.PlayerMineListener;
 import org.baugindustries.baugrpg.listeners.SignBreakListener;
 import org.baugindustries.baugrpg.listeners.SignShopListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ChooseRaceInventoryListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ConfirmRaceInventoryListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.GeneralSkillTreeMenu;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.SkillTreeMenu;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Dwarves.GoldConversionMenu;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Dwarves.ScrollsOfBaugDwarvesInventoryListener;
@@ -56,8 +62,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.craftbukkit.v1_17_R1.CraftSound;
+import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_17_R1.block.CraftBlock;
+
 import java.util.logging.Logger;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -72,7 +84,31 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.scoreboard.Team;
 
+import com.comphenix.protocol.ProtocolManager;
+import com.comphenix.protocol.events.ListenerPriority;
+import com.comphenix.protocol.events.PacketAdapter;
+import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.events.PacketEvent;
+import com.comphenix.protocol.wrappers.BlockPosition;
+import com.comphenix.protocol.wrappers.EnumWrappers;
+import com.comphenix.protocol.wrappers.EnumWrappers.PlayerDigType;
+import com.comphenix.protocol.wrappers.WrappedBlockData;
+
+import net.minecraft.resources.MinecraftKey;
+import net.minecraft.sounds.SoundEffect;
+import net.minecraft.world.level.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundEffectType;
+import net.minecraft.world.level.block.state.IBlockData;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+
 import org.bukkit.ChatColor;
+import org.bukkit.FluidCollisionMode;
+import org.bukkit.Location;
 
 public class Main extends JavaPlugin {
 
@@ -82,8 +118,15 @@ public class Main extends JavaPlugin {
 	public HashMap<Player, Player> tpahereHashMap = new HashMap<Player, Player>();
 	public HashMap<Player, Integer> signChatEscape = new HashMap<Player, Integer>();
 	public HashMap<Player, List<String>> signData = new HashMap<Player, List<String>>();
+	public HashMap<Player, Location> positionData = new HashMap<Player, Location>();
+	public HashMap<Player, String> miningState = new HashMap<Player, String>();
+	public HashMap<Player, BlockPosition> miningPosition = new HashMap<Player, BlockPosition>();
+	public HashMap<Player, Float> miningSpeed = new HashMap<Player, Float>();
+	public HashMap<Player, Integer> miningTicks = new HashMap<Player, Integer>();
+	public HashMap<Player, Float> miningPercentage = new HashMap<Player, Float>();
 	public ScoreboardManager manager;
 	public Scoreboard board;
+	public ProtocolManager protocolManager;
 	
 	
 	//Listeners
@@ -101,6 +144,10 @@ public class Main extends JavaPlugin {
 	public ChestOpenListener chestOpenListener = new ChestOpenListener(this);
 	public BlockExplodeListener blockExplodeListener = new BlockExplodeListener(this);
 	public EntityExplodeListener entityExplodeListener = new EntityExplodeListener(this);
+	public PlayerJumpListener playerJumpListener = new PlayerJumpListener(this);
+	public PlayerAttackListener playerAttackListener = new PlayerAttackListener(this);
+	public PlayerDamageListener playerDamageListener = new PlayerDamageListener(this);
+	public PlayerMineListener playerMineListener = new PlayerMineListener(this);
 	
 	
 	
@@ -120,7 +167,8 @@ public class Main extends JavaPlugin {
 	public PlayerSnoopingEnderChestListListener playerSnoopingEnderChestListListener = new PlayerSnoopingEnderChestListListener(this);
 	public PlayerSnoopingHubInventoryListener playerSnoopingHubInventoryListener = new PlayerSnoopingHubInventoryListener(this);
 	public PlayerSnoopingInventoryListListener playerSnoopingInventoryListListener = new PlayerSnoopingInventoryListListener(this);
-	public SkillTreeMenu skillTreeMenuDwarves = new SkillTreeMenu(this);
+	public SkillTreeMenu skillTreeMenu = new SkillTreeMenu(this);
+	public GeneralSkillTreeMenu generalSkillTreeMenu = new GeneralSkillTreeMenu(this);
 	
 	
 	
@@ -147,6 +195,10 @@ public class Main extends JavaPlugin {
 		 this.getServer().getPluginManager().registerEvents(chestOpenListener, this);
 		 this.getServer().getPluginManager().registerEvents(blockExplodeListener, this);
 		 this.getServer().getPluginManager().registerEvents(entityExplodeListener, this);
+		 this.getServer().getPluginManager().registerEvents(playerJumpListener, this);
+		 this.getServer().getPluginManager().registerEvents(playerAttackListener, this);
+		 this.getServer().getPluginManager().registerEvents(playerDamageListener, this);
+		 this.getServer().getPluginManager().registerEvents(playerMineListener, this);
 		 new Pay(this);
 		 new Balance(this);
 		 new ResetRace(this);
@@ -162,6 +214,47 @@ public class Main extends JavaPlugin {
 		 new Withdraw(this);
 		 new Deposit(this);
 		 new SetBal(this);
+		 
+		 protocolManager = ProtocolLibrary.getProtocolManager();
+		 
+		 
+		 
+		 
+		 
+		 protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Client.BLOCK_DIG) {
+	            @Override
+	            public void onPacketReceiving(PacketEvent event){
+	            	Player player = event.getPlayer();
+	                PacketContainer packet = event.getPacket();
+	                EnumWrappers.PlayerDigType digType = packet.getPlayerDigTypes().getValues().get(0);
+	                
+	                File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
+					FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
+	                
+					
+					
+	                if (digType.name().equals("START_DESTROY_BLOCK") || digType.name().equals("ABORT_DESTROY_BLOCK")) {
+	                	miningTicks.put(player, 0);
+	                	miningPercentage.put(player, 0f);
+	                }
+	                miningState.put(player, digType.name());
+	                BlockPosition pos = packet.getBlockPositionModifier().read(0);
+	                if (!(pos.getX() == 0 && pos.getY() == 0 && pos.getZ() == 0)) {
+	                	miningPosition.put(player, pos);	
+	                }
+	            }
+	     });
+		 
+//		 protocolManager.addPacketListener(new PacketAdapter(this, PacketType.Play.Server.BLOCK_BREAK) {
+//	            @Override
+//	            public void onPacketSending(PacketEvent event){
+//	            	Player player = event.getPlayer();
+//	                PacketContainer packet = event.getPacket();
+//	                Bukkit.broadcastMessage("Data " + packet.getShorts().read(0).toString());
+//	            }
+//	     });
+		 
+		 
 		 
 		 if (board.getTeam("Men") == null) {
 			 Team menTeam = board.registerNewTeam("Men");
@@ -193,6 +286,7 @@ public class Main extends JavaPlugin {
 		 channelManager = new ChatChannelManager();
 		 
 		 orcLight();
+		 miningBuff();
 		 
 		 
 		 File file = new File(this.getDataFolder() + File.separator + "econ.yml");
@@ -219,6 +313,8 @@ public class Main extends JavaPlugin {
 			 }
 		 }
 		 
+		 
+		 
 		 File signfile = new File(this.getDataFolder() + File.separator + "shops.yml");
 	 	 FileConfiguration signconfig = YamlConfiguration.loadConfiguration(signfile);
 		 
@@ -244,6 +340,255 @@ public class Main extends JavaPlugin {
 			 }
 		 }
 	}
+	
+	Runnable miningBuffRunnable = new Runnable() {
+		 
+		  public void run() {
+			  Player[] OnlinePlayers = getServer().getOnlinePlayers().toArray(new Player[getServer().getOnlinePlayers().size()]);
+			     for (int i = 0; i < OnlinePlayers.length; i++) {
+			    	 Player player = OnlinePlayers[i];
+			    	 
+			    	 File skillsfile = new File(getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
+					 FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
+					 
+					 if (skillsconfig.getBoolean("miningOn")) {
+			    	 
+				    	 BlockPosition pos = miningPosition.get(player);
+				    	 if (pos == null) {
+				    		 continue;
+				    	 }
+				    	 Location loc = new Location(player.getWorld(), pos.getX(), pos.getY(), pos.getZ());
+			    	 
+			    	 
+						 
+						 if (miningState.containsKey(player) && (miningState.get(player).equals("ABORT_DESTROY_BLOCK") || miningState.get(player).equals("DROP_ITEM") || miningState.get(player).equals("DROP_ALL_ITEMS"))) {
+							 PacketContainer breakAnimation = protocolManager.createPacket(PacketType.Play.Server.BLOCK_BREAK_ANIMATION);
+							 breakAnimation.getBlockPositionModifier().write(0, miningPosition.get(player));
+							 breakAnimation.getIntegers().write(1, -1);
+							 if ((miningState.get(player).equals("DROP_ITEM") || miningState.get(player).equals("DROP_ALL_ITEMS")) && miningTicks.get(player) != 0) {
+							 	miningState.put(player, "START_DESTROY_BLOCK");
+							 	Float breakSpeed = player.getWorld().getBlockAt(loc).getBreakSpeed(player);
+							 	miningSpeed.put(player, breakSpeed);
+							 }
+							 
+							  try {
+								  protocolManager.sendServerPacket(player, breakAnimation);
+							  } catch (InvocationTargetException e) {
+								  // TODO Auto-generated catch block
+								  e.printStackTrace();
+							  }
+						 }
+						 
+						 if (miningState.containsKey(player) && miningState.get(player).equals("START_DESTROY_BLOCK")) {
+							  
+							  miningTicks.put(player, miningTicks.get(player) + 1);
+							  
+							  PacketContainer breakAnimation = protocolManager.createPacket(PacketType.Play.Server.BLOCK_BREAK_ANIMATION);
+							  breakAnimation.getBlockPositionModifier().write(0, miningPosition.get(player));
+							  float miningLevel = skillsconfig.getInt("mining");
+							  float mineSpeed = miningSpeed.get(player);
+							  float buffedSpeed = mineSpeed * (1 + (miningLevel / 10f));
+							  float totalPercentage = buffedSpeed + miningPercentage.get(player);
+							  miningPercentage.put(player, totalPercentage);
+							  int animationStage = (int) (totalPercentage * 10) - 1;
+							  breakAnimation.getIntegers().write(1, animationStage);
+							  if (animationStage == 9) {
+								  
+								  
+
+								  
+								  Field f;
+								  Sound sound = null;
+								try {
+							        World nmsWorld = ((CraftWorld) player.getWorld()).getHandle();
+							        Block nmsBlock = nmsWorld.getType(new net.minecraft.core.BlockPosition(pos.getX(), pos.getY(), pos.getZ())).getBlock();
+							        SoundEffectType soundEffectType = nmsBlock.getStepSound(null);
+							        SoundEffect soundEffect = soundEffectType.c();//c is breaksound, f is hitsound
+							        
+							        MinecraftKey nmsString = soundEffect.a();//return minecraftkey of soundeffect
+							        
+							        sound = Sound.valueOf(nmsString.getKey().replace(".", "_").toUpperCase());
+								} catch (SecurityException | IllegalArgumentException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							        
+								  
+								  
+								  player.getWorld().playSound(loc, sound, SoundCategory.BLOCKS, 1, 1);
+								  player.breakBlock(player.getWorld().getBlockAt(loc));
+								  
+								  miningState.put(player, "STOP_DESTROY_BLOCK");
+							  }
+							  try {
+								  
+								  protocolManager.sendServerPacket(player, breakAnimation);
+							  } catch (InvocationTargetException e) {
+								  // TODO Auto-generated catch block
+								  e.printStackTrace();
+							  }
+						  }
+			     	  }
+			     }
+		  }
+	};
+	
+	void miningBuff() {
+		this.getServer().getScheduler().scheduleSyncRepeatingTask(this, miningBuffRunnable, 1L, 1L);
+	}
+	
+
+//		
+//		
+//		Material.ACACIA_BUTTON
+//		
+//		if () {
+//			return Sound.BLOCK_AMETHYST_BLOCK_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_AMETHYST_CLUSTER_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_ANCIENT_DEBRIS_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_ANVIL_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_AZALEA_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_AZALEA_LEAVES_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_BAMBOO_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_BAMBOO_SAPLING_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_BASALT_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_BIG_DRIPLEAF_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_BONE_BLOCK_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_CALCITE_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_CANDLE_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_CAVE_VINES_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_CHAIN_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_COPPER_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_CORAL_BLOCK_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_CROP_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_DEEPSLATE_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_DEEPSLATE_BRICKS_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_DEEPSLATE_TILES_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_DRIPSTONE_BLOCK_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_FLOWERING_AZALEA_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_FUNGUS_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_GILDED_BLACKSTONE_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_GLASS_BREAK;
+//		} else if (material.equals(Material.ACACIA_LEAVES)) {
+//			return Sound.BLOCK_GRASS_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_GRAVEL_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_HANGING_ROOTS_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_HONEY_BLOCK_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_LADDER_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_LANTERN_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_LARGE_AMETHYST_BUD_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_LODESTONE_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_MEDIUM_AMETHYST_BUD_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_METAL_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_MOSS_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_MOSS_CARPET_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_NETHER_BRICKS_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_NETHER_GOLD_ORE_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_NETHER_ORE_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_NETHER_SPROUTS_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_NETHER_WART_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_NETHERITE_BLOCK_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_NETHERRACK_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_NYLIUM_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_POINTED_DRIPSTONE_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_POLISHED_DEEPSLATE_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_POWDER_SNOW_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_ROOTED_DIRT_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_ROOTS_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_SAND_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_SCAFFOLDING_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_SCULK_SENSOR_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_SHROOMLIGHT_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_SLIME_BLOCK_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_SMALL_AMETHYST_BUD_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_SMALL_DRIPLEAF_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_SNOW_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_SOUL_SAND_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_SOUL_SOIL_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_SPORE_BLOSSOM_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_STEM_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_STONE_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_SWEET_BERRY_BUSH_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_TUFF_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_VINE_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_WART_BLOCK_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_WEEPING_VINES_BREAK;
+//		} else if () {
+//			return Sound.BLOCK_WET_GRASS_BREAK;
+//		} else if (material.equals(Material.ACACIA_PRESSURE_PLATE) || material.equals(Material.ACACIA_PLANKS) || material.equals(Material.ACACIA_LOG) || material.equals(Material.ACACIA_BOAT) || material.equals(Material.ACACIA_BUTTON) || material.equals(Material.ACACIA_DOOR) || material.equals(Material.ACACIA_FENCE) || material.equals(Material.ACACIA_FENCE_GATE)) {
+//			return Sound.BLOCK_WOOD_BREAK;
+//		} else {
+//			return Sound.BLOCK_WOOL_BREAK;
+//		}
+//		
+  	
 	
 	Runnable orcLightRunnable = new Runnable() {//check if any orcs are in sunlight
 		 
