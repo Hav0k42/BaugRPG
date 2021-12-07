@@ -28,7 +28,6 @@ public class PlayerAdvancementDoneListener implements Listener {
 	 	skillsconfig.set("skillPoints", skillsconfig.getInt("skillPoints") + 1);
 	 	String name = event.getAdvancement().getKey().toString();
 	 	if (skillsconfig.getInt("skillPoints") > 4 && !(name.substring(0, 16).equals("minecraft:recipe"))) {
-	 		player.sendMessage(name);
 		 	player.sendMessage(ChatColor.GOLD + "Gained skill point. Run /bs to use them. Total points: " + ChatColor.DARK_PURPLE + skillsconfig.getInt("skillPoints"));
 	 	}
 	 	
