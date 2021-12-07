@@ -10,6 +10,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerAdvancementDoneEvent;
 
+import net.md_5.bungee.api.ChatColor;
+
 public class PlayerAdvancementDoneListener implements Listener {
 	private Main plugin;
 	public PlayerAdvancementDoneListener(Main plugin) {
@@ -23,5 +25,8 @@ public class PlayerAdvancementDoneListener implements Listener {
 	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
 	 	
 	 	skillsconfig.set("skillPoints", skillsconfig.getInt("skillPoints") + 1);
+	 	if (skillsconfig.getInt("skillPoints") > 4) {
+		 	player.sendMessage(ChatColor.GOLD + "Gained skill point. Run /bs to use them. Total points: " + ChatColor.DARK_PURPLE + skillsconfig.getInt("skillPoints"));
+	 	}
 	}
 }
