@@ -74,6 +74,7 @@ public class OnJoinListener implements Listener{
 				e.printStackTrace();
 			}
 			
+			skillsconfig.set("totalSkillPoints", 0);
 			skillsconfig.set("skillPoints", 0);
 			skillsconfig.set("speed", 0);
 			skillsconfig.set("jump", 0);

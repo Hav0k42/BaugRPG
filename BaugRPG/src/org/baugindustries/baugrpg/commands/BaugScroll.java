@@ -2,6 +2,7 @@ package org.baugindustries.baugrpg.commands;
 
 import org.bukkit.command.CommandExecutor;
 
+import java.io.File;
 import java.util.Arrays;
 
 import org.baugindustries.baugrpg.Main;
@@ -10,6 +11,8 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -48,6 +51,9 @@ public class BaugScroll implements CommandExecutor {
 				
 				
 				race = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
+				File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
+			 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
+				int level = skillsconfig.getInt("totalSkillPoints");
 				
 				if (race == 1) {//Men
 					
@@ -58,11 +64,13 @@ public class BaugScroll implements CommandExecutor {
 							ChatColor.GOLD + "Scrolls of Baug", 
 							Arrays.asList(ChatColor.LIGHT_PURPLE + "This menu gives you access to any and", "all information you need to know to play on this server")));
 					
-					inventory.setItem(11, plugin.createItem(
-							Material.OAK_SAPLING,
-							1,
-							ChatColor.GOLD + "Skill Tree",
-							Arrays.asList(ChatColor.LIGHT_PURPLE + "Upgrade active and passive skills", "based on your class and race.")));
+					if (level > 5) {
+						inventory.setItem(11, plugin.createItem(
+								Material.OAK_SAPLING,
+								1,
+								ChatColor.GOLD + "Skill Tree",
+								Arrays.asList(ChatColor.LIGHT_PURPLE + "Upgrade active and passive skills", "based on your class and race.")));
+					}
 					
 					player.openInventory(inventory);
 					
@@ -76,11 +84,13 @@ public class BaugScroll implements CommandExecutor {
 							ChatColor.GOLD + "Scrolls of Baug", 
 							Arrays.asList(ChatColor.LIGHT_PURPLE + "This menu gives you access to any and", "all information you need to know to play on this server")));
 					
-					inventory.setItem(11, plugin.createItem(
-							Material.OAK_SAPLING,
-							1,
-							ChatColor.GOLD + "Skill Tree",
-							Arrays.asList(ChatColor.LIGHT_PURPLE + "Upgrade active and passive skills", "based on your class and race.")));
+					if (level > 5) {
+						inventory.setItem(11, plugin.createItem(
+								Material.OAK_SAPLING,
+								1,
+								ChatColor.GOLD + "Skill Tree",
+								Arrays.asList(ChatColor.LIGHT_PURPLE + "Upgrade active and passive skills", "based on your class and race.")));
+					}
 					
 					inventory.setItem(12, plugin.createItem(
 							Material.CHEST,
@@ -101,11 +111,13 @@ public class BaugScroll implements CommandExecutor {
 							ChatColor.GOLD + "Scrolls of Baug", 
 							Arrays.asList(ChatColor.LIGHT_PURPLE + "This menu gives you access to any and", "all information you need to know to play on this server")));
 					
-					inventory.setItem(11, plugin.createItem(
-							Material.OAK_SAPLING,
-							1,
-							ChatColor.GOLD + "Skill Tree",
-							Arrays.asList(ChatColor.LIGHT_PURPLE + "Upgrade active and passive skills", "based on your class and race.")));
+					if (level > 5) {
+						inventory.setItem(11, plugin.createItem(
+								Material.OAK_SAPLING,
+								1,
+								ChatColor.GOLD + "Skill Tree",
+								Arrays.asList(ChatColor.LIGHT_PURPLE + "Upgrade active and passive skills", "based on your class and race.")));
+					}
 					
 					inventory.setItem(12, plugin.createItem(
 							Material.GOLD_INGOT,
@@ -125,11 +137,13 @@ public class BaugScroll implements CommandExecutor {
 							ChatColor.GOLD + "Scrolls of Baug", 
 							Arrays.asList(ChatColor.LIGHT_PURPLE + "This menu gives you access to any and", "all information you need to know to play on this server")));
 
-					inventory.setItem(11, plugin.createItem(
-							Material.OAK_SAPLING,
-							1,
-							ChatColor.GOLD + "Skill Tree",
-							Arrays.asList(ChatColor.LIGHT_PURPLE + "Upgrade active and passive skills", "based on your class and race.")));
+					if (level > 5) {
+						inventory.setItem(11, plugin.createItem(
+								Material.OAK_SAPLING,
+								1,
+								ChatColor.GOLD + "Skill Tree",
+								Arrays.asList(ChatColor.LIGHT_PURPLE + "Upgrade active and passive skills", "based on your class and race.")));
+					}
 
 					player.openInventory(inventory);
 					

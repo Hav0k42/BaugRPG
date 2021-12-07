@@ -110,26 +110,31 @@ public class GeneralSkillTreeMenu implements Listener {
 					ItemStack backItem = plugin.createItem(Material.RED_STAINED_GLASS_PANE, 1, ChatColor.RED + "Back");
 					
 					if (event.getSlot() == 45 && event.getCurrentItem().equals(backItem)) {//back to skills hub
-						int inventorySize = 9;
-						String inventoryName = "Skill Trees";
-						Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
 						
-						inventory.setItem(0, plugin.createItem(Material.RED_STAINED_GLASS_PANE, 1, ChatColor.RED + "Back"));
 						
-						inventory.setItem(3, plugin.createItem(
-								Material.OAK_SAPLING,
-								1, 
-								ChatColor.GOLD + "General Skills", 
-								Arrays.asList(ChatColor.LIGHT_PURPLE + "Passive skills every player can use.")));
-						
-						inventory.setItem(5, plugin.createItem(
-								Material.NETHERITE_AXE,
-								1, 
-								ChatColor.GOLD + "Race Skills", 
-								Arrays.asList(ChatColor.LIGHT_PURPLE + "Race specific skills that are more speciallized.")));
-						
-						event.getWhoClicked().openInventory(inventory);
-						
+						if (skillsconfig.getInt("totalSkillPoints") > 19) {
+							int inventorySize = 9;
+							String inventoryName = "Skill Trees";
+							Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
+							
+							inventory.setItem(0, plugin.createItem(Material.RED_STAINED_GLASS_PANE, 1, ChatColor.RED + "Back"));
+							
+							inventory.setItem(3, plugin.createItem(
+									Material.OAK_SAPLING,
+									1, 
+									ChatColor.GOLD + "General Skills", 
+									Arrays.asList(ChatColor.LIGHT_PURPLE + "Passive skills every player can use.")));
+							
+							inventory.setItem(5, plugin.createItem(
+									Material.NETHERITE_AXE,
+									1, 
+									ChatColor.GOLD + "Race Skills", 
+									Arrays.asList(ChatColor.LIGHT_PURPLE + "Race specific skills that are more speciallized.")));
+							
+							event.getWhoClicked().openInventory(inventory);
+						} else {
+							player.performCommand("baugscroll");
+						}
 					}
 					
 					
