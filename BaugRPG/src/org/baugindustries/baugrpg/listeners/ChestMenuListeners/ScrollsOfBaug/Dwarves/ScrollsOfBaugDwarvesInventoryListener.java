@@ -3,7 +3,6 @@ package org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Dw
 import java.util.Arrays;
 
 import org.baugindustries.baugrpg.Main;
-import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Elves.CommunismHub.ElvesCommunismHubInventoryListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -27,7 +26,6 @@ public class ScrollsOfBaugDwarvesInventoryListener implements Listener{
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent event) {
 		if (event.getWhoClicked() instanceof Player) {
-			Player player = (Player)event.getWhoClicked();
 			if (event.getClickedInventory() != null) {
 				if (event.getView().getTitle().equals("Scrolls of Baug")) {
 					
@@ -64,8 +62,6 @@ public class ScrollsOfBaugDwarvesInventoryListener implements Listener{
 						
 						event.getWhoClicked().openInventory(inventory);
 						
-						InventoryClickEvent.getHandlerList().unregister(this);
-						plugin.getServer().getPluginManager().registerEvents(plugin.skillTreeMenu, plugin);
 						
 						
 					} else if (event.getSlot() == 12 && event.getCurrentItem().equals(depositItem)) {
@@ -87,8 +83,6 @@ public class ScrollsOfBaugDwarvesInventoryListener implements Listener{
 					
 						event.getWhoClicked().openInventory(inventory);
 						
-						InventoryClickEvent.getHandlerList().unregister(this);
-						plugin.getServer().getPluginManager().registerEvents(plugin.goldConversionMenu, plugin);
 					
 					}
 						event.setCancelled(true);

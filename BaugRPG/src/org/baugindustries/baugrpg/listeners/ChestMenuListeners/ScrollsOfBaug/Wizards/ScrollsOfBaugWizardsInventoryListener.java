@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import org.baugindustries.baugrpg.Main;
-import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.PlayerSnooping.PlayerSnoopingHubInventoryListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -71,8 +70,6 @@ public class ScrollsOfBaugWizardsInventoryListener implements Listener{
 						
 						event.getWhoClicked().openInventory(inventory);
 						
-						InventoryClickEvent.getHandlerList().unregister(this);
-						plugin.getServer().getPluginManager().registerEvents(plugin.featureManagement, plugin);
 					} else if (event.getSlot() == 12 && event.getCurrentItem().equals(plugin.createItem(
 					Material.CHEST,
 					1,
@@ -106,8 +103,6 @@ public class ScrollsOfBaugWizardsInventoryListener implements Listener{
 							
 							event.getWhoClicked().openInventory(inventory);
 							
-							InventoryClickEvent.getHandlerList().unregister(this);
-							plugin.getServer().getPluginManager().registerEvents(plugin.playerSnoopingHubInventoryListener, plugin);
 						} else {
 							player.sendMessage(ChatColor.RED + "The supporting plugin for this feature is not installed.\nPlease install the OpenInv plugin.\n" + ChatColor.YELLOW + "https://dev.bukkit.org/projects/openinv");
 						}

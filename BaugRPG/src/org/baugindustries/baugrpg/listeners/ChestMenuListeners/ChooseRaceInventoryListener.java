@@ -2,7 +2,6 @@ package org.baugindustries.baugrpg.listeners.ChestMenuListeners;
 
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.baugindustries.baugrpg.Main;
 import org.bukkit.Bukkit;
@@ -12,8 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -65,8 +62,6 @@ public class ChooseRaceInventoryListener implements Listener{
 							
 							
 							player.openInventory(inventory);
-							InventoryClickEvent.getHandlerList().unregister(this);
-							plugin.getServer().getPluginManager().registerEvents(plugin.confirmRaceInventoryListener, plugin);
 						}
 						
 						event.setCancelled(true);

@@ -1,8 +1,6 @@
 package org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.PlayerSnooping;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
 
 import org.baugindustries.baugrpg.Main;
 import org.bukkit.Bukkit;
@@ -14,7 +12,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import net.md_5.bungee.api.ChatColor;
@@ -61,14 +58,11 @@ public class PlayerSnoopingEnderChestListListener implements Listener{
 							
 							event.getWhoClicked().openInventory(inventory);
 							
-							InventoryClickEvent.getHandlerList().unregister(this);
-							plugin.getServer().getPluginManager().registerEvents(plugin.playerSnoopingHubInventoryListener, plugin);
 						} else if (event.getCurrentItem().getType().equals(Material.PLAYER_HEAD)) {
 							ItemStack selectedPlayerHead = event.getCurrentItem();
 							SkullMeta selectedPlayerHeadMeta = (SkullMeta)selectedPlayerHead.getItemMeta();
 							OfflinePlayer selectedOfflinePlayer = plugin.getServer().getOfflinePlayer(selectedPlayerHeadMeta.getOwningPlayer().getUniqueId());//theres a possibility this does not work.
 							
-							InventoryClickEvent.getHandlerList().unregister(this);
 							player.performCommand("oe " + selectedOfflinePlayer.getName());
 						}
 						event.setCancelled(true);

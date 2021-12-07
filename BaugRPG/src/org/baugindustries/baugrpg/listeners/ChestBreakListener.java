@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import org.baugindustries.baugrpg.Main;
-import org.baugindustries.baugrpg.SignData;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -13,8 +12,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockExplodeEvent;
-import org.bukkit.event.entity.EntityExplodeEvent;
 
 
 import net.md_5.bungee.api.ChatColor;

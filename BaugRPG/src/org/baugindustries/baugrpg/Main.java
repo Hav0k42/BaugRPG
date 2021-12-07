@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,6 +32,7 @@ import org.baugindustries.baugrpg.listeners.MinecartMoveListener;
 import org.baugindustries.baugrpg.listeners.OnJoinListener;
 import org.baugindustries.baugrpg.listeners.OnQuitListener;
 import org.baugindustries.baugrpg.listeners.OrcEatMeat;
+import org.baugindustries.baugrpg.listeners.PlayerAdvancementDoneListener;
 import org.baugindustries.baugrpg.listeners.PlayerAttackListener;
 import org.baugindustries.baugrpg.listeners.PlayerCloseInventoryListener;
 import org.baugindustries.baugrpg.listeners.PlayerDamageListener;
@@ -66,19 +66,13 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.craftbukkit.v1_17_R1.CraftSound;
 import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_17_R1.block.CraftBlock;
 
-import java.util.logging.Logger;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.RegisteredServiceProvider;
-import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
@@ -91,23 +85,17 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.BlockPosition;
 import com.comphenix.protocol.wrappers.EnumWrappers;
-import com.comphenix.protocol.wrappers.EnumWrappers.PlayerDigType;
-import com.comphenix.protocol.wrappers.WrappedBlockData;
 
 import net.minecraft.resources.MinecraftKey;
 import net.minecraft.sounds.SoundEffect;
 import net.minecraft.world.level.World;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundEffectType;
-import net.minecraft.world.level.block.state.IBlockData;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 
 import org.bukkit.ChatColor;
-import org.bukkit.FluidCollisionMode;
 import org.bukkit.Location;
 
 public class Main extends JavaPlugin {
@@ -169,6 +157,7 @@ public class Main extends JavaPlugin {
 	public PlayerSnoopingInventoryListListener playerSnoopingInventoryListListener = new PlayerSnoopingInventoryListListener(this);
 	public SkillTreeMenu skillTreeMenu = new SkillTreeMenu(this);
 	public GeneralSkillTreeMenu generalSkillTreeMenu = new GeneralSkillTreeMenu(this);
+	public PlayerAdvancementDoneListener playerAdvancementDoneListener = new PlayerAdvancementDoneListener(this);
 	
 	
 	
@@ -178,7 +167,6 @@ public class Main extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
-		 final Logger log = Logger.getLogger("Minecraft");
 		 manager = Bukkit.getScoreboardManager();
 		 board = manager.getMainScoreboard();
 		 this.getServer().getPluginManager().registerEvents(onJoinListener, this);
@@ -199,6 +187,7 @@ public class Main extends JavaPlugin {
 		 this.getServer().getPluginManager().registerEvents(playerAttackListener, this);
 		 this.getServer().getPluginManager().registerEvents(playerDamageListener, this);
 		 this.getServer().getPluginManager().registerEvents(playerMineListener, this);
+		 this.getServer().getPluginManager().registerEvents(playerAdvancementDoneListener, this);
 		 new Pay(this);
 		 new Balance(this);
 		 new ResetRace(this);
@@ -228,9 +217,6 @@ public class Main extends JavaPlugin {
 	                PacketContainer packet = event.getPacket();
 	                EnumWrappers.PlayerDigType digType = packet.getPlayerDigTypes().getValues().get(0);
 	                
-	                File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
-					FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
-	                
 					
 					
 	                if (digType.name().equals("START_DESTROY_BLOCK") || digType.name().equals("ABORT_DESTROY_BLOCK")) {
@@ -244,15 +230,6 @@ public class Main extends JavaPlugin {
 	                }
 	            }
 	     });
-		 
-//		 protocolManager.addPacketListener(new PacketAdapter(this, PacketType.Play.Server.BLOCK_BREAK) {
-//	            @Override
-//	            public void onPacketSending(PacketEvent event){
-//	            	Player player = event.getPlayer();
-//	                PacketContainer packet = event.getPacket();
-//	                Bukkit.broadcastMessage("Data " + packet.getShorts().read(0).toString());
-//	            }
-//	     });
 		 
 		 
 		 
@@ -290,7 +267,6 @@ public class Main extends JavaPlugin {
 		 
 		 
 		 File file = new File(this.getDataFolder() + File.separator + "econ.yml");
-	 	 FileConfiguration config = YamlConfiguration.loadConfiguration(file);
 		 
 		 //Check to see if the file already exists. If not, create it.
 		 if (!file.exists()) {
@@ -302,7 +278,6 @@ public class Main extends JavaPlugin {
 		 }
 		 
 		 File bankfile = new File(this.getDataFolder() + File.separator + "bank.yml");
-	 	 FileConfiguration bankconfig = YamlConfiguration.loadConfiguration(bankfile);
 		 
 		 //Check to see if the file already exists. If not, create it.
 		 if (!bankfile.exists()) {
@@ -316,7 +291,6 @@ public class Main extends JavaPlugin {
 		 
 		 
 		 File signfile = new File(this.getDataFolder() + File.separator + "shops.yml");
-	 	 FileConfiguration signconfig = YamlConfiguration.loadConfiguration(signfile);
 		 
 		 //Check to see if the file already exists. If not, create it.
 		 if (!signfile.exists()) {
@@ -329,7 +303,6 @@ public class Main extends JavaPlugin {
 		 
 		 
 		 File configfile = new File(this.getDataFolder() + File.separator + "config.yml");
-	 	 FileConfiguration configconfig = YamlConfiguration.loadConfiguration(configfile);
 		 
 		 //Check to see if the file already exists. If not, create it.
 		 if (!configfile.exists()) {
@@ -393,11 +366,6 @@ public class Main extends JavaPlugin {
 							  int animationStage = (int) (totalPercentage * 10) - 1;
 							  breakAnimation.getIntegers().write(1, animationStage);
 							  if (animationStage == 9) {
-								  
-								  
-
-								  
-								  Field f;
 								  Sound sound = null;
 								try {
 							        World nmsWorld = ((CraftWorld) player.getWorld()).getHandle();
@@ -438,156 +406,7 @@ public class Main extends JavaPlugin {
 	}
 	
 
-//		
-//		
-//		Material.ACACIA_BUTTON
-//		
-//		if () {
-//			return Sound.BLOCK_AMETHYST_BLOCK_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_AMETHYST_CLUSTER_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_ANCIENT_DEBRIS_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_ANVIL_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_AZALEA_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_AZALEA_LEAVES_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_BAMBOO_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_BAMBOO_SAPLING_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_BASALT_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_BIG_DRIPLEAF_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_BONE_BLOCK_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_CALCITE_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_CANDLE_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_CAVE_VINES_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_CHAIN_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_COPPER_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_CORAL_BLOCK_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_CROP_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_DEEPSLATE_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_DEEPSLATE_BRICKS_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_DEEPSLATE_TILES_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_DRIPSTONE_BLOCK_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_FLOWERING_AZALEA_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_FUNGUS_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_GILDED_BLACKSTONE_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_GLASS_BREAK;
-//		} else if (material.equals(Material.ACACIA_LEAVES)) {
-//			return Sound.BLOCK_GRASS_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_GRAVEL_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_HANGING_ROOTS_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_HONEY_BLOCK_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_LADDER_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_LANTERN_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_LARGE_AMETHYST_BUD_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_LODESTONE_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_MEDIUM_AMETHYST_BUD_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_METAL_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_MOSS_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_MOSS_CARPET_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_NETHER_BRICKS_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_NETHER_GOLD_ORE_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_NETHER_ORE_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_NETHER_SPROUTS_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_NETHER_WART_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_NETHERITE_BLOCK_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_NETHERRACK_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_NYLIUM_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_POINTED_DRIPSTONE_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_POLISHED_DEEPSLATE_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_POWDER_SNOW_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_ROOTED_DIRT_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_ROOTS_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_SAND_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_SCAFFOLDING_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_SCULK_SENSOR_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_SHROOMLIGHT_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_SLIME_BLOCK_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_SMALL_AMETHYST_BUD_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_SMALL_DRIPLEAF_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_SNOW_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_SOUL_SAND_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_SOUL_SOIL_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_SPORE_BLOSSOM_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_STEM_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_STONE_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_SWEET_BERRY_BUSH_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_TUFF_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_VINE_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_WART_BLOCK_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_WEEPING_VINES_BREAK;
-//		} else if () {
-//			return Sound.BLOCK_WET_GRASS_BREAK;
-//		} else if (material.equals(Material.ACACIA_PRESSURE_PLATE) || material.equals(Material.ACACIA_PLANKS) || material.equals(Material.ACACIA_LOG) || material.equals(Material.ACACIA_BOAT) || material.equals(Material.ACACIA_BUTTON) || material.equals(Material.ACACIA_DOOR) || material.equals(Material.ACACIA_FENCE) || material.equals(Material.ACACIA_FENCE_GATE)) {
-//			return Sound.BLOCK_WOOD_BREAK;
-//		} else {
-//			return Sound.BLOCK_WOOL_BREAK;
-//		}
-//		
+
   	
 	
 	Runnable orcLightRunnable = new Runnable() {//check if any orcs are in sunlight

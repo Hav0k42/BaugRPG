@@ -130,8 +130,6 @@ public class GeneralSkillTreeMenu implements Listener {
 						
 						event.getWhoClicked().openInventory(inventory);
 						
-						InventoryClickEvent.getHandlerList().unregister(this);
-						plugin.getServer().getPluginManager().registerEvents(plugin.skillTreeMenu, plugin);
 					}
 					
 					
@@ -168,7 +166,6 @@ public class GeneralSkillTreeMenu implements Listener {
 						}
 					}
 					
-					float maxJump = 0.35f;
 					
 					currentItem = jumpItem;
 					skill = "jump";
@@ -583,8 +580,6 @@ public class GeneralSkillTreeMenu implements Listener {
 						
 						event.getWhoClicked().openInventory(inventory);
 						
-						InventoryClickEvent.getHandlerList().unregister(this);
-						plugin.getServer().getPluginManager().registerEvents(plugin.generalSkillTreeMenu, plugin);
 					}
 					
 				}

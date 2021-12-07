@@ -354,8 +354,6 @@ public class SkillTreeMenu implements Listener{
 						
 						event.getWhoClicked().openInventory(inventory);
 						
-						InventoryClickEvent.getHandlerList().unregister(this);
-						plugin.getServer().getPluginManager().registerEvents(plugin.generalSkillTreeMenu, plugin);
 					}
 					
 					event.setCancelled(true);

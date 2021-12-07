@@ -2,12 +2,9 @@ package org.baugindustries.baugrpg.listeners;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import org.baugindustries.baugrpg.Main;
-import org.baugindustries.baugrpg.SignData;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
@@ -28,7 +25,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
 import net.md_5.bungee.api.ChatColor;
-import net.minecraft.world.level.block.BlockChest;
 
 public class SignShopListener implements Listener{
 	private Main plugin;
@@ -36,6 +32,7 @@ public class SignShopListener implements Listener{
 		this.plugin = plugin;
 	}
 	
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onClickSign(PlayerInteractEvent event) {
 		

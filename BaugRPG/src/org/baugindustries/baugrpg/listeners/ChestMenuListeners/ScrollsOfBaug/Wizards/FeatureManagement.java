@@ -26,7 +26,6 @@ public class FeatureManagement implements Listener{
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent event) {
 		if (event.getWhoClicked() instanceof Player) {
-			Player player = (Player)event.getWhoClicked();
 			if (event.getClickedInventory() != null) {
 				if (event.getView().getTitle().equals("Feature Management")) {
 					File file = new File(plugin.getDataFolder() + File.separator + "config.yml");

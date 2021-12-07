@@ -1,20 +1,11 @@
 package org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Elves.CommunismHub;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
 
 import org.baugindustries.baugrpg.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,8 +14,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -45,7 +34,6 @@ public class ElvesCommunismInventoryListListener implements Listener{
 					
 						
 						
-						List<OfflinePlayer> allOfflineElves = plugin.getAllOfflineElves();
 						
 						
 						
@@ -84,14 +72,11 @@ public class ElvesCommunismInventoryListListener implements Listener{
 							event.getWhoClicked().openInventory(inventory);
 							
 							
-							InventoryClickEvent.getHandlerList().unregister(this);
-							plugin.getServer().getPluginManager().registerEvents(plugin.elvesCommunismHubInventoryListener, plugin);
 						} else if (event.getCurrentItem().getType().equals(Material.PLAYER_HEAD)) {//View Selected Player's Inventory
 							ItemStack selectedPlayerHead = event.getCurrentItem();
 							SkullMeta selectedPlayerHeadMeta = (SkullMeta)selectedPlayerHead.getItemMeta();
 							OfflinePlayer selectedOfflinePlayer = plugin.getServer().getOfflinePlayer(selectedPlayerHeadMeta.getOwningPlayer().getUniqueId());//theres a possibility this does not work.
 							
-							InventoryClickEvent.getHandlerList().unregister(this);
 							player.performCommand("oi " + selectedOfflinePlayer.getName());
 						}
 						event.setCancelled(true);

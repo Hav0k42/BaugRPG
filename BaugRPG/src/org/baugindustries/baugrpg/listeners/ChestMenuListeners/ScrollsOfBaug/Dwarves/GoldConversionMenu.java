@@ -3,23 +3,16 @@ package org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Dw
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
 
 import org.baugindustries.baugrpg.Main;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -60,7 +53,6 @@ public class GoldConversionMenu implements Listener{
 								e.printStackTrace();
 								
 							}
-							InventoryClickEvent.getHandlerList().unregister(this);
 							event.getView().close();
 							event.setCancelled(true);
 						}

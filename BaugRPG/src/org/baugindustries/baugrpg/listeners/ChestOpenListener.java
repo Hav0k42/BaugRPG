@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import org.baugindustries.baugrpg.Main;
-import org.baugindustries.baugrpg.SignData;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

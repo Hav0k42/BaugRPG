@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.UUID;
 
 import org.baugindustries.baugrpg.Main;
-import org.baugindustries.baugrpg.SignData;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Sign;
 import org.bukkit.configuration.file.FileConfiguration;

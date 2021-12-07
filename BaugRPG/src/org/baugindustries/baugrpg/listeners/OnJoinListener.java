@@ -5,16 +5,13 @@ package org.baugindustries.baugrpg.listeners;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 
 import org.baugindustries.baugrpg.Main;
-import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ChooseRaceInventoryListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.craftbukkit.libs.org.apache.http.impl.execchain.ProtocolExec;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -25,8 +22,6 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class OnJoinListener implements Listener{
 	
@@ -121,26 +116,6 @@ public class OnJoinListener implements Listener{
 				player.setUnsaturatedRegenRate(80);
 			}
 		}
-		
-		//old code
-	 	
-//		//Update player's inventory if it was tampered with while they were offline.
-//		File file = new File(plugin.getDataFolder() + File.separator + "inventoryData" + File.separator + event.getPlayer().getUniqueId() + ".yml");
-//		FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-//		if (file.exists()) {
-//			List<ItemStack> inventoryContentsList = (List<ItemStack>) config.get("Inventory");
-//			ItemStack[] inventoryContents = new ItemStack[inventoryContentsList.size()];
-//			for (int i = 0; i < inventoryContentsList.size(); i++) {
-//				inventoryContents[i] = inventoryContentsList.get(i);
-//			}
-//			event.getPlayer().getInventory().setContents(inventoryContents);
-//			event.getPlayer().updateInventory();
-//		}
-		
-		
-		
-		
-		
 		
 		//Player has not joined before, and needs to get a race assigned.
 		PersistentDataContainer data = event.getPlayer().getPersistentDataContainer();

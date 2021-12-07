@@ -1,7 +1,6 @@
 package org.baugindustries.baugrpg.listeners.ChestMenuListeners;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.baugindustries.baugrpg.Main;
 import org.bukkit.Bukkit;
@@ -12,7 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -83,8 +81,6 @@ public class ConfirmRaceInventoryListener implements Listener{
 							
 							event.getWhoClicked().openInventory(inventory);
 							
-							InventoryClickEvent.getHandlerList().unregister(this);
-							plugin.getServer().getPluginManager().registerEvents(plugin.chooseRaceInventoryListener, plugin);
 						} else if (event.getSlot() == 11 && event.getCurrentItem().equals(plugin.createItem(Material.LIME_STAINED_GLASS_PANE, 1, ChatColor.GREEN + "Yes", null))) {//Yes
 							
 							PersistentDataContainer data = event.getWhoClicked().getPersistentDataContainer();
@@ -102,7 +98,6 @@ public class ConfirmRaceInventoryListener implements Listener{
 							}
 							data.set(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER, selectedRaceInt);//Men: 1, Elves: 2, Dwarves: 3, Orcs: 4
 							
-							InventoryClickEvent.getHandlerList().unregister(this);
 							player.closeInventory();
 							
 							

@@ -8,9 +8,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
-
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.persistence.PersistentDataType; 
 
 
 public class RaceWizard implements CommandExecutor {
@@ -22,6 +20,7 @@ public class RaceWizard implements CommandExecutor {
 		plugin.getCommand("racewizard").setExecutor(this);
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (!(sender instanceof Player)) {
