@@ -188,6 +188,26 @@ public class Main extends JavaPlugin {
 		 this.getServer().getPluginManager().registerEvents(playerDamageListener, this);
 		 this.getServer().getPluginManager().registerEvents(playerMineListener, this);
 		 this.getServer().getPluginManager().registerEvents(playerAdvancementDoneListener, this);
+		 
+		 this.getServer().getPluginManager().registerEvents(chooseRaceInventoryListener, this);
+		 this.getServer().getPluginManager().registerEvents(confirmRaceInventoryListener, this);
+		 this.getServer().getPluginManager().registerEvents(goldConversionMenu, this);
+		 this.getServer().getPluginManager().registerEvents(scrollsOfBaugDwarvesInventoryListener, this);
+		 this.getServer().getPluginManager().registerEvents(scrollsOfBaugElvesInventoryListener, this);
+		 this.getServer().getPluginManager().registerEvents(elvesCommunismEnderChestListListener, this);
+		 this.getServer().getPluginManager().registerEvents(elvesCommunismHubInventoryListener, this);
+		 this.getServer().getPluginManager().registerEvents(elvesCommunismInventoryListListener, this);
+		 this.getServer().getPluginManager().registerEvents(scrollsOfBaugMenInventoryListener, this);
+		 this.getServer().getPluginManager().registerEvents(scrollsOfBaugOrcsInventoryListener, this);
+		 this.getServer().getPluginManager().registerEvents(featureManagement, this);
+		 this.getServer().getPluginManager().registerEvents(scrollsOfBaugWizardsInventoryListener, this);
+		 this.getServer().getPluginManager().registerEvents(playerSnoopingEnderChestListListener, this);
+		 this.getServer().getPluginManager().registerEvents(playerSnoopingHubInventoryListener, this);
+		 this.getServer().getPluginManager().registerEvents(playerSnoopingInventoryListListener, this);
+		 this.getServer().getPluginManager().registerEvents(skillTreeMenu, this);
+		 this.getServer().getPluginManager().registerEvents(generalSkillTreeMenu, this);
+		 this.getServer().getPluginManager().registerEvents(playerAdvancementDoneListener, this);
+		 
 		 new Pay(this);
 		 new Balance(this);
 		 new ResetRace(this);
