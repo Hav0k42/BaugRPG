@@ -206,7 +206,6 @@ public class Main extends JavaPlugin {
 		 this.getServer().getPluginManager().registerEvents(playerSnoopingInventoryListListener, this);
 		 this.getServer().getPluginManager().registerEvents(skillTreeMenu, this);
 		 this.getServer().getPluginManager().registerEvents(generalSkillTreeMenu, this);
-		 this.getServer().getPluginManager().registerEvents(playerAdvancementDoneListener, this);
 		 
 		 new Pay(this);
 		 new Balance(this);

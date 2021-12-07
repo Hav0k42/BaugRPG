@@ -1,6 +1,7 @@
 package org.baugindustries.baugrpg.listeners;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.baugindustries.baugrpg.Main;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -19,14 +20,23 @@ public class PlayerAdvancementDoneListener implements Listener {
 	}
 	
 	@EventHandler
-	public void PlayerAdvancementDoneEvent(PlayerAdvancementDoneEvent event) {
+	public void PlayerAdvancementDoneEvent(PlayerAdvancementDoneEvent event) {//TOTAL OF 91 AVAILABLE SKILL POINTS
 		Player player = event.getPlayer();
 		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
 	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
 	 	
 	 	skillsconfig.set("skillPoints", skillsconfig.getInt("skillPoints") + 1);
-	 	if (skillsconfig.getInt("skillPoints") > 4) {
+	 	String name = event.getAdvancement().getKey().toString();
+	 	if (skillsconfig.getInt("skillPoints") > 4 && !(name.substring(0, 16).equals("minecraft:recipe"))) {
+	 		player.sendMessage(name);
 		 	player.sendMessage(ChatColor.GOLD + "Gained skill point. Run /bs to use them. Total points: " + ChatColor.DARK_PURPLE + skillsconfig.getInt("skillPoints"));
 	 	}
+	 	
+	 	try {
+			skillsconfig.save(skillsfile);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
