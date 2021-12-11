@@ -41,7 +41,9 @@ import org.baugindustries.baugrpg.listeners.PlayerJumpListener;
 import org.baugindustries.baugrpg.listeners.PlayerMineListener;
 import org.baugindustries.baugrpg.listeners.SignBreakListener;
 import org.baugindustries.baugrpg.listeners.SignShopListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ChooseClassListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ChooseRaceInventoryListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ConfirmClassListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ConfirmRaceInventoryListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.GeneralSkillTreeMenu;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.SkillTreeMenu;
@@ -158,6 +160,8 @@ public class Main extends JavaPlugin {
 	public SkillTreeMenu skillTreeMenu = new SkillTreeMenu(this);
 	public GeneralSkillTreeMenu generalSkillTreeMenu = new GeneralSkillTreeMenu(this);
 	public PlayerAdvancementDoneListener playerAdvancementDoneListener = new PlayerAdvancementDoneListener(this);
+	public ChooseClassListener chooseClassListener = new ChooseClassListener(this);
+	public ConfirmClassListener confirmClassListener = new ConfirmClassListener(this);
 	
 	
 	
@@ -206,6 +210,8 @@ public class Main extends JavaPlugin {
 		 this.getServer().getPluginManager().registerEvents(playerSnoopingInventoryListListener, this);
 		 this.getServer().getPluginManager().registerEvents(skillTreeMenu, this);
 		 this.getServer().getPluginManager().registerEvents(generalSkillTreeMenu, this);
+		 this.getServer().getPluginManager().registerEvents(chooseClassListener, this);
+		 this.getServer().getPluginManager().registerEvents(confirmClassListener, this);
 		 
 		 new Pay(this);
 		 new Balance(this);

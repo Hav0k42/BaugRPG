@@ -37,6 +37,7 @@ public class BaugScroll implements CommandExecutor {
 		}
 		
 		Player player = (Player)sender;
+		
 		int race = 0;
 		
 		if (player.hasPermission("minecraft.command.help")) {//everyone has this command hopefully
@@ -44,7 +45,7 @@ public class BaugScroll implements CommandExecutor {
 			if (!data.has(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER)) {//Player is a normie, and therefore cannot open the Scrolls of Baug.
 				player.sendMessage("You are not part of a race, join one using /setrace");
 			} else {//Player is a part of a race and can read the baug scroll.
-
+				
 				int inventorySize = 54;
 				String inventoryName = "Scrolls of Baug";
 				Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);

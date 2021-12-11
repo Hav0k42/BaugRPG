@@ -59,12 +59,28 @@ public class ScrollsOfBaugMenInventoryListener implements Listener{
 										ChatColor.GOLD + "General Skills", 
 										Arrays.asList(ChatColor.LIGHT_PURPLE + "Passive skills every player can use.")));
 								
-								inventory.setItem(5, plugin.createItem(
-										Material.NETHERITE_SWORD,
-										1, 
-										ChatColor.GOLD + "Race Skills", 
-										Arrays.asList(ChatColor.LIGHT_PURPLE + "Race specific skills that are more speciallized.")));
-								
+								if (skillsconfig.getString("class") == null) {
+									inventory.setItem(5, plugin.createItem(
+											Material.NETHERITE_SWORD,
+											1, 
+											ChatColor.GOLD + "Race Skills", 
+											Arrays.asList(ChatColor.LIGHT_PURPLE + "Choose your class.")));
+								} else {
+									String profession = skillsconfig.getString("class");
+									Material professionMaterial = Material.NETHERITE_SWORD;
+									if (profession.equals("Stable Master"))
+										professionMaterial = Material.LEATHER_HORSE_ARMOR;
+									if (profession.equals("Armorer"))
+										professionMaterial = Material.IRON_CHESTPLATE;
+									if (profession.equals("Shepherd"))
+										professionMaterial = Material.STICK;
+									inventory.setItem(5, plugin.createItem(
+											professionMaterial,
+											1, 
+											ChatColor.GOLD + profession + " Skills", 
+											Arrays.asList(ChatColor.LIGHT_PURPLE + "Race specific skills that are more speciallized.")));
+									}
+									
 								event.getWhoClicked().openInventory(inventory);
 							} else {
 								int inventorySize = 54;

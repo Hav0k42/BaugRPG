@@ -58,11 +58,27 @@ public class ScrollsOfBaugOrcsInventoryListener implements Listener{
 									ChatColor.GOLD + "General Skills", 
 									Arrays.asList(ChatColor.LIGHT_PURPLE + "Passive skills every player can use.")));
 							
-							inventory.setItem(5, plugin.createItem(
-									Material.NETHERITE_HELMET,
-									1, 
-									ChatColor.GOLD + "Race Skills", 
-									Arrays.asList(ChatColor.LIGHT_PURPLE + "Race specific skills that are more speciallized.")));
+							if (skillsconfig.getString("class") == null) {
+								inventory.setItem(5, plugin.createItem(
+										Material.NETHERITE_HELMET,
+										1, 
+										ChatColor.GOLD + "Race Skills", 
+										Arrays.asList(ChatColor.LIGHT_PURPLE + "Choose your class.")));
+							} else {
+								String profession = skillsconfig.getString("class");
+								Material professionMaterial = Material.NETHERITE_HELMET;
+								if (profession.equals("Brewer"))
+									professionMaterial = Material.POTION;
+								if (profession.equals("Berserker"))
+									professionMaterial = Material.NETHERITE_AXE;
+								if (profession.equals("Scrapper"))
+									professionMaterial = Material.NETHERITE_SCRAP;
+								inventory.setItem(5, plugin.createItem(
+										professionMaterial,
+										1, 
+										ChatColor.GOLD + profession + " Skills", 
+										Arrays.asList(ChatColor.LIGHT_PURPLE + "Race specific skills that are more speciallized.")));
+								}
 							
 							event.getWhoClicked().openInventory(inventory);
 						} else {

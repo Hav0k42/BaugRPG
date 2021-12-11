@@ -6,6 +6,7 @@ import java.util.Arrays;
 import org.baugindustries.baugrpg.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -14,6 +15,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -28,6 +31,10 @@ public class SkillTreeMenu implements Listener{
 	public void onInventoryClick(InventoryClickEvent event) {
 		if (event.getWhoClicked() instanceof Player) {
 			Player player = (Player)event.getWhoClicked();
+			PersistentDataContainer data = player.getPersistentDataContainer();
+			int race = 0;
+			File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
+		 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
 			if (event.getClickedInventory() != null) {
 				if (event.getView().getTitle().equals("Skill Trees")) {
 					ItemStack generalSkillsItem = plugin.createItem(
@@ -36,17 +43,99 @@ public class SkillTreeMenu implements Listener{
 							ChatColor.GOLD + "General Skills", 
 							Arrays.asList(ChatColor.LIGHT_PURPLE + "Passive skills every player can use."));
 					
+					
+					
 					ItemStack backItem = plugin.createItem(Material.RED_STAINED_GLASS_PANE, 1, ChatColor.RED + "Back");
 					
 					if (event.getSlot() == 0 && event.getCurrentItem().equals(backItem)) {//back to baug scroll
 						player.performCommand("baugscroll");
+					} else if (event.getSlot() == 5 && event.getClickedInventory().getItem(3).equals(generalSkillsItem)) {//class skills
+						if (skillsconfig.getString("class") == null) {
+							race = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
+							int inventorySize = 27;
+							String inventoryName = "Choose your Class";
+							Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
+							switch (race) {
+								case 1:
+									inventory.setItem(11, plugin.createItem(
+											Material.LEATHER_HORSE_ARMOR, 
+											1, 
+											ChatColor.DARK_AQUA + "Stable Master"));
+									
+									inventory.setItem(13, plugin.createItem(
+											Material.IRON_CHESTPLATE, 
+											1, 
+											ChatColor.DARK_AQUA + "Armorer"));
+									
+									inventory.setItem(15, plugin.createItem(
+											Material.STICK, 
+											1, 
+											ChatColor.DARK_AQUA + "Shepherd"));
+									break;
+									
+								case 2:
+									inventory.setItem(11, plugin.createItem(
+											Material.IRON_HOE, 
+											1, 
+											ChatColor.DARK_GREEN + "Farmer"));
+									
+									inventory.setItem(13, plugin.createItem(
+											Material.LOOM, 
+											1,
+											ChatColor.DARK_GREEN + "Spinner"));
+									
+									inventory.setItem(15, plugin.createItem(
+											Material.ANVIL, 
+											1, 
+											ChatColor.DARK_GREEN + "Weaponsmith"));
+									break;
+									
+								case 3:
+									inventory.setItem(11, plugin.createItem(
+											Material.BLAST_FURNACE, 
+											1, 
+											ChatColor.DARK_PURPLE + "Metallurgist"));
+									
+									inventory.setItem(13, plugin.createItem(
+											Material.DIAMOND, 
+											1, 
+											ChatColor.DARK_PURPLE + "Jeweller"));
+									
+									inventory.setItem(15, plugin.createItem(
+											Material.IRON_PICKAXE, 
+											1, 
+											ChatColor.DARK_PURPLE + "Miner"));
+									break;
+									
+								case 4:
+									inventory.setItem(11, plugin.createItem(
+											Material.POTION, 
+											1, 
+											ChatColor.DARK_RED + "Brewer"));
+									
+									inventory.setItem(13, plugin.createItem(
+											Material.NETHERITE_AXE, 
+											1, 
+											ChatColor.DARK_RED + "Berserker"));
+									
+									inventory.setItem(15, plugin.createItem(
+											Material.NETHERITE_SCRAP, 
+											1, 
+											ChatColor.DARK_RED + "Scrapper"));
+									break;
+							}
+							
+							player.openInventory(inventory);
+								
+						} else {
+							
+						}
 					} else if (event.getSlot() == 3 && event.getCurrentItem().equals(generalSkillsItem)) {//general skills
 						int inventorySize = 54;
 						String inventoryName = "General Skills";
 						Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
 						
-						File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
-					 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
+						
 						
 						inventory.setItem(0, plugin.createItem(
 								Material.NETHER_STAR,

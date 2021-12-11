@@ -96,11 +96,27 @@ public class ScrollsOfBaugElvesInventoryListener implements Listener{
 										ChatColor.GOLD + "General Skills", 
 										Arrays.asList(ChatColor.LIGHT_PURPLE + "Passive skills every player can use.")));
 								
-								inventory.setItem(5, plugin.createItem(
-										Material.BOW,
-										1, 
-										ChatColor.GOLD + "Race Skills", 
-										Arrays.asList(ChatColor.LIGHT_PURPLE + "Race specific skills that are more speciallized.")));
+								if (skillsconfig.getString("class") == null) {
+									inventory.setItem(5, plugin.createItem(
+											Material.BOW,
+											1, 
+											ChatColor.GOLD + "Race Skills", 
+											Arrays.asList(ChatColor.LIGHT_PURPLE + "Choose your class.")));
+								} else {
+									String profession = skillsconfig.getString("class");
+									Material professionMaterial = Material.BOW;
+									if (profession.equals("Farmer"))
+										professionMaterial = Material.IRON_HOE;
+									if (profession.equals("Spinner"))
+										professionMaterial = Material.LOOM;
+									if (profession.equals("Weaponsmith"))
+										professionMaterial = Material.ANVIL;
+									inventory.setItem(5, plugin.createItem(
+											professionMaterial,
+											1, 
+											ChatColor.GOLD + profession + " Skills", 
+											Arrays.asList(ChatColor.LIGHT_PURPLE + "Race specific skills that are more speciallized.")));
+								}
 								
 								event.getWhoClicked().openInventory(inventory);
 							} else {
