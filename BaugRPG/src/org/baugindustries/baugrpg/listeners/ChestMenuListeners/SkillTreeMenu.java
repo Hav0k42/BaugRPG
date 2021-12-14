@@ -65,70 +65,128 @@ public class SkillTreeMenu implements Listener{
 									inventory.setItem(13, plugin.createItem(
 											Material.IRON_CHESTPLATE, 
 											1, 
-											ChatColor.DARK_AQUA + "Armorer"));
+											ChatColor.DARK_AQUA + "Steeled Armorer"));
 									
 									inventory.setItem(15, plugin.createItem(
 											Material.STICK, 
 											1, 
-											ChatColor.DARK_AQUA + "Shepherd"));
+											ChatColor.DARK_AQUA + "Verdant Shepherd"));
 									break;
 									
 								case 2:
 									inventory.setItem(11, plugin.createItem(
-											Material.IRON_HOE, 
+											Material.LILY_OF_THE_VALLEY, 
 											1, 
-											ChatColor.DARK_GREEN + "Farmer"));
+											ChatColor.DARK_GREEN + "Enchanted Botanist"));
 									
 									inventory.setItem(13, plugin.createItem(
-											Material.LOOM, 
+											Material.NETHER_STAR, 
 											1,
-											ChatColor.DARK_GREEN + "Spinner"));
+											ChatColor.DARK_GREEN + "Lunar Artificer"));
 									
 									inventory.setItem(15, plugin.createItem(
 											Material.ANVIL, 
 											1, 
-											ChatColor.DARK_GREEN + "Weaponsmith"));
+											ChatColor.DARK_GREEN + "Woodland Craftsman"));
 									break;
 									
 								case 3:
 									inventory.setItem(11, plugin.createItem(
 											Material.BLAST_FURNACE, 
 											1, 
-											ChatColor.DARK_PURPLE + "Metallurgist"));
+											ChatColor.DARK_PURPLE + "Radiant Metallurgist"));
 									
 									inventory.setItem(13, plugin.createItem(
 											Material.DIAMOND, 
 											1, 
-											ChatColor.DARK_PURPLE + "Jeweller"));
+											ChatColor.DARK_PURPLE + "Arcane Jeweler"));
 									
 									inventory.setItem(15, plugin.createItem(
-											Material.IRON_PICKAXE, 
+											Material.GOLDEN_PICKAXE, 
 											1, 
-											ChatColor.DARK_PURPLE + "Miner"));
+											ChatColor.DARK_PURPLE + "Gilded Miner"));
 									break;
 									
 								case 4:
 									inventory.setItem(11, plugin.createItem(
 											Material.POTION, 
 											1, 
-											ChatColor.DARK_RED + "Brewer"));
+											ChatColor.DARK_RED + "Dark Alchemist"));
 									
 									inventory.setItem(13, plugin.createItem(
 											Material.NETHERITE_AXE, 
 											1, 
-											ChatColor.DARK_RED + "Berserker"));
+											ChatColor.DARK_RED + "Enraged Berserker"));
 									
 									inventory.setItem(15, plugin.createItem(
 											Material.NETHERITE_SCRAP, 
 											1, 
-											ChatColor.DARK_RED + "Scrapper"));
+											ChatColor.DARK_RED + "Greedy Scrapper"));
 									break;
 							}
 							
 							player.openInventory(inventory);
 								
 						} else {
+							String profession = skillsconfig.getString("class");
+							int inventorySize = 45;
+							String inventoryName = profession + " Skills";
+							Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
+							ItemStack blankItem = plugin.createItem(Material.GRAY_STAINED_GLASS_PANE, 1, " ");
+							ItemStack lockedItem = plugin.createItem(Material.BLACK_STAINED_GLASS_PANE, 1, ChatColor.DARK_GRAY + "LOCKED");
+							ItemStack ownedItem = plugin.createItem(Material.LIME_STAINED_GLASS_PANE, 1, ChatColor.GREEN + "UPGRADED");
 							
+							for (int i = 0; i < 45; i++) {
+								if (i % 9 == 9 || i % 9 == 8 || i % 9 == 4 || i % 9 == 0) {
+									inventory.setItem(i, blankItem);
+								}
+							}
+							inventory.setItem(15, blankItem);
+							inventory.setItem(16, blankItem);
+							inventory.setItem(9, plugin.createItem(
+									Material.BOOK,
+									1,
+									ChatColor.GOLD + "Available Points", 
+									Arrays.asList(ChatColor.LIGHT_PURPLE + "" + skillsconfig.get("skillPoints"))));
+							
+							inventory.setItem(36, plugin.createItem(
+									Material.RED_STAINED_GLASS_PANE,
+									1,
+									ChatColor.RED + "Back"));
+							inventory.setItem(0, plugin.createItem(
+									Material.NETHER_STAR,
+									1,
+									ChatColor.GOLD + "General Skill Tree", 
+									Arrays.asList(ChatColor.LIGHT_PURPLE + "Upgrade different passive skills.")));
+							
+							
+							if (profession.equals("Stable Master")) {
+								
+							} else if (profession.equals("Steeled Armorer")) {
+								
+							} else if (profession.equals("Verdant Shepherd")) {
+								
+							} else if (profession.equals("Enchanted Botanist")) {
+								
+							} else if (profession.equals("Lunar Artificer")) {
+								
+							} else if (profession.equals("Woodland Craftsman")) {
+								
+							} else if (profession.equals("Radiant Metallurgist")) {
+								
+							} else if (profession.equals("Arcane Jeweler")) {
+								
+							} else if (profession.equals("Gilded Miner")) {
+								
+							} else if (profession.equals("Dark Alchemist")) {
+								
+							} else if (profession.equals("Enraged Berserker")) {
+								
+							} else if (profession.equals("Greedy Scrapper")) {
+								
+							}
+							
+							player.openInventory(inventory);
 						}
 					} else if (event.getSlot() == 3 && event.getCurrentItem().equals(generalSkillsItem)) {//general skills
 						int inventorySize = 54;

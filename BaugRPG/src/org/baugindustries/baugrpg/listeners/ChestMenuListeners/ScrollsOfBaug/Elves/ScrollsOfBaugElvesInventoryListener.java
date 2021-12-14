@@ -105,12 +105,12 @@ public class ScrollsOfBaugElvesInventoryListener implements Listener{
 								} else {
 									String profession = skillsconfig.getString("class");
 									Material professionMaterial = Material.BOW;
-									if (profession.equals("Farmer"))
-										professionMaterial = Material.IRON_HOE;
-									if (profession.equals("Spinner"))
-										professionMaterial = Material.LOOM;
-									if (profession.equals("Weaponsmith"))
+									if (profession.equals("Enchanted Botanist"))
+										professionMaterial = Material.LILY_OF_THE_VALLEY;
+									if (profession.equals("Woodland Craftsman"))
 										professionMaterial = Material.ANVIL;
+									if (profession.equals("Lunar Artificer"))
+										professionMaterial = Material.NETHER_STAR;
 									inventory.setItem(5, plugin.createItem(
 											professionMaterial,
 											1, 

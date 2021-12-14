@@ -70,9 +70,9 @@ public class ScrollsOfBaugMenInventoryListener implements Listener{
 									Material professionMaterial = Material.NETHERITE_SWORD;
 									if (profession.equals("Stable Master"))
 										professionMaterial = Material.LEATHER_HORSE_ARMOR;
-									if (profession.equals("Armorer"))
+									if (profession.equals("Steeled Armorer"))
 										professionMaterial = Material.IRON_CHESTPLATE;
-									if (profession.equals("Shepherd"))
+									if (profession.equals("Verdant Shepherd"))
 										professionMaterial = Material.STICK;
 									inventory.setItem(5, plugin.createItem(
 											professionMaterial,

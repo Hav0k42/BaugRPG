@@ -67,11 +67,11 @@ public class ScrollsOfBaugOrcsInventoryListener implements Listener{
 							} else {
 								String profession = skillsconfig.getString("class");
 								Material professionMaterial = Material.NETHERITE_HELMET;
-								if (profession.equals("Brewer"))
+								if (profession.equals("Dark Alchemist"))
 									professionMaterial = Material.POTION;
-								if (profession.equals("Berserker"))
+								if (profession.equals("Enraged Berserker"))
 									professionMaterial = Material.NETHERITE_AXE;
-								if (profession.equals("Scrapper"))
+								if (profession.equals("Greedy Scrapper"))
 									professionMaterial = Material.NETHERITE_SCRAP;
 								inventory.setItem(5, plugin.createItem(
 										professionMaterial,

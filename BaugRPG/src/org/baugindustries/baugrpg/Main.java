@@ -66,6 +66,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
+import org.bukkit.World.Environment;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
@@ -452,6 +453,11 @@ public class Main extends JavaPlugin {
 			    			 }
 		    			 }
 //		    			 orcLight();
+		    		 }
+		    		 if (race == 2) {//elves
+		    			 if (p.getWorld().getEnvironment().equals(Environment.NETHER)) {
+		    				 p.setFireTicks(400);
+		    			 }
 		    		 }
 		    	 }
 		     }

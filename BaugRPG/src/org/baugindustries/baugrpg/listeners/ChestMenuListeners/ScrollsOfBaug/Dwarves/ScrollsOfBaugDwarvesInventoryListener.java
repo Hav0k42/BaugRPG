@@ -73,12 +73,12 @@ public class ScrollsOfBaugDwarvesInventoryListener implements Listener{
 							} else {
 								String profession = skillsconfig.getString("class");
 								Material professionMaterial = Material.NETHERITE_AXE;
-								if (profession.equals("Metallurgist"))
+								if (profession.equals("Radiant Metallurgist"))
 									professionMaterial = Material.BLAST_FURNACE;
-								if (profession.equals("Jeweller"))
+								if (profession.equals("Arcane Jeweller"))
 									professionMaterial = Material.DIAMOND;
-								if (profession.equals("Miner"))
-									professionMaterial = Material.IRON_PICKAXE;
+								if (profession.equals("Gilded Miner"))
+									professionMaterial = Material.GOLDEN_PICKAXE;
 								inventory.setItem(5, plugin.createItem(
 										professionMaterial,
 										1, 
