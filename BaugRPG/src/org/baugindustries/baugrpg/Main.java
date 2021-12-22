@@ -68,10 +68,10 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
-import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -91,7 +91,11 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.BlockPosition;
 import com.comphenix.protocol.wrappers.EnumWrappers;
-import com.comphenix.protocol.wrappers.MinecraftKey;
+
+import net.minecraft.server.level.WorldServer;
+import net.minecraft.sounds.SoundEffect;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundEffectType;
 
 
 public class Main extends JavaPlugin {
@@ -387,13 +391,13 @@ public class Main extends JavaPlugin {
 							  if (animationStage == 9) {
 								  Sound sound = null;
 								try {
-							        World nmsWorld = ((CraftWorld) player.getWorld()).getHandle();
+									WorldServer nmsWorld = ((CraftWorld) player.getWorld()).getHandle();
 							        Block nmsBlock = nmsWorld.getType(new net.minecraft.core.BlockPosition(pos.getX(), pos.getY(), pos.getZ())).getBlock();
 							        SoundEffectType soundEffectType = nmsBlock.getStepSound(null);
 							        SoundEffect soundEffect = soundEffectType.c();//c is breaksound, f is hitsound
-							        
-							        MinecraftKey nmsString = soundEffect.a();//return minecraftkey of soundeffect
-							        
+
+							        net.minecraft.resources.MinecraftKey nmsString = soundEffect.a();//return minecraftkey of soundeffect
+
 							        sound = Sound.valueOf(nmsString.getKey().replace(".", "_").toUpperCase());
 								} catch (SecurityException | IllegalArgumentException e) {
 									// TODO Auto-generated catch block
