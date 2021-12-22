@@ -137,7 +137,7 @@ public class SkillTreeMenu implements Listener{
 							ItemStack ownedItem = plugin.createItem(Material.LIME_STAINED_GLASS_PANE, 1, ChatColor.GREEN + "UPGRADED");
 							
 							for (int i = 0; i < 45; i++) {
-								if (i % 9 == 9 || i % 9 == 8 || i % 9 == 4 || i % 9 == 0) {
+								if (i % 9 == 8 || i % 9 == 5 || i % 9 == 1 || i % 9 == 0) {
 									inventory.setItem(i, blankItem);
 								}
 							}
