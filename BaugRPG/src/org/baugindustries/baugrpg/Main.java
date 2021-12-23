@@ -71,6 +71,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.World.Environment;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -390,7 +391,7 @@ public class Main extends JavaPlugin {
 							  if (animationStage == 9) {
 								  Sound sound = null;
 								try {
-									World nmsWorld = (World) player.getWorld();
+									World nmsWorld = ((CraftWorld) player.getWorld()).getHandle();
 							        Block nmsBlock = nmsWorld.getType(new net.minecraft.core.BlockPosition(pos.getX(), pos.getY(), pos.getZ())).getBlock();
 							        SoundEffectType soundEffectType = nmsBlock.getStepSound(null);
 							        SoundEffect soundEffect = soundEffectType.c();//c is breaksound, f is hitsound
