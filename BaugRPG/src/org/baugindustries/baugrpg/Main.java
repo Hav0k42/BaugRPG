@@ -391,11 +391,11 @@ public class Main extends JavaPlugin {
 								  Sound sound = null;
 								try {
 									World nmsWorld = (World) player.getWorld();
-							        Block nmsBlock = nmsWorld.getType(new net.minecraft.core.BlockPosition(pos.getX(), pos.getY(), pos.getZ())).getBlock();
-							        SoundEffectType soundEffectType = nmsBlock.getStepSound(null);
-							        SoundEffect soundEffect = soundEffectType.c();//c is breaksound, f is hitsound
+							        Block nmsBlock = nmsWorld.getBlockState(new net.minecraft.core.BlockPosition(pos.getX(), pos.getY(), pos.getZ())).getBlock();
+							        SoundEffectType soundEffectType = nmsBlock.getSoundType(null);
+							        SoundEffect soundEffect = soundEffectType.getBreakSound();//c is breaksound, f is hitsound
 
-							        net.minecraft.resources.MinecraftKey nmsString = soundEffect.a();//return minecraftkey of soundeffect
+							        net.minecraft.resources.MinecraftKey nmsString = soundEffect.getLocation();//return minecraftkey of soundeffect
 
 							        sound = Sound.valueOf(nmsString.getNamespace().replace(".", "_").toUpperCase());
 								} catch (SecurityException | IllegalArgumentException e) {
