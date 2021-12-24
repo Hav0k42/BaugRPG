@@ -71,6 +71,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.World.Environment;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.craftbukkit.v1_18_R1.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -91,6 +92,7 @@ import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.BlockPosition;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 
+import net.minecraft.server.level.WorldServer;
 import net.minecraft.sounds.SoundEffect;
 import net.minecraft.world.level.World;
 import net.minecraft.world.level.block.Block;
@@ -390,14 +392,16 @@ public class Main extends JavaPlugin {
 							  if (animationStage == 9) {
 								  Sound sound = null;
 								try {
-									World nmsWorld = (World) player.getWorld();
-							        Block nmsBlock = nmsWorld.getBlockState(new net.minecraft.core.BlockPosition(pos.getX(), pos.getY(), pos.getZ())).getBlock();
-							        SoundEffectType soundEffectType = nmsBlock.getSoundType(null);
-							        SoundEffect soundEffect = soundEffectType.getBreakSound();//c is breaksound, f is hitsound
+									WorldServer nmsWorld = ((CraftWorld) player.getWorld()).getHandle();
+							        Block nmsBlock = nmsWorld.a_(new net.minecraft.core.BlockPosition(pos.getX(), pos.getY(), pos.getZ())).b();
+							        
+							        SoundEffectType soundEffectType = nmsBlock.m(null);
+							        SoundEffect soundEffect = soundEffectType.c();//c is breaksound, f is hitsound
 
-							        net.minecraft.resources.MinecraftKey nmsString = soundEffect.getLocation();//return minecraftkey of soundeffect
-
-							        sound = Sound.valueOf(nmsString.getNamespace().replace(".", "_").toUpperCase());
+							        net.minecraft.resources.MinecraftKey nmsString = soundEffect.a();//return minecraftkey of soundeffect
+							        
+							        sound = Sound.valueOf(nmsString.toString().replace(".", "_").toUpperCase().substring(10));
+							        
 								} catch (SecurityException | IllegalArgumentException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
