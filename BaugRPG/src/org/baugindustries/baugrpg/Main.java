@@ -73,11 +73,14 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_18_R1.CraftWorld;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.scoreboard.Team;
@@ -449,7 +452,9 @@ public class Main extends JavaPlugin {
 		    			 if (skyLight > 3) {
 			    			 if (!p.getWorld().hasStorm()) {
 			    				 if (!(p.getWorld().getTime() < 23500 && p.getWorld().getTime() > 12500)) {
-			    					 p.setFireTicks(skyLight * 20);
+			    					 if (p.getPotionEffect(PotionEffectType.FIRE_RESISTANCE) == null) {
+			    					 p.setFireTicks(skyLight * 20);	
+			    					 }
 			    				 }
 			    			 }
 		    			 }
@@ -457,7 +462,10 @@ public class Main extends JavaPlugin {
 		    		 }
 		    		 if (race == 2) {//elves
 		    			 if (p.getWorld().getEnvironment().equals(Environment.NETHER)) {
-		    				 p.setFireTicks(400);
+		    				 if (p.getPotionEffect(PotionEffectType.FIRE_RESISTANCE) == null) {
+			    				 p.setFireTicks(400);
+			    				 p.damage(4);
+		    				 }
 		    			 }
 		    		 }
 		    	 }

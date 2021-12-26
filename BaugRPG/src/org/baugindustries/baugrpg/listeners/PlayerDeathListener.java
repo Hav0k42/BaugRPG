@@ -52,6 +52,9 @@ public class PlayerDeathListener implements Listener{
 	    	case 1://man
 	    		break;
 	    	case 2://elf
+	    		if (player.getLastDamageCause().getCause().equals(DamageCause.CUSTOM)) {
+    				event.setDeathMessage(ChatColor.DARK_GREEN + player.getDisplayName() + ChatColor.WHITE + " attempted to enter the Nether unprotected.");
+    			}
 	    		break;
 	    	case 3://dwarf
 	    		break;
