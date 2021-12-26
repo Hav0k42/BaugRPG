@@ -38,11 +38,7 @@ public class GeneralSkillTreeMenu implements Listener {
 
 					Boolean reloadBool = false;
 					
-					ItemStack infoItem = plugin.createItem(
-							Material.NETHER_STAR,
-							1,
-							ChatColor.GOLD + "General Skill Tree", 
-							Arrays.asList(ChatColor.LIGHT_PURPLE + "Upgrade different passive skills."));
+					ItemStack infoItem = plugin.itemManager.getGeneralSkillTreeInfoItem();
 					
 					if (event.getClickedInventory().getItem(0).equals(infoItem)) {
 						if (event.getClickedInventory().getType().equals(InventoryType.CHEST)) {
@@ -107,7 +103,7 @@ public class GeneralSkillTreeMenu implements Listener {
 					
 					
 					
-					ItemStack backItem = plugin.createItem(Material.RED_STAINED_GLASS_PANE, 1, ChatColor.RED + "Back");
+					ItemStack backItem = plugin.itemManager.getBackItem();
 					
 					if (event.getSlot() == 45 && event.getCurrentItem().equals(backItem)) {//back to skills hub
 						
@@ -117,19 +113,11 @@ public class GeneralSkillTreeMenu implements Listener {
 							String inventoryName = "Skill Trees";
 							Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
 							
-							inventory.setItem(0, plugin.createItem(Material.RED_STAINED_GLASS_PANE, 1, ChatColor.RED + "Back"));
+							inventory.setItem(0, backItem);
 							
-							inventory.setItem(3, plugin.createItem(
-									Material.OAK_SAPLING,
-									1, 
-									ChatColor.GOLD + "General Skills", 
-									Arrays.asList(ChatColor.LIGHT_PURPLE + "Passive skills every player can use.")));
+							inventory.setItem(3, plugin.itemManager.getGeneralSkillTreeMenuItem());
 							
-							inventory.setItem(5, plugin.createItem(
-									Material.NETHERITE_AXE,
-									1, 
-									ChatColor.GOLD + "Race Skills", 
-									Arrays.asList(ChatColor.LIGHT_PURPLE + "Race specific skills that are more speciallized.")));
+							inventory.setItem(5, plugin.itemManager.getRaceSkillTreeMenuItem(player));
 							
 							event.getWhoClicked().openInventory(inventory);
 						} else {
@@ -278,11 +266,7 @@ public class GeneralSkillTreeMenu implements Listener {
 						String inventoryName = "General Skills";
 						Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
 						
-						inventory.setItem(0, plugin.createItem(
-								Material.NETHER_STAR,
-								1,
-								ChatColor.GOLD + "General Skill Tree", 
-								Arrays.asList(ChatColor.LIGHT_PURPLE + "Upgrade different passive skills.")));
+						inventory.setItem(0, plugin.itemManager.getGeneralSkillTreeInfoItem());
 						
 						
 						String enabledString = "";
@@ -378,14 +362,11 @@ public class GeneralSkillTreeMenu implements Listener {
 								ChatColor.GOLD + "Available Points", 
 								Arrays.asList(ChatColor.LIGHT_PURPLE + "" + skillsconfig.get("skillPoints"))));
 						
-						inventory.setItem(45, plugin.createItem(
-								Material.RED_STAINED_GLASS_PANE,
-								1,
-								ChatColor.RED + "Back"));
+						inventory.setItem(45, plugin.itemManager.getBackItem());
 						
-						ItemStack blankItem = plugin.createItem(Material.GRAY_STAINED_GLASS_PANE, 1, " ");
-						ItemStack lockedItem = plugin.createItem(Material.BLACK_STAINED_GLASS_PANE, 1, ChatColor.DARK_GRAY + "LOCKED");
-						ItemStack ownedItem = plugin.createItem(Material.LIME_STAINED_GLASS_PANE, 1, ChatColor.GREEN + "UPGRADED");
+						ItemStack blankItem = plugin.itemManager.getBlankItem();
+						ItemStack lockedItem = plugin.itemManager.getLockedItem();
+						ItemStack ownedItem = plugin.itemManager.getUpgradedItem();
 						
 						for (int i = 0; i < 10; i++) {
 							if (i % 9 == 8) {

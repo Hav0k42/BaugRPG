@@ -31,7 +31,7 @@ public class PlayerSnoopingEnderChestListListener implements Listener{
 			if (event.getClickedInventory() != null) {
 				if (event.getView().getTitle().equals("Players Ender Chests")) {
 						
-						if (event.getCurrentItem().equals(plugin.createItem(Material.RED_STAINED_GLASS_PANE, 1, "Go Back", null))) {//Open the previous menu
+						if (event.getCurrentItem().equals(plugin.itemManager.getBackItem())) {//Open the previous menu
 							int inventorySize = 9;
 							String inventoryName = "Inventory Snooping Hub";
 							Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
@@ -42,19 +42,11 @@ public class PlayerSnoopingEnderChestListListener implements Listener{
 							}
 	
 							
-							inventory.setItem(0, plugin.createItem(Material.RED_STAINED_GLASS_PANE, 1, "Go Back", null));
+							inventory.setItem(0, plugin.itemManager.getBackItem());
 							
-							inventory.setItem(3, plugin.createItem(
-									Material.CHEST, 
-									1, 
-									"Inventories", 
-									Arrays.asList(ChatColor.LIGHT_PURPLE + "Access other players' Inventories")));
+							inventory.setItem(3, plugin.itemManager.getInventorySnoopingInventoryItem());
 							
-							inventory.setItem(5, plugin.createItem(
-									Material.ENDER_CHEST, 
-									1, 
-									"Ender Chests", 
-									Arrays.asList(ChatColor.LIGHT_PURPLE + "Access other players' Ender Chests")));
+							inventory.setItem(5, plugin.itemManager.getInventorySnoopingEnderChestItem());
 							
 							event.getWhoClicked().openInventory(inventory);
 							

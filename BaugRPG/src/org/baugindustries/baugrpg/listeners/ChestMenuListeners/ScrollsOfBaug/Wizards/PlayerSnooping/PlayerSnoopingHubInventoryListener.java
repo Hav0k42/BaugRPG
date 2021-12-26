@@ -58,10 +58,7 @@ public class PlayerSnoopingHubInventoryListener implements Listener {
 						}
 						
 						
-						ItemStack backItem = new ItemStack(Material.RED_STAINED_GLASS_PANE);
-						ItemMeta backItemMeta = backItem.getItemMeta();
-						backItemMeta.setDisplayName("Go Back");
-						backItem.setItemMeta(backItemMeta);
+						ItemStack backItem = plugin.itemManager.getBackItem();
 						
 						
 						int inventorySize = 18;
@@ -80,7 +77,7 @@ public class PlayerSnoopingHubInventoryListener implements Listener {
 						
 						
 						
-						if (event.getCurrentItem().equals(plugin.createItem(Material.CHEST, 1, "Inventories", Arrays.asList(ChatColor.LIGHT_PURPLE + "Access other players' Inventories")))) {//Player wants to access other players' inventories.
+						if (event.getCurrentItem().equals(plugin.itemManager.getInventorySnoopingInventoryItem())) {//Player wants to access other players' inventories.
 							String inventoryName = "Players Inventories";
 							Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
 							
@@ -119,7 +116,7 @@ public class PlayerSnoopingHubInventoryListener implements Listener {
 							
 							
 							
-						} else if (event.getCurrentItem().equals(plugin.createItem(Material.ENDER_CHEST, 1, "Ender Chests", Arrays.asList(ChatColor.LIGHT_PURPLE + "Access other players' Ender Chests")))) {//Player wants to access other players' ender chests.
+						} else if (event.getCurrentItem().equals(plugin.itemManager.getInventorySnoopingEnderChestItem())) {//Player wants to access other players' ender chests.
 							
 							String inventoryName = "Players Ender Chests";
 							Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
@@ -159,7 +156,7 @@ public class PlayerSnoopingHubInventoryListener implements Listener {
 							
 							
 						
-						} else if (event.getCurrentItem().equals(plugin.createItem(Material.RED_STAINED_GLASS_PANE, 1, "Go Back", null))) {
+						} else if (event.getCurrentItem().equals(plugin.itemManager.getBackItem())) {
 							player.performCommand("baugscroll");
 						}
 						

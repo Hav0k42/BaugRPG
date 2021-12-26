@@ -1,7 +1,5 @@
 package org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Elves.CommunismHub;
 
-import java.util.Arrays;
-
 import org.baugindustries.baugrpg.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -12,10 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-
-import net.md_5.bungee.api.ChatColor;
 
 public class ElvesCommunismInventoryListListener implements Listener{
 
@@ -34,17 +29,7 @@ public class ElvesCommunismInventoryListListener implements Listener{
 					
 						
 						
-						
-						
-						
-						
-						
-						ItemStack backItemTest = new ItemStack(Material.RED_STAINED_GLASS_PANE);
-						ItemMeta backItemTestMeta = backItemTest.getItemMeta();
-						backItemTestMeta.setDisplayName("Go Back");
-						backItemTest.setItemMeta(backItemTestMeta);
-						
-						if (event.getCurrentItem().getItemMeta().equals(backItemTestMeta)) {//Open the previous menu
+						if (event.getCurrentItem().equals(plugin.itemManager.getBackItem())) {//Open the previous menu
 							int inventorySize = 9;
 							String inventoryName = "Elves Communism Hub";
 							Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
@@ -55,19 +40,11 @@ public class ElvesCommunismInventoryListListener implements Listener{
 							}
 
 							
-							inventory.setItem(0, plugin.createItem(Material.RED_STAINED_GLASS_PANE, 1, "Go Back", null));
+							inventory.setItem(0, plugin.itemManager.getBackItem());
 							
-							inventory.setItem(3, plugin.createItem(
-									Material.CHEST, 
-									1, 
-									"Inventories", 
-									Arrays.asList(ChatColor.LIGHT_PURPLE + "Access other Elves' Inventories")));
+							inventory.setItem(3, plugin.itemManager.getCommunistInventoryItem());
 							
-							inventory.setItem(5, plugin.createItem(
-									Material.ENDER_CHEST, 
-									1, 
-									"Ender Chests", 
-									Arrays.asList(ChatColor.LIGHT_PURPLE + "Access other Elves' Ender Chests")));
+							inventory.setItem(5, plugin.itemManager.getCommunistEnderChestItem());
 							
 							event.getWhoClicked().openInventory(inventory);
 							

@@ -40,7 +40,7 @@ public class ChooseClassListener implements Listener{
 		String inventoryName = "Confirm Class Selection";
 		Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
 		for (int i = 0; i < inventorySize; i++) {
-			inventory.setItem(i, plugin.createItem(Material.BLACK_STAINED_GLASS_PANE, 1, " ", null));
+			inventory.setItem(i, plugin.itemManager.getBlankItem());
 		}
 		
 		
@@ -50,9 +50,9 @@ public class ChooseClassListener implements Listener{
 				ChatColor.YELLOW + "Confirm Selection", 
 				Arrays.asList(ChatColor.LIGHT_PURPLE + "Are you sure you want to choose " + pickedClass + "?")));
 		
-		inventory.setItem(11, plugin.createItem(Material.LIME_STAINED_GLASS_PANE, 1, ChatColor.GREEN + "Yes", null));
+		inventory.setItem(11, plugin.itemManager.getYesItem());
 		
-		inventory.setItem(15, plugin.createItem(Material.RED_STAINED_GLASS_PANE, 1, ChatColor.RED + "No", null));
+		inventory.setItem(15, plugin.itemManager.getNoItem());
 		
 		
 		player.openInventory(inventory);

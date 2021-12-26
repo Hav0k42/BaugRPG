@@ -36,7 +36,7 @@ public class ConfirmClassListener implements Listener {
 		if (!event.getView().getTitle().equals("Confirm Class Selection")) return;
 		
 		Player player = (Player)event.getWhoClicked();
-		if (event.getSlot() == 15 && event.getCurrentItem().equals(plugin.createItem(Material.RED_STAINED_GLASS_PANE, 1, ChatColor.RED + "No", null))) {//No
+		if (event.getSlot() == 15 && event.getCurrentItem().equals(plugin.itemManager.getNoItem())) {//No
 			PersistentDataContainer data = player.getPersistentDataContainer();
 			int race = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
 			int inventorySize = 27;
@@ -44,76 +44,40 @@ public class ConfirmClassListener implements Listener {
 			Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
 			switch (race) {
 				case 1:
-					inventory.setItem(11, plugin.createItem(
-							Material.LEATHER_HORSE_ARMOR, 
-							1, 
-							ChatColor.DARK_AQUA + "Stable Master"));
+					inventory.setItem(11, plugin.itemManager.getStableMasterItem());
 					
-					inventory.setItem(13, plugin.createItem(
-							Material.IRON_CHESTPLATE, 
-							1, 
-							ChatColor.DARK_AQUA + "Steeled Armorer"));
+					inventory.setItem(13, plugin.itemManager.getSteeledArmorerItem());
 					
-					inventory.setItem(15, plugin.createItem(
-							Material.STICK, 
-							1, 
-							ChatColor.DARK_AQUA + "Verdant Shepherd"));
+					inventory.setItem(15, plugin.itemManager.getVerdantShepherdItem());
 					break;
 					
 				case 2:
-					inventory.setItem(11, plugin.createItem(
-							Material.LILY_OF_THE_VALLEY, 
-							1, 
-							ChatColor.DARK_GREEN + "Enchanted Botanist"));
+					inventory.setItem(11, plugin.itemManager.getEnchantedBotanistItem());
 					
-					inventory.setItem(13, plugin.createItem(
-							Material.NETHER_STAR, 
-							1,
-							ChatColor.DARK_GREEN + "Lunar Artificer"));
+					inventory.setItem(13, plugin.itemManager.getLunarArtificerItem());
 					
-					inventory.setItem(15, plugin.createItem(
-							Material.ANVIL, 
-							1, 
-							ChatColor.DARK_GREEN + "Woodland Craftsman"));
+					inventory.setItem(15, plugin.itemManager.getWoodlandCraftsmanItem());
 					break;
 					
 				case 3:
-					inventory.setItem(11, plugin.createItem(
-							Material.BLAST_FURNACE, 
-							1, 
-							ChatColor.DARK_PURPLE + "Radiant Metallurgist"));
+					inventory.setItem(11, plugin.itemManager.getRadiantMetallurgistItem());
 					
-					inventory.setItem(13, plugin.createItem(
-							Material.DIAMOND, 
-							1, 
-							ChatColor.DARK_PURPLE + "Arcane Jeweler"));
+					inventory.setItem(13, plugin.itemManager.getArcaneJewelerItem());
 					
-					inventory.setItem(15, plugin.createItem(
-							Material.GOLDEN_PICKAXE, 
-							1, 
-							ChatColor.DARK_PURPLE + "Gilded Miner"));
+					inventory.setItem(15, plugin.itemManager.getGildedMinerItem());
 					break;
 					
 				case 4:
-					inventory.setItem(11, plugin.createItem(
-							Material.POTION, 
-							1, 
-							ChatColor.DARK_RED + "Dark Alchemist"));
+					inventory.setItem(11, plugin.itemManager.getDarkAlchemistItem());
 					
-					inventory.setItem(13, plugin.createItem(
-							Material.NETHERITE_AXE, 
-							1, 
-							ChatColor.DARK_RED + "Enraged Berserker"));
+					inventory.setItem(13, plugin.itemManager.getEnragedBerserkerItem());
 					
-					inventory.setItem(15, plugin.createItem(
-							Material.NETHERITE_SCRAP, 
-							1, 
-							ChatColor.DARK_RED + "Greedy Scrapper"));
+					inventory.setItem(15, plugin.itemManager.getGreedyScrapperItem());
 					break;
 			}
 			
 			player.openInventory(inventory);
-		} else if (event.getSlot() == 11 && event.getCurrentItem().equals(plugin.createItem(Material.LIME_STAINED_GLASS_PANE, 1, ChatColor.GREEN + "Yes", null))) {//Yes
+		} else if (event.getSlot() == 11 && event.getCurrentItem().equals(plugin.itemManager.getYesItem())) {//Yes
 			ItemMeta raceInfoMeta = event.getInventory().getItem(4).getItemMeta();
 			String selectedClass = raceInfoMeta.getLore().get(0);
 			selectedClass = selectedClass.substring(36, selectedClass.length() - 1);

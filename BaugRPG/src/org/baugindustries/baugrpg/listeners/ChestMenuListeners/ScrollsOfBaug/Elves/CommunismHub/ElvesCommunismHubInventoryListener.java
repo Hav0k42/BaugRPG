@@ -58,10 +58,7 @@ public class ElvesCommunismHubInventoryListener implements Listener {
 						}
 						
 						
-						ItemStack backItem = new ItemStack(Material.RED_STAINED_GLASS_PANE);
-						ItemMeta backItemMeta = backItem.getItemMeta();
-						backItemMeta.setDisplayName("Go Back");
-						backItem.setItemMeta(backItemMeta);
+						ItemStack backItem = plugin.itemManager.getBackItem();
 						
 						
 						int inventorySize = 18;
@@ -80,7 +77,7 @@ public class ElvesCommunismHubInventoryListener implements Listener {
 						
 						
 						
-						if (event.getCurrentItem().equals(plugin.createItem(Material.CHEST, 1, "Inventories", Arrays.asList(ChatColor.LIGHT_PURPLE + "Access other Elves' Inventories")))) {//Player wants to access other elves' inventories.
+						if (event.getCurrentItem().equals(plugin.itemManager.getCommunistInventoryItem())) {//Player wants to access other elves' inventories.
 							String inventoryName = "Elves Inventories";
 							Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
 							
@@ -119,7 +116,7 @@ public class ElvesCommunismHubInventoryListener implements Listener {
 							
 							
 							
-						} else if (event.getCurrentItem().equals(plugin.createItem(Material.ENDER_CHEST, 1, "Ender Chests", Arrays.asList(ChatColor.LIGHT_PURPLE + "Access other Elves' Ender Chests")))) {//Player wants to access other elves' ender chests.
+						} else if (event.getCurrentItem().equals(plugin.itemManager.getCommunistEnderChestItem())) {//Player wants to access other elves' ender chests.
 							
 							String inventoryName = "Elves Ender Chests";
 							Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
@@ -159,7 +156,7 @@ public class ElvesCommunismHubInventoryListener implements Listener {
 							
 							
 						
-						} else if (event.getCurrentItem().equals(plugin.createItem(Material.RED_STAINED_GLASS_PANE, 1, "Go Back", null))) {
+						} else if (event.getCurrentItem().equals(plugin.itemManager.getBackItem())) {
 							player.performCommand("baugscroll");
 						}
 						

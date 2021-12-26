@@ -31,13 +31,13 @@ public class ChooseRaceInventoryListener implements Listener{
 					
 						
 						String chosenRace = "";
-						if (event.getSlot() == 28 && event.getCurrentItem().equals(plugin.createItem(Material.NETHERITE_SWORD, 1, ChatColor.DARK_AQUA + "Men", Arrays.asList(ChatColor.LIGHT_PURPLE + "Masters of the sword and horse combat,", "Men prefer to live in flat open areas", "with lots of room to roam about.")))) {//Men
+						if (event.getSlot() == 28 && event.getCurrentItem().equals(plugin.itemManager.getSelectManItem())) {//Men
 							chosenRace = "Men";
-						} else if (event.getSlot() == 30 && event.getCurrentItem().equals(plugin.createItem(Material.BOW, 1, ChatColor.DARK_GREEN + "Elves", Arrays.asList(ChatColor.LIGHT_PURPLE + "Masters of the bow and ranged combat", "Elves reside in wooded areas", "due to their love of nature.")))) {//Elves
+						} else if (event.getSlot() == 30 && event.getCurrentItem().equals(plugin.itemManager.getSelectElfItem())) {//Elves
 							chosenRace = "Elves";
-						} else if (event.getSlot() == 32 && event.getCurrentItem().equals(plugin.createItem(Material.NETHERITE_AXE, 1, ChatColor.DARK_PURPLE + "Dwarves", Arrays.asList(ChatColor.LIGHT_PURPLE + "Masters of the axe and melee combat", "Dwarves dwell within the earth", "constantly delving for the riches beneath the surface.")))) {//Dwarves
+						} else if (event.getSlot() == 32 && event.getCurrentItem().equals(plugin.itemManager.getSelectDwarfItem())) {//Dwarves
 							chosenRace = "Dwarves";
-						} else if (event.getSlot() == 34 && event.getCurrentItem().equals(plugin.createItem(Material.NETHERITE_HELMET, 1, ChatColor.DARK_RED + "Orcs", Arrays.asList(ChatColor.LIGHT_PURPLE + "Masters of iron forged weaponry and brutal combat", "Orcs smoulder in the fires of hell", "for they cannot go to the surface.")))) {//Orcs
+						} else if (event.getSlot() == 34 && event.getCurrentItem().equals(plugin.itemManager.getSelectOrcItem())) {//Orcs
 							chosenRace = "Orcs";
 						}
 						
@@ -46,7 +46,7 @@ public class ChooseRaceInventoryListener implements Listener{
 							String inventoryName = "Confirm Selection";
 							Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
 							for (int i = 0; i < inventorySize; i++) {
-								inventory.setItem(i, plugin.createItem(Material.BLACK_STAINED_GLASS_PANE, 1, " ", null));
+								inventory.setItem(i, plugin.itemManager.getBlankItem());
 							}
 							
 							
@@ -56,9 +56,9 @@ public class ChooseRaceInventoryListener implements Listener{
 									ChatColor.YELLOW + "Confirm Selection", 
 									Arrays.asList(ChatColor.LIGHT_PURPLE + "Are you sure you want to choose " + chosenRace + "?")));
 							
-							inventory.setItem(11, plugin.createItem(Material.LIME_STAINED_GLASS_PANE, 1, ChatColor.GREEN + "Yes", null));
+							inventory.setItem(11, plugin.itemManager.getYesItem());
 							
-							inventory.setItem(15, plugin.createItem(Material.RED_STAINED_GLASS_PANE, 1, ChatColor.RED + "No", null));
+							inventory.setItem(15, plugin.itemManager.getNoItem());
 							
 							
 							player.openInventory(inventory);

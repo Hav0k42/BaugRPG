@@ -55,19 +55,11 @@ public class PlayerSnoopingInventoryListListener implements Listener{
 							}
 	
 							
-							inventory.setItem(0, plugin.createItem(Material.RED_STAINED_GLASS_PANE, 1, "Go Back", null));
+							inventory.setItem(0, plugin.itemManager.getBackItem());
 							
-							inventory.setItem(3, plugin.createItem(
-									Material.CHEST, 
-									1, 
-									"Inventories", 
-									Arrays.asList(ChatColor.LIGHT_PURPLE + "Access other players' Inventories")));
+							inventory.setItem(3, plugin.itemManager.getInventorySnoopingInventoryItem());
 							
-							inventory.setItem(5, plugin.createItem(
-									Material.ENDER_CHEST, 
-									1, 
-									"Ender Chests", 
-									Arrays.asList(ChatColor.LIGHT_PURPLE + "Access other players' Ender Chests")));
+							inventory.setItem(5, plugin.itemManager.getInventorySnoopingEnderChestItem());
 							
 							event.getWhoClicked().openInventory(inventory);
 							

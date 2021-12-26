@@ -31,11 +31,7 @@ public class FeatureManagement implements Listener{
 					File file = new File(plugin.getDataFolder() + File.separator + "config.yml");
 				 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
 				 	
-					ItemStack tpaItem = plugin.createItem(
-							Material.ENDER_EYE, 
-							1, 
-							"TPA", 
-							Arrays.asList(ChatColor.LIGHT_PURPLE + "Allow Players to teleport.", config.get("allowTpa").toString()));
+					ItemStack tpaItem = plugin.itemManager.getTpaFeatureItem();
 					
 					if (event.getCurrentItem().equals(tpaItem)) {
 						
@@ -47,11 +43,7 @@ public class FeatureManagement implements Listener{
 							e.printStackTrace();
 						}
 						
-						ItemStack newTpaItem = plugin.createItem(
-								Material.ENDER_EYE, 
-								1, 
-								"TPA", 
-								Arrays.asList(ChatColor.LIGHT_PURPLE + "Allow Players to teleport.", config.get("allowTpa").toString()));
+						ItemStack newTpaItem = plugin.itemManager.getTpaFeatureItem();;
 						event.getClickedInventory().setItem(event.getSlot(), newTpaItem);
 					}
 					event.setCancelled(true);

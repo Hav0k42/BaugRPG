@@ -30,11 +30,7 @@ public class GoldConversionMenu implements Listener{
 			Player player = (Player)event.getWhoClicked();
 			if (event.getClickedInventory() != null) {
 				if (event.getView().getTitle().equals("Dwarven Gold Deposit")) {
-					ItemStack confirmItem = plugin.createItem(
-							Material.LIME_STAINED_GLASS_PANE, 
-							1, 
-							ChatColor.GREEN + "CONFIRM", 
-							Arrays.asList(ChatColor.LIGHT_PURPLE + "Place gold ingots to the left, ", "and click here to confirm conversion."));
+					ItemStack confirmItem = plugin.itemManager.getConfirmBankTransferItem();
 					
 					if (event.getCurrentItem() != null && event.getCurrentItem().equals(confirmItem)) {
 						if (event.getView().getTopInventory().getItem(3) != null && event.getView().getTopInventory().getItem(3).getType().equals(Material.GOLD_INGOT)) {

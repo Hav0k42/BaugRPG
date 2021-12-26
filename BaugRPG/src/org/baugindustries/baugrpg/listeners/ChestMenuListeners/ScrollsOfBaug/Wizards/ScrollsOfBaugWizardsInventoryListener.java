@@ -39,11 +39,7 @@ public class ScrollsOfBaugWizardsInventoryListener implements Listener{
 					
 					
 					
-					if (event.getSlot() == 11 && event.getCurrentItem().equals(plugin.createItem(
-					Material.WRITABLE_BOOK,
-					1,
-					ChatColor.AQUA + "Feature Management", 
-					Arrays.asList(ChatColor.LIGHT_PURPLE + "Turn certain features on and off,", "according to how you wish to run your server.")))) {//Player clicked on the Feature Management Item
+					if (event.getSlot() == 11 && event.getCurrentItem().equals(plugin.itemManager.getFeatureManagementItem())) {//Player clicked on the Feature Management Item
 						
 						File file = new File(plugin.getDataFolder() + File.separator + "config.yml");
 					 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
@@ -62,19 +58,11 @@ public class ScrollsOfBaugWizardsInventoryListener implements Listener{
 						String inventoryName = "Feature Management";
 						Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
 						
-						inventory.setItem(11, plugin.createItem(
-								Material.ENDER_EYE, 
-								1, 
-								"TPA", 
-								Arrays.asList(ChatColor.LIGHT_PURPLE + "Allow Players to teleport.", config.get("allowTpa").toString())));
+						inventory.setItem(11, plugin.itemManager.getTpaFeatureItem());
 						
 						event.getWhoClicked().openInventory(inventory);
 						
-					} else if (event.getSlot() == 12 && event.getCurrentItem().equals(plugin.createItem(
-					Material.CHEST,
-					1,
-					ChatColor.AQUA + "Inventory Snooping", 
-					Arrays.asList(ChatColor.LIGHT_PURPLE +  "Access every players' inventories and ender chests")))) {//Player clicked on the Inventory Snooping Item
+					} else if (event.getSlot() == 12 && event.getCurrentItem().equals(plugin.itemManager.getInventorySnoopingItem())) {//Player clicked on the Inventory Snooping Item
 						
 						if (plugin.getServer().getPluginManager().isPluginEnabled("OpenInv")) {
 							int inventorySize = 9;
@@ -87,19 +75,11 @@ public class ScrollsOfBaugWizardsInventoryListener implements Listener{
 							}
 	
 							
-							inventory.setItem(0, plugin.createItem(Material.RED_STAINED_GLASS_PANE, 1, "Go Back", null));
+							inventory.setItem(0, plugin.itemManager.getBackItem());
 							
-							inventory.setItem(3, plugin.createItem(
-									Material.CHEST, 
-									1, 
-									"Inventories", 
-									Arrays.asList(ChatColor.LIGHT_PURPLE + "Access other players' Inventories")));
+							inventory.setItem(3, plugin.itemManager.getInventorySnoopingInventoryItem());
 							
-							inventory.setItem(5, plugin.createItem(
-									Material.ENDER_CHEST, 
-									1, 
-									"Ender Chests", 
-									Arrays.asList(ChatColor.LIGHT_PURPLE + "Access other players' Ender Chests")));
+							inventory.setItem(5, plugin.itemManager.getInventorySnoopingEnderChestItem());
 							
 							event.getWhoClicked().openInventory(inventory);
 							

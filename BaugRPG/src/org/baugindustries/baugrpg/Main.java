@@ -94,7 +94,6 @@ import com.comphenix.protocol.wrappers.EnumWrappers;
 
 import net.minecraft.server.level.WorldServer;
 import net.minecraft.sounds.SoundEffect;
-import net.minecraft.world.level.World;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundEffectType;
 
@@ -116,6 +115,7 @@ public class Main extends JavaPlugin {
 	public ScoreboardManager manager;
 	public Scoreboard board;
 	public ProtocolManager protocolManager;
+	public CustomItems itemManager;
 	
 	
 	//Listeners
@@ -229,6 +229,7 @@ public class Main extends JavaPlugin {
 		 new SetBal(this);
 		 
 		 protocolManager = ProtocolLibrary.getProtocolManager();
+		 itemManager = new CustomItems(this);
 		 
 		 
 		 
