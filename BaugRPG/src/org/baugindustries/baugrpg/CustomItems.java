@@ -134,6 +134,14 @@ public class CustomItems {
 		return getManChooseYourClassItem();
 	}
 	
+	public ItemStack getRaceSkillTreeInfoItem() {
+		return plugin.createItem(
+				Material.NETHER_STAR,
+				1,
+				ChatColor.GOLD + "Race Skill Tree", 
+				Arrays.asList(ChatColor.LIGHT_PURPLE + "Upgrade different race and class skills."));
+	}
+	
 	public ItemStack getCommunistHubItem() {
 		return plugin.createItem(
 				Material.CHEST,

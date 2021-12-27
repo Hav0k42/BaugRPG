@@ -110,7 +110,7 @@ public class SkillTreeMenu implements Listener{
 									Arrays.asList(ChatColor.LIGHT_PURPLE + "" + skillsconfig.get("skillPoints"))));
 							
 							inventory.setItem(36, plugin.itemManager.getBackItem());
-							inventory.setItem(0, plugin.itemManager.getGeneralSkillTreeInfoItem());
+							inventory.setItem(0, plugin.itemManager.getRaceSkillTreeInfoItem());
 							
 							
 							if (profession.equals("Stable Master")) {

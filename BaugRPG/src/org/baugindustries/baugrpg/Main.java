@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.baugindustries.baugrpg.commands.BaugScroll;
 import org.baugindustries.baugrpg.commands.Chat;
+import org.baugindustries.baugrpg.commands.ChatTabCompleter;
 import org.baugindustries.baugrpg.commands.RaceWizard;
 import org.baugindustries.baugrpg.commands.ResetRace;
 import org.baugindustries.baugrpg.commands.SetRace;
@@ -73,8 +74,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_18_R1.CraftWorld;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -220,6 +219,7 @@ public class Main extends JavaPlugin {
 		 new ResetRace(this);
 		 new SetRace(this);
 		 new Chat(this);
+		 getCommand("chat").setTabCompleter(new ChatTabCompleter());
 		 new RaceWizard(this);//The Wizard race will serve as an "operator" race in the BaugRPG plugin, and should be reserved for admins, and people that will oversee RP events.
 		 new BaugScroll(this);
 		 new Tpa(this);
@@ -233,7 +233,6 @@ public class Main extends JavaPlugin {
 		 
 		 protocolManager = ProtocolLibrary.getProtocolManager();
 		 itemManager = new CustomItems(this);
-		 
 		 
 		 
 		 
@@ -289,6 +288,10 @@ public class Main extends JavaPlugin {
 		 getServer().getPluginManager().registerEvents(new ChatChannel(this), this);
 		 
 		 channelManager = new ChatChannelManager();
+		 List<Player> onlinePlayers = getOnlinePlayers();
+		 for (int i = 0; i < getServer().getOnlinePlayers().size(); i++) {
+			 channelManager.joinChannel(onlinePlayers.get(i), "Global Chat");
+		 }
 		 
 		 orcLight();
 		 miningBuff();
