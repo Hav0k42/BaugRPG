@@ -2,10 +2,8 @@ package org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wi
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 
 import org.baugindustries.baugrpg.Main;
-import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -13,8 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-
-import net.md_5.bungee.api.ChatColor;
 
 public class FeatureManagement implements Listener{
 	private Main plugin;

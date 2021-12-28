@@ -1,24 +1,15 @@
 package org.baugindustries.baugrpg.listeners.ChestMenuListeners;
 
 import java.io.File;
-import java.util.Arrays;
 
 import org.baugindustries.baugrpg.Main;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
-
-import net.md_5.bungee.api.ChatColor;
 
 public class SkillTreeMenu implements Listener{
 	private Main plugin;
@@ -31,8 +22,7 @@ public class SkillTreeMenu implements Listener{
 	public void onInventoryClick(InventoryClickEvent event) {
 		if (event.getWhoClicked() instanceof Player) {
 			Player player = (Player)event.getWhoClicked();
-			PersistentDataContainer data = player.getPersistentDataContainer();
-			int race = 0;
+			
 			File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
 		 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
 			if (event.getClickedInventory() != null) {
@@ -47,275 +37,12 @@ public class SkillTreeMenu implements Listener{
 						player.performCommand("baugscroll");
 					} else if (event.getSlot() == 5 && event.getClickedInventory().getItem(3).equals(generalSkillsItem)) {//class skills
 						if (skillsconfig.getString("class") == null) {
-							race = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
-							int inventorySize = 27;
-							String inventoryName = "Choose your Class";
-							Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
-							switch (race) {
-								case 1:
-									inventory.setItem(11, plugin.itemManager.getStableMasterItem());
-									
-									inventory.setItem(13, plugin.itemManager.getSteeledArmorerItem());
-									
-									inventory.setItem(15, plugin.itemManager.getVerdantShepherdItem());
-									break;
-									
-								case 2:
-									inventory.setItem(11, plugin.itemManager.getEnchantedBotanistItem());
-									
-									inventory.setItem(13, plugin.itemManager.getLunarArtificerItem());
-									
-									inventory.setItem(15, plugin.itemManager.getWoodlandCraftsmanItem());
-									break;
-									
-								case 3:
-									inventory.setItem(11, plugin.itemManager.getRadiantMetallurgistItem());
-									
-									inventory.setItem(13, plugin.itemManager.getArcaneJewelerItem());
-									
-									inventory.setItem(15, plugin.itemManager.getGildedMinerItem());
-									break;
-									
-								case 4:
-									inventory.setItem(11, plugin.itemManager.getDarkAlchemistItem());
-									
-									inventory.setItem(13, plugin.itemManager.getEnragedBerserkerItem());
-									
-									inventory.setItem(15, plugin.itemManager.getGreedyScrapperItem());
-									break;
-							}
-							
-							player.openInventory(inventory);
-								
+							player.openInventory(plugin.inventoryManager.getChooseRaceSkillTreeMenuInventory(player));
 						} else {
-							String profession = skillsconfig.getString("class");
-							int inventorySize = 45;
-							String inventoryName = profession + " Skills";
-							Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
-							ItemStack blankItem = plugin.itemManager.getBlankItem();
-							ItemStack lockedItem = plugin.itemManager.getLockedItem();
-							ItemStack ownedItem = plugin.itemManager.getUpgradedItem();
-							
-							for (int i = 0; i < 45; i++) {
-								if (i % 9 == 8 || i % 9 == 5 || i % 9 == 1 || i % 9 == 0) {
-									inventory.setItem(i, blankItem);
-								}
-							}
-							inventory.setItem(15, blankItem);
-							inventory.setItem(16, blankItem);
-							inventory.setItem(9, plugin.createItem(
-									Material.BOOK,
-									1,
-									ChatColor.GOLD + "Available Points", 
-									Arrays.asList(ChatColor.LIGHT_PURPLE + "" + skillsconfig.get("skillPoints"))));
-							
-							inventory.setItem(36, plugin.itemManager.getBackItem());
-							inventory.setItem(0, plugin.itemManager.getRaceSkillTreeInfoItem());
-							
-							
-							if (profession.equals("Stable Master")) {
-								
-							} else if (profession.equals("Steeled Armorer")) {
-								
-							} else if (profession.equals("Verdant Shepherd")) {
-								
-							} else if (profession.equals("Enchanted Botanist")) {
-								
-							} else if (profession.equals("Lunar Artificer")) {
-								
-							} else if (profession.equals("Woodland Craftsman")) {
-								
-							} else if (profession.equals("Radiant Metallurgist")) {
-								
-							} else if (profession.equals("Arcane Jeweler")) {
-								
-							} else if (profession.equals("Gilded Miner")) {
-								
-							} else if (profession.equals("Dark Alchemist")) {
-								
-							} else if (profession.equals("Enraged Berserker")) {
-								
-							} else if (profession.equals("Greedy Scrapper")) {
-								
-							}
-							
-							player.openInventory(inventory);
+							player.openInventory(plugin.inventoryManager.getRaceSkillTreeMenuInventory(player));
 						}
 					} else if (event.getSlot() == 3 && event.getCurrentItem().equals(generalSkillsItem)) {//general skills
-						int inventorySize = 54;
-						String inventoryName = "General Skills";
-						Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
-						
-						
-						
-						inventory.setItem(0, plugin.itemManager.getGeneralSkillTreeInfoItem());
-						
-						String enabledString = "";
-						
-						
-						if (skillsconfig.getBoolean("speedOn")) {
-							enabledString = ChatColor.GREEN + "ENABLED";
-						} else {
-							enabledString = ChatColor.RED + "DISABLED";
-						}
-						
-						inventory.setItem(1, plugin.createItem(
-								Material.FEATHER,
-								1,
-								ChatColor.GOLD + "Speed", 
-								Arrays.asList(ChatColor.LIGHT_PURPLE + "Upgrade movement speed.", "Click to toggle: " + enabledString)));
-						
-						if (skillsconfig.getBoolean("jumpOn")) {
-							enabledString = ChatColor.GREEN + "ENABLED";
-						} else {
-							enabledString = ChatColor.RED + "DISABLED";
-						}
-						
-						inventory.setItem(2, plugin.createItem(
-								Material.RABBIT_FOOT,
-								1,
-								ChatColor.GOLD + "Jump Height", 
-								Arrays.asList(ChatColor.LIGHT_PURPLE + "Upgrade jump height.", "Click to toggle: " + enabledString)));
-						
-						if (skillsconfig.getBoolean("damageOn")) {
-							enabledString = ChatColor.GREEN + "ENABLED";
-						} else {
-							enabledString = ChatColor.RED + "DISABLED";
-						}
-						
-						inventory.setItem(3, plugin.createItem(
-								Material.IRON_AXE,
-								1,
-								ChatColor.GOLD + "Attack Damage", 
-								Arrays.asList(ChatColor.LIGHT_PURPLE + "Upgrade attack damage.", "Click to toggle: " + enabledString)));
-						
-						if (skillsconfig.getBoolean("resistanceOn")) {
-							enabledString = ChatColor.GREEN + "ENABLED";
-						} else {
-							enabledString = ChatColor.RED + "DISABLED";
-						}
-						
-						inventory.setItem(4, plugin.createItem(
-								Material.SHIELD,
-								1,
-								ChatColor.GOLD + "Resistance", 
-								Arrays.asList(ChatColor.LIGHT_PURPLE + "Upgrade damage resistance", "Click to toggle: " + enabledString)));
-						
-						if (skillsconfig.getBoolean("miningOn")) {
-							enabledString = ChatColor.GREEN + "ENABLED";
-						} else {
-							enabledString = ChatColor.RED + "DISABLED";
-						}
-						
-						inventory.setItem(5, plugin.createItem(
-								Material.IRON_PICKAXE,
-								1,
-								ChatColor.GOLD + "Mining Speed", 
-								Arrays.asList(ChatColor.LIGHT_PURPLE + "Upgrade mining speed.", "Click to toggle: " + enabledString)));
-						
-						if (skillsconfig.getBoolean("regenOn")) {
-							enabledString = ChatColor.GREEN + "ENABLED";
-						} else {
-							enabledString = ChatColor.RED + "DISABLED";
-						}
-						
-						inventory.setItem(6, plugin.createItem(
-								Material.APPLE,
-								1,
-								ChatColor.GOLD + "Regeneration", 
-								Arrays.asList(ChatColor.LIGHT_PURPLE + "Upgrade regeration speed.", "Click to toggle: " + enabledString)));
-						
-						if (skillsconfig.getBoolean("swimOn")) {
-							enabledString = ChatColor.GREEN + "ENABLED";
-						} else {
-							enabledString = ChatColor.RED + "DISABLED";
-						}
-						
-						inventory.setItem(7, plugin.createItem(
-								Material.HEART_OF_THE_SEA,
-								1,
-								ChatColor.GOLD + "Swim Speed", 
-								Arrays.asList(ChatColor.LIGHT_PURPLE + "Upgrade swim speed.", "Click to toggle: " + enabledString)));
-						
-						inventory.setItem(9, plugin.createItem(
-								Material.BOOK,
-								1,
-								ChatColor.GOLD + "Available Points", 
-								Arrays.asList(ChatColor.LIGHT_PURPLE + "" + skillsconfig.get("skillPoints"))));
-						
-						inventory.setItem(45, plugin.itemManager.getBackItem());
-						
-						ItemStack blankItem = plugin.itemManager.getBlankItem();
-						ItemStack lockedItem = plugin.itemManager.getLockedItem();
-						ItemStack ownedItem = plugin.itemManager.getUpgradedItem();
-						
-						for (int i = 0; i < 10; i++) {
-							if (i % 9 == 8) {
-								inventory.setItem(i, blankItem);
-							}
-						}
-						
-						for (int i = 10; i < 18; i++) {
-							inventory.setItem(i, blankItem);
-						}
-						
-						for (int i = 18; i < 45; i++) {
-							if (i % 9 == 8 || i % 9 == 0) {
-								inventory.setItem(i, blankItem);
-							} else {
-								inventory.setItem(i, lockedItem);
-							}
-						}
-						
-						for (int i = 45; i < 54; i++) {
-							if (i % 9 == 8) {
-								inventory.setItem(i, blankItem);
-							} else if (i % 9 != 0) {
-								inventory.setItem(i, lockedItem);
-							}
-						}
-						
-						ItemStack[] currentItem = new ItemStack[7];
-						currentItem[0] = plugin.createItem(Material.BLUE_STAINED_GLASS_PANE, 1, ChatColor.WHITE + "Upgrade speed: Lvl " + (skillsconfig.getInt("speed") + 1));
-						currentItem[1] = plugin.createItem(Material.BLUE_STAINED_GLASS_PANE, 1, ChatColor.GREEN + "Upgrade jump: Lvl " + (skillsconfig.getInt("jump") + 1));
-						currentItem[2] = plugin.createItem(Material.BLUE_STAINED_GLASS_PANE, 1, ChatColor.DARK_RED + "Upgrade attack damage: Lvl " + (skillsconfig.getInt("damage") + 1));
-						currentItem[3] = plugin.createItem(Material.BLUE_STAINED_GLASS_PANE, 1, ChatColor.DARK_AQUA + "Upgrade resistance: Lvl " + (skillsconfig.getInt("resistance") + 1));
-						currentItem[4] = plugin.createItem(Material.BLUE_STAINED_GLASS_PANE, 1, ChatColor.YELLOW + "Upgrade mining speed: Lvl " + (skillsconfig.getInt("mining") + 1));
-						currentItem[5] = plugin.createItem(Material.BLUE_STAINED_GLASS_PANE, 1, ChatColor.RED + "Upgrade regeneration: Lvl " + (skillsconfig.getInt("regen") + 1));
-						currentItem[6] = plugin.createItem(Material.BLUE_STAINED_GLASS_PANE, 1, ChatColor.AQUA + "Upgrade swim speed: Lvl " + (skillsconfig.getInt("swim") + 1));
-						
-						String[] skillNames = {"speed", "jump", "damage", "resistance", "mining", "regen", "swim"};
-						
-						for (int i = 0; i < currentItem.length; i++) {
-							int levelInt = skillsconfig.getInt(skillNames[i]);
-							int rowShifter = i;
-							if (levelInt == 0) {
-								inventory.setItem(46 + rowShifter, currentItem[i]);
-							} else if (levelInt > 0 && levelInt < 5) {
-								inventory.setItem(46 + rowShifter, ownedItem);
-								inventory.setItem(37 + rowShifter, currentItem[i]);
-							} else if (levelInt > 4 && levelInt < 9) {
-								inventory.setItem(46 + rowShifter, ownedItem);
-								inventory.setItem(37 + rowShifter, ownedItem);
-								inventory.setItem(28 + rowShifter, currentItem[i]);
-							} else if (levelInt == 9) {
-								inventory.setItem(46 + rowShifter, ownedItem);
-								inventory.setItem(37 + rowShifter, ownedItem);
-								inventory.setItem(28 + rowShifter, ownedItem);
-								inventory.setItem(19 + rowShifter, currentItem[i]);
-							} else {
-								inventory.setItem(46 + rowShifter, ownedItem);
-								inventory.setItem(37 + rowShifter, ownedItem);
-								inventory.setItem(28 + rowShifter, ownedItem);
-								inventory.setItem(19 + rowShifter, ownedItem);
-							}
-						}
-						
-						
-						
-						
-						event.getWhoClicked().openInventory(inventory);
-						
+						player.openInventory(plugin.inventoryManager.getGeneralSkillTreeMenuInventory(player));
 					}
 					
 					event.setCancelled(true);

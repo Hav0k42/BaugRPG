@@ -1,0 +1,111 @@
+package org.baugindustries.baugrpg.listeners.ChestMenuListeners;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
+import org.baugindustries.baugrpg.Main;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+
+public class RaceSkillTreeMenu implements Listener{
+	private Main plugin;
+	public RaceSkillTreeMenu(Main plugin) {
+		this.plugin = plugin;
+	}
+	
+	
+	@EventHandler
+	public void onInventoryClick(InventoryClickEvent event) {
+		if (!(event.getWhoClicked() instanceof Player)) return;
+		if (event.getClickedInventory() == null) return;
+		String[] classNames = {"Stable Master", "Steeled Armorer", "Verdant Shepherd", "Enchanted Botanist", "Lunar Artificer", "Woodland Craftsman", "Radiant Metallurgist", "Arcane Jeweler", "Gilded Miner", "Dark Alchemist", "Enraged Berserker", "Greedy Scrapper"};
+		Boolean nameCheck = false;
+		String profession = "";
+		for (String name: classNames) {
+			if (event.getView().getTitle().equals(name + " Skills")) {
+				nameCheck = true;
+				profession = name;
+				continue;
+			}
+		}
+		if (!nameCheck) return;
+		if (!event.getClickedInventory().getItem(0).equals(plugin.itemManager.getRaceSkillTreeInfoItem())) return;
+		event.setCancelled(true);
+		if (event.getCurrentItem() == null) return;
+		
+		Player player = (Player)event.getWhoClicked();
+		
+		if (event.getCurrentItem().equals(plugin.itemManager.getBackItem())) {
+			player.openInventory(plugin.inventoryManager.getSkillTreeMenuInventory(player));
+		}
+		
+		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
+	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
+		
+	 	Boolean reloadBool = false;
+	 	
+	 	int slot = event.getSlot();
+	 	if (slot == 3 || slot == 12 || slot == 21 || slot == 30 || slot == 39) {
+	 		String skill = "";
+	 		int skillNum = 0;
+			
+			if (slot == 3 || slot == 12) {
+				skillNum = 1;
+			}
+			if (slot == 21 || slot == 30) {
+				skillNum = 2;
+			}
+			if (slot == 39) {
+				skillNum = 3;
+			}
+			
+			if (profession.equals("Steeled Armorer") || profession.equals("Verdant Shepherd") || profession.equals("Radiant Metallurgist") || profession.equals("Arcane Jeweler")) {
+				if (slot == 21) {
+					skillNum = 1;
+				}
+			}
+			
+			skill = profession.replaceAll("\\s", "") + skillNum;
+			
+			if (skillsconfig.contains(skill)) {
+				skillsconfig.set(skill, !skillsconfig.getBoolean(skill));
+	 			reloadBool = true;
+		 	} else {
+		 		List<String> lore = event.getCurrentItem().getItemMeta().getLore();
+		 		String skillPriceStr = lore.get(lore.size() - 1).substring(13);
+		 		skillPriceStr = skillPriceStr.substring(0, skillPriceStr.length() - 7);
+		 		
+		 		int skillPrice = 0;
+		 		if (plugin.isInteger(skillPriceStr)) {
+		 			skillPrice = Integer.parseInt(skillPriceStr);
+			 		if (skillsconfig.getInt("skillPoints") >= skillPrice) {
+			 			skillsconfig.set(skill, true);
+			 			skillsconfig.set("skillPoints", skillsconfig.getInt("skillPoints") - skillPrice);
+			 			reloadBool = true;
+			 		}
+		 		}
+		 	}
+			
+			try {
+				skillsconfig.save(skillsfile);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	 	}
+	 	
+	 	
+	 	if (reloadBool) {
+	 		player.openInventory(plugin.inventoryManager.getRaceSkillTreeMenuInventory(player));
+	 	}
+		
+		
+		
+		
+	}
+}

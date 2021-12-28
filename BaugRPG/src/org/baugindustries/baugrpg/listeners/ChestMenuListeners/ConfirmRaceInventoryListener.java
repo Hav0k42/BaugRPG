@@ -2,13 +2,11 @@ package org.baugindustries.baugrpg.listeners.ChestMenuListeners;
 
 
 import org.baugindustries.baugrpg.Main;
-import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -32,33 +30,7 @@ public class ConfirmRaceInventoryListener implements Listener{
 				if (event.getView().getTitle().equals("Confirm Selection")) {
 					
 						if (event.getSlot() == 15 && event.getCurrentItem().equals(plugin.itemManager.getNoItem())) {//No
-
-							int inventorySize = 54;
-							String inventoryName = "Choose Your Race";
-							Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
-							
-							
-							
-							for (int i = 0; i < inventorySize; i++) {
-								inventory.setItem(i, plugin.itemManager.getBlankItem());
-							}
-							
-							
-							
-							inventory.setItem(13, plugin.itemManager.getRaceSelectionItem());
-							
-							inventory.setItem(28, plugin.itemManager.getSelectManItem());
-								
-							inventory.setItem(30, plugin.itemManager.getSelectElfItem());
-							
-							inventory.setItem(32, plugin.itemManager.getSelectDwarfItem());
-							
-							inventory.setItem(34, plugin.itemManager.getSelectOrcItem());
-							
-							
-							
-							event.getWhoClicked().openInventory(inventory);
-							
+							player.openInventory(plugin.inventoryManager.getSetRaceMenuInventory());
 						} else if (event.getSlot() == 11 && event.getCurrentItem().equals(plugin.itemManager.getYesItem())) {//Yes
 							
 							PersistentDataContainer data = event.getWhoClicked().getPersistentDataContainer();

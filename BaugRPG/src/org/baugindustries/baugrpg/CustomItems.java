@@ -109,7 +109,7 @@ public class CustomItems {
 				professionMaterial = Material.STICK;
 			if (profession.equals("Radiant Metallurgist"))
 				professionMaterial = Material.BLAST_FURNACE;
-			if (profession.equals("Arcane Jeweller"))
+			if (profession.equals("Arcane Jeweler"))
 				professionMaterial = Material.DIAMOND;
 			if (profession.equals("Gilded Miner"))
 				professionMaterial = Material.GOLDEN_PICKAXE;
@@ -212,7 +212,7 @@ public class CustomItems {
 				Material.NETHERITE_AXE, 
 				1, 
 				ChatColor.DARK_PURPLE + "Dwarves", 
-				Arrays.asList(ChatColor.LIGHT_PURPLE + "Masters of the axe and melee combat", "Dwarves dwell within the earth", "constantly delving for the riches beneath the surface."));
+				Arrays.asList(ChatColor.LIGHT_PURPLE + "Masters of the axe and melee combat", "Dwarves dwell within the earth", "constantly delving for the", "riches beneath the surface."));
 	}
 	
 	public ItemStack getSelectOrcItem() {
@@ -367,7 +367,7 @@ public class CustomItems {
 		return plugin.createItem(
 				Material.CHEST, 
 				1, 
-				"Inventories", 
+				ChatColor.YELLOW + "Inventories", 
 				Arrays.asList(ChatColor.LIGHT_PURPLE + "Access other players' Inventories"));
 	}
 	
@@ -375,7 +375,7 @@ public class CustomItems {
 		return plugin.createItem(
 				Material.ENDER_CHEST, 
 				1, 
-				"Ender Chests", 
+				ChatColor.DARK_GREEN + "Ender Chests", 
 				Arrays.asList(ChatColor.LIGHT_PURPLE + "Access other players' Ender Chests"));
 	}
 	
@@ -385,8 +385,257 @@ public class CustomItems {
 		return plugin.createItem(
 				Material.ENDER_EYE, 
 				1, 
-				"TPA", 
+				ChatColor.DARK_GREEN + "TPA", 
 				Arrays.asList(ChatColor.LIGHT_PURPLE + "Allow Players to teleport.", config.get("allowTpa").toString()));
+	}
+	
+	public ItemStack getStableMasterSkill1Item(Player player) {
+	 	return plugin.createItem(
+	 			Material.LEATHER_HORSE_ARMOR,
+	 			1,
+	 			ChatColor.DARK_AQUA + "Hermes Hooves",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Increase mounted speed threefold",
+	 					getSecondDataSkillItemsString(player, "StableMaster1", "8 Points")));
+	}
+	
+	public ItemStack getStableMasterSkill2Item(Player player) {
+	 	return plugin.createItem(
+	 			Material.IRON_SWORD,
+	 			1,
+	 			ChatColor.DARK_AQUA + "Mounted Mania",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Increased Damage when riding horses.",
+	 					getSecondDataSkillItemsString(player, "StableMaster2", "9 Points")));
+	}
+	
+	public ItemStack getStableMasterSkill3Item(Player player) {
+	 	return plugin.createItem(
+	 			Material.APPLE,
+	 			1,
+	 			ChatColor.DARK_AQUA + "Healthy Horses",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Increased Health when riding horses",
+	 					getSecondDataSkillItemsString(player, "StableMaster3", "8 Points")));
+	}
+	
+	public ItemStack getSteeledArmorerSkill1Item(Player player) {
+	 	return plugin.createItem(
+	 			Material.TOTEM_OF_UNDYING,
+	 			1,
+	 			ChatColor.DARK_AQUA + "Steeled Resolve",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Instead of dying, your fatal blow transforms",
+	 					ChatColor.LIGHT_PURPLE + "you into a statue, saving you from death.",
+	 					getSecondDataSkillItemsString(player, "SteeledArmorer1", "25 Points")));
+	}
+	
+	public ItemStack getVerdantShepherdSkill1Item(Player player) {
+	 	return plugin.createItem(
+	 			Material.SPORE_BLOSSOM,
+	 			1,
+	 			ChatColor.DARK_AQUA + "Shepherd's Grace",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "At low health, heal all other",
+	 					ChatColor.LIGHT_PURPLE + "men in a radius of 10 blocks.",
+	 					getSecondDataSkillItemsString(player, "VerdantShepherd1", "25 Points")));
+	}
+	
+	public ItemStack getEnchantedBotanistSkill1Item(Player player) {
+	 	return plugin.createItem(
+	 			Material.IRON_HOE,
+	 			1,
+	 			ChatColor.DARK_GREEN + "Efficient Botany",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Right click to replant crops.",
+	 					getSecondDataSkillItemsString(player, "EnchantedBotanist1", "10 Points")));
+	}
+	
+	public ItemStack getEnchantedBotanistSkill2Item(Player player) {
+	 	return plugin.createItem(
+	 			Material.CORNFLOWER,
+	 			1,
+	 			ChatColor.DARK_GREEN + "Enchanted Petals",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Consuming flowers gives",
+	 					ChatColor.LIGHT_PURPLE + "different potion effects.",
+	 					getSecondDataSkillItemsString(player, "EnchantedBotanist2", "15 Points")));
+	}
+	
+	public ItemStack getWoodlandCraftsmanSkill1Item(Player player) {
+	 	return plugin.createItem(
+	 			Material.GOLDEN_APPLE,
+	 			1,
+	 			ChatColor.DARK_GREEN + "Woodland Absoprtion",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Slow Regen that is not dependent on hunger.",
+	 					getSecondDataSkillItemsString(player, "WoodlandCraftsman1", "5 Points")));
+	}
+	
+	public ItemStack getWoodlandCraftsmanSkill2Item(Player player) {
+	 	return plugin.createItem(
+	 			Material.OAK_SAPLING,
+	 			1,
+	 			ChatColor.DARK_GREEN + "Arborated Strike",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Low percent chance for attacks",
+	 					ChatColor.LIGHT_PURPLE + "to summon an Arborated Strike",
+	 					ChatColor.LIGHT_PURPLE + "damaging everything it hits except for elves.",
+	 					getSecondDataSkillItemsString(player, "WoodlandCraftsman2", "20 Points")));
+	}
+	
+	public ItemStack getLunarArtificerSkill1Item(Player player) {
+	 	return plugin.createItem(
+	 			Material.SEA_LANTERN,
+	 			1,
+	 			ChatColor.DARK_GREEN + "Full Moon Lunar Transfusion",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Transform items in a moon pool",
+	 					ChatColor.LIGHT_PURPLE + "during a full moon.",
+	 					getSecondDataSkillItemsString(player, "LunarArtificer1", "6 Points")));
+	}
+	
+	public ItemStack getLunarArtificerSkill2Item(Player player) {
+	 	return plugin.createItem(
+	 			Material.NETHER_STAR,
+	 			1,
+	 			ChatColor.DARK_GREEN + "Starlight Healing",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Heal one nearby elf using starlight power.",
+	 					getSecondDataSkillItemsString(player, "LunarArtificer2", "13 Points")));
+	}
+	
+	public ItemStack getLunarArtificerSkill3Item(Player player) {
+	 	return plugin.createItem(
+	 			Material.REDSTONE_LAMP,
+	 			1,
+	 			ChatColor.DARK_GREEN + "New Moon Lunar Transfusion",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Transform items in a moon pool",
+	 					ChatColor.LIGHT_PURPLE + "during a new moon.",
+	 					getSecondDataSkillItemsString(player, "LunarArtificer3", "6 Points")));
+	}
+	
+	public ItemStack getRadiantMetallurgistSkill1Item(Player player) {
+	 	return plugin.createItem(
+	 			Material.ANVIL,
+	 			1,
+	 			ChatColor.DARK_PURPLE + "Radiant Anvils",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Chance for attacks to strike enemies",
+	 					ChatColor.LIGHT_PURPLE + "with a barrage of anvils.",
+	 					ChatColor.LIGHT_PURPLE + "Struck enemies become irradiated.",
+	 					getSecondDataSkillItemsString(player, "RadiantMetallurgist1", "25 Points")));
+	}
+	
+	public ItemStack getArcaneJewelerSkill1Item(Player player) {
+	 	return plugin.createItem(
+	 			Material.DIAMOND,
+	 			1,
+	 			ChatColor.DARK_PURPLE + "Arcane Jewels",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Chance for attacks to summon",
+	 					ChatColor.LIGHT_PURPLE + "a whirlwind of gems, revitalizing",
+	 					ChatColor.LIGHT_PURPLE + "any nearby dwarves.",
+	 					getSecondDataSkillItemsString(player, "ArcaneJeweler1", "25 Points")));
+	}
+	
+	public ItemStack getGildedMinerSkill1Item(Player player) {
+	 	return plugin.createItem(
+	 			Material.GOLDEN_PICKAXE,
+	 			1,
+	 			ChatColor.DARK_PURPLE + "Gilded Fortune",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Permanent fortune buff.",
+	 					getSecondDataSkillItemsString(player, "GildedMiner1", "6 Points")));
+	}
+	
+	public ItemStack getGildedMinerSkill2Item(Player player) {
+	 	return plugin.createItem(
+	 			Material.MINECART,
+	 			1,
+	 			ChatColor.DARK_PURPLE + "Powered Minecarts",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "All minecarts act as", 
+	 					ChatColor.LIGHT_PURPLE + "though they are being powered.",
+	 					getSecondDataSkillItemsString(player, "GildedMiner2", "13 Points")));
+	}
+	
+	public ItemStack getGildedMinerSkill3Item(Player player) {
+	 	return plugin.createItem(
+	 			Material.GOLDEN_PICKAXE,
+	 			1,
+	 			ChatColor.DARK_PURPLE + "Gilded Haste",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Permanent haste buff.",
+	 					getSecondDataSkillItemsString(player, "GildedMiner3", "6 Points")));
+	}
+	
+	public ItemStack getDarkAlchemistSkill1Item(Player player) {
+	 	return plugin.createItem(
+	 			Material.POTION,
+	 			1,
+	 			ChatColor.DARK_RED + "Powerful Alchemy",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Thrown potions have double the given effect.",
+	 					getSecondDataSkillItemsString(player, "DarkAlchemist1", "8 Points")));
+	}
+	
+	public ItemStack getDarkAlchemistSkill2Item(Player player) {
+	 	return plugin.createItem(
+	 			Material.CAULDRON,
+	 			1,
+	 			ChatColor.DARK_RED + "Magma Transmutation",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Transform lava to water in a cauldron.",
+	 					getSecondDataSkillItemsString(player, "DarkAlchemist2", "9 Points")));
+	}
+	
+	public ItemStack getDarkAlchemistSkill3Item(Player player) {
+	 	return plugin.createItem(
+	 			Material.POTION,
+	 			1,
+	 			ChatColor.DARK_RED + "Lasting Alchemy",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Thrown potions last twice as long.",
+	 					getSecondDataSkillItemsString(player, "DarkAlchemist3", "8 Points")));
+	}
+	
+	public ItemStack getEnragedBerserkerSkill1Item(Player player) {
+	 	return plugin.createItem(
+	 			Material.NETHERITE_AXE,
+	 			1,
+	 			ChatColor.DARK_RED + "Rage",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Hitting a killstreak of 5",
+	 					ChatColor.LIGHT_PURPLE + "sends you into a blind rage.",
+	 					getSecondDataSkillItemsString(player, "EnragedBerserker1", "15 Points")));
+	}
+	
+	public ItemStack getEnragedBerserkerSkill2Item(Player player) {
+	 	return plugin.createItem(
+	 			Material.WITHER_SKELETON_SKULL,
+	 			1,
+	 			ChatColor.DARK_RED + "Withered Beheading",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Increased Wither Skull drops.",
+	 					getSecondDataSkillItemsString(player, "EnragedBerserker2", "10 Points")));
+	}
+	
+	public ItemStack getGreedyScrapperSkill1Item(Player player) {
+	 	return plugin.createItem(
+	 			Material.FISHING_ROD,
+	 			1,
+	 			ChatColor.DARK_RED + "Molten Fishing",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Allows for fishing in lava.",
+	 					getSecondDataSkillItemsString(player, "GreedyScrapper1", "5 Points")));
+	}
+	
+	public ItemStack getGreedyScrapperSkill2Item(Player player) {
+	 	return plugin.createItem(
+	 			Material.NETHERITE_SCRAP,
+	 			1,
+	 			ChatColor.DARK_RED + "Greedy Reinforcements",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Give nearby orcs a resistance",
+	 					ChatColor.LIGHT_PURPLE + "buff at low health.",
+	 					getSecondDataSkillItemsString(player, "GreedyScrapper2", "20 Points")));
+	}
+	
+	
+	
+	private String getSecondDataSkillItemsString(Player player, String skill, String priceString) {
+		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
+	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
+	 	
+	 	String secondString = ChatColor.DARK_GRAY + "Unowned: " + ChatColor.LIGHT_PURPLE + priceString;
+	 	if (skillsconfig.contains(skill)) {
+	 		String enabledString = ChatColor.RED + "DISABLED";
+	 		if (skillsconfig.getBoolean(skill)) {
+	 			enabledString = ChatColor.GREEN + "ENABLED";
+	 		}
+	 		
+	 		secondString = "Click to toggle: " + enabledString;
+	 	}
+	 	return secondString;
+	 	
 	}
 }
 

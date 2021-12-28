@@ -1,14 +1,12 @@
 package org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Elves.CommunismHub;
 
 import org.baugindustries.baugrpg.Main;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -30,25 +28,7 @@ public class ElvesCommunismInventoryListListener implements Listener{
 						
 						
 						if (event.getCurrentItem().equals(plugin.itemManager.getBackItem())) {//Open the previous menu
-							int inventorySize = 9;
-							String inventoryName = "Elves Communism Hub";
-							Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
-							
-							
-							for (int i = 0; i < inventorySize; i++) {
-								inventory.setItem(i, new ItemStack(Material.AIR));
-							}
-
-							
-							inventory.setItem(0, plugin.itemManager.getBackItem());
-							
-							inventory.setItem(3, plugin.itemManager.getCommunistInventoryItem());
-							
-							inventory.setItem(5, plugin.itemManager.getCommunistEnderChestItem());
-							
-							event.getWhoClicked().openInventory(inventory);
-							
-							
+							player.openInventory(plugin.inventoryManager.getElvesCommunistHubMenuInventory());
 						} else if (event.getCurrentItem().getType().equals(Material.PLAYER_HEAD)) {//View Selected Player's Inventory
 							ItemStack selectedPlayerHead = event.getCurrentItem();
 							SkullMeta selectedPlayerHeadMeta = (SkullMeta)selectedPlayerHead.getItemMeta();

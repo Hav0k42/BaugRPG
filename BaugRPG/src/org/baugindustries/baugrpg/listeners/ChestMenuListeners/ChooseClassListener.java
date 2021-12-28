@@ -1,18 +1,11 @@
 package org.baugindustries.baugrpg.listeners.ChestMenuListeners;
 
 
-import java.util.Arrays;
-
 import org.baugindustries.baugrpg.Main;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
-
-import net.md_5.bungee.api.ChatColor;
 
 public class ChooseClassListener implements Listener{
 	
@@ -35,27 +28,8 @@ public class ChooseClassListener implements Listener{
  		
  		
  		String pickedClass = event.getCurrentItem().getItemMeta().getDisplayName();
+ 		player.openInventory(plugin.inventoryManager.getConfirmClassMenuInventory(pickedClass));
  		
- 		int inventorySize = 27;
-		String inventoryName = "Confirm Class Selection";
-		Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
-		for (int i = 0; i < inventorySize; i++) {
-			inventory.setItem(i, plugin.itemManager.getBlankItem());
-		}
-		
-		
-		inventory.setItem(4, plugin.createItem(
-				Material.NETHER_STAR, 
-				1, 
-				ChatColor.YELLOW + "Confirm Selection", 
-				Arrays.asList(ChatColor.LIGHT_PURPLE + "Are you sure you want to choose " + pickedClass + "?")));
-		
-		inventory.setItem(11, plugin.itemManager.getYesItem());
-		
-		inventory.setItem(15, plugin.itemManager.getNoItem());
-		
-		
-		player.openInventory(inventory);
 		event.setCancelled(true);
 				
 			

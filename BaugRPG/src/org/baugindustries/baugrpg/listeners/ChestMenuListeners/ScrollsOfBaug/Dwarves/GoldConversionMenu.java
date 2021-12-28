@@ -2,7 +2,6 @@ package org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Dw
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 
 import org.baugindustries.baugrpg.Main;
 import org.bukkit.Material;

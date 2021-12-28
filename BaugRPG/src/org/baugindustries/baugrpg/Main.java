@@ -47,6 +47,7 @@ import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ChooseRaceInvento
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ConfirmClassListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ConfirmRaceInventoryListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.GeneralSkillTreeMenu;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.RaceSkillTreeMenu;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.SkillTreeMenu;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Dwarves.GoldConversionMenu;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Dwarves.ScrollsOfBaugDwarvesInventoryListener;
@@ -118,6 +119,7 @@ public class Main extends JavaPlugin {
 	public Scoreboard board;
 	public ProtocolManager protocolManager;
 	public CustomItems itemManager;
+	public CustomInventories inventoryManager;
 	
 	
 	//Listeners
@@ -163,6 +165,7 @@ public class Main extends JavaPlugin {
 	public PlayerAdvancementDoneListener playerAdvancementDoneListener = new PlayerAdvancementDoneListener(this);
 	public ChooseClassListener chooseClassListener = new ChooseClassListener(this);
 	public ConfirmClassListener confirmClassListener = new ConfirmClassListener(this);
+	public RaceSkillTreeMenu raceSkillTreeMenu = new RaceSkillTreeMenu(this);
 	
 	
 	
@@ -213,6 +216,7 @@ public class Main extends JavaPlugin {
 		 this.getServer().getPluginManager().registerEvents(generalSkillTreeMenu, this);
 		 this.getServer().getPluginManager().registerEvents(chooseClassListener, this);
 		 this.getServer().getPluginManager().registerEvents(confirmClassListener, this);
+		 this.getServer().getPluginManager().registerEvents(raceSkillTreeMenu, this);
 		 
 		 new Pay(this);
 		 new Balance(this);
@@ -233,6 +237,7 @@ public class Main extends JavaPlugin {
 		 
 		 protocolManager = ProtocolLibrary.getProtocolManager();
 		 itemManager = new CustomItems(this);
+		 inventoryManager = new CustomInventories(this);
 		 
 		 
 		 
