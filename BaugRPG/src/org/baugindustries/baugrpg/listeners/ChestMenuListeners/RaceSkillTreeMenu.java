@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.util.List;
 
 import org.baugindustries.baugrpg.Main;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -74,6 +76,31 @@ public class RaceSkillTreeMenu implements Listener{
 			
 			if (skillsconfig.contains(skill)) {
 				skillsconfig.set(skill, !skillsconfig.getBoolean(skill));
+				
+				if (skill.equals("StableMaster1") && skillsconfig.contains("StableMaster1") && plugin.mountedPlayers.contains(player)) {
+		 			AbstractHorse horse = (AbstractHorse) player.getVehicle();
+		 			
+		 			if (skillsconfig.getBoolean("StableMaster1")) {
+		 				horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue() * plugin.horseListener.getBuffedHorseSpeed());
+		 			} else {
+		 				horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue() / plugin.horseListener.getBuffedHorseSpeed());
+		 			}
+		 		}
+				
+				if (skill.equals("StableMaster3") && skillsconfig.contains("StableMaster3") && plugin.mountedPlayers.contains(player)) {
+		 			AbstractHorse horse = (AbstractHorse) player.getVehicle();
+		 			
+		 			if (skillsconfig.getBoolean("StableMaster3")) {
+		 				double healthPercentage = horse.getHealth() / horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
+		 				horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() * plugin.horseListener.getBuffedHorseHealth());
+		 				horse.setHealth(horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() * healthPercentage);
+		 			} else {
+		 				double healthPercentage = horse.getHealth() / horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
+		 				horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() / plugin.horseListener.getBuffedHorseHealth());
+		 				horse.setHealth(horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() * healthPercentage);
+		 			}
+		 		}
+				
 	 			reloadBool = true;
 		 	} else {
 		 		List<String> lore = event.getCurrentItem().getItemMeta().getLore();
@@ -85,6 +112,23 @@ public class RaceSkillTreeMenu implements Listener{
 		 			skillPrice = Integer.parseInt(skillPriceStr);
 			 		if (skillsconfig.getInt("skillPoints") >= skillPrice) {
 			 			skillsconfig.set(skill, true);
+			 			if (skill.equals("StableMaster1") && skillsconfig.contains("StableMaster1") && plugin.mountedPlayers.contains(player)) {
+				 			AbstractHorse horse = (AbstractHorse) player.getVehicle();
+				 			
+				 			if (skillsconfig.getBoolean("StableMaster1")) {
+				 				horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue() * plugin.horseListener.getBuffedHorseSpeed());
+				 			}
+				 		}
+						
+						if (skill.equals("StableMaster3") && skillsconfig.contains("StableMaster3") && plugin.mountedPlayers.contains(player)) {
+				 			AbstractHorse horse = (AbstractHorse) player.getVehicle();
+				 			
+				 			if (skillsconfig.getBoolean("StableMaster3")) {
+				 				double healthPercentage = horse.getHealth() / horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
+				 				horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() * plugin.horseListener.getBuffedHorseHealth());
+				 				horse.setHealth(horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() * healthPercentage);
+				 			} 
+				 		}
 			 			skillsconfig.set("skillPoints", skillsconfig.getInt("skillPoints") - skillPrice);
 			 			reloadBool = true;
 			 		}
@@ -100,8 +144,10 @@ public class RaceSkillTreeMenu implements Listener{
 	 	}
 	 	
 	 	
+	 	
 	 	if (reloadBool) {
 	 		player.openInventory(plugin.inventoryManager.getRaceSkillTreeMenuInventory(player));
+	 		
 	 	}
 		
 		

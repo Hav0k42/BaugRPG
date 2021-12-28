@@ -1,21 +1,24 @@
 package org.baugindustries.baugrpg.listeners;
 
+import java.io.File;
+
 import org.baugindustries.baugrpg.Main;
-import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
-import org.bukkit.persistence.PersistentDataType;
 
 public class HorseListener implements Listener{
 
 	
 	private Main plugin;
-	int buffedHorseSpeed = 3;
+	public int buffedHorseSpeed = 3;
+	public double buffedHorseHealth = 1.5;
 	public HorseListener(Main plugin) {
 		this.plugin = plugin;
 	}
@@ -27,10 +30,17 @@ public class HorseListener implements Listener{
 
 	        AbstractHorse horse = (AbstractHorse) event.getVehicle();
 	        Player player = (Player) event.getEntered();
-	        
-	        if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER) == 1) {//Check if the player is of the race of Men
+	        File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
+		 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
+	        if (skillsconfig.contains("StableMaster1") && skillsconfig.getBoolean("StableMaster1")) {
 	        	horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue() * buffedHorseSpeed);
 	        }
+	        if (skillsconfig.contains("StableMaster3") && skillsconfig.getBoolean("StableMaster3")) {
+	        	double healthPercentage = horse.getHealth() / horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
+	        	horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() * buffedHorseHealth);
+	        	horse.setHealth(horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() * healthPercentage);
+	        }
+	        plugin.mountedPlayers.add(player);
 	    }
 	}
 	
@@ -41,12 +51,25 @@ public class HorseListener implements Listener{
         if (event.getVehicle() instanceof AbstractHorse) {
             Player player = (Player) event.getExited();
             AbstractHorse horse = (AbstractHorse) event.getVehicle();
-            
-            if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER) == 1) {//Check if the player is of the race of Men
+            File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
+		 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
+            if (skillsconfig.contains("StableMaster1") && skillsconfig.getBoolean("StableMaster1")) {
             	horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue() / buffedHorseSpeed);
 	        }
+            if (skillsconfig.contains("StableMaster3") && skillsconfig.getBoolean("StableMaster3")) {
+            	double healthPercentage = horse.getHealth() / horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
+            	horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() / buffedHorseHealth);
+            	horse.setHealth(horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() * healthPercentage);
+	        }
+            plugin.mountedPlayers.remove(player);
         }
     }
 
+	public int getBuffedHorseSpeed() {
+		return buffedHorseSpeed;
+	}
 	
+	public double getBuffedHorseHealth() {
+		return buffedHorseHealth;
+	}
 }

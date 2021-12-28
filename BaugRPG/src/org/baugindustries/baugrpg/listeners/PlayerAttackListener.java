@@ -24,13 +24,16 @@ public class PlayerAttackListener implements Listener {
 			File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
 		 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
 			
-		 	
+		 	double damageMultiplier = 1;
+		 	double initDamage = event.getDamage();
 		 	if (skillsconfig.getBoolean("damageOn")) {
-			 	double damageMultiplier = (1 + ((0.5 / 10) * skillsconfig.getInt("damage")));
-				double initDamage = event.getDamage();
-				event.setDamage(initDamage * damageMultiplier);
+			 	damageMultiplier = (1 + ((0.5 / 10) * skillsconfig.getInt("damage")));
 		 	}
-			
+		 	
+		 	if ((skillsconfig.contains("StableMaster2") && skillsconfig.getBoolean("StableMaster2")) && plugin.mountedPlayers.contains(player)) {
+		 		damageMultiplier *= 1.5;
+		 	}
+		 	event.setDamage(initDamage * damageMultiplier);
 		}
 	}
 }

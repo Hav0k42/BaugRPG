@@ -74,6 +74,7 @@ import org.bukkit.World.Environment;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_18_R1.CraftWorld;
+import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -115,6 +116,7 @@ public class Main extends JavaPlugin {
 	public HashMap<Player, Float> miningSpeed = new HashMap<Player, Float>();
 	public HashMap<Player, Integer> miningTicks = new HashMap<Player, Integer>();
 	public HashMap<Player, Float> miningPercentage = new HashMap<Player, Float>();
+	public List<Player> mountedPlayers = new ArrayList<Player>();
 	public ScoreboardManager manager;
 	public Scoreboard board;
 	public ProtocolManager protocolManager;
@@ -301,6 +303,11 @@ public class Main extends JavaPlugin {
 		 orcLight();
 		 miningBuff();
 		 
+		 for (Player player: getOnlinePlayers()) {
+			 if (player.getVehicle() instanceof AbstractHorse) {
+				 mountedPlayers.add(player);
+			 }
+		 }
 		 
 		 File file = new File(this.getDataFolder() + File.separator + "econ.yml");
 		 
@@ -395,7 +402,10 @@ public class Main extends JavaPlugin {
 							  PacketContainer breakAnimation = protocolManager.createPacket(PacketType.Play.Server.BLOCK_BREAK_ANIMATION);
 							  breakAnimation.getBlockPositionModifier().write(0, miningPosition.get(player));
 							  float miningLevel = skillsconfig.getInt("mining");
-							  float mineSpeed = miningSpeed.get(player);
+							  float mineSpeed = 0;
+							  if (miningSpeed.containsKey(player)) {
+								  mineSpeed = miningSpeed.get(player);
+							  }
 							  float buffedSpeed = mineSpeed * (1 + (miningLevel / 10f));
 							  float totalPercentage = buffedSpeed + miningPercentage.get(player);
 							  miningPercentage.put(player, totalPercentage);
