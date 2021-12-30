@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 import org.baugindustries.baugrpg.Main;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -61,6 +62,11 @@ public class OnJoinListener implements Listener{
 			e.printStackTrace();
 		}
 	 	
+	 	
+	 	if (plugin.steeledResolveDisconnectedPlayers.contains(player.getUniqueId())) {
+	 		player.setGameMode(GameMode.SURVIVAL);
+	 		player.teleport(plugin.steeledResolveInitLoc.get(player.getUniqueId()));
+	 	}
 	 	
 		
 	 	File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + event.getPlayer().getUniqueId() + ".yml");
@@ -166,8 +172,6 @@ public class OnJoinListener implements Listener{
 			
 			
 			event.getPlayer().openInventory(inventory);
-			
-			plugin.getServer().getPluginManager().registerEvents(plugin.chooseRaceInventoryListener, plugin);
 			
 			
 			

@@ -417,13 +417,40 @@ public class CustomItems {
 	}
 	
 	public ItemStack getSteeledArmorerSkill1Item(Player player) {
-	 	return plugin.createItem(
-	 			Material.TOTEM_OF_UNDYING,
-	 			1,
-	 			ChatColor.DARK_AQUA + "Steeled Resolve",
-	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Instead of dying, your fatal blow transforms",
-	 					ChatColor.LIGHT_PURPLE + "you into a statue, saving you from death.",
-	 					getSecondDataSkillItemsString(player, "SteeledArmorer1", "25 Points")));
+		if (plugin.steeledResolveCooldown.containsKey(player.getUniqueId())) {
+	 		int minutesToMillis = 60000;
+	 		if (plugin.steeledResolveCooldown.get(player.getUniqueId()) + (30 * minutesToMillis) < System.currentTimeMillis()) {
+	 			plugin.steeledResolveCooldown.remove(player.getUniqueId());
+	 		}
+	 	}
+		if (plugin.steeledResolveCooldown.containsKey(player.getUniqueId())) {
+			int minutesToMillis = 60000;
+			Long timeRemaining = (plugin.steeledResolveCooldown.get(player.getUniqueId()) + (plugin.playerDamageListener.getSteeledResolveCooldownTime() * minutesToMillis)) - System.currentTimeMillis();
+			String timeString = "";
+			if (timeRemaining > minutesToMillis) {
+				//display in minutes
+				timeString = ((int)(timeRemaining / minutesToMillis) + " Minutes Remaining");
+			} else {
+				//display in seconds
+				timeString = ((int)(timeRemaining / 1000) + " Seconds Remaining");
+			}
+			return plugin.createItem(
+		 			Material.TOTEM_OF_UNDYING,
+		 			1,
+		 			ChatColor.DARK_AQUA + "Steeled Resolve",
+		 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Instead of dying, your fatal blow transforms",
+		 					ChatColor.LIGHT_PURPLE + "you into a statue, saving you from death.",
+		 					ChatColor.DARK_AQUA + "Cooldown: " + timeString,
+		 					getSecondDataSkillItemsString(player, "SteeledArmorer1", "25 Points")));
+		} else {
+		 	return plugin.createItem(
+		 			Material.TOTEM_OF_UNDYING,
+		 			1,
+		 			ChatColor.DARK_AQUA + "Steeled Resolve",
+		 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Instead of dying, your fatal blow transforms",
+		 					ChatColor.LIGHT_PURPLE + "you into a statue, saving you from death.",
+		 					getSecondDataSkillItemsString(player, "SteeledArmorer1", "25 Points")));
+		}
 	}
 	
 	public ItemStack getVerdantShepherdSkill1Item(Player player) {

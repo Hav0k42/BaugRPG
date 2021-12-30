@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import org.baugindustries.baugrpg.commands.BaugScroll;
 import org.baugindustries.baugrpg.commands.Chat;
@@ -78,7 +79,6 @@ import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
@@ -116,7 +116,12 @@ public class Main extends JavaPlugin {
 	public HashMap<Player, Float> miningSpeed = new HashMap<Player, Float>();
 	public HashMap<Player, Integer> miningTicks = new HashMap<Player, Integer>();
 	public HashMap<Player, Float> miningPercentage = new HashMap<Player, Float>();
+	public HashMap<UUID, Long> steeledResolveCooldown = new HashMap<UUID, Long>();
+	public HashMap<UUID, Long> steeledResolveTpTicks = new HashMap<UUID, Long>();
+	public HashMap<UUID, Location> steeledResolveInitLoc = new HashMap<UUID, Location>();
+	public HashMap<UUID, Integer> steeledResolveNpcId = new HashMap<UUID, Integer>();
 	public List<Player> mountedPlayers = new ArrayList<Player>();
+	public List<UUID> steeledResolveDisconnectedPlayers = new ArrayList<UUID>();
 	public ScoreboardManager manager;
 	public Scoreboard board;
 	public ProtocolManager protocolManager;
@@ -220,6 +225,8 @@ public class Main extends JavaPlugin {
 		 this.getServer().getPluginManager().registerEvents(confirmClassListener, this);
 		 this.getServer().getPluginManager().registerEvents(raceSkillTreeMenu, this);
 		 
+		 
+		 
 		 new Pay(this);
 		 new Balance(this);
 		 new ResetRace(this);
@@ -242,6 +249,7 @@ public class Main extends JavaPlugin {
 		 inventoryManager = new CustomInventories(this);
 		 
 		 
+		
 		 
 		 
 		 protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Client.BLOCK_DIG) {
@@ -355,6 +363,22 @@ public class Main extends JavaPlugin {
 				 e.printStackTrace();
 			 }
 		 }
+		 
+		 File steeledResolvecooldownDatafile = new File(this.getDataFolder() + File.separator + "steeledResolveCooldownData.yml");
+		 FileConfiguration steeledResolvecooldownDataconfig = YamlConfiguration.loadConfiguration(steeledResolvecooldownDatafile);
+		 //Check to see if the file already exists. If not, create it.
+		 if (!steeledResolvecooldownDatafile.exists()) {
+			 try {
+				 steeledResolvecooldownDatafile.createNewFile();
+			 } catch (IOException e) {
+				 e.printStackTrace();
+			 }
+		 }
+		 for (String uuidStr: steeledResolvecooldownDataconfig.getKeys(true)) {
+			 UUID uuid = UUID.fromString(uuidStr);
+			 steeledResolveCooldown.put(uuid, steeledResolvecooldownDataconfig.getLong(uuidStr));
+		 }
+		 
 	}
 	
 	Runnable miningBuffRunnable = new Runnable() {
@@ -508,47 +532,29 @@ public class Main extends JavaPlugin {
 	
 	public void onDisable() {
 		//Save player's inventory to YML file
-				
-		for (int i = 0; i < this.getServer().getOfflinePlayers().length; i++) {
-				
-			if (this.getServer().getOfflinePlayers()[i].isOnline()) {
-				
-				Player player = this.getServer().getOfflinePlayers()[i].getPlayer();
-				
-				//create file with player's UUID
-				File file = new File(this.getDataFolder() + File.separator + "inventoryData" + File.separator + player.getUniqueId() + ".yml");
-				FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-				
-				//Check to see if the file already exists. If not, create it.
-				if (!file.exists()) {
-					try {
-						file.createNewFile();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-				
-				config.set("Username", player.getDisplayName());
-				config.set("UUID", player.getUniqueId().toString());
-				config.set("Inventory", player.getInventory().getContents());
-				
-				PersistentDataContainer data = player.getPlayer().getPersistentDataContainer();
-				if (data.has(new NamespacedKey(this, "Race"), PersistentDataType.INTEGER)) {
-					config.set("Race Data", data.get(new NamespacedKey(this, "Race"), PersistentDataType.INTEGER));
-				}
-				
-					
-				
-				
-				try {
-					config.save(file);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+		
+		File steeledResolvecooldownDatafile = new File(this.getDataFolder() + File.separator + "steeledResolveCooldownData.yml");
+		FileConfiguration steeledResolvecooldownDataconfig = new YamlConfiguration();
+		//Check to see if the file already exists. If not, create it.
+		if (!steeledResolvecooldownDatafile.exists()) {
+			try {
+				steeledResolvecooldownDatafile.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
-				
+		
+		steeledResolveCooldown.forEach((key, value) -> {
+				UUID uuid = key;
+				steeledResolvecooldownDataconfig.set(uuid.toString(), value);
+		    });
+		
+		try {
+			steeledResolvecooldownDataconfig.save(steeledResolvecooldownDatafile);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public List<OfflinePlayer> getAllOfflineElves() {
