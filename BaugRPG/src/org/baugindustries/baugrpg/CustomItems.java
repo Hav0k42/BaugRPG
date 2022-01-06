@@ -427,12 +427,24 @@ public class CustomItems {
 			int minutesToMillis = 60000;
 			Long timeRemaining = (plugin.steeledResolveCooldown.get(player.getUniqueId()) + (plugin.playerDamageListener.getSteeledResolveCooldownTime() * minutesToMillis)) - System.currentTimeMillis();
 			String timeString = "";
+			int timeValue;
 			if (timeRemaining > minutesToMillis) {
 				//display in minutes
-				timeString = ((int)(timeRemaining / minutesToMillis) + " Minutes Remaining");
+				timeValue = (int)(timeRemaining / minutesToMillis);
+				if (timeValue == 1) {
+					timeString = (timeValue + " Minute Remaining");
+				} else {
+					timeString = (timeValue + " Minute Remaining");
+				}
 			} else {
 				//display in seconds
-				timeString = ((int)(timeRemaining / 1000) + " Seconds Remaining");
+				timeValue = (int)(timeRemaining / 1000);
+				if (timeValue == 1) {
+					timeString = (timeValue + " Second Remaining");
+				} else {
+					timeString = (timeValue + " Seconds Remaining");
+				}
+				
 			}
 			return plugin.createItem(
 		 			Material.TOTEM_OF_UNDYING,
@@ -464,12 +476,24 @@ public class CustomItems {
 			int minutesToMillis = 60000;
 			Long timeRemaining = (plugin.shepherdsGraceCooldown.get(player.getUniqueId()) + (plugin.playerDamageListener.getShepherdsGraceCooldownTime() * minutesToMillis)) - System.currentTimeMillis();
 			String timeString = "";
+			int timeValue;
 			if (timeRemaining > minutesToMillis) {
 				//display in minutes
-				timeString = ((int)(timeRemaining / minutesToMillis) + " Minutes Remaining");
+				timeValue = (int)(timeRemaining / minutesToMillis);
+				if (timeValue == 1) {
+					timeString = (timeValue + " Minute Remaining");
+				} else {
+					timeString = (timeValue + " Minute Remaining");
+				}
 			} else {
 				//display in seconds
-				timeString = ((int)(timeRemaining / 1000) + " Seconds Remaining");
+				timeValue = (int)(timeRemaining / 1000);
+				if (timeValue == 1) {
+					timeString = (timeValue + " Second Remaining");
+				} else {
+					timeString = (timeValue + " Seconds Remaining");
+				}
+				
 			}
 			return plugin.createItem(
 		 			Material.SPORE_BLOSSOM,
