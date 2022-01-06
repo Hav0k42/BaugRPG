@@ -419,7 +419,7 @@ public class CustomItems {
 	public ItemStack getSteeledArmorerSkill1Item(Player player) {
 		if (plugin.steeledResolveCooldown.containsKey(player.getUniqueId())) {
 	 		int minutesToMillis = 60000;
-	 		if (plugin.steeledResolveCooldown.get(player.getUniqueId()) + (30 * minutesToMillis) < System.currentTimeMillis()) {
+	 		if (plugin.steeledResolveCooldown.get(player.getUniqueId()) + (plugin.playerDamageListener.getSteeledResolveCooldownTime() * minutesToMillis) < System.currentTimeMillis()) {
 	 			plugin.steeledResolveCooldown.remove(player.getUniqueId());
 	 		}
 	 	}
@@ -454,13 +454,40 @@ public class CustomItems {
 	}
 	
 	public ItemStack getVerdantShepherdSkill1Item(Player player) {
-	 	return plugin.createItem(
-	 			Material.SPORE_BLOSSOM,
-	 			1,
-	 			ChatColor.DARK_AQUA + "Shepherd's Grace",
-	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "At low health, heal all other",
-	 					ChatColor.LIGHT_PURPLE + "men in a radius of 10 blocks.",
-	 					getSecondDataSkillItemsString(player, "VerdantShepherd1", "25 Points")));
+		if (plugin.shepherdsGraceCooldown.containsKey(player.getUniqueId())) {
+	 		int minutesToMillis = 60000;
+	 		if (plugin.shepherdsGraceCooldown.get(player.getUniqueId()) + (plugin.playerDamageListener.getShepherdsGraceCooldownTime() * minutesToMillis) < System.currentTimeMillis()) {
+	 			plugin.shepherdsGraceCooldown.remove(player.getUniqueId());
+	 		}
+	 	}
+		if (plugin.shepherdsGraceCooldown.containsKey(player.getUniqueId())) {
+			int minutesToMillis = 60000;
+			Long timeRemaining = (plugin.shepherdsGraceCooldown.get(player.getUniqueId()) + (plugin.playerDamageListener.getShepherdsGraceCooldownTime() * minutesToMillis)) - System.currentTimeMillis();
+			String timeString = "";
+			if (timeRemaining > minutesToMillis) {
+				//display in minutes
+				timeString = ((int)(timeRemaining / minutesToMillis) + " Minutes Remaining");
+			} else {
+				//display in seconds
+				timeString = ((int)(timeRemaining / 1000) + " Seconds Remaining");
+			}
+			return plugin.createItem(
+		 			Material.SPORE_BLOSSOM,
+		 			1,
+		 			ChatColor.DARK_AQUA + "Shepherd's Grace",
+		 			Arrays.asList(ChatColor.LIGHT_PURPLE + "At low health, heal all other",
+		 					ChatColor.LIGHT_PURPLE + "men in a radius of 10 blocks.",
+		 					ChatColor.DARK_AQUA + "Cooldown: " + timeString,
+		 					getSecondDataSkillItemsString(player, "VerdantShepherd1", "25 Points")));
+		} else {
+			return plugin.createItem(
+		 			Material.SPORE_BLOSSOM,
+		 			1,
+		 			ChatColor.DARK_AQUA + "Shepherd's Grace",
+		 			Arrays.asList(ChatColor.LIGHT_PURPLE + "At low health, heal all other",
+		 					ChatColor.LIGHT_PURPLE + "men in a radius of 10 blocks.",
+		 					getSecondDataSkillItemsString(player, "VerdantShepherd1", "25 Points")));
+		}
 	}
 	
 	public ItemStack getEnchantedBotanistSkill1Item(Player player) {

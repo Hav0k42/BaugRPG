@@ -62,11 +62,22 @@ public class OnJoinListener implements Listener{
 			e.printStackTrace();
 		}
 	 	
+	 	player.setGameMode(GameMode.SURVIVAL);
 	 	
 	 	if (plugin.steeledResolveDisconnectedPlayers.contains(player.getUniqueId())) {
-	 		player.setGameMode(GameMode.SURVIVAL);
 	 		player.teleport(plugin.steeledResolveInitLoc.get(player.getUniqueId()));
+	 		plugin.steeledResolveDisconnectedPlayers.remove(player.getUniqueId());
 	 	}
+	 	
+	 	File steeledResolveDisconnectedDatafile = new File(plugin.getDataFolder() + File.separator + "steeledResolveDisconnectedData.yml");
+		FileConfiguration steeledResolveDisconnectedDataconfig = YamlConfiguration.loadConfiguration(steeledResolveDisconnectedDatafile);
+		
+		if (steeledResolveDisconnectedDataconfig.contains(player.getUniqueId().toString())) {
+			player.teleport(steeledResolveDisconnectedDataconfig.getLocation(player.getUniqueId().toString()));
+			steeledResolveDisconnectedDataconfig.set(player.getUniqueId().toString(), null);
+		}
+		
+		
 	 	
 		
 	 	File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + event.getPlayer().getUniqueId() + ".yml");

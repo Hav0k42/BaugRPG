@@ -4,12 +4,12 @@ package org.baugindustries.baugrpg.listeners;
 import java.io.File;
 
 import org.baugindustries.baugrpg.Main;
-import org.bukkit.entity.Player;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -29,6 +29,7 @@ public class PlayerJumpListener implements Listener {
 		Player player = event.getPlayer();
 	    Vector velocity = player.getVelocity();
 	    
+	    
 	    Location prevPos = plugin.positionData.get(player);
 	    if (prevPos != null) {
 		    Location currentPos = player.getLocation();
@@ -37,9 +38,9 @@ public class PlayerJumpListener implements Listener {
 		    float Ydelta = (float) (currentPos.getY() - prevPos.getY());
 		    float Zdelta = (float) (currentPos.getZ() - prevPos.getZ());
 		    
+		    
 		    File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
 		 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
-		    
 		    // Check if the player is moving "up"
 		    if (velocity.getY() > 0 & !player.isSwimming() && skillsconfig.getBoolean("jumpOn")) {
 		        // Default jump velocity

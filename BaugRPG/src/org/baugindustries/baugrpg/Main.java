@@ -120,6 +120,8 @@ public class Main extends JavaPlugin {
 	public HashMap<UUID, Long> steeledResolveTpTicks = new HashMap<UUID, Long>();
 	public HashMap<UUID, Location> steeledResolveInitLoc = new HashMap<UUID, Location>();
 	public HashMap<UUID, Integer> steeledResolveNpcId = new HashMap<UUID, Integer>();
+	public HashMap<UUID, Long> shepherdsGraceCooldown = new HashMap<UUID, Long>();
+	public HashMap<UUID, Long> shepherdsGraceTicks = new HashMap<UUID, Long>();
 	public List<Player> mountedPlayers = new ArrayList<Player>();
 	public List<UUID> steeledResolveDisconnectedPlayers = new ArrayList<UUID>();
 	public ScoreboardManager manager;
@@ -379,6 +381,28 @@ public class Main extends JavaPlugin {
 			 steeledResolveCooldown.put(uuid, steeledResolvecooldownDataconfig.getLong(uuidStr));
 		 }
 		 
+		 
+		 
+		 
+		 
+		 File shepherdsGracecooldownDatafile = new File(this.getDataFolder() + File.separator + "shepherdsGraceCooldownData.yml");
+		 FileConfiguration shepherdsGracecooldownDataconfig = YamlConfiguration.loadConfiguration(shepherdsGracecooldownDatafile);
+		 //Check to see if the file already exists. If not, create it.
+		 if (!shepherdsGracecooldownDatafile.exists()) {
+			 try {
+				 shepherdsGracecooldownDatafile.createNewFile();
+			 } catch (IOException e) {
+				 e.printStackTrace();
+			 }
+		 }
+		 for (String uuidStr: shepherdsGracecooldownDataconfig.getKeys(true)) {
+			 UUID uuid = UUID.fromString(uuidStr);
+			 shepherdsGraceCooldown.put(uuid, shepherdsGracecooldownDataconfig.getLong(uuidStr));
+		 }
+		 
+		 
+		 
+		 
 	}
 	
 	Runnable miningBuffRunnable = new Runnable() {
@@ -531,7 +555,6 @@ public class Main extends JavaPlugin {
 	
 	
 	public void onDisable() {
-		//Save player's inventory to YML file
 		
 		File steeledResolvecooldownDatafile = new File(this.getDataFolder() + File.separator + "steeledResolveCooldownData.yml");
 		FileConfiguration steeledResolvecooldownDataconfig = new YamlConfiguration();
@@ -549,12 +572,53 @@ public class Main extends JavaPlugin {
 				steeledResolvecooldownDataconfig.set(uuid.toString(), value);
 		    });
 		
+		
+		File shepherdsGracecooldownDatafile = new File(this.getDataFolder() + File.separator + "shepherdsGraceCooldownData.yml");
+		FileConfiguration shepherdsGracecooldownDataconfig = new YamlConfiguration();
+		
+		if (!shepherdsGracecooldownDatafile.exists()) {
+			try {
+				shepherdsGracecooldownDatafile.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		shepherdsGraceCooldown.forEach((key, value) -> {
+			UUID uuid = key;
+			shepherdsGracecooldownDataconfig.set(uuid.toString(), value);
+	    });
+		
+		
+		
+		File steeledResolveDisconnectedDatafile = new File(this.getDataFolder() + File.separator + "steeledResolveDisconnectedData.yml");
+		FileConfiguration steeledResolveDisconnectedDataconfig = new YamlConfiguration();
+		
+		steeledResolveTpTicks.forEach((key, value) -> {
+			if (value < 401) {
+				steeledResolveDisconnectedPlayers.add(key);
+			}
+		});
+		
+		
+		for (UUID uuid: steeledResolveDisconnectedPlayers) {
+			steeledResolveDisconnectedDataconfig.set(uuid.toString(), steeledResolveInitLoc.get(uuid));
+		}
+		
+		
+		
+		
 		try {
 			steeledResolvecooldownDataconfig.save(steeledResolvecooldownDatafile);
+			steeledResolveDisconnectedDataconfig.save(steeledResolveDisconnectedDatafile);
+			shepherdsGracecooldownDataconfig.save(shepherdsGracecooldownDatafile);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
 	}
 	
 	public List<OfflinePlayer> getAllOfflineElves() {
@@ -622,7 +686,7 @@ public class Main extends JavaPlugin {
 	
 	
 	public List<Player> getOnlinePlayers() {
-		List<Player> allOnlinePlayers = new ArrayList<Player>();//this line doesnt work
+		List<Player> allOnlinePlayers = new ArrayList<Player>();
 		OfflinePlayer[] allOfflinePlayers = getServer().getOfflinePlayers();
 		for (int i = 0; i < allOfflinePlayers.length; i++) {
 			if (allOfflinePlayers[i].isOnline()) {
@@ -632,7 +696,19 @@ public class Main extends JavaPlugin {
 		return allOnlinePlayers;
 	}
 	
-	
+	public List<Player> getOnlineMen() {//I know its better to keep track of which race is online at what time by updating a list of players for each race when they join, but at this point ive realized it too late and its too much work for me to go back and fix it right now. I may later.
+		List<Player> allOnlinePlayers = new ArrayList<Player>();
+		OfflinePlayer[] allOfflinePlayers = getServer().getOfflinePlayers();
+		for (int i = 0; i < allOfflinePlayers.length; i++) {
+			if (allOfflinePlayers[i].isOnline()) {
+				Player player = allOfflinePlayers[i].getPlayer();
+				if (player.getPersistentDataContainer().has(new NamespacedKey(this, "Race"), PersistentDataType.INTEGER) && player.getPersistentDataContainer().get(new NamespacedKey(this, "Race"), PersistentDataType.INTEGER) == 1) {
+					allOnlinePlayers.add(player);
+				}
+			}
+		}
+		return allOnlinePlayers;
+	}
 	
 	
 	

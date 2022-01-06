@@ -1,30 +1,32 @@
 package org.baugindustries.baugrpg.listeners;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 import org.baugindustries.baugrpg.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_18_R1.CraftServer;
 import org.bukkit.craftbukkit.v1_18_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_18_R1.entity.CraftPlayer;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BlockIterator;
+import org.bukkit.util.Vector;
 
 import com.comphenix.protocol.PacketType;
 import com.mojang.authlib.GameProfile;
@@ -43,6 +45,7 @@ import net.minecraft.server.network.PlayerConnection;
 public class PlayerDamageListener implements Listener {
 	private Main plugin;
 	private int steeledResolveCooldownTime = 50;
+	private int shepherdsGraceCooldownTime = 35;
 	public PlayerDamageListener(Main plugin) {
 		this.plugin = plugin;
 	}
@@ -70,6 +73,11 @@ public class PlayerDamageListener implements Listener {
 		 		}
 		 	}
 		 	
+		 	
+		 	
+		 	
+		 	
+		 	//Activate Steeled Armorer animation
 		 	if (skillsconfig.contains("SteeledArmorer1") && skillsconfig.getBoolean("SteeledArmorer1") && event.getDamage() > player.getHealth() && !plugin.steeledResolveCooldown.containsKey(player.getUniqueId())){
 		 		
 		 		plugin.steeledResolveCooldown.put(player.getUniqueId(), System.currentTimeMillis());
@@ -129,15 +137,54 @@ public class PlayerDamageListener implements Listener {
 		 		event.setCancelled(true);
 		 		
 		 	}
+		 	
+		 	
+		 	
+		 	
+		 	if (plugin.shepherdsGraceCooldown.containsKey(player.getUniqueId())) {
+		 		int minutesToMillis = 60000;
+		 		if (plugin.shepherdsGraceCooldown.get(player.getUniqueId()) + (shepherdsGraceCooldownTime * minutesToMillis) < System.currentTimeMillis()) {
+		 			plugin.shepherdsGraceCooldown.remove(player.getUniqueId());
+		 		}
+		 	}
+		 	
+		 	
+		 	//Activate Verdant Shepherd Healing
+		 	if (skillsconfig.contains("VerdantShepherd1") && skillsconfig.getBoolean("VerdantShepherd1") && player.getHealth() - event.getDamage() < 5 && event.getDamage() < player.getHealth() && !plugin.shepherdsGraceCooldown.containsKey(player.getUniqueId())) {
+		 		plugin.shepherdsGraceCooldown.put(player.getUniqueId(), System.currentTimeMillis());
+		 		plugin.shepherdsGraceTicks.put(player.getUniqueId(), 0L);
+		 		runVerdantShepherdEffect(player.getUniqueId());
+		 	}
+		 	
+		 	
+		 	
+		 	
+		 	
+		 	
+		 	
+		 	
+		 	
+		 	
 		}
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public int getSteeledResolveCooldownTime( ) {
 		return steeledResolveCooldownTime;
 	}
 	
 	private void runTeleportPlayer(UUID uuid) {
-		Runnable teleportPlayer = new Runnable() {//check if any orcs are in sunlight
+		Runnable teleportPlayer = new Runnable() {
     		  @SuppressWarnings("deprecation")
 			public void run() {
     			  Player player;
@@ -166,70 +213,7 @@ public class PlayerDamageListener implements Listener {
         			  double zLoc = (Math.cos(ticks/constant) * distanceScalar) + initLoc.getZ();
         			  float yaw = (float) ((-1.8 * ticks) + 180);
         			  Location location = new Location(player.getWorld(), xLoc, initLoc.getY() + heightShift, zLoc, yaw, viewingAngle);
-        			  Iterator<Block> itr = new BlockIterator((LivingEntity) player, 15);
-        			  
-        			  double npcDist = Math.sqrt(
-    						  (Math.abs(xLoc - initLoc.getX()) * Math.abs(xLoc - initLoc.getX())) +
-    						  (Math.abs(zLoc - initLoc.getZ()) * Math.abs(zLoc - initLoc.getZ())) +
-    						  (Math.abs(heightShift - risenNPCheight) * Math.abs(heightShift - risenNPCheight))
-    								  ); 
-        			  
-        			  List<Block> frontBlocks = new ArrayList<Block>();
-        			  
-        			  while (itr.hasNext()) {
-        				  Block block = itr.next();
-        				  
-        				  Location blockLoc = block.getLocation();
-        				  
-        				  double blockDist = Math.sqrt(
-        						  (Math.abs(xLoc - blockLoc.getX()) * Math.abs(xLoc - blockLoc.getX())) +
-        						  (Math.abs(zLoc - blockLoc.getZ()) * Math.abs(zLoc - blockLoc.getZ())) +
-        						  (Math.abs((initLoc.getY() + heightShift) - blockLoc.getY()) * Math.abs((initLoc.getY() + heightShift) - blockLoc.getY())
-        								  ));
-        				  
-        				  
-        				  if (blockDist <= npcDist && !(block.getType().equals(Material.AIR) || block.getType().equals(Material.CAVE_AIR) || block.getType().equals(Material.VOID_AIR))) {//block is in front of player and is not air
-        					  frontBlocks.add(block);
-        				  } else if (blockDist > npcDist) {//block is behind and we dont care.
-        					  break;
-        				  }
-        			  }
-        			  
-        			  if (frontBlocks.size() == 0) {
-	        			  player.teleport(location);
-        			  } else {
-        				  
-        				  Block block = frontBlocks.get(frontBlocks.size() - 1);
-        				  
-        				  Location blockLoc = block.getLocation();
-        				  
-        				  double blockDist = Math.sqrt(
-        						  (Math.abs(xLoc - blockLoc.getX()) * Math.abs(xLoc - blockLoc.getX())) +
-        						  (Math.abs(zLoc - blockLoc.getZ()) * Math.abs(zLoc - blockLoc.getZ())) +
-        						  (Math.abs((initLoc.getY() + heightShift) - blockLoc.getY()) * Math.abs((initLoc.getY() + heightShift) - blockLoc.getY())
-        								  ));
-        				  
-        				  distanceScalar = npcDist - (blockDist + 1.5); 
-        				  
-        				  if (distanceScalar < 0) {
-        					  distanceScalar = 0.2;
-        				  }
-        				  
-        				  
-        				  xLoc = (Math.sin(ticks/constant) * distanceScalar) + initLoc.getX();
-        				  heightShift = distanceScalar * Math.tan(Math.toRadians(viewingAngle)) + risenNPCheight;
-        				  zLoc = (Math.cos(ticks/constant) * distanceScalar) + initLoc.getZ();
-        				  
-        				  
-        				  location = new Location(player.getWorld(), xLoc, initLoc.getY() + heightShift, zLoc, yaw, viewingAngle);
-        				  player.teleport(location);
-        			  }
-        			  
-        			  
-        			  
-        			  
-        			  
-        			  
+        			  player.teleport(location);
         			  
         			  
         			  Bukkit.getOnlinePlayers().forEach(onlinePlayer -> {
@@ -238,6 +222,7 @@ public class PlayerDamageListener implements Listener {
       		          });
         			  
         			  if (ticks % 20 == 0 ) {
+        				  player.getWorld().playSound(initLoc, Sound.BLOCK_BEACON_AMBIENT, SoundCategory.MASTER, 2f, 1f);
         				int secondsRemaining = (20 - (int)(ticks / 20));
         				ChatColor secondColor = ChatColor.RED;
         				if (secondsRemaining == 3) {
@@ -261,9 +246,6 @@ public class PlayerDamageListener implements Listener {
     				  plugin.steeledResolveDisconnectedPlayers.add(uuid);
     				  plugin.steeledResolveTpTicks.put(uuid, 401L);
     			  }
-    			  
-    			  
-    			  
     			
     			if (ticks <= 400) {
     				runTeleportPlayer(uuid);
@@ -272,7 +254,102 @@ public class PlayerDamageListener implements Listener {
     		};
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, teleportPlayer, 1L);
 	}
+
+	public int getShepherdsGraceCooldownTime() {
+		return shepherdsGraceCooldownTime;
+	}
 	
+	
+	private void runVerdantShepherdEffect(UUID uuid) {
+		Runnable verdantShepherdEffect = new Runnable() {
+			public void run() {
+				Long ticks = plugin.shepherdsGraceTicks.get(uuid);
+				
+				if (Bukkit.getPlayer(uuid).isOnline()) {
+					Player player = Bukkit.getPlayer(uuid);
+					int radialParticleDensity = 100;
+			 		int radius = 10;
+			 		Color particleColor = Color.LIME;
+			 		float particleSize = 1;
+			 		World world = player.getWorld();
+			 		double yPos = player.getLocation().getY();
+			 		
+			 		Vector startPos = player.getLocation().toVector().add(new Vector(0, -1, 0));
+			 		Vector direction = new Vector(0, -1, 0);	 		
+			 		
+			 		BlockIterator itr = new BlockIterator(world, startPos, direction, 0, 20);
+			 		while (itr.hasNext()) {
+			 			Block block = itr.next();
+			 			if (block.getType().isSolid()) {
+			 				yPos = block.getY() + 1;
+			 				break;
+			 			}
+			 		}
+
+		 			Particle particle = Particle.REDSTONE;
+		 			Particle.DustOptions options = new Particle.DustOptions(particleColor, particleSize);
+			 		double pxPos = player.getLocation().getX();
+			 		double pzPos = player.getLocation().getZ();
+			 		for (int i = 0; i < radialParticleDensity; i++) {
+			 			double angle = (((2 * Math.PI) / (radialParticleDensity)) * i);
+			 			double xPos = (radius * Math.cos(angle)) + pxPos;
+			 			double zPos = (radius * Math.sin(angle)) + pzPos;
+			 			Location particleLoc = new Location(world, xPos, yPos, zPos);
+			 			world.spawnParticle(particle, particleLoc, 1, options);
+			 		}
+			 		
+			 		
+			 		
+			 		int linearParticleDensity = (int) (radialParticleDensity / Math.PI);
+			 		double angle = (ticks * Math.PI * 2) / 200;
+			 		double totalXDist = Math.abs(2 * (radius * Math.cos(angle)));
+			 		double initXPos = (radius * Math.cos(angle)) + pxPos;
+			 		double initZPos = (radius * Math.sin(angle)) + pzPos;
+			 		if (initXPos - pxPos != 0) {//lines wont be vertical
+			 			double slope = (initZPos - pzPos) / (initXPos - pxPos);
+				 		for (int i = 0; i < linearParticleDensity; i++) {
+				 			double xPos;
+				 			if (initXPos > pxPos) {
+				 				xPos = initXPos - ((totalXDist / linearParticleDensity) * i);
+				 			} else {
+				 				xPos = initXPos + ((totalXDist / linearParticleDensity) * i);
+				 			}
+				 			
+				 			double zPos = slope * (xPos - player.getLocation().getX()) + pzPos;
+				 			double zPos2 = -slope * (xPos - player.getLocation().getX()) + pzPos;
+				 			Location particleLoc = new Location(world, xPos, yPos, zPos);
+				 			Location particleLoc2 = new Location(world, xPos, yPos, zPos2);
+				 			world.spawnParticle(particle, particleLoc, 1, options);
+				 			world.spawnParticle(particle, particleLoc2, 1, options);
+				 		}
+			 		}
+			 		
+			 		double healAmount = 0.05;
+			 		Bukkit.getOnlinePlayers().forEach(bukkitPlayer -> {
+			 			if (!bukkitPlayer.getUniqueId().equals(uuid) && bukkitPlayer.getPersistentDataContainer().has(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER) && bukkitPlayer.getPersistentDataContainer().get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER) == 1) {
+			 				Location bukkitLoc = bukkitPlayer.getLocation();
+			 				double dist = Math.sqrt((Math.abs(bukkitLoc.getX() - pxPos) * Math.abs(bukkitLoc.getX() - pxPos)) + (Math.abs(bukkitLoc.getZ() - pzPos) * Math.abs(bukkitLoc.getZ() - pzPos)));
+			 				if (dist < 10) {
+			 					bukkitPlayer.setHealth(bukkitPlayer.getHealth() + healAmount);
+			 				}
+			 			}
+			 		});
+			 		
+			 		
+			 		
+				}
+		 		
+		 		
+				plugin.shepherdsGraceTicks.put(uuid, ticks + 1);
+		 		
+		 		if (ticks <= 200) {
+		 			runVerdantShepherdEffect(uuid);
+		 		}
+			}
+		};
+		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, verdantShepherdEffect, 1L);
+ 		
+	}
 	
 	
 }
