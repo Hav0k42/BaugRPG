@@ -335,7 +335,9 @@ public class PlayerDamageListener implements Listener {
 			 			}
 			 		});
 			 		
-			 		
+			 		if (ticks % 20 == 0 ) {
+			 			player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_AMBIENT, SoundCategory.MASTER, 2f, 1f);
+			 		}
 			 		
 				}
 		 		
