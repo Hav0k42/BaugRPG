@@ -27,7 +27,9 @@ import org.baugindustries.baugrpg.commands.econ.Withdraw;
 import org.baugindustries.baugrpg.listeners.BlockExplodeListener;
 import org.baugindustries.baugrpg.listeners.ChestBreakListener;
 import org.baugindustries.baugrpg.listeners.ChestOpenListener;
+import org.baugindustries.baugrpg.listeners.EfficientBotanyListener;
 import org.baugindustries.baugrpg.listeners.ElfEatMeat;
+import org.baugindustries.baugrpg.listeners.EnchantedPetalsListener;
 import org.baugindustries.baugrpg.listeners.EntityExplodeListener;
 import org.baugindustries.baugrpg.listeners.HorseListener;
 import org.baugindustries.baugrpg.listeners.MinecartMoveListener;
@@ -124,6 +126,7 @@ public class Main extends JavaPlugin {
 	public HashMap<UUID, Long> shepherdsGraceTicks = new HashMap<UUID, Long>();
 	public List<Player> mountedPlayers = new ArrayList<Player>();
 	public List<UUID> steeledResolveDisconnectedPlayers = new ArrayList<UUID>();
+	public HashMap<UUID, Long> petalTickTime = new HashMap<UUID, Long>();
 	public ScoreboardManager manager;
 	public Scoreboard board;
 	public ProtocolManager protocolManager;
@@ -150,7 +153,8 @@ public class Main extends JavaPlugin {
 	public PlayerAttackListener playerAttackListener = new PlayerAttackListener(this);
 	public PlayerDamageListener playerDamageListener = new PlayerDamageListener(this);
 	public PlayerMineListener playerMineListener = new PlayerMineListener(this);
-	
+	public EfficientBotanyListener efficientBotanyListener = new EfficientBotanyListener(this);
+	public EnchantedPetalsListener enchantedPetalsListener = new EnchantedPetalsListener(this);
 	
 	
 	
@@ -226,7 +230,8 @@ public class Main extends JavaPlugin {
 		 this.getServer().getPluginManager().registerEvents(chooseClassListener, this);
 		 this.getServer().getPluginManager().registerEvents(confirmClassListener, this);
 		 this.getServer().getPluginManager().registerEvents(raceSkillTreeMenu, this);
-		 
+		 this.getServer().getPluginManager().registerEvents(efficientBotanyListener, this);
+		 this.getServer().getPluginManager().registerEvents(enchantedPetalsListener, this);
 		 
 		 
 		 new Pay(this);
