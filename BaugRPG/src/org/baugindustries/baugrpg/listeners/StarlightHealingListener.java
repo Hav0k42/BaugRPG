@@ -93,6 +93,7 @@ public class StarlightHealingListener implements Listener {
         				if (player.getWorld().getNearbyEntities(loc, distMult, distMult, distMult).contains(bukkitPlayer)) {
         					//for the next 10 seconds, heal player and create particle effect
         					
+        					
         					plugin.starlightHealingCooldown.put(player.getUniqueId(), System.currentTimeMillis());
         					plugin.starlightHealingTicks.put(uuid, 0L);
         					healPlayer(uuid);
