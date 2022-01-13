@@ -564,12 +564,51 @@ public class CustomItems {
 	}
 	
 	public ItemStack getLunarArtificerSkill2Item(Player player) {
-	 	return plugin.createItem(
-	 			Material.NETHER_STAR,
-	 			1,
-	 			ChatColor.DARK_GREEN + "Starlight Healing",
-	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Heal one nearby elf using starlight power.",
-	 					getSecondDataSkillItemsString(player, "LunarArtificer2", "13 Points")));
+		if (plugin.starlightHealingCooldown.containsKey(player.getUniqueId())) {
+	 		int minutesToMillis = 60000;
+	 		if (plugin.starlightHealingCooldown.get(player.getUniqueId()) + (plugin.starlightHealingListener.getStarlightHealingCooldownTime() * minutesToMillis) < System.currentTimeMillis()) {
+	 			plugin.starlightHealingCooldown.remove(player.getUniqueId());
+	 		}
+	 	}
+		if (plugin.starlightHealingCooldown.containsKey(player.getUniqueId())) {
+			int minutesToMillis = 60000;
+			Long timeRemaining = (plugin.shepherdsGraceCooldown.get(player.getUniqueId()) + (plugin.starlightHealingListener.getStarlightHealingCooldownTime() * minutesToMillis)) - System.currentTimeMillis();
+			String timeString = "";
+			int timeValue;
+			if (timeRemaining > minutesToMillis) {
+				//display in minutes
+				timeValue = (int)(timeRemaining / minutesToMillis);
+				if (timeValue == 1) {
+					timeString = (timeValue + " Minute Remaining");
+				} else {
+					timeString = (timeValue + " Minute Remaining");
+				}
+			} else {
+				//display in seconds
+				timeValue = (int)(timeRemaining / 1000);
+				if (timeValue == 1) {
+					timeString = (timeValue + " Second Remaining");
+				} else {
+					timeString = (timeValue + " Seconds Remaining");
+				}
+				
+			}
+			return plugin.createItem(
+		 			Material.NETHER_STAR,
+		 			1,
+		 			ChatColor.DARK_GREEN + "Starlight Healing",
+		 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Heal one nearby elf using starlight power.",
+		 					ChatColor.DARK_AQUA + "Cooldown: " + timeString,
+		 					getSecondDataSkillItemsString(player, "LunarArtificer2", "13 Points")));
+		} else {
+			return plugin.createItem(
+		 			Material.NETHER_STAR,
+		 			1,
+		 			ChatColor.DARK_GREEN + "Starlight Healing",
+		 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Heal one nearby elf using starlight power.",
+		 					getSecondDataSkillItemsString(player, "LunarArtificer2", "13 Points")));
+		}
+	 	
 	}
 	
 	public ItemStack getLunarArtificerSkill3Item(Player player) {

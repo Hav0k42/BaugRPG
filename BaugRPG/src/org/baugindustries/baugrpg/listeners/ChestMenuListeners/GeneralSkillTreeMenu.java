@@ -74,11 +74,11 @@ public class GeneralSkillTreeMenu implements Listener {
 									skillsconfig.set("regenOn", !skillsconfig.getBoolean("regenOn"));
 									reloadBool = true;
 									if (skillsconfig.getBoolean("regenOn")) {
-										player.setSaturatedRegenRate((int)(((skillsconfig.getInt("regen") * -5f) / 9f) + (95f/9f)));
-										player.setUnsaturatedRegenRate((int)(((skillsconfig.getInt("regen") * -40f) / 9f) + (760f/9f)));
+										player.setSaturatedRegenRate(plugin.onJoinListener.getSaturationSlownessMultiplier() * (int)(((skillsconfig.getInt("regen") * -5f) / 9f) + (95f/9f)));
+										player.setUnsaturatedRegenRate(plugin.onJoinListener.getSaturationSlownessMultiplier() * (int)(((skillsconfig.getInt("regen") * -40f) / 9f) + (760f/9f)));
 									} else {
-										player.setSaturatedRegenRate(10);
-										player.setUnsaturatedRegenRate(80);
+										player.setSaturatedRegenRate(plugin.onJoinListener.getSaturationSlownessMultiplier() * 10);
+										player.setUnsaturatedRegenRate(plugin.onJoinListener.getSaturationSlownessMultiplier() * 80);
 									}
 									break;
 								case 7:
@@ -139,8 +139,12 @@ public class GeneralSkillTreeMenu implements Listener {
 									player.setFlySpeed((((maxSpeed - 0.2f) / 10f) * skillsconfig.getInt("speed")) + 0.2f);
 								}
 								if (skillsconfig.getBoolean("regenOn")) {
-									player.setSaturatedRegenRate((int)(((skillsconfig.getInt("regen") * -5f) / 9f) + (95f/9f)));
-									player.setUnsaturatedRegenRate((int)(((skillsconfig.getInt("regen") * -40f) / 9f) + (760f/9f)));
+									player.setSaturatedRegenRate(plugin.onJoinListener.getSaturationSlownessMultiplier() * (int)(((skillsconfig.getInt("regen") * -5f) / 9f) + (95f/9f)));
+									player.setUnsaturatedRegenRate(plugin.onJoinListener.getSaturationSlownessMultiplier() * (int)(((skillsconfig.getInt("regen") * -40f) / 9f) + (760f/9f)));
+									player.sendMessage(player.getSaturatedRegenRate() + "");
+								} else {
+									player.setSaturatedRegenRate(plugin.onJoinListener.getSaturationSlownessMultiplier() * 10);
+									player.setUnsaturatedRegenRate(plugin.onJoinListener.getSaturationSlownessMultiplier() * 80);
 								}
 								reloadBool = true;
 							}

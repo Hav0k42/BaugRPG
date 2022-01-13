@@ -45,7 +45,7 @@ import net.minecraft.server.network.PlayerConnection;
 public class PlayerDamageListener implements Listener {
 	private Main plugin;
 	private int steeledResolveCooldownTime = 50;
-	private int shepherdsGraceCooldownTime = 35;
+	private int shepherdsGraceCooldownTime = 30;
 	public PlayerDamageListener(Main plugin) {
 		this.plugin = plugin;
 	}
@@ -155,13 +155,6 @@ public class PlayerDamageListener implements Listener {
 		 		plugin.shepherdsGraceTicks.put(player.getUniqueId(), 0L);
 		 		runVerdantShepherdEffect(player.getUniqueId());
 		 	}
-		 	
-		 	
-		 	
-		 	
-		 	
-		 	
-		 	
 		 	
 		 	
 		 	
@@ -324,7 +317,7 @@ public class PlayerDamageListener implements Listener {
 				 		}
 			 		}
 			 		
-			 		double healAmount = 0.05;
+			 		double healAmount = 0.04;
 			 		Bukkit.getOnlinePlayers().forEach(bukkitPlayer -> {
 			 			if (!bukkitPlayer.getUniqueId().equals(uuid) && bukkitPlayer.getPersistentDataContainer().has(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER) && bukkitPlayer.getPersistentDataContainer().get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER) == 1) {
 			 				Location bukkitLoc = bukkitPlayer.getLocation();

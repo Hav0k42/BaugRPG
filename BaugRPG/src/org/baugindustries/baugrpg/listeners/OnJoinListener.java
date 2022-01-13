@@ -25,10 +25,15 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
 
 public class OnJoinListener implements Listener{
+	private int saturationSlownessMultiplier = 40;
 	
 	private Main plugin;
 	public OnJoinListener(Main plugin) {
 		this.plugin = plugin;
+	}
+	
+	public int getSaturationSlownessMultiplier() {
+		return saturationSlownessMultiplier;
 	}
 	@SuppressWarnings("deprecation")
 	@EventHandler
@@ -127,11 +132,11 @@ public class OnJoinListener implements Listener{
 			}
 			
 			if (skillsconfig.getBoolean("regenOn")) {
-				player.setSaturatedRegenRate((int)(((skillsconfig.getInt("regen") * -5f) / 9f) + (95f/9f)));
-				player.setUnsaturatedRegenRate((int)(((skillsconfig.getInt("regen") * -40f) / 9f) + (760f/9f)));
+				player.setSaturatedRegenRate(saturationSlownessMultiplier * (int)(((skillsconfig.getInt("regen") * -5f) / 9f) + (95f/9f)));
+				player.setUnsaturatedRegenRate(saturationSlownessMultiplier * (int)(((skillsconfig.getInt("regen") * -40f) / 9f) + (760f/9f)));
 			} else {
-				player.setSaturatedRegenRate(10);
-				player.setUnsaturatedRegenRate(80);
+				player.setSaturatedRegenRate(saturationSlownessMultiplier * 10);
+				player.setUnsaturatedRegenRate(saturationSlownessMultiplier * 80);
 			}
 		}
 		

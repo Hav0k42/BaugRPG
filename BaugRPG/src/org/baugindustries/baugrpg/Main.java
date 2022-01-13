@@ -43,8 +43,10 @@ import org.baugindustries.baugrpg.listeners.PlayerDamageListener;
 import org.baugindustries.baugrpg.listeners.PlayerDeathListener;
 import org.baugindustries.baugrpg.listeners.PlayerJumpListener;
 import org.baugindustries.baugrpg.listeners.PlayerMineListener;
+import org.baugindustries.baugrpg.listeners.PlayerRespawnListener;
 import org.baugindustries.baugrpg.listeners.SignBreakListener;
 import org.baugindustries.baugrpg.listeners.SignShopListener;
+import org.baugindustries.baugrpg.listeners.StarlightHealingListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ChooseClassListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ChooseRaceInventoryListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ConfirmClassListener;
@@ -97,6 +99,8 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.BlockPosition;
 import com.comphenix.protocol.wrappers.EnumWrappers;
+import com.comphenix.protocol.wrappers.WrappedDataWatcher;
+import com.comphenix.protocol.wrappers.WrappedDataWatcher.Serializer;
 
 import net.minecraft.server.level.WorldServer;
 import net.minecraft.sounds.SoundEffect;
@@ -126,7 +130,11 @@ public class Main extends JavaPlugin {
 	public HashMap<UUID, Long> shepherdsGraceTicks = new HashMap<UUID, Long>();
 	public List<Player> mountedPlayers = new ArrayList<Player>();
 	public List<UUID> steeledResolveDisconnectedPlayers = new ArrayList<UUID>();
+	public HashMap<UUID, Long> sneakingLunarArtificers = new HashMap<UUID, Long>();
 	public HashMap<UUID, Long> petalTickTime = new HashMap<UUID, Long>();
+	public HashMap<UUID, List<UUID>> glowingElvesPerArtificer = new HashMap<UUID, List<UUID>>();
+	public HashMap<UUID, Long> starlightHealingTicks = new HashMap<UUID, Long>();
+	public HashMap<UUID, Long> starlightHealingCooldown = new HashMap<UUID, Long>();
 	public ScoreboardManager manager;
 	public Scoreboard board;
 	public ProtocolManager protocolManager;
@@ -140,6 +148,7 @@ public class Main extends JavaPlugin {
 	public PlayerCloseInventoryListener playerCloseInventoryListener = new PlayerCloseInventoryListener(this);
 	public HorseListener horseListener = new HorseListener(this);
 	public PlayerDeathListener playerDeathListener = new PlayerDeathListener(this);
+	public PlayerRespawnListener playerRespawnListener = new PlayerRespawnListener(this);
 	public MinecartMoveListener minecartMoveListener = new MinecartMoveListener(this);
 	public ElfEatMeat elfEatMeat = new ElfEatMeat(this);
 	public OrcEatMeat orcEatMeat = new OrcEatMeat(this);
@@ -155,6 +164,7 @@ public class Main extends JavaPlugin {
 	public PlayerMineListener playerMineListener = new PlayerMineListener(this);
 	public EfficientBotanyListener efficientBotanyListener = new EfficientBotanyListener(this);
 	public EnchantedPetalsListener enchantedPetalsListener = new EnchantedPetalsListener(this);
+	public StarlightHealingListener starlightHealingListener = new StarlightHealingListener(this);
 	
 	
 	
@@ -195,6 +205,7 @@ public class Main extends JavaPlugin {
 		 this.getServer().getPluginManager().registerEvents(playerCloseInventoryListener, this);
 		 this.getServer().getPluginManager().registerEvents(horseListener, this);
 		 this.getServer().getPluginManager().registerEvents(playerDeathListener, this);
+		 this.getServer().getPluginManager().registerEvents(playerRespawnListener, this);
 		 this.getServer().getPluginManager().registerEvents(minecartMoveListener, this);
 		 this.getServer().getPluginManager().registerEvents(elfEatMeat, this);
 		 this.getServer().getPluginManager().registerEvents(orcEatMeat, this);
@@ -232,6 +243,7 @@ public class Main extends JavaPlugin {
 		 this.getServer().getPluginManager().registerEvents(raceSkillTreeMenu, this);
 		 this.getServer().getPluginManager().registerEvents(efficientBotanyListener, this);
 		 this.getServer().getPluginManager().registerEvents(enchantedPetalsListener, this);
+		 this.getServer().getPluginManager().registerEvents(starlightHealingListener, this);
 		 
 		 
 		 new Pay(this);
@@ -280,6 +292,28 @@ public class Main extends JavaPlugin {
 	            }
 	     });
 		 
+		 protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Server.ENTITY_METADATA) {
+	            @Override
+	            public void onPacketSending(PacketEvent event){
+	            	Player player = event.getPlayer();
+	                PacketContainer packet = event.getPacket();
+	                if (glowingElvesPerArtificer.containsKey(player.getUniqueId())) {
+	                	List<UUID> nearbyPlayers = glowingElvesPerArtificer.get(player.getUniqueId());
+	                	nearbyPlayers.forEach(uuid -> {
+	                		Player nearbyPlayer = Bukkit.getPlayer(uuid);
+	                		if (nearbyPlayer != null && nearbyPlayer.getEntityId() == packet.getIntegers().read(0)) {
+	                			//Entity sent in packet is a player that we want to be glowing
+	                			WrappedDataWatcher dataModifier = new WrappedDataWatcher();
+	                			Serializer serializer = WrappedDataWatcher.Registry.get(Byte.class);
+	                			dataModifier.setEntity(nearbyPlayer);
+	                			dataModifier.setObject(0, serializer, (byte) (0x40), true);
+	                		    packet.getWatchableCollectionModifier().write(0, dataModifier.getWatchableObjects());
+	                		}
+	                	});
+	                }
+	                
+	            }
+	     });
 		 
 		 
 		 if (board.getTeam("Men") == null) {
@@ -406,6 +440,46 @@ public class Main extends JavaPlugin {
 		 }
 		 
 		 
+		 
+		 File starlightHealingcooldownDatafile = new File(this.getDataFolder() + File.separator + "starlightHealingCooldownData.yml");
+		 FileConfiguration starlightHealingcooldownDataconfig = YamlConfiguration.loadConfiguration(starlightHealingcooldownDatafile);
+		 //Check to see if the file already exists. If not, create it.
+		 if (!starlightHealingcooldownDatafile.exists()) {
+			 try {
+				 starlightHealingcooldownDatafile.createNewFile();
+			 } catch (IOException e) {
+				 e.printStackTrace();
+			 }
+		 }
+		 for (String uuidStr: starlightHealingcooldownDataconfig.getKeys(true)) {
+			 UUID uuid = UUID.fromString(uuidStr);
+			 starlightHealingCooldown.put(uuid, starlightHealingcooldownDataconfig.getLong(uuidStr));
+		 }
+		 
+		 
+		 
+
+		 float maxSpeed = 0.35f;
+		 
+		 Bukkit.getOnlinePlayers().forEach(player -> {
+			 	File skillsfile = new File(getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
+			 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
+				if (skillsconfig.getBoolean("speedOn")) {
+					player.setWalkSpeed((((maxSpeed - 0.2f) / 10f) * skillsconfig.getInt("speed"))+ 0.2f);
+					player.setFlySpeed((((maxSpeed - 0.2f) / 10f) * skillsconfig.getInt("speed")) + 0.2f);
+				} else {
+					player.setWalkSpeed(0.2f);
+					player.setFlySpeed(0.2f);
+				}
+				
+				if (skillsconfig.getBoolean("regenOn")) {
+					player.setSaturatedRegenRate(onJoinListener.getSaturationSlownessMultiplier() * (int)(((skillsconfig.getInt("regen") * -5f) / 9f) + (95f/9f)));
+					player.setUnsaturatedRegenRate(onJoinListener.getSaturationSlownessMultiplier() * (int)(((skillsconfig.getInt("regen") * -40f) / 9f) + (760f/9f)));
+				} else {
+					player.setSaturatedRegenRate(onJoinListener.getSaturationSlownessMultiplier() * 10);
+					player.setUnsaturatedRegenRate(onJoinListener.getSaturationSlownessMultiplier() * 80);
+				}
+		 });
 		 
 		 
 	}
@@ -578,6 +652,23 @@ public class Main extends JavaPlugin {
 		    });
 		
 		
+		
+		
+		File steeledResolveDisconnectedDatafile = new File(this.getDataFolder() + File.separator + "steeledResolveDisconnectedData.yml");
+		FileConfiguration steeledResolveDisconnectedDataconfig = new YamlConfiguration();
+		
+		steeledResolveTpTicks.forEach((key, value) -> {
+			if (value < 401) {
+				steeledResolveDisconnectedPlayers.add(key);
+			}
+		});
+		
+		
+		for (UUID uuid: steeledResolveDisconnectedPlayers) {
+			steeledResolveDisconnectedDataconfig.set(uuid.toString(), steeledResolveInitLoc.get(uuid));
+		}
+		
+		
 		File shepherdsGracecooldownDatafile = new File(this.getDataFolder() + File.separator + "shepherdsGraceCooldownData.yml");
 		FileConfiguration shepherdsGracecooldownDataconfig = new YamlConfiguration();
 		
@@ -597,19 +688,29 @@ public class Main extends JavaPlugin {
 		
 		
 		
-		File steeledResolveDisconnectedDatafile = new File(this.getDataFolder() + File.separator + "steeledResolveDisconnectedData.yml");
-		FileConfiguration steeledResolveDisconnectedDataconfig = new YamlConfiguration();
+		File starlightHealingcooldownDatafile = new File(this.getDataFolder() + File.separator + "starlightHealingCooldownData.yml");
+		FileConfiguration starlightHealingcooldownDataconfig = new YamlConfiguration();
 		
-		steeledResolveTpTicks.forEach((key, value) -> {
-			if (value < 401) {
-				steeledResolveDisconnectedPlayers.add(key);
+		if (!starlightHealingcooldownDatafile.exists()) {
+			try {
+				starlightHealingcooldownDatafile.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-		});
-		
-		
-		for (UUID uuid: steeledResolveDisconnectedPlayers) {
-			steeledResolveDisconnectedDataconfig.set(uuid.toString(), steeledResolveInitLoc.get(uuid));
 		}
+		
+		
+		starlightHealingCooldown.forEach((key, value) -> {
+			UUID uuid = key;
+			starlightHealingcooldownDataconfig.set(uuid.toString(), value);
+	    });
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		
@@ -618,6 +719,7 @@ public class Main extends JavaPlugin {
 			steeledResolvecooldownDataconfig.save(steeledResolvecooldownDatafile);
 			steeledResolveDisconnectedDataconfig.save(steeledResolveDisconnectedDatafile);
 			shepherdsGracecooldownDataconfig.save(shepherdsGracecooldownDatafile);
+			starlightHealingcooldownDataconfig.save(starlightHealingcooldownDatafile);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

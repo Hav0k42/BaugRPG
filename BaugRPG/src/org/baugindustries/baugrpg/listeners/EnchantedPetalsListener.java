@@ -96,6 +96,5 @@ public class EnchantedPetalsListener implements Listener {
     		event.getItem().setAmount(item.getAmount() - 1);
     		plugin.petalTickTime.put(player.getUniqueId(), Bukkit.getWorlds().get(0).getFullTime());
     	}
-    	
 	}
 }
