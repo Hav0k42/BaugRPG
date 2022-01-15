@@ -16,7 +16,6 @@ public class OrcEatMeat implements Listener {
 		this.plugin = plugin;
 	}
 	
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onPlayerUse(PlayerItemConsumeEvent event) {
 	    Player p = event.getPlayer();
@@ -42,9 +41,22 @@ public class OrcEatMeat implements Listener {
 		    	}
 		    	p.setFoodLevel(p.getFoodLevel() + 5);
 			    p.setSaturation(p.getSaturation() + 2.5f);
-			    ItemStack newItem = p.getItemInHand();
-			    newItem.setAmount(newItem.getAmount() - 1);
-			    p.setItemInHand(newItem);
+			    ItemStack newItem = event.getItem();
+			    if (p.getInventory().getItemInMainHand().equals(newItem)) {
+			    	if (newItem.getAmount() == 1) {
+			    		p.getInventory().setItemInMainHand(null);
+			    	} else {
+				    	newItem.setAmount(newItem.getAmount() - 1);
+				    	p.getInventory().setItemInMainHand(newItem);
+			    	}
+			    } else {
+			    	if (newItem.getAmount() == 1) {
+			    		p.getInventory().setItemInOffHand(null);
+			    	} else {
+				    	newItem.setAmount(newItem.getAmount() - 1);
+				    	p.getInventory().setItemInOffHand(newItem);
+			    	}
+			    }
 		    	event.setCancelled(true);
 		    }
 		}

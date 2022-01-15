@@ -3,14 +3,18 @@ package org.baugindustries.baugrpg;
 import java.io.File;
 import java.util.Arrays;
 
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -539,7 +543,7 @@ public class CustomItems {
 	 			1,
 	 			ChatColor.DARK_GREEN + "Woodland Absoprtion",
 	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Slow Regen that is not dependent on hunger.",
-	 					getSecondDataSkillItemsString(player, "WoodlandCraftsman1", "5 Points")));
+	 					getSecondDataSkillItemsString(player, "WoodlandCraftsman1", "10 Points")));
 	}
 	
 	public ItemStack getWoodlandCraftsmanSkill2Item(Player player) {
@@ -550,7 +554,7 @@ public class CustomItems {
 	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Low percent chance for attacks",
 	 					ChatColor.LIGHT_PURPLE + "to summon an Arborated Strike",
 	 					ChatColor.LIGHT_PURPLE + "damaging everything it hits except for elves.",
-	 					getSecondDataSkillItemsString(player, "WoodlandCraftsman2", "20 Points")));
+	 					getSecondDataSkillItemsString(player, "WoodlandCraftsman2", "15 Points")));
 	}
 	
 	public ItemStack getLunarArtificerSkill1Item(Player player) {
@@ -613,7 +617,7 @@ public class CustomItems {
 	
 	public ItemStack getLunarArtificerSkill3Item(Player player) {
 	 	return plugin.createItem(
-	 			Material.REDSTONE_LAMP,
+	 			Material.SHROOMLIGHT,
 	 			1,
 	 			ChatColor.DARK_GREEN + "New Moon Lunar Transfusion",
 	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Transform items in a moon pool",
@@ -753,6 +757,18 @@ public class CustomItems {
 	 	}
 	 	return secondString;
 	 	
+	}
+
+	public ItemStack getBottledStarlightItem() {
+		ItemStack item = plugin.createItem(
+				Material.POTION,
+				1,
+				ChatColor.DARK_GREEN + "Bottled Starlight");
+		PotionMeta meta = (PotionMeta)item.getItemMeta();
+		meta.setColor(Color.WHITE);
+		meta.addCustomEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 400, 0), true);
+		item.setItemMeta(meta);
+		return item;
 	}
 }
 

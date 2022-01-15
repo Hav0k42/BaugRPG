@@ -87,6 +87,9 @@ public class OnJoinListener implements Listener{
 		
 	 	File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + event.getPlayer().getUniqueId() + ".yml");
 	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
+	 	
+	 	
+	 	
 		 
 		//Check to see if the file already exists. If not, create it.
 		if (!skillsfile.exists()) {
@@ -213,4 +216,8 @@ public class OnJoinListener implements Listener{
 			}
 		}
 	}
+	
+	
+	
+	
 }

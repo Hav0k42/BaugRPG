@@ -45,6 +45,8 @@ public class SignShopListener implements Listener{
 			Sign sign = (Sign)event.getClickedBlock().getState();
 			String title = sign.getLocation().getBlockX() + "" + sign.getLocation().getBlockY() + "" + sign.getLocation().getBlockZ();
 			
+			if (!(sign.getBlockData() instanceof Directional)) return;
+			
 			BlockFace signFace = ((Directional)sign.getBlockData()).getFacing();
 			Block blockBehindSign = null;
 			switch (signFace) {

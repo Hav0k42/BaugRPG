@@ -24,6 +24,7 @@ import org.baugindustries.baugrpg.commands.econ.Deposit;
 import org.baugindustries.baugrpg.commands.econ.Pay;
 import org.baugindustries.baugrpg.commands.econ.SetBal;
 import org.baugindustries.baugrpg.commands.econ.Withdraw;
+import org.baugindustries.baugrpg.listeners.ArboratedStrikeListener;
 import org.baugindustries.baugrpg.listeners.BlockExplodeListener;
 import org.baugindustries.baugrpg.listeners.ChestBreakListener;
 import org.baugindustries.baugrpg.listeners.ChestOpenListener;
@@ -32,6 +33,7 @@ import org.baugindustries.baugrpg.listeners.ElfEatMeat;
 import org.baugindustries.baugrpg.listeners.EnchantedPetalsListener;
 import org.baugindustries.baugrpg.listeners.EntityExplodeListener;
 import org.baugindustries.baugrpg.listeners.HorseListener;
+import org.baugindustries.baugrpg.listeners.LunarTransfusionListener;
 import org.baugindustries.baugrpg.listeners.MinecartMoveListener;
 import org.baugindustries.baugrpg.listeners.OnJoinListener;
 import org.baugindustries.baugrpg.listeners.OnQuitListener;
@@ -165,6 +167,8 @@ public class Main extends JavaPlugin {
 	public EfficientBotanyListener efficientBotanyListener = new EfficientBotanyListener(this);
 	public EnchantedPetalsListener enchantedPetalsListener = new EnchantedPetalsListener(this);
 	public StarlightHealingListener starlightHealingListener = new StarlightHealingListener(this);
+	public LunarTransfusionListener lunarTransfusionListener = new LunarTransfusionListener(this);
+	public ArboratedStrikeListener arboratedStrikeListener = new ArboratedStrikeListener(this);
 	
 	
 	
@@ -244,6 +248,8 @@ public class Main extends JavaPlugin {
 		 this.getServer().getPluginManager().registerEvents(efficientBotanyListener, this);
 		 this.getServer().getPluginManager().registerEvents(enchantedPetalsListener, this);
 		 this.getServer().getPluginManager().registerEvents(starlightHealingListener, this);
+		 this.getServer().getPluginManager().registerEvents(lunarTransfusionListener, this);
+		 this.getServer().getPluginManager().registerEvents(arboratedStrikeListener, this);
 		 
 		 
 		 new Pay(this);
@@ -268,7 +274,22 @@ public class Main extends JavaPlugin {
 		 inventoryManager = new CustomInventories(this);
 		 
 		 
-		
+		 Runnable craftsmanRegen = new Runnable() {
+			  public void run() {
+				  
+				 Bukkit.getOnlinePlayers().forEach(player -> {
+					 File skillsfile = new File(getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
+					 FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
+					 if (skillsconfig.contains("WoodlandCraftsman1") && skillsconfig.getBoolean("WoodlandCraftsman1")) {
+						 if (player.getHealth() + 1 < 20) {
+								player.setHealth(player.getHealth() + 1);
+						 }
+					 }
+				 });
+				 
+			  }
+		 };
+		 getServer().getScheduler().scheduleSyncRepeatingTask(this, craftsmanRegen, 600L, 600L);
 		 
 		 
 		 protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Client.BLOCK_DIG) {
@@ -471,6 +492,8 @@ public class Main extends JavaPlugin {
 					player.setWalkSpeed(0.2f);
 					player.setFlySpeed(0.2f);
 				}
+				
+				
 				
 				if (skillsconfig.getBoolean("regenOn")) {
 					player.setSaturatedRegenRate(onJoinListener.getSaturationSlownessMultiplier() * (int)(((skillsconfig.getInt("regen") * -5f) / 9f) + (95f/9f)));

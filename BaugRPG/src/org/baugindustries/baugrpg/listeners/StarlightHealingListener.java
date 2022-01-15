@@ -121,7 +121,7 @@ public class StarlightHealingListener implements Listener {
 				Particle particle = Particle.END_ROD;
 				Player player = Bukkit.getPlayer(uuid);
 				player.getWorld().spawnParticle(particle, player.getLocation().add(0, 1, 0), 2, 0, 0.5, 0, 0.03);
-				if (player.getHealth() + 0.0375 < 20) {
+				if (player.getHealth() + 0.075 < 20) {
 					player.setHealth(player.getHealth() + 0.075);
 				}
 				
