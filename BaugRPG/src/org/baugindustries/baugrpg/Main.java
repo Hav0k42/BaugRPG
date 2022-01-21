@@ -32,6 +32,7 @@ import org.baugindustries.baugrpg.listeners.EfficientBotanyListener;
 import org.baugindustries.baugrpg.listeners.ElfEatMeat;
 import org.baugindustries.baugrpg.listeners.EnchantedPetalsListener;
 import org.baugindustries.baugrpg.listeners.EntityExplodeListener;
+import org.baugindustries.baugrpg.listeners.GildedFortuneListener;
 import org.baugindustries.baugrpg.listeners.HorseListener;
 import org.baugindustries.baugrpg.listeners.LunarTransfusionListener;
 import org.baugindustries.baugrpg.listeners.MinecartMoveListener;
@@ -46,6 +47,7 @@ import org.baugindustries.baugrpg.listeners.PlayerDeathListener;
 import org.baugindustries.baugrpg.listeners.PlayerJumpListener;
 import org.baugindustries.baugrpg.listeners.PlayerMineListener;
 import org.baugindustries.baugrpg.listeners.PlayerRespawnListener;
+import org.baugindustries.baugrpg.listeners.RadiantAnvilListener;
 import org.baugindustries.baugrpg.listeners.SignBreakListener;
 import org.baugindustries.baugrpg.listeners.SignShopListener;
 import org.baugindustries.baugrpg.listeners.StarlightHealingListener;
@@ -75,6 +77,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.World.Environment;
@@ -87,6 +90,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
@@ -137,6 +141,9 @@ public class Main extends JavaPlugin {
 	public HashMap<UUID, List<UUID>> glowingElvesPerArtificer = new HashMap<UUID, List<UUID>>();
 	public HashMap<UUID, Long> starlightHealingTicks = new HashMap<UUID, Long>();
 	public HashMap<UUID, Long> starlightHealingCooldown = new HashMap<UUID, Long>();
+	public List<UUID> anvilUUIDs = new ArrayList<UUID>();
+	public List<Location> anvilSpawnLocs = new ArrayList<Location>();
+	public List<ArmorStandEntity> activeTrees = new ArrayList<ArmorStandEntity>();
 	public ScoreboardManager manager;
 	public Scoreboard board;
 	public ProtocolManager protocolManager;
@@ -169,6 +176,8 @@ public class Main extends JavaPlugin {
 	public StarlightHealingListener starlightHealingListener = new StarlightHealingListener(this);
 	public LunarTransfusionListener lunarTransfusionListener = new LunarTransfusionListener(this);
 	public ArboratedStrikeListener arboratedStrikeListener = new ArboratedStrikeListener(this);
+	public RadiantAnvilListener radiantAnvilListener = new RadiantAnvilListener(this);
+	public GildedFortuneListener gildedFortuneListener = new GildedFortuneListener(this);
 	
 	
 	
@@ -250,6 +259,8 @@ public class Main extends JavaPlugin {
 		 this.getServer().getPluginManager().registerEvents(starlightHealingListener, this);
 		 this.getServer().getPluginManager().registerEvents(lunarTransfusionListener, this);
 		 this.getServer().getPluginManager().registerEvents(arboratedStrikeListener, this);
+		 this.getServer().getPluginManager().registerEvents(radiantAnvilListener, this);
+		 this.getServer().getPluginManager().registerEvents(gildedFortuneListener, this);
 		 
 		 
 		 new Pay(this);
@@ -561,7 +572,7 @@ public class Main extends JavaPlugin {
 							  miningPercentage.put(player, totalPercentage);
 							  int animationStage = (int) (totalPercentage * 10) - 1;
 							  breakAnimation.getIntegers().write(1, animationStage);
-							  if (animationStage == 9) {
+							  if (animationStage >= 9) {// used to be == 9, but when players mine too fast it skips nine, gets to 10 and keeps going up. This fixes it.
 								  Sound sound = null;
 								try {
 									WorldServer nmsWorld = ((CraftWorld) player.getWorld()).getHandle();
@@ -582,6 +593,8 @@ public class Main extends JavaPlugin {
 								  
 								  
 								  player.getWorld().playSound(loc, sound, SoundCategory.BLOCKS, 1, 1);
+								  Particle particle = Particle.BLOCK_DUST;
+								  player.getWorld().spawnParticle(particle, loc.getX() + 0.5, loc.getY() + 0.5, loc.getZ() + 0.5, 20, 0.1, 0.1, 0.1, player.getWorld().getBlockAt(loc).getBlockData());
 								  player.breakBlock(player.getWorld().getBlockAt(loc));
 								  
 								  miningState.put(player, "STOP_DESTROY_BLOCK");
@@ -635,6 +648,13 @@ public class Main extends JavaPlugin {
 			    				 p.damage(4);
 		    				 }
 		    			 }
+		    		 }
+		    		 if (race == 3) {//dwarven miner haste buff
+		    			File skillsfile = new File(getDataFolder() + File.separator + "skillsData" + File.separator + p.getUniqueId() + ".yml");
+		 	    	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
+		 	    	 	if (skillsconfig.contains("GildedMiner3") && skillsconfig.getBoolean("GildedMiner3")) {
+		 	    			p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 6, 1));
+			            }
 		    		 }
 		    	 }
 		     }
@@ -729,7 +749,17 @@ public class Main extends JavaPlugin {
 	    });
 		
 		
+		anvilUUIDs.forEach(uuid -> {
+			getServer().getEntity(uuid).remove();
+	    });
 		
+		anvilSpawnLocs.forEach(loc -> {
+			loc.getBlock().setType(Material.AIR);
+		});
+		
+		activeTrees.forEach(tree -> {
+			tree.kill();
+		});
 		
 		
 		
