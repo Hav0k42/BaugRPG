@@ -573,12 +573,6 @@ public class LunarTransfusionListener implements Listener {
 		return false;
 	}
 	
-	
-	
-	
-	
-	
-	
 	private Boolean checkBlockRelative(Player player, Location center, int x, int y, int z, Material mat, int orientation) {//0 is default, so do nothing
 		
 		int helper = x;
@@ -640,7 +634,6 @@ public class LunarTransfusionListener implements Listener {
 		player.sendMessage(ChatColor.YELLOW + "Missing block " + mat.name() + " " + slabPos.name() + " at: " + newLoc.getBlockX() + ", " + newLoc.getBlockY() + ", " + newLoc.getBlockZ() + ".");
 		return false;
 	}
-	
 	
 	private Boolean checkBlockRelative(Player player, Location center, int x, int y, int z, Material mat, Slab.Type slabPos, int orientation, boolean waterlogged) {
 		

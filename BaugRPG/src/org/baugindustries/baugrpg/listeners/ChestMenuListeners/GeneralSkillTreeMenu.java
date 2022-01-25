@@ -141,7 +141,6 @@ public class GeneralSkillTreeMenu implements Listener {
 								if (skillsconfig.getBoolean("regenOn")) {
 									player.setSaturatedRegenRate(plugin.onJoinListener.getSaturationSlownessMultiplier() * (int)(((skillsconfig.getInt("regen") * -5f) / 9f) + (95f/9f)));
 									player.setUnsaturatedRegenRate(plugin.onJoinListener.getSaturationSlownessMultiplier() * (int)(((skillsconfig.getInt("regen") * -40f) / 9f) + (760f/9f)));
-									player.sendMessage(player.getSaturatedRegenRate() + "");
 								} else {
 									player.setSaturatedRegenRate(plugin.onJoinListener.getSaturationSlownessMultiplier() * 10);
 									player.setUnsaturatedRegenRate(plugin.onJoinListener.getSaturationSlownessMultiplier() * 80);

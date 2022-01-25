@@ -35,7 +35,7 @@ public class ScrollsOfBaugWizardsInventoryListener implements Listener{
 		Player player = (Player)event.getWhoClicked();
 		PersistentDataContainer data = event.getWhoClicked().getPersistentDataContainer();
 		int race = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
-		if (race != 4) return;
+		if (race != 5) return;
 					
 					
 					
@@ -55,12 +55,23 @@ public class ScrollsOfBaugWizardsInventoryListener implements Listener{
 					e.printStackTrace();
 				}
 		 	}
+		 	
+		 	if (!config.contains("allowRecipe")) {
+		 		config.set("allowRecipe", true);
+		 		try {
+					config.save(file);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		 	}
 			
 			int inventorySize = 54;
 			String inventoryName = "Feature Management";
 			Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
 			
 			inventory.setItem(11, plugin.itemManager.getTpaFeatureItem());
+			inventory.setItem(12, plugin.itemManager.getRecipeFeatureItem());
 			
 			event.getWhoClicked().openInventory(inventory);
 			

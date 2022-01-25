@@ -24,10 +24,13 @@ import org.baugindustries.baugrpg.commands.econ.Deposit;
 import org.baugindustries.baugrpg.commands.econ.Pay;
 import org.baugindustries.baugrpg.commands.econ.SetBal;
 import org.baugindustries.baugrpg.commands.econ.Withdraw;
+import org.baugindustries.baugrpg.listeners.AlchemistThrowPotionListener;
 import org.baugindustries.baugrpg.listeners.ArboratedStrikeListener;
+import org.baugindustries.baugrpg.listeners.ArcaneJewelsListener;
 import org.baugindustries.baugrpg.listeners.BlockExplodeListener;
 import org.baugindustries.baugrpg.listeners.ChestBreakListener;
 import org.baugindustries.baugrpg.listeners.ChestOpenListener;
+import org.baugindustries.baugrpg.listeners.DisableRecipeListener;
 import org.baugindustries.baugrpg.listeners.EfficientBotanyListener;
 import org.baugindustries.baugrpg.listeners.ElfEatMeat;
 import org.baugindustries.baugrpg.listeners.EnchantedPetalsListener;
@@ -35,10 +38,12 @@ import org.baugindustries.baugrpg.listeners.EntityExplodeListener;
 import org.baugindustries.baugrpg.listeners.GildedFortuneListener;
 import org.baugindustries.baugrpg.listeners.HorseListener;
 import org.baugindustries.baugrpg.listeners.LunarTransfusionListener;
+import org.baugindustries.baugrpg.listeners.MagmaTransmutationListener;
 import org.baugindustries.baugrpg.listeners.MinecartMoveListener;
 import org.baugindustries.baugrpg.listeners.OnJoinListener;
 import org.baugindustries.baugrpg.listeners.OnQuitListener;
 import org.baugindustries.baugrpg.listeners.OrcEatMeat;
+import org.baugindustries.baugrpg.listeners.OrcRageListener;
 import org.baugindustries.baugrpg.listeners.PlayerAdvancementDoneListener;
 import org.baugindustries.baugrpg.listeners.PlayerAttackListener;
 import org.baugindustries.baugrpg.listeners.PlayerCloseInventoryListener;
@@ -51,6 +56,7 @@ import org.baugindustries.baugrpg.listeners.RadiantAnvilListener;
 import org.baugindustries.baugrpg.listeners.SignBreakListener;
 import org.baugindustries.baugrpg.listeners.SignShopListener;
 import org.baugindustries.baugrpg.listeners.StarlightHealingListener;
+import org.baugindustries.baugrpg.listeners.WitheredBeheadingListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ChooseClassListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ChooseRaceInventoryListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ConfirmClassListener;
@@ -141,9 +147,12 @@ public class Main extends JavaPlugin {
 	public HashMap<UUID, List<UUID>> glowingElvesPerArtificer = new HashMap<UUID, List<UUID>>();
 	public HashMap<UUID, Long> starlightHealingTicks = new HashMap<UUID, Long>();
 	public HashMap<UUID, Long> starlightHealingCooldown = new HashMap<UUID, Long>();
+	public HashMap<UUID, Long> berserkerKillstreaks = new HashMap<UUID, Long>();
+	public HashMap<UUID, Long> rageCooldown = new HashMap<UUID, Long>();
 	public List<UUID> anvilUUIDs = new ArrayList<UUID>();
 	public List<Location> anvilSpawnLocs = new ArrayList<Location>();
 	public List<ArmorStandEntity> activeTrees = new ArrayList<ArmorStandEntity>();
+	public List<List<ArmorStandEntity>> activeTornadoes = new ArrayList<List<ArmorStandEntity>>();
 	public ScoreboardManager manager;
 	public Scoreboard board;
 	public ProtocolManager protocolManager;
@@ -178,7 +187,12 @@ public class Main extends JavaPlugin {
 	public ArboratedStrikeListener arboratedStrikeListener = new ArboratedStrikeListener(this);
 	public RadiantAnvilListener radiantAnvilListener = new RadiantAnvilListener(this);
 	public GildedFortuneListener gildedFortuneListener = new GildedFortuneListener(this);
-	
+	public ArcaneJewelsListener arcaneJewelsListener = new ArcaneJewelsListener(this);
+	public AlchemistThrowPotionListener alchemistThrowPotionListener = new AlchemistThrowPotionListener(this);
+	public MagmaTransmutationListener magmaTransmutationListener = new MagmaTransmutationListener(this);
+	public OrcRageListener orcRageListener = new OrcRageListener(this);
+	public WitheredBeheadingListener witheredBeheadingListener = new WitheredBeheadingListener(this);
+	public DisableRecipeListener disableRecipeListener = new DisableRecipeListener(this);
 	
 	
 	public ChooseRaceInventoryListener chooseRaceInventoryListener = new ChooseRaceInventoryListener(this);
@@ -233,6 +247,12 @@ public class Main extends JavaPlugin {
 		 this.getServer().getPluginManager().registerEvents(playerDamageListener, this);
 		 this.getServer().getPluginManager().registerEvents(playerMineListener, this);
 		 this.getServer().getPluginManager().registerEvents(playerAdvancementDoneListener, this);
+		 this.getServer().getPluginManager().registerEvents(arcaneJewelsListener, this);
+		 this.getServer().getPluginManager().registerEvents(alchemistThrowPotionListener, this);
+		 this.getServer().getPluginManager().registerEvents(magmaTransmutationListener, this);
+		 this.getServer().getPluginManager().registerEvents(orcRageListener, this);
+		 this.getServer().getPluginManager().registerEvents(witheredBeheadingListener, this);
+		 this.getServer().getPluginManager().registerEvents(disableRecipeListener, this);
 		 
 		 this.getServer().getPluginManager().registerEvents(chooseRaceInventoryListener, this);
 		 this.getServer().getPluginManager().registerEvents(confirmRaceInventoryListener, this);
@@ -486,6 +506,21 @@ public class Main extends JavaPlugin {
 		 for (String uuidStr: starlightHealingcooldownDataconfig.getKeys(true)) {
 			 UUID uuid = UUID.fromString(uuidStr);
 			 starlightHealingCooldown.put(uuid, starlightHealingcooldownDataconfig.getLong(uuidStr));
+		 }
+		 
+		 File ragecooldownDatafile = new File(this.getDataFolder() + File.separator + "rageCooldownData.yml");
+		 FileConfiguration ragecooldownDataconfig = YamlConfiguration.loadConfiguration(ragecooldownDatafile);
+		 //Check to see if the file already exists. If not, create it.
+		 if (!ragecooldownDatafile.exists()) {
+			 try {
+				 ragecooldownDatafile.createNewFile();
+			 } catch (IOException e) {
+				 e.printStackTrace();
+			 }
+		 }
+		 for (String uuidStr: ragecooldownDataconfig.getKeys(true)) {
+			 UUID uuid = UUID.fromString(uuidStr);
+			 rageCooldown.put(uuid, ragecooldownDataconfig.getLong(uuidStr));
 		 }
 		 
 		 
@@ -748,6 +783,23 @@ public class Main extends JavaPlugin {
 			starlightHealingcooldownDataconfig.set(uuid.toString(), value);
 	    });
 		
+		File ragecooldownDatafile = new File(this.getDataFolder() + File.separator + "rageCooldownData.yml");
+		FileConfiguration ragecooldownDataconfig = new YamlConfiguration();
+		
+		if (!ragecooldownDatafile.exists()) {
+			try {
+				ragecooldownDatafile.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		rageCooldown.forEach((key, value) -> {
+			UUID uuid = key;
+			ragecooldownDataconfig.set(uuid.toString(), value);
+	    });
+		
 		
 		anvilUUIDs.forEach(uuid -> {
 			getServer().getEntity(uuid).remove();
@@ -761,7 +813,11 @@ public class Main extends JavaPlugin {
 			tree.kill();
 		});
 		
-		
+		activeTornadoes.forEach(tornado -> {
+			tornado.forEach(layer -> {
+				layer.kill();
+			});
+		});
 		
 		
 		
@@ -773,6 +829,7 @@ public class Main extends JavaPlugin {
 			steeledResolveDisconnectedDataconfig.save(steeledResolveDisconnectedDatafile);
 			shepherdsGracecooldownDataconfig.save(shepherdsGracecooldownDatafile);
 			starlightHealingcooldownDataconfig.save(starlightHealingcooldownDatafile);
+			ragecooldownDataconfig.save(ragecooldownDatafile);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

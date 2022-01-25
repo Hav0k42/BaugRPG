@@ -386,11 +386,29 @@ public class CustomItems {
 	public ItemStack getTpaFeatureItem() {
 		File file = new File(plugin.getDataFolder() + File.separator + "config.yml");
 	 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+	 	ChatColor color = ChatColor.RED;
+	 	if (config.getBoolean("allowTpa")) {
+	 		color = ChatColor.GREEN;
+	 	}
 		return plugin.createItem(
 				Material.ENDER_EYE, 
 				1, 
 				ChatColor.DARK_GREEN + "TPA", 
-				Arrays.asList(ChatColor.LIGHT_PURPLE + "Allow Players to teleport.", config.get("allowTpa").toString()));
+				Arrays.asList(ChatColor.LIGHT_PURPLE + "Allow Players to teleport.", color + config.get("allowTpa").toString().toUpperCase()));
+	}
+	
+	public ItemStack getRecipeFeatureItem() {
+		File file = new File(plugin.getDataFolder() + File.separator + "config.yml");
+	 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+	 	ChatColor color = ChatColor.RED;
+	 	if (config.getBoolean("allowRecipe")) {
+	 		color = ChatColor.GREEN;
+	 	}
+		return plugin.createItem(
+				Material.KNOWLEDGE_BOOK, 
+				1, 
+				ChatColor.DARK_AQUA + "Recipes", 
+				Arrays.asList(ChatColor.LIGHT_PURPLE + "Allow Players to learn recipes.", color + config.get("allowRecipe").toString().toUpperCase()));
 	}
 	
 	public ItemStack getStableMasterSkill1Item(Player player) {
@@ -576,7 +594,7 @@ public class CustomItems {
 	 	}
 		if (plugin.starlightHealingCooldown.containsKey(player.getUniqueId())) {
 			int minutesToMillis = 60000;
-			Long timeRemaining = (plugin.shepherdsGraceCooldown.get(player.getUniqueId()) + (plugin.starlightHealingListener.getStarlightHealingCooldownTime() * minutesToMillis)) - System.currentTimeMillis();
+			Long timeRemaining = (plugin.starlightHealingCooldown.get(player.getUniqueId()) + (plugin.starlightHealingListener.getStarlightHealingCooldownTime() * minutesToMillis)) - System.currentTimeMillis();
 			String timeString = "";
 			int timeValue;
 			if (timeRemaining > minutesToMillis) {
@@ -703,13 +721,60 @@ public class CustomItems {
 	}
 	
 	public ItemStack getEnragedBerserkerSkill1Item(Player player) {
-	 	return plugin.createItem(
-	 			Material.NETHERITE_AXE,
-	 			1,
-	 			ChatColor.DARK_RED + "Rage",
-	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Hitting a killstreak of 5",
-	 					ChatColor.LIGHT_PURPLE + "sends you into a blind rage.",
-	 					getSecondDataSkillItemsString(player, "EnragedBerserker1", "15 Points")));
+
+		if (plugin.rageCooldown.containsKey(player.getUniqueId())) {
+	 		int minutesToMillis = 60000;
+	 		if (plugin.rageCooldown.get(player.getUniqueId()) + (plugin.orcRageListener.getRageCooldownTime() * minutesToMillis) < System.currentTimeMillis()) {
+	 			plugin.rageCooldown.remove(player.getUniqueId());
+	 		}
+	 	}
+		if (plugin.rageCooldown.containsKey(player.getUniqueId())) {
+			int minutesToMillis = 60000;
+			Long timeRemaining = (plugin.rageCooldown.get(player.getUniqueId()) + (plugin.orcRageListener.getRageCooldownTime() * minutesToMillis)) - System.currentTimeMillis();
+			String timeString = "";
+			int timeValue;
+			if (timeRemaining > minutesToMillis) {
+				//display in minutes
+				timeValue = (int)(timeRemaining / minutesToMillis);
+				if (timeValue == 1) {
+					timeString = (timeValue + " Minute Remaining");
+				} else {
+					timeString = (timeValue + " Minute Remaining");
+				}
+			} else {
+				//display in seconds
+				timeValue = (int)(timeRemaining / 1000);
+				if (timeValue == 1) {
+					timeString = (timeValue + " Second Remaining");
+				} else {
+					timeString = (timeValue + " Seconds Remaining");
+				}
+				
+			}
+			return plugin.createItem(
+		 			Material.NETHERITE_AXE,
+		 			1,
+		 			ChatColor.DARK_RED + "Rage",
+		 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Hitting a killstreak of 5",
+		 					ChatColor.LIGHT_PURPLE + "sends you into a blind rage.",
+		 					ChatColor.DARK_RED + "Cooldown: " + timeString,
+		 					getSecondDataSkillItemsString(player, "EnragedBerserker1", "15 Points")));
+		} else {
+			return plugin.createItem(
+		 			Material.NETHERITE_AXE,
+		 			1,
+		 			ChatColor.DARK_RED + "Rage",
+		 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Hitting a killstreak of 5",
+		 					ChatColor.LIGHT_PURPLE + "sends you into a blind rage.",
+		 					getSecondDataSkillItemsString(player, "EnragedBerserker1", "15 Points")));
+		}
+		
+		
+		
+		
+		
+		
+	 	
 	}
 	
 	public ItemStack getEnragedBerserkerSkill2Item(Player player) {

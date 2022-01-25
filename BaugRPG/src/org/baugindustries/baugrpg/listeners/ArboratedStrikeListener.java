@@ -1,16 +1,23 @@
 package org.baugindustries.baugrpg.listeners;
 
 
+import java.io.File;
+
 import org.baugindustries.baugrpg.ArmorStandEntity;
 import org.baugindustries.baugrpg.Main;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
 
@@ -23,6 +30,15 @@ public class ArboratedStrikeListener implements Listener {
 	@EventHandler
 	public void PlayerAttackEvent(EntityDamageByEntityEvent event) {
 		if (!(event.getDamager() instanceof Player)) return;
+		
+		Player attacker = (Player) event.getDamager();
+		
+		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + attacker.getUniqueId() + ".yml");
+	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
+	 	
+	 	if (!(skillsconfig.contains("WoodlandCraftsman2") && skillsconfig.getBoolean("WoodlandCraftsman2"))) return;
+	 	double percentage = 0.01;
+	 	if (Math.random() > percentage) return;
 		
 		ArmorStandEntity tree = new ArmorStandEntity(event.getEntity().getLocation().add(0, -15, 0));
 		//one block in a armor stand thing is 5/8ths of a real block (0.625)
@@ -75,6 +91,7 @@ public class ArboratedStrikeListener implements Listener {
 		}
 		
 		tree.spawn();
+		plugin.activeTrees.add(tree);
 		Vector startPos = event.getEntity().getLocation().toVector().add(new Vector(0, -1, 0));
  		Vector direction = new Vector(0, -1, 0);	 		
  		
@@ -102,14 +119,40 @@ public class ArboratedStrikeListener implements Listener {
 						//Launch any nearby Entites: radius 2.5
 						initLoc.getWorld().getNearbyEntities(initLoc, 2, 2, 2).forEach(entity -> {
 							Vector launchVector = entity.getLocation().toVector().subtract(initLoc.toVector().setY(initLoc.getY() - 2));
-							entity.setVelocity(launchVector.multiply(0.5));
+							if (entity instanceof Player) {
+								Player toLaunchP = (Player) entity;
+								PersistentDataContainer data = toLaunchP.getPersistentDataContainer();
+								if (data.has(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER)) {
+									int race = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
+									if (race != 2) {
+										entity.setVelocity(launchVector.multiply(0.75));
+									}
+								} else {
+									entity.setVelocity(launchVector.multiply(0.75));
+								}
+							} else {
+								entity.setVelocity(launchVector.multiply(0.5));
+							}
 						});
 					}
 					if (initLoc.getY() - tree.getCenterLoc().getY() < 7) {
 						//Launch any nearby Entites: radius 5
 						initLoc.getWorld().getNearbyEntities(initLoc, 5, 5, 5).forEach(entity -> {
 							Vector launchVector = entity.getLocation().toVector().subtract(initLoc.toVector().setY(initLoc.getY() - 2));
-							entity.setVelocity(launchVector.multiply(0.25));
+							if (entity instanceof Player) {
+								Player toLaunchP = (Player) entity;
+								PersistentDataContainer data = toLaunchP.getPersistentDataContainer();
+								if (data.has(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER)) {
+									int race = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
+									if (race != 2) {
+										entity.setVelocity(launchVector.multiply(0.5));
+									}
+								} else {
+									entity.setVelocity(launchVector.multiply(0.5));
+								}
+							} else {
+								entity.setVelocity(launchVector.multiply(0.25));
+							}
 						});
 					}
 					runMoveTree(tree, initLoc);
@@ -123,6 +166,7 @@ public class ArboratedStrikeListener implements Listener {
 					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 						public void run() {
 							tree.kill();
+							plugin.activeTrees.remove(tree);
 						}
 					}, 100L);
 				}
