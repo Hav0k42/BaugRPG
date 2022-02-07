@@ -30,6 +30,9 @@ public class FeatureManagement implements Listener{
 	 	
 		ItemStack tpaItem = plugin.itemManager.getTpaFeatureItem();
 		ItemStack recipeItem = plugin.itemManager.getRecipeFeatureItem();
+		ItemStack endermanGriefItem = plugin.itemManager.getEndermanGriefItem();
+		ItemStack creeperGriefItem = plugin.itemManager.getCreeperGriefItem();
+		ItemStack tntGriefItem = plugin.itemManager.getTntGriefItem();
 		
 		if (event.getCurrentItem().equals(tpaItem)) {
 			
@@ -58,6 +61,48 @@ public class FeatureManagement implements Listener{
 			
 			ItemStack newRecipeItem = plugin.itemManager.getRecipeFeatureItem();;
 			event.getClickedInventory().setItem(event.getSlot(), newRecipeItem);
+		}
+		
+		if (event.getCurrentItem().equals(endermanGriefItem)) {
+			
+			config.set("allowEndermanGriefing", !(Boolean)config.get("allowEndermanGriefing"));
+			try {
+				config.save(file);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			ItemStack newEndermanGriefItem = plugin.itemManager.getEndermanGriefItem();
+			event.getClickedInventory().setItem(event.getSlot(), newEndermanGriefItem);
+		}
+		
+		if (event.getCurrentItem().equals(creeperGriefItem)) {
+			
+			config.set("allowCreeperGriefing", !(Boolean)config.get("allowCreeperGriefing"));
+			try {
+				config.save(file);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			ItemStack newCreeperGriefItem = plugin.itemManager.getCreeperGriefItem();
+			event.getClickedInventory().setItem(event.getSlot(), newCreeperGriefItem);
+		}
+		
+		if (event.getCurrentItem().equals(tntGriefItem)) {
+			
+			config.set("allowTntGriefing", !(Boolean)config.get("allowTntGriefing"));
+			try {
+				config.save(file);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			ItemStack newTntGriefItem = plugin.itemManager.getTntGriefItem();
+			event.getClickedInventory().setItem(event.getSlot(), newTntGriefItem);
 		}
 		
 		

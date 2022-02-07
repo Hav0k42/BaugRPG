@@ -65,13 +65,46 @@ public class ScrollsOfBaugWizardsInventoryListener implements Listener{
 					e.printStackTrace();
 				}
 		 	}
+		 	
+		 	if (!config.contains("allowEndermanGriefing")) {
+		 		config.set("allowEndermanGriefing", true);
+		 		try {
+					config.save(file);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		 	}
+		 	
+		 	if (!config.contains("allowCreeperGriefing")) {
+		 		config.set("allowCreeperGriefing", true);
+		 		try {
+					config.save(file);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		 	}
+		 	
+		 	if (!config.contains("allowTntGriefing")) {
+		 		config.set("allowTntGriefing", true);
+		 		try {
+					config.save(file);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		 	}
 			
 			int inventorySize = 54;
 			String inventoryName = "Feature Management";
 			Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
 			
-			inventory.setItem(11, plugin.itemManager.getTpaFeatureItem());
-			inventory.setItem(12, plugin.itemManager.getRecipeFeatureItem());
+			inventory.setItem(10, plugin.itemManager.getTpaFeatureItem());
+			inventory.setItem(11, plugin.itemManager.getRecipeFeatureItem());
+			inventory.setItem(12, plugin.itemManager.getEndermanGriefItem());
+			inventory.setItem(13, plugin.itemManager.getCreeperGriefItem());
+			inventory.setItem(14, plugin.itemManager.getTntGriefItem());
 			
 			event.getWhoClicked().openInventory(inventory);
 			

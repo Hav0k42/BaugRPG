@@ -10,6 +10,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
@@ -25,7 +26,40 @@ public class EntityExplodeListener implements Listener {
 		File signfile = new File(plugin.getDataFolder() + File.separator + "shops.yml");
 	 	FileConfiguration signconfig = YamlConfiguration.loadConfiguration(signfile);
 		
+	 	if (event.getEntityType().equals(EntityType.CREEPER)) {
+	 		File file = new File(plugin.getDataFolder() + File.separator + "config.yml");
+		 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+		 	
+			if ((config.contains("allowCreeperGriefing") && !config.getBoolean("allowCreeperGriefing"))) {
+				List<Block> blocks = new ArrayList<Block>();
+
+				for (int i = 0; i < event.blockList().size(); i++) {
+					blocks.add(event.blockList().get(i));
+				}
+				
+				for (Block block : blocks) {
+					event.blockList().remove(block);
+				}
+			}
+	 	}
 	 	
+	 	if (event.getEntityType().equals(EntityType.PRIMED_TNT) || event.getEntityType().equals(EntityType.MINECART_TNT)) {
+	 		File file = new File(plugin.getDataFolder() + File.separator + "config.yml");
+		 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+		 	
+			if ((config.contains("allowTntGriefing") && !config.getBoolean("allowTntGriefing"))) {
+				List<Block> blocks = new ArrayList<Block>();
+
+				for (int i = 0; i < event.blockList().size(); i++) {
+					blocks.add(event.blockList().get(i));
+				}
+				
+				for (Block block : blocks) {
+					event.blockList().remove(block);
+				}
+			}
+			
+	 	}
 		
 	 	
 		ArrayList<Location> loc = new ArrayList<Location>();

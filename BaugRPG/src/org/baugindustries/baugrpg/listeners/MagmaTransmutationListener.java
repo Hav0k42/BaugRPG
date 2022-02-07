@@ -30,6 +30,7 @@ public class MagmaTransmutationListener implements Listener {
 		Player player = event.getPlayer();
 		
 		ItemStack item = event.getItem();
+		if (item == null) return;
 		if (!item.getType().equals(Material.LAVA_BUCKET)) return;
 		
 		if (player.isSneaking()) return;

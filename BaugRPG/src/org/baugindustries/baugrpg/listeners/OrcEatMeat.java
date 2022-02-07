@@ -23,7 +23,7 @@ public class OrcEatMeat implements Listener {
 	    if (p.getPersistentDataContainer().get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER) == 4) {//Check if the player is of the race of Elf
             
 		    
-		    Material[] meats = {Material.ROTTEN_FLESH, Material.BEEF, Material.CHICKEN, Material.MUTTON, Material.PORKCHOP, Material.RABBIT};
+		    Material[] meats = {Material.COOKED_BEEF, Material.COOKED_CHICKEN, Material.COOKED_MUTTON, Material.COOKED_PORKCHOP, Material.COOKED_RABBIT, Material.ROTTEN_FLESH, Material.BEEF, Material.CHICKEN, Material.MUTTON, Material.PORKCHOP, Material.RABBIT, Material.COD, Material.SALMON, Material.COOKED_COD, Material.COOKED_SALMON};
 		    
 		    Boolean acceptable = false;
 		    for (int i = 0; i < meats.length; i++) {

@@ -411,6 +411,53 @@ public class CustomItems {
 				Arrays.asList(ChatColor.LIGHT_PURPLE + "Allow Players to learn recipes.", color + config.get("allowRecipe").toString().toUpperCase()));
 	}
 	
+	public ItemStack getEndermanGriefItem() {
+		File file = new File(plugin.getDataFolder() + File.separator + "config.yml");
+	 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+	 	ChatColor color = ChatColor.RED;
+	 	if (config.getBoolean("allowEndermanGriefing")) {
+	 		color = ChatColor.GREEN;
+	 	}
+		return plugin.createItem(
+				Material.ENDER_PEARL, 
+				1, 
+				ChatColor.DARK_GREEN + "Enderman Griefing", 
+				Arrays.asList(ChatColor.LIGHT_PURPLE + "Allow enderman to move blocks or not",
+						ChatColor.LIGHT_PURPLE + "without affecting other mob griefing.",
+						color + config.get("allowEndermanGriefing").toString().toUpperCase()));
+	}
+	
+	public ItemStack getCreeperGriefItem() {
+		File file = new File(plugin.getDataFolder() + File.separator + "config.yml");
+	 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+	 	ChatColor color = ChatColor.RED;
+	 	if (config.getBoolean("allowCreeperGriefing")) {
+	 		color = ChatColor.GREEN;
+	 	}
+		return plugin.createItem(
+				Material.CREEPER_HEAD, 
+				1, 
+				ChatColor.DARK_GREEN + "Creeper Griefing", 
+				Arrays.asList(ChatColor.LIGHT_PURPLE + "Allow creepers to explode blocks or not",
+						ChatColor.LIGHT_PURPLE + "without affecting other mob griefing.",
+						color + config.get("allowCreeperGriefing").toString().toUpperCase()));
+	}
+	
+	public ItemStack getTntGriefItem() {
+		File file = new File(plugin.getDataFolder() + File.separator + "config.yml");
+	 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+	 	ChatColor color = ChatColor.RED;
+	 	if (config.getBoolean("allowTntGriefing")) {
+	 		color = ChatColor.GREEN;
+	 	}
+		return plugin.createItem(
+				Material.TNT, 
+				1, 
+				ChatColor.RED + "TNT Griefing", 
+				Arrays.asList(ChatColor.LIGHT_PURPLE + "Allow TNT Griefing",
+						color + config.get("allowTntGriefing").toString().toUpperCase()));
+	}
+	
 	public ItemStack getStableMasterSkill1Item(Player player) {
 	 	return plugin.createItem(
 	 			Material.LEATHER_HORSE_ARMOR,
@@ -796,13 +843,56 @@ public class CustomItems {
 	}
 	
 	public ItemStack getGreedyScrapperSkill2Item(Player player) {
-	 	return plugin.createItem(
-	 			Material.NETHERITE_SCRAP,
-	 			1,
-	 			ChatColor.DARK_RED + "Greedy Reinforcements",
-	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Give nearby orcs a resistance",
-	 					ChatColor.LIGHT_PURPLE + "buff at low health.",
-	 					getSecondDataSkillItemsString(player, "GreedyScrapper2", "20 Points")));
+
+		if (plugin.greedyReinforcementCooldown.containsKey(player.getUniqueId())) {
+	 		int minutesToMillis = 60000;
+	 		if (plugin.greedyReinforcementCooldown.get(player.getUniqueId()) + (plugin.playerDamageListener.getGreedyReinforcementCooldownTime() * minutesToMillis) < System.currentTimeMillis()) {
+	 			plugin.greedyReinforcementCooldown.remove(player.getUniqueId());
+	 		}
+	 	}
+		if (plugin.greedyReinforcementCooldown.containsKey(player.getUniqueId())) {
+			int minutesToMillis = 60000;
+			Long timeRemaining = (plugin.greedyReinforcementCooldown.get(player.getUniqueId()) + (plugin.playerDamageListener.getGreedyReinforcementCooldownTime() * minutesToMillis)) - System.currentTimeMillis();
+			String timeString = "";
+			int timeValue;
+			if (timeRemaining > minutesToMillis) {
+				//display in minutes
+				timeValue = (int)(timeRemaining / minutesToMillis);
+				if (timeValue == 1) {
+					timeString = (timeValue + " Minute Remaining");
+				} else {
+					timeString = (timeValue + " Minute Remaining");
+				}
+			} else {
+				//display in seconds
+				timeValue = (int)(timeRemaining / 1000);
+				if (timeValue == 1) {
+					timeString = (timeValue + " Second Remaining");
+				} else {
+					timeString = (timeValue + " Seconds Remaining");
+				}
+				
+			}
+			
+			return plugin.createItem(
+		 			Material.NETHERITE_SCRAP,
+		 			1,
+		 			ChatColor.DARK_RED + "Greedy Reinforcements",
+		 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Give nearby orcs a resistance",
+		 					ChatColor.LIGHT_PURPLE + "buff at low health.",
+		 					ChatColor.DARK_RED + "Cooldown: " + timeString,
+		 					getSecondDataSkillItemsString(player, "GreedyScrapper2", "20 Points")));
+		} else {
+			return plugin.createItem(
+		 			Material.NETHERITE_SCRAP,
+		 			1,
+		 			ChatColor.DARK_RED + "Greedy Reinforcements",
+		 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Give nearby orcs a resistance",
+		 					ChatColor.LIGHT_PURPLE + "buff at low health.",
+		 					getSecondDataSkillItemsString(player, "GreedyScrapper2", "20 Points")));
+		}
+		
+		
 	}
 	
 	

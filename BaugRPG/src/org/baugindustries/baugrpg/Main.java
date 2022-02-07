@@ -37,6 +37,7 @@ import org.baugindustries.baugrpg.listeners.EnchantedPetalsListener;
 import org.baugindustries.baugrpg.listeners.EntityExplodeListener;
 import org.baugindustries.baugrpg.listeners.GildedFortuneListener;
 import org.baugindustries.baugrpg.listeners.HorseListener;
+import org.baugindustries.baugrpg.listeners.LavaFishingListener;
 import org.baugindustries.baugrpg.listeners.LunarTransfusionListener;
 import org.baugindustries.baugrpg.listeners.MagmaTransmutationListener;
 import org.baugindustries.baugrpg.listeners.MinecartMoveListener;
@@ -140,6 +141,8 @@ public class Main extends JavaPlugin {
 	public HashMap<UUID, Integer> steeledResolveNpcId = new HashMap<UUID, Integer>();
 	public HashMap<UUID, Long> shepherdsGraceCooldown = new HashMap<UUID, Long>();
 	public HashMap<UUID, Long> shepherdsGraceTicks = new HashMap<UUID, Long>();
+	public HashMap<UUID, Long> greedyReinforcementCooldown = new HashMap<UUID, Long>();
+	public HashMap<UUID, Long> greedyReinforcementTicks = new HashMap<UUID, Long>();
 	public List<Player> mountedPlayers = new ArrayList<Player>();
 	public List<UUID> steeledResolveDisconnectedPlayers = new ArrayList<UUID>();
 	public HashMap<UUID, Long> sneakingLunarArtificers = new HashMap<UUID, Long>();
@@ -193,7 +196,7 @@ public class Main extends JavaPlugin {
 	public OrcRageListener orcRageListener = new OrcRageListener(this);
 	public WitheredBeheadingListener witheredBeheadingListener = new WitheredBeheadingListener(this);
 	public DisableRecipeListener disableRecipeListener = new DisableRecipeListener(this);
-	
+	public LavaFishingListener lavaFishingListener = new LavaFishingListener(this);
 	
 	public ChooseRaceInventoryListener chooseRaceInventoryListener = new ChooseRaceInventoryListener(this);
 	public ConfirmRaceInventoryListener confirmRaceInventoryListener = new ConfirmRaceInventoryListener(this);
@@ -225,6 +228,10 @@ public class Main extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
+		 File defaultDir = new File(this.getDataFolder().getAbsolutePath());
+		 defaultDir.mkdir();
+		
+		
 		 manager = Bukkit.getScoreboardManager();
 		 board = manager.getMainScoreboard();
 		 this.getServer().getPluginManager().registerEvents(onJoinListener, this);
@@ -253,6 +260,7 @@ public class Main extends JavaPlugin {
 		 this.getServer().getPluginManager().registerEvents(orcRageListener, this);
 		 this.getServer().getPluginManager().registerEvents(witheredBeheadingListener, this);
 		 this.getServer().getPluginManager().registerEvents(disableRecipeListener, this);
+		 this.getServer().getPluginManager().registerEvents(lavaFishingListener, this);
 		 
 		 this.getServer().getPluginManager().registerEvents(chooseRaceInventoryListener, this);
 		 this.getServer().getPluginManager().registerEvents(confirmRaceInventoryListener, this);
@@ -489,6 +497,22 @@ public class Main extends JavaPlugin {
 		 for (String uuidStr: shepherdsGracecooldownDataconfig.getKeys(true)) {
 			 UUID uuid = UUID.fromString(uuidStr);
 			 shepherdsGraceCooldown.put(uuid, shepherdsGracecooldownDataconfig.getLong(uuidStr));
+		 }
+		 
+		 
+		 File greedyReinforcementcooldownDatafile = new File(this.getDataFolder() + File.separator + "greedyReinforcementCooldownData.yml");
+		 FileConfiguration greedyReinforcementcooldownDataconfig = YamlConfiguration.loadConfiguration(greedyReinforcementcooldownDatafile);
+		 //Check to see if the file already exists. If not, create it.
+		 if (!greedyReinforcementcooldownDatafile.exists()) {
+			 try {
+				 greedyReinforcementcooldownDatafile.createNewFile();
+			 } catch (IOException e) {
+				 e.printStackTrace();
+			 }
+		 }
+		 for (String uuidStr: greedyReinforcementcooldownDataconfig.getKeys(true)) {
+			 UUID uuid = UUID.fromString(uuidStr);
+			 greedyReinforcementCooldown.put(uuid, greedyReinforcementcooldownDataconfig.getLong(uuidStr));
 		 }
 		 
 		 
@@ -766,6 +790,25 @@ public class Main extends JavaPlugin {
 		
 		
 		
+		File greedyReinforcementcooldownDatafile = new File(this.getDataFolder() + File.separator + "greedyReinforcementCooldownData.yml");
+		FileConfiguration greedyReinforcementcooldownDataconfig = new YamlConfiguration();
+		
+		if (!greedyReinforcementcooldownDatafile.exists()) {
+			try {
+				greedyReinforcementcooldownDatafile.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		greedyReinforcementCooldown.forEach((key, value) -> {
+			UUID uuid = key;
+			greedyReinforcementcooldownDataconfig.set(uuid.toString(), value);
+	    });
+		
+		
+		
 		File starlightHealingcooldownDatafile = new File(this.getDataFolder() + File.separator + "starlightHealingCooldownData.yml");
 		FileConfiguration starlightHealingcooldownDataconfig = new YamlConfiguration();
 		
@@ -830,6 +873,7 @@ public class Main extends JavaPlugin {
 			shepherdsGracecooldownDataconfig.save(shepherdsGracecooldownDatafile);
 			starlightHealingcooldownDataconfig.save(starlightHealingcooldownDatafile);
 			ragecooldownDataconfig.save(ragecooldownDatafile);
+			greedyReinforcementcooldownDataconfig.save(greedyReinforcementcooldownDatafile);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -23,11 +23,10 @@ public class ElfEatMeat implements Listener {
 	    if (p.getPersistentDataContainer().get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER) == 2) {//Check if the player is of the race of Elf
             
 		    
-		    Material[] meats = {Material.COOKED_BEEF, Material.COOKED_CHICKEN, Material.COOKED_MUTTON, Material.COOKED_PORKCHOP, Material.COOKED_RABBIT, Material.ROTTEN_FLESH, Material.BEEF, Material.CHICKEN, Material.MUTTON, Material.PORKCHOP, Material.RABBIT, Material.RABBIT_STEW};
+	    	Material[] meats = {Material.COOKED_BEEF, Material.COOKED_CHICKEN, Material.COOKED_MUTTON, Material.COOKED_PORKCHOP, Material.COOKED_RABBIT, Material.ROTTEN_FLESH, Material.BEEF, Material.CHICKEN, Material.MUTTON, Material.PORKCHOP, Material.RABBIT, Material.COD, Material.SALMON, Material.COOKED_COD, Material.COOKED_SALMON};
 		    
 		    for (int i = 0; i < meats.length; i++) {
 			    if(event.getItem().getType().equals(meats[i])) {
-			    	
 			    	event.setCancelled(true);
 			    }
 		    }

@@ -1,6 +1,8 @@
 package org.baugindustries.baugrpg.listeners;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.baugindustries.baugrpg.Main;
@@ -25,6 +27,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
 
@@ -46,6 +50,7 @@ public class PlayerDamageListener implements Listener {
 	private Main plugin;
 	private int steeledResolveCooldownTime = 50;
 	private int shepherdsGraceCooldownTime = 30;
+	private int greedyReinforcementCooldownTime = 30;
 	public PlayerDamageListener(Main plugin) {
 		this.plugin = plugin;
 	}
@@ -158,6 +163,22 @@ public class PlayerDamageListener implements Listener {
 		 	
 		 	
 		 	
+		 	if (plugin.greedyReinforcementCooldown.containsKey(player.getUniqueId())) {
+		 		int minutesToMillis = 60000;
+		 		if (plugin.greedyReinforcementCooldown.get(player.getUniqueId()) + (greedyReinforcementCooldownTime * minutesToMillis) < System.currentTimeMillis()) {
+		 			plugin.greedyReinforcementCooldown.remove(player.getUniqueId());
+		 		}
+		 	}
+		 	
+		 	
+		 	//Activate Greedy Scrapper Reinforcements
+		 	if (skillsconfig.contains("GreedyScrapper2") && skillsconfig.getBoolean("GreedyScrapper2") && player.getHealth() - event.getDamage() < 5 && event.getDamage() < player.getHealth() && !plugin.greedyReinforcementCooldown.containsKey(player.getUniqueId())) {
+		 		plugin.greedyReinforcementCooldown.put(player.getUniqueId(), System.currentTimeMillis());
+		 		plugin.greedyReinforcementTicks.put(player.getUniqueId(), 0L);
+		 		runGreedyScrapperEffect(player.getUniqueId());
+		 	}
+		 	
+		 	
 		}
 	}
 	
@@ -252,6 +273,10 @@ public class PlayerDamageListener implements Listener {
 		return shepherdsGraceCooldownTime;
 	}
 	
+	public int getGreedyReinforcementCooldownTime() {
+		return greedyReinforcementCooldownTime;
+	}
+	
 	
 	private void runVerdantShepherdEffect(UUID uuid) {
 		Runnable verdantShepherdEffect = new Runnable() {
@@ -343,6 +368,73 @@ public class PlayerDamageListener implements Listener {
 			}
 		};
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, verdantShepherdEffect, 1L);
+ 		
+	}
+	
+	
+	
+	
+	
+	private void runGreedyScrapperEffect(UUID uuid) {
+		Runnable greedyScrapperEffect = new Runnable() {
+			public void run() {
+				Long ticks = plugin.greedyReinforcementTicks.get(uuid);
+				
+				if (Bukkit.getPlayer(uuid).isOnline()) {
+					Player player = Bukkit.getPlayer(uuid);
+		 			Particle particle = Particle.REDSTONE;
+			 		Color particleColor = Color.MAROON;
+			 		float particleSize = 1;
+		 			Particle.DustOptions options = new Particle.DustOptions(particleColor, particleSize);
+			 		World world = player.getWorld();
+			 		
+			 		List<Player> nearbyOrcs = new ArrayList<Player>();
+			 		
+			 		Bukkit.getOnlinePlayers().forEach(bukkitPlayer -> {
+			 			if (!bukkitPlayer.getUniqueId().equals(uuid) && bukkitPlayer.getPersistentDataContainer().has(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER) && bukkitPlayer.getPersistentDataContainer().get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER) == 4) {
+			 				Location bukkitLoc = bukkitPlayer.getLocation();
+			 				double dist = bukkitLoc.distance(player.getLocation());
+			 				if (dist < 15) {
+			 					nearbyOrcs.add(bukkitPlayer);
+			 				}
+			 			}
+			 		});
+			 		
+			 		double particleDensity = 30;
+			 		
+			 		for (Player orc : nearbyOrcs) {
+			 			Location orcLoc = orc.getLocation();
+			 			orcLoc.add(0, 1, 0);
+			 			double xDist = orcLoc.getX() - player.getLocation().getX();
+			 			double yDist = orcLoc.getY() - (player.getLocation().getY() + 1);
+			 			double zDist = orcLoc.getZ() - player.getLocation().getZ();
+
+			 			for (double i = 0; i < particleDensity; i++) {
+			 				Location particleLoc = new Location(player.getWorld(),
+			 						orcLoc.getX() - (xDist * (i / particleDensity)),
+			 						orcLoc.getY() - (yDist * (i / particleDensity)),
+			 						orcLoc.getZ() - (zDist * (i / particleDensity)));
+				 			world.spawnParticle(particle, particleLoc, 1, options);
+			 			}
+			 			orc.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 100, 1));
+			 			orc.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 1));
+			 		}
+			 		
+			 		if (ticks == 0) {
+			 			player.getWorld().playSound(player.getLocation(), Sound.AMBIENT_CAVE, SoundCategory.MASTER, 2f, 1f);
+			 		}
+			 		
+				}
+		 		
+		 		
+				plugin.greedyReinforcementTicks.put(uuid, ticks + 1);
+		 		
+		 		if (ticks <= 200) {
+		 			runGreedyScrapperEffect(uuid);
+		 		}
+			}
+		};
+		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, greedyScrapperEffect, 1L);
  		
 	}
 	
