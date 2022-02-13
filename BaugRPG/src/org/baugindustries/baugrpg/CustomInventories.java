@@ -30,6 +30,11 @@ public class CustomInventories {
 
 		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
 	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
+	 	
+
+		PersistentDataContainer data = player.getPersistentDataContainer();
+		int race = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
+		
 		String profession = skillsconfig.getString("class");
 		int inventorySize = 45;
 		String inventoryName = profession + " Skills";
@@ -53,6 +58,71 @@ public class CustomInventories {
 		
 		inventory.setItem(36, plugin.itemManager.getBackItem());
 		inventory.setItem(0, plugin.itemManager.getRaceSkillTreeInfoItem());
+		
+		inventory.setItem(24, lockedItem);
+		inventory.setItem(25, lockedItem);
+		inventory.setItem(33, lockedItem);
+		inventory.setItem(34, lockedItem);
+		
+		ItemStack[] currentItem = new ItemStack[2];
+		String[] skillNames = new String[2];
+		switch (race) {
+			case 1://Men
+				inventory.setItem(6, plugin.itemManager.getMenBuffBiomeItem(player));
+				inventory.setItem(7, plugin.itemManager.getMenFallDamageNerfItem(player));
+				skillNames[0] = "menBuffBiome";
+				skillNames[1] = "menDanger";
+				currentItem[0] = plugin.createItem(Material.BLUE_STAINED_GLASS_PANE, 1, ChatColor.DARK_AQUA + "Upgrade Home Field Advantage: Lvl " + (skillsconfig.getInt(skillNames[0]) + 1));
+				currentItem[1] = plugin.createItem(Material.BLUE_STAINED_GLASS_PANE, 1, ChatColor.DARK_AQUA + "Upgrade Reinforced Legs: Lvl " + (skillsconfig.getInt(skillNames[1]) + 1));
+				break;
+			case 2://Elves
+				inventory.setItem(6, plugin.itemManager.getElfBuffBiomeItem(player));
+				inventory.setItem(7, plugin.itemManager.getElfRespirationItem(player));
+				skillNames[0] = "elfBuffBiome";
+				skillNames[1] = "elfDanger";
+				currentItem[0] = plugin.createItem(Material.BLUE_STAINED_GLASS_PANE, 1, ChatColor.DARK_GREEN + "Upgrade Underbrush Protection: Lvl " + (skillsconfig.getInt(skillNames[0]) + 1));
+				currentItem[1] = plugin.createItem(Material.BLUE_STAINED_GLASS_PANE, 1, ChatColor.DARK_GREEN + "Upgrade Aqueous Insufflation: Lvl " + (skillsconfig.getInt(skillNames[1]) + 1));
+				break;
+			case 3://Dwarves
+				inventory.setItem(6, plugin.itemManager.getDwarfBuffBiomeItem(player));
+				inventory.setItem(7, plugin.itemManager.getDwarfUndergroundMobResistanceItem(player));
+				skillNames[0] = "dwarfBuffBiome";
+				skillNames[1] = "dwarfDanger";
+				currentItem[0] = plugin.createItem(Material.BLUE_STAINED_GLASS_PANE, 1, ChatColor.DARK_PURPLE + "Upgrade Mountainous Grit: Lvl " + (skillsconfig.getInt(skillNames[0]) + 1));
+				currentItem[1] = plugin.createItem(Material.BLUE_STAINED_GLASS_PANE, 1, ChatColor.DARK_PURPLE + "Upgrade Shaded Security: Lvl " + (skillsconfig.getInt(skillNames[1]) + 1));
+				break;
+			case 4://Orcs
+				inventory.setItem(6, plugin.itemManager.getOrcBuffBiomeItem(player));
+				inventory.setItem(7, plugin.itemManager.getOrcLavaImmunityItem(player));
+				skillNames[0] = "orcBuffBiome";
+				skillNames[1] = "orcDanger";
+				currentItem[0] = plugin.createItem(Material.BLUE_STAINED_GLASS_PANE, 1, ChatColor.DARK_RED + "Upgrade Hellish Reposte: Lvl " + (skillsconfig.getInt(skillNames[0]) + 1));
+				currentItem[1] = plugin.createItem(Material.BLUE_STAINED_GLASS_PANE, 1, ChatColor.DARK_RED + "Upgrade Iron Skin: Lvl " + (skillsconfig.getInt(skillNames[1]) + 1));
+				break;
+		}
+		
+		
+		
+		
+		
+		for (int i = 0; i < currentItem.length; i++) {
+			int levelInt = skillsconfig.getInt(skillNames[i]);
+			int rowShifter = i;
+			if (levelInt == 0) {
+				inventory.setItem(42 + rowShifter, currentItem[i]);
+			} else if (levelInt == 1) {
+				inventory.setItem(42 + rowShifter, ownedItem);
+				inventory.setItem(33 + rowShifter, currentItem[i]);
+			} else if (levelInt == 2) {
+				inventory.setItem(42 + rowShifter, ownedItem);
+				inventory.setItem(33 + rowShifter, ownedItem);
+				inventory.setItem(24 + rowShifter, currentItem[i]);
+			} else {
+				inventory.setItem(42 + rowShifter, ownedItem);
+				inventory.setItem(33 + rowShifter, ownedItem);
+				inventory.setItem(24 + rowShifter, ownedItem);
+			}
+		}
 		
 		
 		if (profession.equals("Stable Master")) {//Slots to use: 3, 12, 21, 30, 39

@@ -925,6 +925,163 @@ public class CustomItems {
 		item.setItemMeta(meta);
 		return item;
 	}
+	
+	public ItemStack getMenBuffBiomeItem(Player player) {
+		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
+	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
+		
+		String enabledString = ChatColor.RED + "DISABLED";
+ 		if (skillsconfig.getBoolean("menBuffBiomeOn")) {
+ 			enabledString = ChatColor.GREEN + "ENABLED";
+ 		}
+		
+		String secondString = "Click to toggle: " + enabledString;
+		
+	 	return plugin.createItem(
+	 			Material.GRASS,
+	 			1,
+	 			ChatColor.DARK_AQUA + "Home Field Advantage",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Increased strength to other",
+	 					"players in open areas.",
+	 					secondString));
+	}
+	
+	public ItemStack getMenFallDamageNerfItem(Player player) {
+		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
+	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
+		
+		String enabledString = ChatColor.RED + "DISABLED";
+ 		if (skillsconfig.getBoolean("menDangerOn")) {
+ 			enabledString = ChatColor.GREEN + "ENABLED";
+ 		}
+		
+		String secondString = "Click to toggle: " + enabledString;
+		
+	 	return plugin.createItem(
+	 			Material.FEATHER,
+	 			1,
+	 			ChatColor.DARK_AQUA + "Reinforced Legs",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Reduce fall damage.",
+	 					secondString));
+	}
+	
+	public ItemStack getElfBuffBiomeItem(Player player) {
+		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
+	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
+		
+		String enabledString = ChatColor.RED + "DISABLED";
+ 		if (skillsconfig.getBoolean("elfBuffBiomeOn")) {
+ 			enabledString = ChatColor.GREEN + "ENABLED";
+ 		}
+		
+		String secondString = "Click to toggle: " + enabledString;
+		
+	 	return plugin.createItem(
+	 			Material.OAK_SAPLING,
+	 			1,
+	 			ChatColor.DARK_GREEN + "Underbrush Protection",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Increased strength to other",
+	 					"players in forests",
+	 					secondString));
+	}
+	
+	public ItemStack getElfRespirationItem(Player player) {
+		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
+	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
+		
+		String enabledString = ChatColor.RED + "DISABLED";
+ 		if (skillsconfig.getBoolean("elfDangerOn")) {
+ 			enabledString = ChatColor.GREEN + "ENABLED";
+ 		}
+		
+		String secondString = "Click to toggle: " + enabledString;
+		
+	 	return plugin.createItem(
+	 			Material.WATER_BUCKET,
+	 			1,
+	 			ChatColor.DARK_GREEN + "Aqueous Insufflation",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Increase drowning time.",
+	 					secondString));
+	}
+	
+	public ItemStack getDwarfBuffBiomeItem(Player player) {
+		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
+	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
+		
+		String enabledString = ChatColor.RED + "DISABLED";
+ 		if (skillsconfig.getBoolean("dwarfBuffBiomeOn")) {
+ 			enabledString = ChatColor.GREEN + "ENABLED";
+ 		}
+		
+		String secondString = "Click to toggle: " + enabledString;
+		
+	 	return plugin.createItem(
+	 			Material.STONE,
+	 			1,
+	 			ChatColor.DARK_PURPLE + "Mountainous Grit",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Increased strength to other",
+	 					"players in the mountains", 
+	 					"and underground.",
+	 					secondString));
+	}
+	
+	public ItemStack getDwarfUndergroundMobResistanceItem(Player player) {
+		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
+	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
+		
+		String enabledString = ChatColor.RED + "DISABLED";
+ 		if (skillsconfig.getBoolean("dwarfDangerOn")) {
+ 			enabledString = ChatColor.GREEN + "ENABLED";
+ 		}
+		
+		String secondString = "Click to toggle: " + enabledString;
+		
+	 	return plugin.createItem(
+	 			Material.REDSTONE_TORCH,
+	 			1,
+	 			ChatColor.DARK_PURPLE + "Shaded Security",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Resistance to underground monsters.",
+	 					secondString));
+	}
+	
+	public ItemStack getOrcBuffBiomeItem(Player player) {
+		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
+	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
+		
+		String enabledString = ChatColor.RED + "DISABLED";
+ 		if (skillsconfig.getBoolean("orcBuffBiomeOn")) {
+ 			enabledString = ChatColor.GREEN + "ENABLED";
+ 		}
+		
+		String secondString = "Click to toggle: " + enabledString;
+		
+	 	return plugin.createItem(
+	 			Material.NETHERRACK,
+	 			1,
+	 			ChatColor.DARK_RED + "Hellish Reposte",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Increased strength to other",
+	 					"players in the nether.",
+	 					secondString));
+	}
+	
+	public ItemStack getOrcLavaImmunityItem(Player player) {
+		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
+	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
+		
+		String enabledString = ChatColor.RED + "DISABLED";
+ 		if (skillsconfig.getBoolean("orcDangerOn")) {
+ 			enabledString = ChatColor.GREEN + "ENABLED";
+ 		}
+		
+		String secondString = "Click to toggle: " + enabledString;
+		
+	 	return plugin.createItem(
+	 			Material.LAVA_BUCKET,
+	 			1,
+	 			ChatColor.DARK_RED + "Iron Skin",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Reduce damage to lava.",
+	 					secondString));
+	}
 }
 
 

@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.List;
 
 import org.baugindustries.baugrpg.Main;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -13,6 +15,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 public class RaceSkillTreeMenu implements Listener{
 	private Main plugin;
@@ -52,6 +56,69 @@ public class RaceSkillTreeMenu implements Listener{
 	 	Boolean reloadBool = false;
 	 	
 	 	int slot = event.getSlot();
+
+ 		PersistentDataContainer data = player.getPersistentDataContainer();
+ 		String raceString = "men";
+		int race = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
+ 		switch (race) {
+	 		case 2:
+	 			raceString = "elf";
+	 			break;
+	 		case 3:
+	 			raceString = "dwarf";
+	 			break;
+	 		case 4:
+	 			raceString = "orc";
+	 			break;
+ 		}
+	 	if (slot == 6 || slot == 7) {
+	 		String skillString = raceString;
+	 		if (slot == 6) {
+	 			skillString = skillString + "BuffBiomeOn";
+	 		} else {
+	 			skillString = skillString + "DangerOn";
+	 		}
+	 		
+	 		if (skillsconfig.contains(skillString)) {
+	 			skillsconfig.set(skillString, !skillsconfig.getBoolean(skillString));
+	 		} else {
+	 			skillsconfig.set(skillString, true);
+	 		}
+	 		
+	 		try {
+				skillsconfig.save(skillsfile);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	 		
+	 		reloadBool = true;
+	 	}
+	 	
+	 	if (event.getCurrentItem().getType().equals(Material.BLUE_STAINED_GLASS_PANE)) {
+	 		if (skillsconfig.getInt("skillPoints") < 1) return;
+	 		
+	 		
+	 		String skillString = raceString;
+	 		if (slot % 9 == 6) {
+	 			skillString = skillString + "BuffBiome";
+	 		} else {
+	 			skillString = skillString + "Danger";
+	 		}
+	 		
+	 		skillsconfig.set(skillString, skillsconfig.getInt(skillString) + 1);
+ 			skillsconfig.set("skillPoints", skillsconfig.getInt("skillPoints") - 1);
+ 			
+ 			try {
+				skillsconfig.save(skillsfile);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	 		
+	 		reloadBool = true;
+	 	}
+	 	
 	 	if (slot == 3 || slot == 12 || slot == 21 || slot == 30 || slot == 39) {
 	 		String skill = "";
 	 		int skillNum = 0;
@@ -59,12 +126,16 @@ public class RaceSkillTreeMenu implements Listener{
 			if (slot == 3 || slot == 12) {
 				skillNum = 1;
 			}
+			
 			if (slot == 21 || slot == 30) {
 				skillNum = 2;
 			}
+			
 			if (slot == 39) {
 				skillNum = 3;
 			}
+			
+			
 			
 			if (profession.equals("Steeled Armorer") || profession.equals("Verdant Shepherd") || profession.equals("Radiant Metallurgist") || profession.equals("Arcane Jeweler")) {
 				if (slot == 21) {

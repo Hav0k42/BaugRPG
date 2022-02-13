@@ -50,9 +50,4 @@ public class SkillTreeMenu implements Listener{
 			}
 		}
 	}
-	
-	
-	void skillPaneSetter (ItemStack currentItem, int levelInt, int rowShifter) {
-		
-	}
 }

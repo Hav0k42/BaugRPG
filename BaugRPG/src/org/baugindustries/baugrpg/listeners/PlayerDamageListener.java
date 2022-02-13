@@ -22,10 +22,13 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_18_R1.CraftServer;
 import org.bukkit.craftbukkit.v1_18_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_18_R1.entity.CraftPlayer;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -79,8 +82,43 @@ public class PlayerDamageListener implements Listener {
 		 	}
 		 	
 		 	
+		 	if (skillsconfig.contains("menDangerOn") && skillsconfig.getBoolean("menDangerOn")) {
+		 		if (event.getCause().equals(DamageCause.FALL)) {
+		 			if (skillsconfig.contains("menDanger")) {
+		 				int lvl = skillsconfig.getInt("menDanger");
+			 			event.setDamage(event.getDamage() * (1 - (lvl / 8.0)));
+		 			}
+		 		}
+		 	}
 		 	
+		 	if (skillsconfig.contains("elfDangerOn") && skillsconfig.getBoolean("elfDangerOn")) {
+		 		if (event.getCause().equals(DamageCause.DROWNING)) {
+		 			if (skillsconfig.contains("elfDanger")) {
+		 				int lvl = skillsconfig.getInt("elfDanger");
+			 			event.setDamage(event.getDamage() * (1 - (lvl / 4.0)));
+		 			}
+		 		}
+		 	}
 		 	
+		 	if (skillsconfig.contains("dwarfDangerOn") && skillsconfig.getBoolean("dwarfDangerOn")) {
+		 		if (event.getCause().equals(DamageCause.ENTITY_ATTACK)) {
+		 			if (!((EntityDamageByEntityEvent)event).getDamager().getType().equals(EntityType.PLAYER)) {
+			 			if (skillsconfig.contains("dwarfDanger")) {
+			 				int lvl = skillsconfig.getInt("dwarfDanger");
+				 			event.setDamage(event.getDamage() * (1 - (lvl / 8.0)));
+			 			}
+		 			}
+		 		}
+		 	}
+		 	
+		 	if (skillsconfig.contains("orcDangerOn") && skillsconfig.getBoolean("orcDangerOn")) {
+		 		if (event.getCause().equals(DamageCause.LAVA)) {
+		 			if (skillsconfig.contains("orcDanger")) {
+		 				int lvl = skillsconfig.getInt("orcDanger");
+			 			event.setDamage(event.getDamage() * (1 - (lvl / 8.0)));
+		 			}
+		 		}
+		 	}
 		 	
 		 	//Activate Steeled Armorer animation
 		 	if (skillsconfig.contains("SteeledArmorer1") && skillsconfig.getBoolean("SteeledArmorer1") && event.getDamage() > player.getHealth() && !plugin.steeledResolveCooldown.containsKey(player.getUniqueId())){
@@ -423,6 +461,48 @@ public class PlayerDamageListener implements Listener {
 			 		if (ticks == 0) {
 			 			player.getWorld().playSound(player.getLocation(), Sound.AMBIENT_CAVE, SoundCategory.MASTER, 2f, 1f);
 			 		}
+			 		
+			 		
+			 		
+			 		
+			 		
+			 		
+			 		
+			 		double radius = 1.5;
+			 		double orbCount = 7;
+			 		double speed = 0.0;
+			 		double offset = speed * ((double)ticks);
+			 		double tilt = Math.toRadians(20);
+			 		double tiltSpeed = -0.07;
+			 		double tiltOffset = tiltSpeed * ((double)ticks);
+			 		
+			 		for (int i = 0; i < orbCount; i++) {
+			 			
+			 			double angle = (((2 * Math.PI) / (orbCount)) * i) + offset;
+			 			double xPos = (radius * Math.cos(angle));
+			 			double yPos = 1;
+			 			double zPos = (radius * Math.sin(angle));
+			 			
+			 			
+			 			//Rotate around x axis
+			 			double xPos2 = xPos;
+			 			double yPos2 = (yPos * Math.cos(tilt)) - (zPos * Math.sin(tilt));
+			 			double zPos2 = (yPos * Math.sin(tilt)) + (zPos * Math.cos(tilt));
+			 			
+			 			
+			 			//Rotate around y axis
+			 			double xPos3 = (xPos2 * Math.cos(tiltOffset)) + (zPos2 * Math.sin(tiltOffset));
+			 			double yPos3 = yPos2;
+			 			double zPos3 = (-xPos2 * Math.sin(tiltOffset)) + (zPos2 * Math.cos(tiltOffset));
+			 			
+			 			
+			 			
+			 			Location particleLoc = new Location(player.getWorld(), xPos3 + player.getLocation().getX(), yPos3 + player.getLocation().getY(), zPos3 + player.getLocation().getZ());
+
+			 			world.spawnParticle(particle, particleLoc, 1, options);
+			 		}
+			 		
+			 		
 			 		
 				}
 		 		

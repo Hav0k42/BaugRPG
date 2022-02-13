@@ -20,6 +20,7 @@ public class OrcEatMeat implements Listener {
 	public void onPlayerUse(PlayerItemConsumeEvent event) {
 	    Player p = event.getPlayer();
 	    
+	    if (!p.getPersistentDataContainer().has(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER)) return;
 	    if (p.getPersistentDataContainer().get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER) == 4) {//Check if the player is of the race of Elf
             
 		    
