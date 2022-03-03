@@ -253,6 +253,77 @@ public class CustomInventories {
 			enableLeaders = true;
 		}
 		
+		
+		if (race == 2 && leaderConfig.contains("elfElectionActive") && leaderConfig.getBoolean("elfElectionActive")) {
+			if (leaderConfig.getStringList("elfVotedPlayers").contains(player.getUniqueId().toString())) {
+				inventory.setItem(4, plugin.itemManager.getAlreadyVotedItem());
+			} else {
+				inventory.setItem(4, plugin.itemManager.getVoteOnLeaderItem(race));
+			}
+			inventory.setItem(5, plugin.itemManager.getNominateSelfItem(race));
+			
+			
+			
+			if (System.currentTimeMillis() - leaderConfig.getLong("elfElectionStartTime") > 129600000) {
+				List<String> secretaryCandidates = leaderConfig.getStringList("elfCandidates");
+				UUID secretaryUUID = null;
+				for (String string : secretaryCandidates) {
+					UUID candidateUUID = UUID.fromString(string);
+					if (secretaryUUID == null || (leaderConfig.getInt(string + "Votes") > leaderConfig.getInt(secretaryUUID.toString() + "Votes"))) {
+						secretaryUUID = candidateUUID;
+					}
+					leaderConfig.set(string + "Votes", null);
+				}
+				leaderConfig.set("elfLeaderUUID", secretaryUUID.toString());
+				leaderConfig.set("elfCandidates", null);
+				leaderConfig.set("elfVotedPlayers", null);
+				leaderConfig.set("elfElectionActive", false);
+			}
+			try {
+				leaderConfig.save(leaderDataFile);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			
+		}
+		
+		if (race == 1 && leaderConfig.contains("menElectionActive") && leaderConfig.getBoolean("menElectionActive")) {
+			if (leaderConfig.getStringList("menVotedPlayers").contains(player.getUniqueId().toString())) {
+				inventory.setItem(4, plugin.itemManager.getAlreadyVotedItem());
+			} else {
+				inventory.setItem(4, plugin.itemManager.getVoteOnLeaderItem(race));
+			}
+			inventory.setItem(5, plugin.itemManager.getNominateSelfItem(race));
+			
+			
+			
+			if (System.currentTimeMillis() - leaderConfig.getLong("menElectionStartTime") > 129600000) {
+				List<String> kingCandidates = leaderConfig.getStringList("menCandidates");
+				UUID kingUUID = null;
+				for (String string : kingCandidates) {
+					UUID candidateUUID = UUID.fromString(string);
+					if (kingUUID == null || (leaderConfig.getInt(string + "Votes") > leaderConfig.getInt(kingUUID.toString() + "Votes"))) {
+						kingUUID = candidateUUID;
+					}
+					leaderConfig.set(string + "Votes", null);
+				}
+				leaderConfig.set("menLeaderUUID", kingUUID.toString());
+				leaderConfig.set("menCandidates", null);
+				leaderConfig.set("menVotedPlayers", null);
+				leaderConfig.set("menElectionActive", false);
+			}
+			try {
+				leaderConfig.save(leaderDataFile);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			
+			
+			
+		}
+		
 		SkullMeta skullMeta = (SkullMeta)plugin.itemManager.getLeaderHeadItem(race).getItemMeta();
 		ItemStack tempItem = plugin.itemManager.getLeaderHeadItem(race);
 		if (!enableLeaders) {
@@ -370,75 +441,7 @@ public class CustomInventories {
 			inventory.setItem(12, plugin.itemManager.getNominateSelfItem(race));
 		}
 		
-		if (race == 2 && leaderConfig.contains("elfElectionActive") && leaderConfig.getBoolean("elfElectionActive")) {
-			if (leaderConfig.getStringList("elfVotedPlayers").contains(player.getUniqueId().toString())) {
-				inventory.setItem(4, plugin.itemManager.getAlreadyVotedItem());
-			} else {
-				inventory.setItem(4, plugin.itemManager.getVoteOnLeaderItem(race));
-			}
-			inventory.setItem(5, plugin.itemManager.getNominateSelfItem(race));
-			
-			
-			
-			if (System.currentTimeMillis() - leaderConfig.getLong("elfElectionStartTime") > 129600000) {
-				List<String> secretaryCandidates = leaderConfig.getStringList("elfCandidates");
-				UUID secretaryUUID = null;
-				for (String string : secretaryCandidates) {
-					UUID candidateUUID = UUID.fromString(string);
-					if (secretaryUUID == null || (leaderConfig.getInt(string + "Votes") > leaderConfig.getInt(secretaryUUID.toString() + "Votes"))) {
-						secretaryUUID = candidateUUID;
-					}
-					leaderConfig.set(string + "Votes", null);
-				}
-				leaderConfig.set("elfLeaderUUID", secretaryUUID.toString());
-				leaderConfig.set("elfCandidates", null);
-				leaderConfig.set("elfVotedPlayers", null);
-				leaderConfig.set("elfElectionActive", false);
-			}
-			try {
-				leaderConfig.save(leaderDataFile);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			
-		}
 		
-		if (race == 1 && leaderConfig.contains("menElectionActive") && leaderConfig.getBoolean("menElectionActive")) {
-			if (leaderConfig.getStringList("menVotedPlayers").contains(player.getUniqueId().toString())) {
-				inventory.setItem(4, plugin.itemManager.getAlreadyVotedItem());
-			} else {
-				inventory.setItem(4, plugin.itemManager.getVoteOnLeaderItem(race));
-			}
-			inventory.setItem(5, plugin.itemManager.getNominateSelfItem(race));
-			
-			
-			
-			if (System.currentTimeMillis() - leaderConfig.getLong("menElectionStartTime") > 129600000) {
-				List<String> kingCandidates = leaderConfig.getStringList("menCandidates");
-				UUID kingUUID = null;
-				for (String string : kingCandidates) {
-					UUID candidateUUID = UUID.fromString(string);
-					if (kingUUID == null || (leaderConfig.getInt(string + "Votes") > leaderConfig.getInt(kingUUID.toString() + "Votes"))) {
-						kingUUID = candidateUUID;
-					}
-					leaderConfig.set(string + "Votes", null);
-				}
-				leaderConfig.set("menLeaderUUID", kingUUID.toString());
-				leaderConfig.set("menCandidates", null);
-				leaderConfig.set("menVotedPlayers", null);
-				leaderConfig.set("menElectionActive", false);
-			}
-			try {
-				leaderConfig.save(leaderDataFile);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			
-			
-			
-		}
 		
 		return inventory;
 	}
