@@ -1,10 +1,14 @@
 package org.baugindustries.baugrpg;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.NamespacedKey;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -32,12 +36,33 @@ public class ChatChannel implements Listener {
 	public void onPlayerChat(AsyncPlayerChatEvent event) {
 		Player p = event.getPlayer();
 		
-		if (plugin.signChatEscape.containsKey(p)) {
+		if (plugin.taxDwarvesEscape == p.getUniqueId()) {
+			if (plugin.isDouble(event.getMessage())) {
+				double taxAmount = Double.parseDouble(event.getMessage());
+				if (taxAmount > 5 || taxAmount < 0) {
+					p.sendMessage(ChatColor.RED + "Please enter a number between 0 and 5.");
+				} else {
+					p.sendMessage(ChatColor.GOLD + "You are now taxing your citizens " + taxAmount + "%.");
+					plugin.taxDwarvesEscape = null;
+					File leaderDataFile = new File(plugin.getDataFolder() + File.separator + "leaderData.yml");
+					FileConfiguration leaderConfig = YamlConfiguration.loadConfiguration(leaderDataFile);
+					leaderConfig.set("taxAmount", taxAmount / 100);
+					try {
+						leaderConfig.save(leaderDataFile);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			} else {
+				p.sendMessage(ChatColor.RED + "Please enter a number");
+			}
+			event.setCancelled(true);
+		} else if (plugin.signChatEscape.containsKey(p)) {
 			int step = plugin.signChatEscape.get(p);
 			switch (step) {
 				case 1:
 					String shopname = event.getMessage();
-					p.sendMessage(shopname);
+					p.sendMessage(ChatColor.GOLD + "<Shop Name Input>: " + ChatColor.YELLOW + shopname);
 					List<String> signData = new ArrayList<String>();
 					signData.add(shopname);
 					plugin.signData.put(p, signData);
@@ -47,7 +72,7 @@ public class ChatChannel implements Listener {
 				case 2:
 					if (plugin.isInteger(event.getMessage())) {
 						int buyAmount = Math.abs(Integer.parseInt(event.getMessage()));
-						p.sendMessage(buyAmount + "");
+						p.sendMessage(ChatColor.GOLD + "<Purchase Amount Input>: " + ChatColor.YELLOW + buyAmount);
 						signData = plugin.signData.get(p);
 						signData.add("Buy: " + buyAmount);
 						plugin.signData.put(p, signData);
@@ -60,7 +85,7 @@ public class ChatChannel implements Listener {
 				case 3:
 					if (plugin.isInteger(event.getMessage())) {
 						int sellAmount = Math.abs(Integer.parseInt(event.getMessage()));
-						p.sendMessage(sellAmount + "");
+						p.sendMessage(ChatColor.GOLD + "<Sell Amount Input>: " + ChatColor.YELLOW + sellAmount);
 						signData = plugin.signData.get(p);
 						signData.add("Sell: " + sellAmount);
 						plugin.signData.put(p, signData);
@@ -72,6 +97,96 @@ public class ChatChannel implements Listener {
 					break;
 					
 			}
+			event.setCancelled(true);
+		} else if (plugin.lawSuggestionEscape.contains(p.getUniqueId())) {
+			File leaderDataFile = new File(plugin.getDataFolder() + File.separator + "leaderData.yml");
+			FileConfiguration leaderConfig = YamlConfiguration.loadConfiguration(leaderDataFile);
+
+			PersistentDataContainer data = p.getPersistentDataContainer();
+			int race = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
+			
+			String raceString = null;
+			switch (race) {
+				case 1:
+					raceString = "men";
+					break;
+				case 2:
+					raceString = "elf";
+					break;
+				case 3:
+					raceString = "dwarf";
+					break;
+				case 4:
+					raceString = "orc";
+					break;
+			}
+			
+			if (!leaderConfig.contains(raceString + "LawSuggestions")) {
+				List<String> suggestionList = new ArrayList<String>();
+				suggestionList.add(event.getMessage());
+				leaderConfig.set(raceString + "LawSuggestions", suggestionList);
+			} else {
+				List<String> suggestionList = leaderConfig.getStringList(raceString + "LawSuggestions");
+				suggestionList.add(event.getMessage());
+				leaderConfig.set(raceString + "LawSuggestions", suggestionList);
+			}
+			
+			p.sendMessage(ChatColor.GOLD + "<Suggestion Input>: " + ChatColor.YELLOW + event.getMessage());
+			
+			
+			
+			try {
+				leaderConfig.save(leaderDataFile);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			plugin.lawSuggestionEscape.remove(p.getUniqueId());
+			
+			event.setCancelled(true);
+		} else if (plugin.reportCrimeEscape.contains(p.getUniqueId())) {
+			File leaderDataFile = new File(plugin.getDataFolder() + File.separator + "leaderData.yml");
+			FileConfiguration leaderConfig = YamlConfiguration.loadConfiguration(leaderDataFile);
+
+			PersistentDataContainer data = p.getPersistentDataContainer();
+			int race = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
+			
+			String raceString = null;
+			switch (race) {
+				case 1:
+					raceString = "men";
+					break;
+				case 2:
+					raceString = "elf";
+					break;
+				case 3:
+					raceString = "dwarf";
+					break;
+				case 4:
+					raceString = "orc";
+					break;
+			}
+			
+			if (!leaderConfig.contains(raceString + "ReportedCrimes")) {
+				List<String> suggestionList = new ArrayList<String>();
+				suggestionList.add(event.getMessage());
+				leaderConfig.set(raceString + "ReportedCrimes", suggestionList);
+			} else {
+				List<String> suggestionList = leaderConfig.getStringList(raceString + "ReportedCrimes");
+				suggestionList.add(event.getMessage());
+				leaderConfig.set(raceString + "ReportedCrimes", suggestionList);
+			}
+			
+			p.sendMessage(ChatColor.GOLD + "<Reported Crime>: " + ChatColor.YELLOW + event.getMessage());
+			
+			
+			
+			try {
+				leaderConfig.save(leaderDataFile);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			plugin.reportCrimeEscape.remove(p.getUniqueId());
+			
 			event.setCancelled(true);
 		} else {
 			PersistentDataContainer data = p.getPersistentDataContainer();

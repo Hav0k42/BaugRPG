@@ -1,9 +1,11 @@
 package org.baugindustries.baugrpg;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -25,6 +27,428 @@ public class CustomInventories {
 	CustomInventories(Main plugin) {
 		this.plugin = plugin;
 	}
+	
+	
+	public Inventory getConfirmStepDownMenu() {
+		
+		int inventorySize = 27;
+		String inventoryName = ChatColor.DARK_GREEN + "Confirm Stepping Down";
+		
+		Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
+		
+		ItemStack blankItem = plugin.itemManager.getBlankItem();
+		for (int i = 0; i < inventorySize; i++) {
+			inventory.setItem(i, blankItem);
+		}
+		
+		
+		ItemStack infoItem = plugin.createItem(Material.NETHER_STAR,
+				1,
+				ChatColor.DARK_GREEN + "CONFIRM DECISION",
+				Arrays.asList(ChatColor.LIGHT_PURPLE + "Are you sure you want",
+						"to step down as Secretary?"));
+		
+		inventory.setItem(4, infoItem);
+		
+		
+		inventory.setItem(11, plugin.itemManager.getYesItem());
+		
+		inventory.setItem(15, plugin.itemManager.getNoItem());
+		
+		return inventory;
+	}
+	
+	
+	
+	public Inventory getConfirmAppointKingMenu(UUID uuid) {
+		
+		int inventorySize = 27;
+		String inventoryName = ChatColor.DARK_AQUA + "Confirm Appointment";
+		
+		Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
+		
+		ItemStack blankItem = plugin.itemManager.getBlankItem();
+		for (int i = 0; i < inventorySize; i++) {
+			inventory.setItem(i, blankItem);
+		}
+		
+		OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
+		
+		ItemStack infoItem = plugin.createItem(Material.PLAYER_HEAD,
+				1,
+				ChatColor.DARK_AQUA + player.getName(),
+				Arrays.asList(ChatColor.LIGHT_PURPLE + "Are you sure you want",
+						"to appoint " + ChatColor.DARK_AQUA + player.getName(),
+						"as King?"));
+		
+		SkullMeta meta = (SkullMeta) infoItem.getItemMeta();
+		meta.setOwningPlayer(player);
+		infoItem.setItemMeta(meta);
+		
+		inventory.setItem(4, infoItem);
+		
+		
+		inventory.setItem(11, plugin.itemManager.getYesItem());
+		
+		inventory.setItem(15, plugin.itemManager.getNoItem());
+		
+		return inventory;
+	}
+	
+	
+	
+	public Inventory getAppointKingMenu(UUID uuid, int page) {
+		Player player = Bukkit.getPlayer(uuid);
+		List<OfflinePlayer> allOfflineMen = plugin.getAllOfflineMen();
+		ItemStack backItem = plugin.itemManager.getBackItem();
+		List<ItemStack> menHeads = new ArrayList<ItemStack>();
+		int inventorySize = 18;
+		if (menHeads.size() > 9) {
+			inventorySize = 27;
+		}
+		if (menHeads.size() > 18) {
+			inventorySize = 36;
+		}
+		if (menHeads.size() > 27) {
+			inventorySize = 45;
+		}
+		if (menHeads.size() > 36) {
+			inventorySize = 54;
+		}
+		for (int i = 0; i < allOfflineMen.size(); i++) {
+			ItemStack tempPlayerHead = new ItemStack(Material.PLAYER_HEAD);
+			SkullMeta tempPlayerHeadMeta = (SkullMeta)tempPlayerHead.getItemMeta();
+			List<String> tempPlayerHeadLore = Arrays.asList(ChatColor.YELLOW + "Appoint " + allOfflineMen.get(i).getName() + " as King.");
+			tempPlayerHeadMeta.setLore(tempPlayerHeadLore);
+			tempPlayerHeadMeta.setDisplayName(allOfflineMen.get(i).getName());
+			tempPlayerHeadMeta.setOwningPlayer(allOfflineMen.get(i));
+			tempPlayerHead.setItemMeta(tempPlayerHeadMeta);
+			if (!player.getUniqueId().equals(allOfflineMen.get(i).getUniqueId())) {
+				menHeads.add(tempPlayerHead);
+			}
+		}
+		
+		for (int i = 0; i < page * 45; i++) {
+			menHeads.remove(0);
+		}
+		
+		String inventoryName = ChatColor.DARK_AQUA + "Appoint King";
+		if (page != 0) {
+			inventoryName = inventoryName + " " + page;
+		}
+		Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
+		
+		
+		for (int i = 0; i < inventorySize; i++) {
+			inventory.setItem(i, new ItemStack(Material.AIR));
+		}
+		
+		
+		for (int i = 0; i < menHeads.size(); i++) {
+			inventory.setItem(i, menHeads.get(i));
+			if (i > 45) {
+				break;
+			}
+		}
+		
+		
+		
+		
+		if (page != 0) {
+			inventory.setItem(inventorySize - 2, plugin.itemManager.getPreviousPageItem());
+		}
+		
+		if (menHeads.size() > 45) {
+			inventory.setItem(46, backItem);
+			inventory.setItem(53, plugin.itemManager.getNextPageItem());
+			//add menu to go to the next page of elves, also, figure out how to get multiple pages of elves if for some reason theres a server with more than 45 fucking elves.
+		} else if (menHeads.size() > 36) {
+			inventory.setItem(46, backItem);
+		} else if (menHeads.size() > 27) {
+			inventory.setItem(37, backItem);
+		} else if (menHeads.size() > 18) {
+			inventory.setItem(28, backItem);
+		} else if (menHeads.size() > 9) {
+			inventory.setItem(19, backItem);
+		} else {
+			inventory.setItem(10, backItem);
+		}
+		
+		return inventory;
+	}
+	
+	
+	
+	public Inventory getGovernmentMenuInventory(Player player) {
+		PersistentDataContainer data = player.getPersistentDataContainer();
+		int race = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
+		
+		int inventorySize = 18;
+		String inventoryName = ChatColor.DARK_AQUA + "Kingdom Info";
+		switch (race) {
+			case 2:
+				inventoryName = ChatColor.DARK_GREEN + "Commune Info";
+				break;
+			case 3:
+				inventoryName = ChatColor.DARK_PURPLE + "Guild Info";
+				break;
+			case 4:
+				inventoryName = ChatColor.DARK_RED + "Horde Info";
+				break;
+		}
+
+		File leaderDataFile = new File(plugin.getDataFolder() + File.separator + "leaderData.yml");
+		FileConfiguration leaderConfig = YamlConfiguration.loadConfiguration(leaderDataFile);
+		Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
+		
+		
+		
+		inventory.setItem(9,  plugin.itemManager.getBackItem());
+		
+		
+		
+		boolean enableLeaders = false;
+		if (!leaderConfig.contains("elfLeaderUUID") || !leaderConfig.contains("menLeaderUUID")) {
+			if (leaderConfig.contains("elfElectionStartTime") && leaderConfig.contains("menElectionStartTime")) {
+				if (System.currentTimeMillis() - leaderConfig.getLong("elfElectionStartTime") > 129600000 && System.currentTimeMillis() - leaderConfig.getLong("menElectionStartTime") > 129600000) {
+					enableLeaders = true;
+					if (leaderConfig.contains("VotedPlayers")) {
+						leaderConfig.set("VotedPlayers", null);
+					}
+				}
+				if (System.currentTimeMillis() - leaderConfig.getLong("elfElectionStartTime") > 129600000) {
+					List<String> secretaryCandidates = leaderConfig.getStringList("elfCandidates");
+					UUID secretaryUUID = null;
+					for (String string : secretaryCandidates) {
+						UUID candidateUUID = UUID.fromString(string);
+						if (secretaryUUID == null || (leaderConfig.getInt(string + "Votes") > leaderConfig.getInt(secretaryUUID.toString() + "Votes"))) {
+							secretaryUUID = candidateUUID;
+						}
+						leaderConfig.set(string + "Votes", null);
+					}
+					leaderConfig.set("elfLeaderUUID", secretaryUUID.toString());
+					leaderConfig.set("elfCandidates", null);
+				}
+				if (System.currentTimeMillis() - leaderConfig.getLong("menElectionStartTime") > 129600000) {
+					List<String> kingCandidates = leaderConfig.getStringList("menCandidates");
+					UUID kingUUID = null;
+					for (String string : kingCandidates) {
+						UUID candidateUUID = UUID.fromString(string);
+						if (kingUUID == null || (leaderConfig.getInt(string + "Votes") > leaderConfig.getInt(kingUUID.toString() + "Votes"))) {
+							kingUUID = candidateUUID;
+						}
+						leaderConfig.set(string + "Votes", null);
+					}
+					leaderConfig.set("menLeaderUUID", kingUUID.toString());
+					leaderConfig.set("menCandidates", null);
+				}
+				try {
+					leaderConfig.save(leaderDataFile);
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}
+			}
+		} else {
+			enableLeaders = true;
+		}
+		
+		SkullMeta skullMeta = (SkullMeta)plugin.itemManager.getLeaderHeadItem(race).getItemMeta();
+		ItemStack tempItem = plugin.itemManager.getLeaderHeadItem(race);
+		if (!enableLeaders) {
+			String leaderTitle = "";
+			switch (race) {
+				case 1:
+					leaderTitle = "King";
+					break;
+				case 2:
+					leaderTitle = "Secretary";
+					break;
+				case 3:
+					leaderTitle = "Emperor";
+					break;
+				case 4:
+					leaderTitle = "Chief";
+					break;
+			}
+			tempItem = plugin.createItem(Material.PLAYER_HEAD, 1, getRaceColor(race) + "UNKNOWN", Arrays.asList("You currently have no " + leaderTitle));
+		}
+		
+		inventory.setItem(2, tempItem);
+		
+		if (skullMeta.getOwningPlayer() != null) {
+			if (skullMeta.getOwningPlayer().getUniqueId().equals(player.getUniqueId())) {
+				//Player is the leader
+				int currentIndex = 11;
+				if (race == 1) {
+					inventory.setItem(currentIndex, plugin.itemManager.getAppointKingItem());
+					currentIndex++;
+				} else if (race == 2) {
+					inventory.setItem(currentIndex, plugin.itemManager.getStepDownItem());
+					if (leaderConfig.contains("elfElectionActive") && leaderConfig.getBoolean("elfElectionActive")) {
+						tempItem = plugin.itemManager.getStepDownItem();
+						tempItem.setType(Material.BARRIER);
+						inventory.setItem(currentIndex, tempItem);
+					}
+					currentIndex++;
+				}
+				
+				inventory.setItem(currentIndex, plugin.itemManager.getDraftLawsItem(race));
+				currentIndex++;
+				
+				inventory.setItem(currentIndex, plugin.itemManager.getViewLawSuggestionsItem(race));
+				currentIndex++;
+				
+				inventory.setItem(currentIndex, plugin.itemManager.getViewLawsItem(race));
+				currentIndex++;
+				
+				inventory.setItem(currentIndex, plugin.itemManager.getLeaderViewCrimesItem(race));
+				currentIndex++;
+				
+				if (race == 3) {
+					inventory.setItem(currentIndex, plugin.itemManager.getTaxDwarvesItem());
+					currentIndex++;
+					inventory.setItem(currentIndex, plugin.itemManager.getTaxDwarvesWeeklyItem());
+					currentIndex++;
+				}
+				
+			} else {
+				//Player is not the leader
+				int currentIndex = 11;
+				if (race == 1) {
+					inventory.setItem(currentIndex, plugin.itemManager.getOverthrowKingItem());
+					if (leaderConfig.contains("menElectionActive") && leaderConfig.getBoolean("menElectionActive")) {
+						tempItem = plugin.itemManager.getOverthrowKingItem();
+						tempItem.setType(Material.BARRIER);
+						inventory.setItem(currentIndex, tempItem);
+					}
+					if (leaderConfig.getStringList("overthrowKingVotes").contains(player.getUniqueId().toString())) {
+						inventory.setItem(currentIndex, plugin.itemManager.getAlreadyVotedItem());
+					}
+					currentIndex++;
+				} else if (race == 2) {
+					inventory.setItem(currentIndex, plugin.itemManager.getImpeachSecretaryItem());
+					if (leaderConfig.contains("elfElectionActive") && leaderConfig.getBoolean("elfElectionActive")) {
+						tempItem = plugin.itemManager.getImpeachSecretaryItem();
+						tempItem.setType(Material.BARRIER);
+						inventory.setItem(currentIndex, tempItem);
+					}
+					if (leaderConfig.getStringList("impeachSecretaryVotes").contains(player.getUniqueId().toString())) {
+						inventory.setItem(currentIndex, plugin.itemManager.getAlreadyVotedItem());
+					}
+					
+					currentIndex++;
+				}
+				
+				inventory.setItem(currentIndex, plugin.itemManager.getSubmitLawSuggestionItem(race));
+				currentIndex++;
+				
+				if (race == 2) {
+					inventory.setItem(currentIndex, plugin.itemManager.getVoteOnLawsItem());
+					currentIndex++;
+				}
+				
+				inventory.setItem(currentIndex, plugin.itemManager.getViewLawsItem(race));
+				currentIndex++;
+				
+				if (race == 1 || race == 2) {
+					inventory.setItem(currentIndex, plugin.itemManager.getViewReportedCrimesItem(race));
+					currentIndex++;
+				}
+				
+				inventory.setItem(currentIndex, plugin.itemManager.getReportCrimeItem(race));
+				currentIndex++;
+				
+			}
+		} else {
+			//There is no leader
+			if (leaderConfig.getStringList("VotedPlayers").contains(player.getUniqueId().toString())) {
+				inventory.setItem(11, plugin.itemManager.getAlreadyVotedItem());
+			} else {
+				inventory.setItem(11, plugin.itemManager.getVoteOnLeaderItem(race));
+			}
+			inventory.setItem(12, plugin.itemManager.getNominateSelfItem(race));
+		}
+		
+		if (race == 2 && leaderConfig.contains("elfElectionActive") && leaderConfig.getBoolean("elfElectionActive")) {
+			if (leaderConfig.getStringList("elfVotedPlayers").contains(player.getUniqueId().toString())) {
+				inventory.setItem(4, plugin.itemManager.getAlreadyVotedItem());
+			} else {
+				inventory.setItem(4, plugin.itemManager.getVoteOnLeaderItem(race));
+			}
+			inventory.setItem(5, plugin.itemManager.getNominateSelfItem(race));
+			
+			
+			
+			if (System.currentTimeMillis() - leaderConfig.getLong("elfElectionStartTime") > 129600000) {
+				List<String> secretaryCandidates = leaderConfig.getStringList("elfCandidates");
+				UUID secretaryUUID = null;
+				for (String string : secretaryCandidates) {
+					UUID candidateUUID = UUID.fromString(string);
+					if (secretaryUUID == null || (leaderConfig.getInt(string + "Votes") > leaderConfig.getInt(secretaryUUID.toString() + "Votes"))) {
+						secretaryUUID = candidateUUID;
+					}
+					leaderConfig.set(string + "Votes", null);
+				}
+				leaderConfig.set("elfLeaderUUID", secretaryUUID.toString());
+				leaderConfig.set("elfCandidates", null);
+				leaderConfig.set("elfVotedPlayers", null);
+				leaderConfig.set("elfElectionActive", false);
+			}
+			try {
+				leaderConfig.save(leaderDataFile);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			
+		}
+		
+		if (race == 1 && leaderConfig.contains("menElectionActive") && leaderConfig.getBoolean("menElectionActive")) {
+			if (leaderConfig.getStringList("menVotedPlayers").contains(player.getUniqueId().toString())) {
+				inventory.setItem(4, plugin.itemManager.getAlreadyVotedItem());
+			} else {
+				inventory.setItem(4, plugin.itemManager.getVoteOnLeaderItem(race));
+			}
+			inventory.setItem(5, plugin.itemManager.getNominateSelfItem(race));
+			
+			
+			
+			if (System.currentTimeMillis() - leaderConfig.getLong("menElectionStartTime") > 129600000) {
+				List<String> kingCandidates = leaderConfig.getStringList("menCandidates");
+				UUID kingUUID = null;
+				for (String string : kingCandidates) {
+					UUID candidateUUID = UUID.fromString(string);
+					if (kingUUID == null || (leaderConfig.getInt(string + "Votes") > leaderConfig.getInt(kingUUID.toString() + "Votes"))) {
+						kingUUID = candidateUUID;
+					}
+					leaderConfig.set(string + "Votes", null);
+				}
+				leaderConfig.set("menLeaderUUID", kingUUID.toString());
+				leaderConfig.set("menCandidates", null);
+				leaderConfig.set("menVotedPlayers", null);
+				leaderConfig.set("menElectionActive", false);
+			}
+			try {
+				leaderConfig.save(leaderDataFile);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			
+			
+			
+		}
+		
+		return inventory;
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	public Inventory getRaceSkillTreeMenuInventory(Player player) {
 
@@ -372,21 +796,27 @@ public class CustomInventories {
 	public Inventory getBaugScrollMenuInventory(Player player) {
 
 		int inventorySize = 54;
-		String inventoryName = "Scrolls of Baug";
-		Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
-		
 		PersistentDataContainer data = player.getPersistentDataContainer();
 		int race = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
+		String inventoryName = getRaceColor(race) + "Scrolls of Baug";
+		
+		Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
+		
 		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
 	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
 		int level = skillsconfig.getInt("totalSkillPoints");
 		
+		int currentSlot = 11;
 		if (race == 1) {//Men
 			inventory.setItem(0, plugin.itemManager.getScrollsOfBaugInfoItem());
 			
+			inventory.setItem(currentSlot, plugin.itemManager.getGovernmentMenuItem(race));
+			currentSlot++;
+			
 			if (level > 5) {
-				inventory.setItem(11, plugin.itemManager.getSkillTreeMenuItem());
+				inventory.setItem(currentSlot, plugin.itemManager.getSkillTreeMenuItem());
 			}
+			currentSlot++;
 			
 			
 			
@@ -394,12 +824,16 @@ public class CustomInventories {
 			
 			inventory.setItem(0, plugin.itemManager.getScrollsOfBaugInfoItem());
 			
+			inventory.setItem(currentSlot, plugin.itemManager.getGovernmentMenuItem(race));
+			currentSlot++;
+			
 			if (level > 5) {
-				inventory.setItem(11, plugin.itemManager.getSkillTreeMenuItem());
+				inventory.setItem(currentSlot, plugin.itemManager.getSkillTreeMenuItem());
 			}
+			currentSlot++;
 			
-			inventory.setItem(12, plugin.itemManager.getCommunistHubItem());
-			
+			inventory.setItem(currentSlot, plugin.itemManager.getCommunistHubItem());
+			currentSlot++;
 			
 			
 			
@@ -407,21 +841,29 @@ public class CustomInventories {
 			
 			inventory.setItem(0, plugin.itemManager.getScrollsOfBaugInfoItem());
 			
+			inventory.setItem(currentSlot, plugin.itemManager.getGovernmentMenuItem(race));
+			currentSlot++;
+			
 			if (level > 5) {
-				inventory.setItem(11, plugin.itemManager.getSkillTreeMenuItem());
+				inventory.setItem(currentSlot, plugin.itemManager.getSkillTreeMenuItem());
 			}
+			currentSlot++;
 			
-			inventory.setItem(12, plugin.itemManager.getDwarvenBankConversionItem());
-			
+			inventory.setItem(currentSlot, plugin.itemManager.getDwarvenBankConversionItem());
+			currentSlot++;
 			
 			
 		} else if (race == 4) {//Orcs
 			
 			inventory.setItem(0, plugin.itemManager.getScrollsOfBaugInfoItem());
 			
+			inventory.setItem(currentSlot, plugin.itemManager.getGovernmentMenuItem(race));
+			currentSlot++;
+			
 			if (level > 5) {
-				inventory.setItem(11, plugin.itemManager.getSkillTreeMenuItem());
+				inventory.setItem(currentSlot, plugin.itemManager.getSkillTreeMenuItem());
 			}
+			currentSlot++;
 
 			
 			
@@ -431,11 +873,11 @@ public class CustomInventories {
 			inventory.setItem(0, plugin.itemManager.getWizardScrollsOfBaugInfoItem());
 			
 			
-			inventory.setItem(11, plugin.itemManager.getFeatureManagementItem());
+			inventory.setItem(currentSlot, plugin.itemManager.getFeatureManagementItem());
+			currentSlot++;
 			
-			
-			inventory.setItem(12, plugin.itemManager.getInventorySnoopingItem());
-			
+			inventory.setItem(currentSlot, plugin.itemManager.getInventorySnoopingItem());
+			currentSlot++;
 			
 			
 		}
@@ -454,7 +896,7 @@ public class CustomInventories {
 	
 	public Inventory getSetRaceMenuInventory() {
 		int inventorySize = 54;
-		String inventoryName = "Choose Your Race";
+		String inventoryName = ChatColor.DARK_GRAY + "Choose Your Race";
 		Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
 		
 		for (int i = 0; i < inventorySize; i++) {
@@ -522,7 +964,7 @@ public class CustomInventories {
 	
 	public Inventory getConfirmRaceMenuInventory(String chosenRace) {
 		int inventorySize = 27;
-		String inventoryName = "Confirm Selection";
+		String inventoryName = ChatColor.DARK_GRAY + "Confirm Selection";
 		Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
 		for (int i = 0; i < inventorySize; i++) {
 			inventory.setItem(i, plugin.itemManager.getBlankItem());
@@ -604,7 +1046,7 @@ public class CustomInventories {
 	
 	
 	
-	public Inventory getElvesCommunistInventoryMenuInventory(Player player) {
+	public Inventory getElvesCommunistInventoryMenuInventory(Player player, int page) {
 		List<OfflinePlayer> allOfflineElves = plugin.getAllOfflineElves();
 		ItemStack backItem = plugin.itemManager.getBackItem();
 		List<ItemStack> elfHeads = new ArrayList<ItemStack>();
@@ -634,7 +1076,14 @@ public class CustomInventories {
 			}
 		}
 		
+		for (int i = 0; i < page * 45; i++) {
+			elfHeads.remove(0);
+		}
+		
 		String inventoryName = "Elves Inventories";
+		if (page != 0) {
+			inventoryName = inventoryName + " " + page;
+		}
 		Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
 		
 		
@@ -653,8 +1102,13 @@ public class CustomInventories {
 		
 		
 		
+		if (page != 0) {
+			inventory.setItem(inventorySize - 2, plugin.itemManager.getPreviousPageItem());
+		}
+		
 		if (elfHeads.size() > 45) {
 			inventory.setItem(46, backItem);
+			inventory.setItem(53, plugin.itemManager.getNextPageItem());
 			//add menu to go to the next page of elves, also, figure out how to get multiple pages of elves if for some reason theres a server with more than 45 fucking elves.
 		} else if (elfHeads.size() > 36) {
 			inventory.setItem(46, backItem);
@@ -678,7 +1132,7 @@ public class CustomInventories {
 	
 	
 	
-	public Inventory getElvesCommunistEnderChestMenuInventory(Player player) {
+	public Inventory getElvesCommunistEnderChestMenuInventory(Player player, int page) {
 		List<OfflinePlayer> allOfflineElves = plugin.getAllOfflineElves();
 		ItemStack backItem = plugin.itemManager.getBackItem();
 		List<ItemStack> elfHeads = new ArrayList<ItemStack>();
@@ -708,7 +1162,14 @@ public class CustomInventories {
 			}
 		}
 		
+		for (int i = 0; i < page * 45; i++) {
+			elfHeads.remove(0);
+		}
+		
 		String inventoryName = "Elves Ender Chests";
+		if (page != 0) {
+			inventoryName = inventoryName + " " + page;
+		}
 		Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
 		
 		
@@ -727,8 +1188,13 @@ public class CustomInventories {
 		
 		
 		
+		if (page != 0) {
+			inventory.setItem(inventorySize - 2, plugin.itemManager.getPreviousPageItem());
+		}
+		
 		if (elfHeads.size() > 45) {
 			inventory.setItem(46, backItem);
+			inventory.setItem(53, plugin.itemManager.getNextPageItem());
 			//add menu to go to the next page of elves, also, figure out how to get multiple pages of elves if for some reason theres a server with more than 45 fucking elves.
 		} else if (elfHeads.size() > 36) {
 			inventory.setItem(46, backItem);
@@ -741,6 +1207,7 @@ public class CustomInventories {
 		} else {
 			inventory.setItem(10, backItem);
 		}
+		
 		return inventory;
 	}
 	
@@ -781,7 +1248,7 @@ public class CustomInventories {
 	
 	
 	
-	public Inventory getInventorySnoopingInventoryMenuInventory(Player player) {
+	public Inventory getInventorySnoopingInventoryMenuInventory(Player player, int page) {
 		OfflinePlayer[] allOfflinePlayers = plugin.getServer().getOfflinePlayers();
 		
 		
@@ -801,6 +1268,9 @@ public class CustomInventories {
 			}
 		}
 		
+		for (int i = 0; i < page * 45; i++) {
+			playerHeads.remove(0);
+		}
 		
 		ItemStack backItem = plugin.itemManager.getBackItem();
 		
@@ -820,6 +1290,9 @@ public class CustomInventories {
 		}
 		
 		String inventoryName = "Players Inventories";
+		if (page != 0) {
+			inventoryName = inventoryName + " " + page;
+		}
 		Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
 		
 		
@@ -830,7 +1303,7 @@ public class CustomInventories {
 		
 		for (int i = 0; i < playerHeads.size(); i++) {
 			inventory.setItem(i, playerHeads.get(i));
-			if (i > 45) {
+			if (i > 44) {
 				break;
 			}
 		}
@@ -838,21 +1311,25 @@ public class CustomInventories {
 		
 		
 		
-		if (playerHeads.size() > 45) {
-			inventory.setItem(46, backItem);
-			//add menu to go to the next page of players, also, figure out how to get multiple pages of elves if for some reason theres a server with more than 45 players.
-		} else if (playerHeads.size() > 36) {
-			inventory.setItem(46, backItem);
-		} else if (playerHeads.size() > 27) {
-			inventory.setItem(37, backItem);
-		} else if (playerHeads.size() > 18) {
-			inventory.setItem(28, backItem);
-		} else if (playerHeads.size() > 9) {
-			inventory.setItem(19, backItem);
-		} else {
-			inventory.setItem(10, backItem);
+		if (page != 0) {
+			inventory.setItem(inventorySize - 2, plugin.itemManager.getPreviousPageItem());
 		}
 		
+		if (playerHeads.size() > 45) {
+			inventory.setItem(45, backItem);
+			inventory.setItem(53, plugin.itemManager.getNextPageItem());
+			//add menu to go to the next page of players, also, figure out how to get multiple pages of elves if for some reason theres a server with more than 45 players.
+		} else if (playerHeads.size() > 36) {
+			inventory.setItem(45, backItem);
+		} else if (playerHeads.size() > 27) {
+			inventory.setItem(36, backItem);
+		} else if (playerHeads.size() > 18) {
+			inventory.setItem(27, backItem);
+		} else if (playerHeads.size() > 9) {
+			inventory.setItem(18, backItem);
+		} else {
+			inventory.setItem(9, backItem);
+		}
 		return inventory;
 	}
 	
@@ -864,7 +1341,7 @@ public class CustomInventories {
 	
 	
 	
-	public Inventory getInventorySnoopingEnderChestMenuInventory(Player player) {
+	public Inventory getInventorySnoopingEnderChestMenuInventory(Player player, int page) {
 		OfflinePlayer[] allOfflinePlayers = plugin.getServer().getOfflinePlayers();
 		
 		
@@ -882,6 +1359,100 @@ public class CustomInventories {
 			if (!player.getUniqueId().equals(allOfflinePlayers[i].getUniqueId())) {
 				playerHeads.add(tempPlayerHead);
 			}
+		}
+		
+		for (int i = 0; i < page * 45; i++) {
+			playerHeads.remove(0);
+		}
+		
+		ItemStack backItem = plugin.itemManager.getBackItem();
+		
+		
+		int inventorySize = 18;
+		if (playerHeads.size() > 9) {
+			inventorySize = 27;
+		}
+		if (playerHeads.size() > 18) {
+			inventorySize = 36;
+		}
+		if (playerHeads.size() > 27) {
+			inventorySize = 45;
+		}
+		if (playerHeads.size() > 36) {
+			inventorySize = 54;
+		}
+		
+
+		String inventoryName = "Players Ender Chests";
+		if (page != 0) {
+			inventoryName = inventoryName + " " + page;
+		}
+		Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
+		
+		
+		for (int i = 0; i < inventorySize; i++) {
+			inventory.setItem(i, new ItemStack(Material.AIR));
+		}
+		
+		
+		for (int i = 0; i < playerHeads.size(); i++) {
+			inventory.setItem(i, playerHeads.get(i));
+			if (i > 44) {
+				break;
+			}
+		}
+		
+		
+		
+		
+		if (page != 0) {
+			inventory.setItem(inventorySize - 2, plugin.itemManager.getPreviousPageItem());
+		}
+		
+		if (playerHeads.size() > 45) {
+			inventory.setItem(45, backItem);
+			inventory.setItem(53, plugin.itemManager.getNextPageItem());
+			//add menu to go to the next page of players, also, figure out how to get multiple pages of elves if for some reason theres a server with more than 45 players.
+		} else if (playerHeads.size() > 36) {
+			inventory.setItem(45, backItem);
+		} else if (playerHeads.size() > 27) {
+			inventory.setItem(36, backItem);
+		} else if (playerHeads.size() > 18) {
+			inventory.setItem(27, backItem);
+		} else if (playerHeads.size() > 9) {
+			inventory.setItem(18, backItem);
+		} else {
+			inventory.setItem(9, backItem);
+		}
+		return inventory;
+	}
+	
+	public Inventory getVotingMenu(int race) {
+		return getVotingMenu(race, 0);
+	}
+	
+	public Inventory getVotingMenu(int race, int page) {
+		File leaderDataFile = new File(plugin.getDataFolder() + File.separator + "leaderData.yml");
+		FileConfiguration leaderConfig = YamlConfiguration.loadConfiguration(leaderDataFile);
+		String raceString = "men";
+		if (race == 2) {
+			raceString = "elf";
+		}
+		List<ItemStack> playerHeads = new ArrayList<ItemStack>();
+		leaderConfig.getStringList(raceString + "Candidates").forEach(string -> {
+			OfflinePlayer candidate = Bukkit.getOfflinePlayer(UUID.fromString(string));
+			ItemStack tempPlayerHead = new ItemStack(Material.PLAYER_HEAD);
+			SkullMeta tempPlayerHeadMeta = (SkullMeta)tempPlayerHead.getItemMeta();
+			tempPlayerHeadMeta.setDisplayName(ChatColor.YELLOW + "Vote for " + candidate.getName());
+			tempPlayerHeadMeta.setOwningPlayer(candidate);
+			tempPlayerHead.setItemMeta(tempPlayerHeadMeta);
+			
+			playerHeads.add(tempPlayerHead);
+		});
+		
+		
+		for (int i = 0; i < page * 45; i++) {
+			playerHeads.remove(0);
 		}
 		
 		
@@ -903,7 +1474,10 @@ public class CustomInventories {
 		}
 		
 
-		String inventoryName = "Players Ender Chests";
+		String inventoryName = getRaceColor(race) + "Voting";
+		if (page != 0) {
+			inventoryName = inventoryName + " " + page;
+		}
 		Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
 		
 		
@@ -914,28 +1488,45 @@ public class CustomInventories {
 		
 		for (int i = 0; i < playerHeads.size(); i++) {
 			inventory.setItem(i, playerHeads.get(i));
-			if (i > 45) {
+			if (i > 44) {
 				break;
 			}
 		}
 		
 		
-		
+		if (page != 0) {
+			inventory.setItem(inventorySize - 2, plugin.itemManager.getPreviousPageItem());
+		}
 		
 		if (playerHeads.size() > 45) {
-			inventory.setItem(46, backItem);
+			inventory.setItem(45, backItem);
+			inventory.setItem(53, plugin.itemManager.getNextPageItem());
 			//add menu to go to the next page of players, also, figure out how to get multiple pages of elves if for some reason theres a server with more than 45 players.
 		} else if (playerHeads.size() > 36) {
-			inventory.setItem(46, backItem);
+			inventory.setItem(45, backItem);
 		} else if (playerHeads.size() > 27) {
-			inventory.setItem(37, backItem);
+			inventory.setItem(36, backItem);
 		} else if (playerHeads.size() > 18) {
-			inventory.setItem(28, backItem);
+			inventory.setItem(27, backItem);
 		} else if (playerHeads.size() > 9) {
-			inventory.setItem(19, backItem);
+			inventory.setItem(18, backItem);
 		} else {
-			inventory.setItem(10, backItem);
+			inventory.setItem(9, backItem);
 		}
 		return inventory;
+	}
+	
+	public ChatColor getRaceColor(int race) {//I PROMISE this method isn't racist. PLEASE BELIEVE ME.
+		switch (race) {
+			case 1:
+				return ChatColor.DARK_AQUA;
+			case 2:
+				return ChatColor.DARK_GREEN;
+			case 3:
+				return ChatColor.DARK_PURPLE;
+			case 4:
+				return ChatColor.DARK_RED;
+		}
+		return ChatColor.AQUA;
 	}
 }

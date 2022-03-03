@@ -29,7 +29,7 @@ public class ScrollsOfBaugElvesInventoryListener implements Listener{
 	public void onInventoryClick(InventoryClickEvent event) {
 		if (!(event.getWhoClicked() instanceof Player)) return;
 		if (!(event.getClickedInventory() != null && event.getCurrentItem() != null)) return;
-		if (!event.getView().getTitle().equals("Scrolls of Baug")) return;
+		if (!event.getView().getTitle().equals(plugin.inventoryManager.getRaceColor(2) + "Scrolls of Baug")) return;
 		Player player = (Player)event.getWhoClicked();
 		PersistentDataContainer data = event.getWhoClicked().getPersistentDataContainer();
 		int race = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
@@ -39,7 +39,7 @@ public class ScrollsOfBaugElvesInventoryListener implements Listener{
 			
 			if (plugin.getServer().getPluginManager().isPluginEnabled("OpenInv")) {
 			
-				if (event.getSlot() == 12 && event.getCurrentItem().equals(sharedInventoriesItem)) {//Player clicked on the Shared Inventory Chest
+				if (event.getCurrentItem().equals(sharedInventoriesItem)) {//Player clicked on the Shared Inventory Chest
 					player.openInventory(plugin.inventoryManager.getElvesCommunistHubMenuInventory());
 				}
 				
@@ -51,7 +51,7 @@ public class ScrollsOfBaugElvesInventoryListener implements Listener{
 			
 			ItemStack skillTreeItem = plugin.itemManager.getSkillTreeMenuItem();
 			
-			if (event.getSlot() == 11 && event.getCurrentItem().equals(skillTreeItem)) {
+			if (event.getCurrentItem().equals(skillTreeItem)) {
 				
 				File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
 			 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
@@ -63,6 +63,8 @@ public class ScrollsOfBaugElvesInventoryListener implements Listener{
 				}
 				
 				
+			} else if (event.getCurrentItem().equals(plugin.itemManager.getGovernmentMenuItem(2))) {
+				player.openInventory(plugin.inventoryManager.getGovernmentMenuInventory(player));
 			}
 			
 			

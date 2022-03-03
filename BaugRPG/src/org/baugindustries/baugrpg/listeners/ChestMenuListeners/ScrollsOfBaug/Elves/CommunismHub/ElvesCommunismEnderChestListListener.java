@@ -25,6 +25,12 @@ public class ElvesCommunismEnderChestListListener implements Listener{
 			if (event.getClickedInventory() != null) {
 				if (event.getView().getTitle().equals("Elves Ender Chests")) {
 						
+					int page = 0;
+					String lastChar = event.getView().getTitle().charAt(event.getView().getTitle().length() - 1) + "";
+					if (plugin.isInteger(lastChar)) {
+						page = Integer.parseInt(lastChar);
+					}
+					
 						if (event.getCurrentItem().equals(plugin.itemManager.getBackItem())) {//Open the previous menu
 							player.openInventory(plugin.inventoryManager.getElvesCommunistHubMenuInventory());
 						} else if (event.getCurrentItem().getType().equals(Material.PLAYER_HEAD)) {
@@ -33,6 +39,13 @@ public class ElvesCommunismEnderChestListListener implements Listener{
 							OfflinePlayer selectedOfflinePlayer = plugin.getServer().getOfflinePlayer(selectedPlayerHeadMeta.getOwningPlayer().getUniqueId());//theres a possibility this does not work.
 							
 							player.performCommand("oe " + selectedOfflinePlayer.getName());
+						}
+						if (event.getCurrentItem().equals(plugin.itemManager.getNextPageItem()) ) {
+							player.openInventory(plugin.inventoryManager.getElvesCommunistEnderChestMenuInventory(player, page + 1));
+						}
+						
+						if (event.getCurrentItem().equals(plugin.itemManager.getPreviousPageItem()) ) {
+							player.openInventory(plugin.inventoryManager.getElvesCommunistEnderChestMenuInventory(player, page - 1));
 						}
 						event.setCancelled(true);
 					}

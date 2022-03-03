@@ -2,6 +2,7 @@ package org.baugindustries.baugrpg.listeners.ChestMenuListeners;
 
 
 import org.baugindustries.baugrpg.Main;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,7 +21,7 @@ public class ChooseRaceInventoryListener implements Listener{
 		if (event.getWhoClicked() instanceof Player) {
 			Player player = (Player)event.getWhoClicked();
 			if (event.getClickedInventory() != null) {
-				if (event.getView().getTitle().equals("Choose Your Race")) {
+				if (event.getView().getTitle().equals(ChatColor.DARK_GRAY + "Choose Your Race")) {
 					
 						
 						String chosenRace = "";

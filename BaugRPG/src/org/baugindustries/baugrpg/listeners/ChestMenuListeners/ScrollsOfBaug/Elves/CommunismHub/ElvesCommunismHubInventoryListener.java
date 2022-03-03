@@ -22,9 +22,9 @@ public class ElvesCommunismHubInventoryListener implements Listener {
 					
 						
 						if (event.getCurrentItem().equals(plugin.itemManager.getCommunistInventoryItem())) {//Player wants to access other elves' inventories.
-							player.openInventory(plugin.inventoryManager.getElvesCommunistInventoryMenuInventory(player));
+							player.openInventory(plugin.inventoryManager.getElvesCommunistInventoryMenuInventory(player, 0));
 						} else if (event.getCurrentItem().equals(plugin.itemManager.getCommunistEnderChestItem())) {//Player wants to access other elves' ender chests.
-							player.openInventory(plugin.inventoryManager.getElvesCommunistEnderChestMenuInventory(player));
+							player.openInventory(plugin.inventoryManager.getElvesCommunistEnderChestMenuInventory(player, 0));
 						} else if (event.getCurrentItem().equals(plugin.itemManager.getBackItem())) {
 							player.performCommand("baugscroll");
 						}

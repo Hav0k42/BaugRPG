@@ -27,7 +27,7 @@ public class ScrollsOfBaugOrcsInventoryListener implements Listener{
 	public void onInventoryClick(InventoryClickEvent event) {
 		if (!(event.getWhoClicked() instanceof Player)) return;
 		if (!(event.getClickedInventory() != null && event.getCurrentItem() != null)) return;
-		if (!event.getView().getTitle().equals("Scrolls of Baug")) return;
+		if (!event.getView().getTitle().equals(plugin.inventoryManager.getRaceColor(4) + "Scrolls of Baug")) return;
 		Player player = (Player)event.getWhoClicked();
 		PersistentDataContainer data = event.getWhoClicked().getPersistentDataContainer();
 		int race = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
@@ -36,7 +36,7 @@ public class ScrollsOfBaugOrcsInventoryListener implements Listener{
 		
 		ItemStack skillTreeItem = plugin.itemManager.getSkillTreeMenuItem();
 		
-		if (event.getSlot() == 11 && event.getCurrentItem().equals(skillTreeItem)) {
+		if (event.getCurrentItem().equals(skillTreeItem)) {
 			
 			File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
 		 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
@@ -47,6 +47,8 @@ public class ScrollsOfBaugOrcsInventoryListener implements Listener{
 				player.openInventory(plugin.inventoryManager.getGeneralSkillTreeMenuInventory(player));
 			}
 			
+		} else if (event.getCurrentItem().equals(plugin.itemManager.getGovernmentMenuItem(4))) {
+			player.openInventory(plugin.inventoryManager.getGovernmentMenuInventory(player));
 		}
 		event.setCancelled(true);
 	}

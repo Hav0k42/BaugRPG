@@ -22,9 +22,9 @@ public class PlayerSnoopingHubInventoryListener implements Listener {
 					
 						
 						if (event.getCurrentItem().equals(plugin.itemManager.getInventorySnoopingInventoryItem())) {//Player wants to access other players' inventories.
-							player.openInventory(plugin.inventoryManager.getInventorySnoopingInventoryMenuInventory(player));
+							player.openInventory(plugin.inventoryManager.getInventorySnoopingInventoryMenuInventory(player, 0));
 						} else if (event.getCurrentItem().equals(plugin.itemManager.getInventorySnoopingEnderChestItem())) {//Player wants to access other players' ender chests.
-							player.openInventory(plugin.inventoryManager.getInventorySnoopingEnderChestMenuInventory(player));
+							player.openInventory(plugin.inventoryManager.getInventorySnoopingEnderChestMenuInventory(player, 0));
 						} else if (event.getCurrentItem().equals(plugin.itemManager.getBackItem())) {
 							player.performCommand("baugscroll");
 						}

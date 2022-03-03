@@ -3,7 +3,6 @@ package org.baugindustries.baugrpg.listeners;
 import java.io.File;
 
 import org.baugindustries.baugrpg.Main;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;

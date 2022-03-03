@@ -34,6 +34,7 @@ import org.baugindustries.baugrpg.listeners.DisableRecipeListener;
 import org.baugindustries.baugrpg.listeners.EfficientBotanyListener;
 import org.baugindustries.baugrpg.listeners.ElfEatMeat;
 import org.baugindustries.baugrpg.listeners.EnchantedPetalsListener;
+import org.baugindustries.baugrpg.listeners.EndermanGriefingListener;
 import org.baugindustries.baugrpg.listeners.EntityExplodeListener;
 import org.baugindustries.baugrpg.listeners.GildedFortuneListener;
 import org.baugindustries.baugrpg.listeners.HorseListener;
@@ -63,14 +64,19 @@ import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ChooseRaceInvento
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ConfirmClassListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ConfirmRaceInventoryListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.GeneralSkillTreeMenu;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.GovernmentMenu;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.RaceSkillTreeMenu;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.SkillTreeMenu;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.VotingMenu;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Dwarves.GoldConversionMenu;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Dwarves.ScrollsOfBaugDwarvesInventoryListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Elves.ConfirmStepDownMenu;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Elves.ScrollsOfBaugElvesInventoryListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Elves.CommunismHub.ElvesCommunismEnderChestListListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Elves.CommunismHub.ElvesCommunismHubInventoryListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Elves.CommunismHub.ElvesCommunismInventoryListListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Men.AppointKingMenu;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Men.ConfirmAppointKingMenu;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Men.ScrollsOfBaugMenInventoryListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Orcs.ScrollsOfBaugOrcsInventoryListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.FeatureManagement;
@@ -96,6 +102,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -152,6 +159,12 @@ public class Main extends JavaPlugin {
 	public HashMap<UUID, Long> starlightHealingCooldown = new HashMap<UUID, Long>();
 	public HashMap<UUID, Long> berserkerKillstreaks = new HashMap<UUID, Long>();
 	public HashMap<UUID, Long> rageCooldown = new HashMap<UUID, Long>();
+	
+	public List<UUID> lawSuggestionEscape = new ArrayList<UUID>();
+	public List<UUID> reportCrimeEscape = new ArrayList<UUID>();
+	
+	public UUID taxDwarvesEscape = null;
+	
 	public List<UUID> anvilUUIDs = new ArrayList<UUID>();
 	public List<Location> anvilSpawnLocs = new ArrayList<Location>();
 	public List<ArmorStandEntity> activeTrees = new ArrayList<ArmorStandEntity>();
@@ -198,6 +211,7 @@ public class Main extends JavaPlugin {
 	public DisableRecipeListener disableRecipeListener = new DisableRecipeListener(this);
 	public LavaFishingListener lavaFishingListener = new LavaFishingListener(this);
 	
+	public EndermanGriefingListener endermanGriefingListener = new EndermanGriefingListener(this);
 	public ChooseRaceInventoryListener chooseRaceInventoryListener = new ChooseRaceInventoryListener(this);
 	public ConfirmRaceInventoryListener confirmRaceInventoryListener = new ConfirmRaceInventoryListener(this);
 	public GoldConversionMenu goldConversionMenu = new GoldConversionMenu(this);
@@ -219,7 +233,11 @@ public class Main extends JavaPlugin {
 	public ChooseClassListener chooseClassListener = new ChooseClassListener(this);
 	public ConfirmClassListener confirmClassListener = new ConfirmClassListener(this);
 	public RaceSkillTreeMenu raceSkillTreeMenu = new RaceSkillTreeMenu(this);
-	
+	public GovernmentMenu governmentMenu = new GovernmentMenu(this);
+	public VotingMenu votingMenu = new VotingMenu(this);
+	public AppointKingMenu appointKingMenu = new AppointKingMenu(this);
+	public ConfirmAppointKingMenu confirmAppointKingMenu = new ConfirmAppointKingMenu(this);
+	public ConfirmStepDownMenu confirmStepDownMenu = new ConfirmStepDownMenu(this);
 	
 	
 	
@@ -234,61 +252,68 @@ public class Main extends JavaPlugin {
 		
 		 manager = Bukkit.getScoreboardManager();
 		 board = manager.getMainScoreboard();
-		 this.getServer().getPluginManager().registerEvents(onJoinListener, this);
-		 this.getServer().getPluginManager().registerEvents(onQuitListener, this);
-		 this.getServer().getPluginManager().registerEvents(playerCloseInventoryListener, this);
-		 this.getServer().getPluginManager().registerEvents(horseListener, this);
-		 this.getServer().getPluginManager().registerEvents(playerDeathListener, this);
-		 this.getServer().getPluginManager().registerEvents(playerRespawnListener, this);
-		 this.getServer().getPluginManager().registerEvents(minecartMoveListener, this);
-		 this.getServer().getPluginManager().registerEvents(elfEatMeat, this);
-		 this.getServer().getPluginManager().registerEvents(orcEatMeat, this);
-		 this.getServer().getPluginManager().registerEvents(signShopListener, this);
-		 this.getServer().getPluginManager().registerEvents(signBreakListener, this);
-		 this.getServer().getPluginManager().registerEvents(chestBreakListener, this);
-		 this.getServer().getPluginManager().registerEvents(chestOpenListener, this);
-		 this.getServer().getPluginManager().registerEvents(blockExplodeListener, this);
-		 this.getServer().getPluginManager().registerEvents(entityExplodeListener, this);
-		 this.getServer().getPluginManager().registerEvents(playerJumpListener, this);
-		 this.getServer().getPluginManager().registerEvents(playerAttackListener, this);
-		 this.getServer().getPluginManager().registerEvents(playerDamageListener, this);
-		 this.getServer().getPluginManager().registerEvents(playerMineListener, this);
-		 this.getServer().getPluginManager().registerEvents(playerAdvancementDoneListener, this);
-		 this.getServer().getPluginManager().registerEvents(arcaneJewelsListener, this);
-		 this.getServer().getPluginManager().registerEvents(alchemistThrowPotionListener, this);
-		 this.getServer().getPluginManager().registerEvents(magmaTransmutationListener, this);
-		 this.getServer().getPluginManager().registerEvents(orcRageListener, this);
-		 this.getServer().getPluginManager().registerEvents(witheredBeheadingListener, this);
-		 this.getServer().getPluginManager().registerEvents(disableRecipeListener, this);
-		 this.getServer().getPluginManager().registerEvents(lavaFishingListener, this);
+		 PluginManager pluginManager = getServer().getPluginManager();
+		 pluginManager.registerEvents(onJoinListener, this);
+		 pluginManager.registerEvents(onQuitListener, this);
+		 pluginManager.registerEvents(playerCloseInventoryListener, this);
+		 pluginManager.registerEvents(horseListener, this);
+		 pluginManager.registerEvents(playerDeathListener, this);
+		 pluginManager.registerEvents(playerRespawnListener, this);
+		 pluginManager.registerEvents(minecartMoveListener, this);
+		 pluginManager.registerEvents(elfEatMeat, this);
+		 pluginManager.registerEvents(orcEatMeat, this);
+		 pluginManager.registerEvents(signShopListener, this);
+		 pluginManager.registerEvents(signBreakListener, this);
+		 pluginManager.registerEvents(chestBreakListener, this);
+		 pluginManager.registerEvents(chestOpenListener, this);
+		 pluginManager.registerEvents(blockExplodeListener, this);
+		 pluginManager.registerEvents(entityExplodeListener, this);
+		 pluginManager.registerEvents(playerJumpListener, this);
+		 pluginManager.registerEvents(playerAttackListener, this);
+		 pluginManager.registerEvents(playerDamageListener, this);
+		 pluginManager.registerEvents(playerMineListener, this);
+		 pluginManager.registerEvents(playerAdvancementDoneListener, this);
+		 pluginManager.registerEvents(arcaneJewelsListener, this);
+		 pluginManager.registerEvents(alchemistThrowPotionListener, this);
+		 pluginManager.registerEvents(magmaTransmutationListener, this);
+		 pluginManager.registerEvents(orcRageListener, this);
+		 pluginManager.registerEvents(witheredBeheadingListener, this);
+		 pluginManager.registerEvents(disableRecipeListener, this);
+		 pluginManager.registerEvents(lavaFishingListener, this);
+		 pluginManager.registerEvents(endermanGriefingListener, this);
 		 
-		 this.getServer().getPluginManager().registerEvents(chooseRaceInventoryListener, this);
-		 this.getServer().getPluginManager().registerEvents(confirmRaceInventoryListener, this);
-		 this.getServer().getPluginManager().registerEvents(goldConversionMenu, this);
-		 this.getServer().getPluginManager().registerEvents(scrollsOfBaugDwarvesInventoryListener, this);
-		 this.getServer().getPluginManager().registerEvents(scrollsOfBaugElvesInventoryListener, this);
-		 this.getServer().getPluginManager().registerEvents(elvesCommunismEnderChestListListener, this);
-		 this.getServer().getPluginManager().registerEvents(elvesCommunismHubInventoryListener, this);
-		 this.getServer().getPluginManager().registerEvents(elvesCommunismInventoryListListener, this);
-		 this.getServer().getPluginManager().registerEvents(scrollsOfBaugMenInventoryListener, this);
-		 this.getServer().getPluginManager().registerEvents(scrollsOfBaugOrcsInventoryListener, this);
-		 this.getServer().getPluginManager().registerEvents(featureManagement, this);
-		 this.getServer().getPluginManager().registerEvents(scrollsOfBaugWizardsInventoryListener, this);
-		 this.getServer().getPluginManager().registerEvents(playerSnoopingEnderChestListListener, this);
-		 this.getServer().getPluginManager().registerEvents(playerSnoopingHubInventoryListener, this);
-		 this.getServer().getPluginManager().registerEvents(playerSnoopingInventoryListListener, this);
-		 this.getServer().getPluginManager().registerEvents(skillTreeMenu, this);
-		 this.getServer().getPluginManager().registerEvents(generalSkillTreeMenu, this);
-		 this.getServer().getPluginManager().registerEvents(chooseClassListener, this);
-		 this.getServer().getPluginManager().registerEvents(confirmClassListener, this);
-		 this.getServer().getPluginManager().registerEvents(raceSkillTreeMenu, this);
-		 this.getServer().getPluginManager().registerEvents(efficientBotanyListener, this);
-		 this.getServer().getPluginManager().registerEvents(enchantedPetalsListener, this);
-		 this.getServer().getPluginManager().registerEvents(starlightHealingListener, this);
-		 this.getServer().getPluginManager().registerEvents(lunarTransfusionListener, this);
-		 this.getServer().getPluginManager().registerEvents(arboratedStrikeListener, this);
-		 this.getServer().getPluginManager().registerEvents(radiantAnvilListener, this);
-		 this.getServer().getPluginManager().registerEvents(gildedFortuneListener, this);
+		 pluginManager.registerEvents(chooseRaceInventoryListener, this);
+		 pluginManager.registerEvents(confirmRaceInventoryListener, this);
+		 pluginManager.registerEvents(goldConversionMenu, this);
+		 pluginManager.registerEvents(scrollsOfBaugDwarvesInventoryListener, this);
+		 pluginManager.registerEvents(scrollsOfBaugElvesInventoryListener, this);
+		 pluginManager.registerEvents(elvesCommunismEnderChestListListener, this);
+		 pluginManager.registerEvents(elvesCommunismHubInventoryListener, this);
+		 pluginManager.registerEvents(elvesCommunismInventoryListListener, this);
+		 pluginManager.registerEvents(scrollsOfBaugMenInventoryListener, this);
+		 pluginManager.registerEvents(scrollsOfBaugOrcsInventoryListener, this);
+		 pluginManager.registerEvents(featureManagement, this);
+		 pluginManager.registerEvents(scrollsOfBaugWizardsInventoryListener, this);
+		 pluginManager.registerEvents(playerSnoopingEnderChestListListener, this);
+		 pluginManager.registerEvents(playerSnoopingHubInventoryListener, this);
+		 pluginManager.registerEvents(playerSnoopingInventoryListListener, this);
+		 pluginManager.registerEvents(skillTreeMenu, this);
+		 pluginManager.registerEvents(generalSkillTreeMenu, this);
+		 pluginManager.registerEvents(chooseClassListener, this);
+		 pluginManager.registerEvents(confirmClassListener, this);
+		 pluginManager.registerEvents(raceSkillTreeMenu, this);
+		 pluginManager.registerEvents(efficientBotanyListener, this);
+		 pluginManager.registerEvents(enchantedPetalsListener, this);
+		 pluginManager.registerEvents(starlightHealingListener, this);
+		 pluginManager.registerEvents(lunarTransfusionListener, this);
+		 pluginManager.registerEvents(arboratedStrikeListener, this);
+		 pluginManager.registerEvents(radiantAnvilListener, this);
+		 pluginManager.registerEvents(gildedFortuneListener, this);
+		 pluginManager.registerEvents(governmentMenu, this);
+		 pluginManager.registerEvents(votingMenu, this);
+		 pluginManager.registerEvents(appointKingMenu, this);
+		 pluginManager.registerEvents(confirmAppointKingMenu, this);
+		 pluginManager.registerEvents(confirmStepDownMenu, this);
 		 
 		 
 		 new Pay(this);
@@ -329,6 +354,14 @@ public class Main extends JavaPlugin {
 			  }
 		 };
 		 getServer().getScheduler().scheduleSyncRepeatingTask(this, craftsmanRegen, 600L, 600L);
+		 
+		 
+		 
+		 
+		
+		 
+		 
+		 
 		 
 		 
 		 protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Client.BLOCK_DIG) {
@@ -464,6 +497,7 @@ public class Main extends JavaPlugin {
 				 e.printStackTrace();
 			 }
 		 }
+		 
 		 
 		 File steeledResolvecooldownDatafile = new File(this.getDataFolder() + File.separator + "steeledResolveCooldownData.yml");
 		 FileConfiguration steeledResolvecooldownDataconfig = YamlConfiguration.loadConfiguration(steeledResolvecooldownDatafile);
@@ -734,6 +768,16 @@ public class Main extends JavaPlugin {
 	    }
 	}
 	
+	public boolean isDouble( String input ) {
+	    try {
+	        Double.parseDouble( input );
+	        return true;
+	    }
+	    catch( Exception e ) {
+	        return false;
+	    }
+	}
+	
 	
 	public void onDisable() {
 		
@@ -902,6 +946,125 @@ public class Main extends JavaPlugin {
 				
 				int race = config.getInt("Race Data");
 				if (race == 2) {
+					allOfflineElvesList.add(offlinePlayer);
+				}
+			}
+		}
+		
+		
+		
+		
+		return allOfflineElvesList;
+	}
+	
+	public List<OfflinePlayer> getAllEligibleElves() {//Eligible for voting
+		List<OfflinePlayer> allOfflineElvesList = getAllOfflineElves();
+		for (OfflinePlayer elf : allOfflineElvesList) {
+			if (elf.getLastPlayed() + 604800000 < System.currentTimeMillis()) {
+				allOfflineElvesList.remove(elf);
+			}
+		}
+		
+		return allOfflineElvesList;
+	}
+	
+	public List<OfflinePlayer> getAllEligibleMen() {//Eligible for voting
+		List<OfflinePlayer> allOfflineMenList = getAllOfflineMen();
+		for (OfflinePlayer man : allOfflineMenList) {
+			if (man.getLastPlayed() + 604800000 < System.currentTimeMillis()) {
+				allOfflineMenList.remove(man);
+			}
+		}
+		
+		return allOfflineMenList;
+	}
+	
+	
+	public List<OfflinePlayer> getAllOfflineOrcs() {
+		OfflinePlayer[] allOfflinePlayers = this.getServer().getOfflinePlayers();
+		List<OfflinePlayer> allOfflineElvesList = new ArrayList<OfflinePlayer>();
+		
+		for (int i = 0; i < allOfflinePlayers.length; i++) {
+			Player player;
+			OfflinePlayer offlinePlayer = allOfflinePlayers[i];
+			if (allOfflinePlayers[i].isOnline()) {
+				player = allOfflinePlayers[i].getPlayer();
+				
+				if (player.getPersistentDataContainer().has(new NamespacedKey(this, "Race"), PersistentDataType.INTEGER) && player.getPersistentDataContainer().get(new NamespacedKey(this, "Race"), PersistentDataType.INTEGER) == 4) {
+					allOfflineElvesList.add(offlinePlayer);
+				}
+				
+			} else {
+				File file = new File(this.getDataFolder() + File.separator + "inventoryData" + File.separator + offlinePlayer.getUniqueId() + ".yml");
+				FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+				
+				int race = config.getInt("Race Data");
+				if (race == 4) {
+					allOfflineElvesList.add(offlinePlayer);
+				}
+			}
+		}
+		
+		
+		
+		
+		return allOfflineElvesList;
+	}
+	
+	
+	
+	public List<OfflinePlayer> getAllOfflineMen() {
+		OfflinePlayer[] allOfflinePlayers = this.getServer().getOfflinePlayers();
+		List<OfflinePlayer> allOfflineElvesList = new ArrayList<OfflinePlayer>();
+		
+		for (int i = 0; i < allOfflinePlayers.length; i++) {
+			Player player;
+			OfflinePlayer offlinePlayer = allOfflinePlayers[i];
+			if (allOfflinePlayers[i].isOnline()) {
+				player = allOfflinePlayers[i].getPlayer();
+				
+				if (player.getPersistentDataContainer().has(new NamespacedKey(this, "Race"), PersistentDataType.INTEGER) && player.getPersistentDataContainer().get(new NamespacedKey(this, "Race"), PersistentDataType.INTEGER) == 1) {
+					allOfflineElvesList.add(offlinePlayer);
+				}
+				
+			} else {
+				File file = new File(this.getDataFolder() + File.separator + "inventoryData" + File.separator + offlinePlayer.getUniqueId() + ".yml");
+				FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+				
+				int race = config.getInt("Race Data");
+				if (race == 1) {
+					allOfflineElvesList.add(offlinePlayer);
+				}
+			}
+		}
+		
+		
+		
+		
+		return allOfflineElvesList;
+	}
+	
+	
+	public List<OfflinePlayer> getAllOfflineDwarves() {
+		OfflinePlayer[] allOfflinePlayers = this.getServer().getOfflinePlayers();
+		List<OfflinePlayer> allOfflineElvesList = new ArrayList<OfflinePlayer>();
+		
+		for (int i = 0; i < allOfflinePlayers.length; i++) {
+			Player player;
+			OfflinePlayer offlinePlayer = allOfflinePlayers[i];
+			if (allOfflinePlayers[i].isOnline()) {
+				player = allOfflinePlayers[i].getPlayer();
+				
+				if (player.getPersistentDataContainer().has(new NamespacedKey(this, "Race"), PersistentDataType.INTEGER) && player.getPersistentDataContainer().get(new NamespacedKey(this, "Race"), PersistentDataType.INTEGER) == 3) {
+					allOfflineElvesList.add(offlinePlayer);
+				}
+				
+			} else {
+				File file = new File(this.getDataFolder() + File.separator + "inventoryData" + File.separator + offlinePlayer.getUniqueId() + ".yml");
+				FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+				
+				int race = config.getInt("Race Data");
+				if (race == 3) {
 					allOfflineElvesList.add(offlinePlayer);
 				}
 			}

@@ -27,24 +27,35 @@ public class PlayerSnoopingInventoryListListener implements Listener{
 					
 						
 						
-						
-						
-						
-						
-						
-						if (event.getCurrentItem().equals(plugin.itemManager.getBackItem())) {//Open the previous menu
-							player.openInventory(plugin.inventoryManager.getInventorySnoopingHubMenuInventory());
-						} else if (event.getCurrentItem().getType().equals(Material.PLAYER_HEAD)) {//View Selected Player's Inventory
-							ItemStack selectedPlayerHead = event.getCurrentItem();
-							SkullMeta selectedPlayerHeadMeta = (SkullMeta)selectedPlayerHead.getItemMeta();
-							OfflinePlayer selectedOfflinePlayer = plugin.getServer().getOfflinePlayer(selectedPlayerHeadMeta.getOwningPlayer().getUniqueId());//theres a possibility this does not work.
-							
-							player.performCommand("oi " + selectedOfflinePlayer.getName());
-						}
-						event.setCancelled(true);
+					int page = 0;
+					String lastChar = event.getView().getTitle().charAt(event.getView().getTitle().length() - 1) + "";
+					if (plugin.isInteger(lastChar)) {
+						page = Integer.parseInt(lastChar);
 					}
+						
+						
+						
+						
+					if (event.getCurrentItem().equals(plugin.itemManager.getBackItem())) {//Open the previous menu
+						player.openInventory(plugin.inventoryManager.getInventorySnoopingHubMenuInventory());
+					} else if (event.getCurrentItem().getType().equals(Material.PLAYER_HEAD)) {//View Selected Player's Inventory
+						ItemStack selectedPlayerHead = event.getCurrentItem();
+						SkullMeta selectedPlayerHeadMeta = (SkullMeta)selectedPlayerHead.getItemMeta();
+						OfflinePlayer selectedOfflinePlayer = plugin.getServer().getOfflinePlayer(selectedPlayerHeadMeta.getOwningPlayer().getUniqueId());//theres a possibility this does not work.
+						
+						player.performCommand("oi " + selectedOfflinePlayer.getName());
+					}
+					if (event.getCurrentItem().equals(plugin.itemManager.getNextPageItem()) ) {
+						player.openInventory(plugin.inventoryManager.getInventorySnoopingInventoryMenuInventory(player, page + 1));
+					}
+					
+					if (event.getCurrentItem().equals(plugin.itemManager.getPreviousPageItem()) ) {
+						player.openInventory(plugin.inventoryManager.getInventorySnoopingInventoryMenuInventory(player, page - 1));
+					}
+					event.setCancelled(true);
 				}
 			}
 		}
 	}
+}
 

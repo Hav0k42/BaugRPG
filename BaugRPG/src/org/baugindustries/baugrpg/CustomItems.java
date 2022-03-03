@@ -1,16 +1,24 @@
 package org.baugindustries.baugrpg;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.Statistic;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
@@ -28,6 +36,14 @@ public class CustomItems {
 	
 	public ItemStack getBackItem() {
 		return plugin.createItem(Material.RED_STAINED_GLASS_PANE, 1, ChatColor.RED + "Back", null);
+	}
+	
+	public ItemStack getNextPageItem() {
+		return plugin.createItem(Material.LIME_STAINED_GLASS_PANE, 1, ChatColor.GREEN + "Next Page", null);
+	}
+	
+	public ItemStack getPreviousPageItem() {
+		return plugin.createItem(Material.LIGHT_BLUE_STAINED_GLASS_PANE, 1, ChatColor.AQUA + "Previous Page", null);
 	}
 	
 	public ItemStack getBlankItem() {
@@ -503,7 +519,7 @@ public class CustomItems {
 				if (timeValue == 1) {
 					timeString = (timeValue + " Minute Remaining");
 				} else {
-					timeString = (timeValue + " Minute Remaining");
+					timeString = (timeValue + " Minutes Remaining");
 				}
 			} else {
 				//display in seconds
@@ -552,7 +568,7 @@ public class CustomItems {
 				if (timeValue == 1) {
 					timeString = (timeValue + " Minute Remaining");
 				} else {
-					timeString = (timeValue + " Minute Remaining");
+					timeString = (timeValue + " Minutes Remaining");
 				}
 			} else {
 				//display in seconds
@@ -650,7 +666,7 @@ public class CustomItems {
 				if (timeValue == 1) {
 					timeString = (timeValue + " Minute Remaining");
 				} else {
-					timeString = (timeValue + " Minute Remaining");
+					timeString = (timeValue + " Minutes Remaining");
 				}
 			} else {
 				//display in seconds
@@ -786,7 +802,7 @@ public class CustomItems {
 				if (timeValue == 1) {
 					timeString = (timeValue + " Minute Remaining");
 				} else {
-					timeString = (timeValue + " Minute Remaining");
+					timeString = (timeValue + " Minutes Remaining");
 				}
 			} else {
 				//display in seconds
@@ -861,7 +877,7 @@ public class CustomItems {
 				if (timeValue == 1) {
 					timeString = (timeValue + " Minute Remaining");
 				} else {
-					timeString = (timeValue + " Minute Remaining");
+					timeString = (timeValue + " Minutes Remaining");
 				}
 			} else {
 				//display in seconds
@@ -1082,36 +1098,281 @@ public class CustomItems {
 	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Reduce damage to lava.",
 	 					secondString));
 	}
+	
+	public ItemStack getGovernmentMenuItem(int race) {
+		String title = ChatColor.DARK_AQUA + "Kingdom Info";
+		List<String> infoText = Arrays.asList(ChatColor.LIGHT_PURPLE + "View info about who your",
+				"current King is and more.");
+		switch (race) {
+			case 2:
+				title = ChatColor.DARK_GREEN + "Commune Info";
+				infoText = Arrays.asList(ChatColor.LIGHT_PURPLE + "View info about who your",
+						"current Secretary is and more.");
+				break;
+			case 3:
+				title = ChatColor.DARK_PURPLE + "Guild Info";
+				infoText = Arrays.asList(ChatColor.LIGHT_PURPLE + "View info about who your",
+						"current Emperor is and more.");
+				break;
+			case 4:
+				title = ChatColor.DARK_RED + "Horde Info";
+				infoText = Arrays.asList(ChatColor.LIGHT_PURPLE + "View info about who your",
+						"current Chief is and more.");
+				break;
+		}
+		return plugin.createItem(Material.GOLDEN_HELMET,
+				1,
+				title,
+				infoText);
+	}
+	
+	public ItemStack getLeaderHeadItem(int race) {
+		File leaderDataFile = new File(plugin.getDataFolder() + File.separator + "leaderData.yml");
+		 
+		 //Check to see if the file already exists. If not, create it.
+		 if (!leaderDataFile.exists()) {
+			 try {
+				 leaderDataFile.createNewFile();
+			 } catch (IOException e) {
+				 e.printStackTrace();
+			 }
+		}
+		FileConfiguration leaderConfig = YamlConfiguration.loadConfiguration(leaderDataFile);
+		
+		UUID leaderUUID = null;
+		String leaderTitle = "";
+		switch (race) {
+			case 1:
+				if (leaderConfig.contains("menLeaderUUID")) {
+					leaderUUID = UUID.fromString(leaderConfig.getString("menLeaderUUID"));
+				}
+				leaderTitle = "King";
+				break;
+			case 2:
+				if (leaderConfig.contains("elfLeaderUUID")) {
+					leaderUUID = UUID.fromString(leaderConfig.getString("elfLeaderUUID"));
+				}
+				leaderTitle = "Secretary";
+				break;
+			case 3:
+				File bankfile = new File(plugin.getDataFolder() + File.separator + "bank.yml");
+				FileConfiguration bankConfig = YamlConfiguration.loadConfiguration(bankfile);
+				
+				UUID emperorUUID = null;
+				
+				Set<String> banks = bankConfig.getKeys(false);
+				for (String string : banks) {
+					UUID uuid = UUID.fromString(string);
+
+					File file = new File(plugin.getDataFolder() + File.separator + "inventoryData" + File.separator + string + ".yml");
+					FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+					
+					int playerRace = config.getInt("Race Data");
+					if (Bukkit.getOfflinePlayer(uuid).isOnline()) {
+						PersistentDataContainer data = Bukkit.getPlayer(uuid).getPersistentDataContainer();
+						playerRace = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
+					}
+					
+					if (playerRace == 3) {
+						if (emperorUUID == null) {
+							emperorUUID = uuid;
+						} else if (bankConfig.getInt(string) > bankConfig.getInt(emperorUUID.toString())) {
+							emperorUUID = uuid;
+						}
+					}
+				}
+				leaderUUID = emperorUUID;
+				leaderConfig.set("dwarfLeaderUUID", leaderUUID.toString());
+				
+				try {
+					leaderConfig.save(leaderDataFile);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				leaderTitle = "Emperor";
+				break;
+			case 4:
+				for (OfflinePlayer orc : plugin.getAllOfflineOrcs()) {
+					if (leaderUUID == null) {
+						leaderUUID = orc.getUniqueId();
+					} else if (orc.getStatistic(Statistic.PLAYER_KILLS) > Bukkit.getOfflinePlayer(leaderUUID).getStatistic(Statistic.PLAYER_KILLS)) {
+						leaderUUID = orc.getUniqueId();
+					}
+				}
+				
+				leaderConfig.set("orcLeaderUUID", leaderUUID.toString());
+				
+				try {
+					leaderConfig.save(leaderDataFile);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				leaderTitle = "Chief";
+				break;
+		}
+		
+		if (leaderUUID == null) {
+			return plugin.createItem(Material.PLAYER_HEAD, 1, getRaceColor(race) + "UNKNOWN", Arrays.asList("You currently have no " + leaderTitle));
+		} else {
+			OfflinePlayer leaderOP = Bukkit.getOfflinePlayer(leaderUUID);
+			ItemStack leaderHead = plugin.createItem(Material.PLAYER_HEAD,
+					1,
+					getRaceColor(race) + leaderOP.getName(),
+					Arrays.asList("is your " + leaderTitle,
+							"They can claim land,",
+							"declare war,",
+							"draft laws,",
+							"and more."));
+			SkullMeta leaderHeadMeta = (SkullMeta)leaderHead.getItemMeta();
+			leaderHeadMeta.setOwningPlayer(leaderOP);
+			leaderHead.setItemMeta(leaderHeadMeta);
+			return leaderHead;
+		}
+		
+	}
+	
+	public ItemStack getVoteOnLeaderItem(int race) {
+		String leaderTitle = "King";
+		if (race == 2) {
+			leaderTitle = "Secretary";
+		}
+		return plugin.createItem(Material.NAME_TAG,
+				1,
+				getRaceColor(race) + "Vote for which player will your " + leaderTitle);
+	}
+	
+	public ItemStack getAlreadyVotedItem() {
+		return plugin.createItem(Material.BARRIER,
+				1,
+				ChatColor.DARK_RED + "You already voted.");
+	}
+	
+	public ItemStack getNominateSelfItem(int race) {
+		String leaderTitle = "King";
+		if (race == 2) {
+			leaderTitle = "Secretary";
+		}
+		return plugin.createItem(Material.WRITABLE_BOOK,
+				1,
+				getRaceColor(race) + "Nominate yourself for " + leaderTitle);
+	}
+	
+	public ItemStack getOverthrowKingItem() {
+		return plugin.createItem(
+				Material.IRON_SWORD,
+				1,
+				ChatColor.DARK_AQUA + "Vote to overthrow your current king.");
+	}
+
+	public ItemStack getImpeachSecretaryItem() {
+		return plugin.createItem(
+				Material.WOODEN_SWORD,
+				1,
+				ChatColor.DARK_GREEN + "Vote to impeach your current secretary.");
+	}
+	
+	
+	public ChatColor getRaceColor(int race) {//I PROMISE this method isn't racist. PLEASE BELIEVE ME.
+		switch (race) {
+			case 1:
+				return ChatColor.DARK_AQUA;
+			case 2:
+				return ChatColor.DARK_GREEN;
+			case 3:
+				return ChatColor.DARK_PURPLE;
+			case 4:
+				return ChatColor.DARK_RED;
+		}
+		return ChatColor.AQUA;
+	}
+
+	public ItemStack getSubmitLawSuggestionItem(int race) {
+		return plugin.createItem(
+				Material.WRITABLE_BOOK,
+				1,
+				getRaceColor(race) + "Submit a suggestion for a law.");
+	}
+
+	public ItemStack getVoteOnLawsItem() {
+		return plugin.createItem(
+				Material.NAME_TAG,
+				1,
+				ChatColor.DARK_GREEN + "Vote on different bills.");
+	}
+
+	public ItemStack getViewLawsItem(int race) {
+		return plugin.createItem(
+				Material.WRITTEN_BOOK,
+				1,
+				getRaceColor(race) + "View passed laws.");
+	}
+
+	public ItemStack getViewReportedCrimesItem(int race) {
+		return plugin.createItem(
+				Material.BOOK,
+				1,
+				getRaceColor(race) + "View alleged crimes.");
+	}
+
+	public ItemStack getReportCrimeItem(int race) {
+		return plugin.createItem(
+				Material.MAP,
+				1,
+				getRaceColor(race) + "Report a crime.");
+	}
+
+	public ItemStack getAppointKingItem() {
+		return plugin.createItem(
+				Material.GOLDEN_HELMET,
+				1,
+				ChatColor.DARK_AQUA + "Appoint a new king.");
+	}
+
+	public ItemStack getStepDownItem() {
+		return plugin.createItem(
+				Material.SPRUCE_STAIRS,
+				1,
+				ChatColor.DARK_GREEN + "Step down and start a new election for secretary.");
+	}
+
+	public ItemStack getDraftLawsItem(int race) {
+		return plugin.createItem(
+				Material.WRITABLE_BOOK,
+				1,
+				getRaceColor(race) + "Draft a new laws.");
+	}
+
+	public ItemStack getViewLawSuggestionsItem(int race) {
+		return plugin.createItem(
+				Material.KNOWLEDGE_BOOK,
+				1,
+				getRaceColor(race) + "View suggested laws.");
+	}
+
+	public ItemStack getLeaderViewCrimesItem(int race) {
+		return plugin.createItem(
+				Material.BOOK,
+				1,
+				getRaceColor(race) + "View alleged crimes, and decide punishments.");
+	}
+
+	public ItemStack getTaxDwarvesItem() {
+		return plugin.createItem(
+				Material.GOLD_NUGGET,
+				1,
+				ChatColor.DARK_PURPLE + "Decide how much you'll tax your citizens.");
+	}
+	
+	public ItemStack getTaxDwarvesWeeklyItem() {
+		return plugin.createItem(
+				Material.GOLD_NUGGET,
+				1,
+				ChatColor.DARK_PURPLE + "Collect the weekly tax.");
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

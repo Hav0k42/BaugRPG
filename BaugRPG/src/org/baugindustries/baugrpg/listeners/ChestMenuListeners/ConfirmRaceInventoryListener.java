@@ -2,6 +2,7 @@ package org.baugindustries.baugrpg.listeners.ChestMenuListeners;
 
 
 import org.baugindustries.baugrpg.Main;
+import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,7 +28,7 @@ public class ConfirmRaceInventoryListener implements Listener{
 		if (event.getWhoClicked() instanceof Player) {
 			Player player = (Player)event.getWhoClicked();
 			if (event.getClickedInventory() != null) {
-				if (event.getView().getTitle().equals("Confirm Selection")) {
+				if (event.getView().getTitle().equals(ChatColor.DARK_GRAY + "Confirm Selection")) {
 					
 						if (event.getSlot() == 15 && event.getCurrentItem().equals(plugin.itemManager.getNoItem())) {//No
 							player.openInventory(plugin.inventoryManager.getSetRaceMenuInventory());

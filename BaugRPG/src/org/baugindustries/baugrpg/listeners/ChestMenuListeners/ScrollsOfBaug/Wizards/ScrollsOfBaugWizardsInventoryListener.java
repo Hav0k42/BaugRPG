@@ -31,7 +31,7 @@ public class ScrollsOfBaugWizardsInventoryListener implements Listener{
 	public void onInventoryClick(InventoryClickEvent event) {
 		if (!(event.getWhoClicked() instanceof Player)) return;
 		if (!(event.getClickedInventory() != null && event.getCurrentItem() != null)) return;
-		if (!event.getView().getTitle().equals("Scrolls of Baug")) return;
+		if (!event.getView().getTitle().equals(ChatColor.AQUA + "Scrolls of Baug")) return;
 		Player player = (Player)event.getWhoClicked();
 		PersistentDataContainer data = event.getWhoClicked().getPersistentDataContainer();
 		int race = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
@@ -41,7 +41,7 @@ public class ScrollsOfBaugWizardsInventoryListener implements Listener{
 					
 					
 					
-		if (event.getSlot() == 11 && event.getCurrentItem().equals(plugin.itemManager.getFeatureManagementItem())) {//Player clicked on the Feature Management Item
+		if (event.getCurrentItem().equals(plugin.itemManager.getFeatureManagementItem())) {//Player clicked on the Feature Management Item
 			
 			File file = new File(plugin.getDataFolder() + File.separator + "config.yml");
 		 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
@@ -108,7 +108,7 @@ public class ScrollsOfBaugWizardsInventoryListener implements Listener{
 			
 			event.getWhoClicked().openInventory(inventory);
 			
-		} else if (event.getSlot() == 12 && event.getCurrentItem().equals(plugin.itemManager.getInventorySnoopingItem())) {//Player clicked on the Inventory Snooping Item
+		} else if (event.getCurrentItem().equals(plugin.itemManager.getInventorySnoopingItem())) {//Player clicked on the Inventory Snooping Item
 			
 			if (plugin.getServer().getPluginManager().isPluginEnabled("OpenInv")) {
 				player.openInventory(plugin.inventoryManager.getInventorySnoopingHubMenuInventory());
