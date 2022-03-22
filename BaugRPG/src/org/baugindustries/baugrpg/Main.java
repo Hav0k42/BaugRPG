@@ -8,12 +8,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.baugindustries.baugrpg.commands.BaugScroll;
 import org.baugindustries.baugrpg.commands.Chat;
 import org.baugindustries.baugrpg.commands.ChatTabCompleter;
 import org.baugindustries.baugrpg.commands.RaceWizard;
 import org.baugindustries.baugrpg.commands.ResetRace;
+import org.baugindustries.baugrpg.commands.SetPoi;
 import org.baugindustries.baugrpg.commands.SetRace;
+import org.baugindustries.baugrpg.commands.SetpoiTabCompleter;
 import org.baugindustries.baugrpg.commands.Tpa;
 import org.baugindustries.baugrpg.commands.Tpaccept;
 import org.baugindustries.baugrpg.commands.Tpdeny;
@@ -30,6 +33,7 @@ import org.baugindustries.baugrpg.listeners.ArcaneJewelsListener;
 import org.baugindustries.baugrpg.listeners.BlockExplodeListener;
 import org.baugindustries.baugrpg.listeners.ChestBreakListener;
 import org.baugindustries.baugrpg.listeners.ChestOpenListener;
+import org.baugindustries.baugrpg.listeners.ClickedTextCommandListener;
 import org.baugindustries.baugrpg.listeners.DisableRecipeListener;
 import org.baugindustries.baugrpg.listeners.EfficientBotanyListener;
 import org.baugindustries.baugrpg.listeners.ElfEatMeat;
@@ -78,6 +82,7 @@ import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Elv
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Men.AppointKingMenu;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Men.ConfirmAppointKingMenu;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Men.ScrollsOfBaugMenInventoryListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Orcs.ExecutionMenuListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Orcs.ScrollsOfBaugOrcsInventoryListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.FeatureManagement;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.ScrollsOfBaugWizardsInventoryListener;
@@ -96,7 +101,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.World.Environment;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.craftbukkit.v1_18_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_18_R2.CraftWorld;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -161,9 +166,14 @@ public class Main extends JavaPlugin {
 	public HashMap<UUID, Long> rageCooldown = new HashMap<UUID, Long>();
 	
 	public List<UUID> lawSuggestionEscape = new ArrayList<UUID>();
-	public List<UUID> reportCrimeEscape = new ArrayList<UUID>();
+	public HashMap<UUID, Integer> reportCrimeEscape = new HashMap<UUID, Integer>();
+	public HashMap<UUID, String> reportCrimeMap = new HashMap<UUID, String>();
+	public List<UUID> draftLawEscape = new ArrayList<UUID>();
+	public HashMap<UUID, Integer> leaderPunishEscape = new HashMap<UUID, Integer>();
+	public HashMap<UUID, Integer> elfPunishEscape = new HashMap<UUID, Integer>();
 	
 	public UUID taxDwarvesEscape = null;
+	public UUID orcVictim = null;
 	
 	public List<UUID> anvilUUIDs = new ArrayList<UUID>();
 	public List<Location> anvilSpawnLocs = new ArrayList<Location>();
@@ -210,6 +220,7 @@ public class Main extends JavaPlugin {
 	public WitheredBeheadingListener witheredBeheadingListener = new WitheredBeheadingListener(this);
 	public DisableRecipeListener disableRecipeListener = new DisableRecipeListener(this);
 	public LavaFishingListener lavaFishingListener = new LavaFishingListener(this);
+	public ClickedTextCommandListener clickedTextCommandListener = new ClickedTextCommandListener(this);
 	
 	public EndermanGriefingListener endermanGriefingListener = new EndermanGriefingListener(this);
 	public ChooseRaceInventoryListener chooseRaceInventoryListener = new ChooseRaceInventoryListener(this);
@@ -238,8 +249,14 @@ public class Main extends JavaPlugin {
 	public AppointKingMenu appointKingMenu = new AppointKingMenu(this);
 	public ConfirmAppointKingMenu confirmAppointKingMenu = new ConfirmAppointKingMenu(this);
 	public ConfirmStepDownMenu confirmStepDownMenu = new ConfirmStepDownMenu(this);
+	public ExecutionMenuListener executionMenuListener = new ExecutionMenuListener(this);
 	
 	
+	
+	
+	public String[] commandStrings = new String[17];
+	public final int startingClaimBlocks = 200;
+	public final int startingClaimChunks = 50;
 	
 	
 
@@ -248,8 +265,70 @@ public class Main extends JavaPlugin {
 	public void onEnable() {
 		 File defaultDir = new File(this.getDataFolder().getAbsolutePath());
 		 defaultDir.mkdir();
+		 
+		 File claimsFile = new File(this.getDataFolder() + File.separator + "claims.yml");
+		 
+		 //Check to see if the file already exists. If not, create it.
+		 if (!claimsFile.exists()) {
+			 try {
+				 claimsFile.createNewFile();
+			 } catch (IOException e) {
+				 e.printStackTrace();
+			 }
+		 }
+		 FileConfiguration claimsConfig = YamlConfiguration.loadConfiguration(claimsFile);
+		 
+		 String missingPois = "";//points of interest
+		 
+		 if (!claimsConfig.contains("menSpawn")) {
+			 missingPois = missingPois + "Men Spawn Location ";
+		 }
+		 
+		 if (!claimsConfig.contains("elfSpawn")) {
+			 missingPois = missingPois + "Elf Spawn Location ";
+		 }
+		 
+		 if (!claimsConfig.contains("dwarfSpawn")) {
+			 missingPois = missingPois + "Dwarf Spawn Location ";
+		 }
+		 
+		 if (!claimsConfig.contains("orcSpawn")) {
+			 missingPois = missingPois + "Orc Spawn Location ";
+		 }
+		 
+		 if (!claimsConfig.contains("orcExecutioner")) {
+			 missingPois = missingPois + "Orc Executioner Location ";
+		 }
+		 
+		 if (!claimsConfig.contains("orcExecutionee")) {
+			 missingPois = missingPois + "Orc Executionee Location ";
+		 }
+		 
+		 
+		 new SetPoi(this);
+		 getCommand("setpoi").setTabCompleter(new SetpoiTabCompleter());
+		 
+		 final String missingPoisTemp = missingPois;
+		 
+		 if (!missingPois.equals("")) {
+			 getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+				 public void run() {
+					Bukkit.broadcastMessage(ChatColor.RED + "Missing points of interest: " + missingPoisTemp + ". Set them at the desired locations using /setpoi <poi>. Run /reload when complete.");
+				 }
+			}, 1L);
+			 
+			 return;
+		 }
+		 
+		 
 		
-		
+		 for (int i = 0; i < commandStrings.length; i++) {
+			 commandStrings[i] = "/" + RandomStringUtils.random(150, true, true);
+		 }
+		 
+		 
+		 
+		 
 		 manager = Bukkit.getScoreboardManager();
 		 board = manager.getMainScoreboard();
 		 PluginManager pluginManager = getServer().getPluginManager();
@@ -281,6 +360,7 @@ public class Main extends JavaPlugin {
 		 pluginManager.registerEvents(disableRecipeListener, this);
 		 pluginManager.registerEvents(lavaFishingListener, this);
 		 pluginManager.registerEvents(endermanGriefingListener, this);
+		 pluginManager.registerEvents(clickedTextCommandListener, this);
 		 
 		 pluginManager.registerEvents(chooseRaceInventoryListener, this);
 		 pluginManager.registerEvents(confirmRaceInventoryListener, this);
@@ -314,6 +394,7 @@ public class Main extends JavaPlugin {
 		 pluginManager.registerEvents(appointKingMenu, this);
 		 pluginManager.registerEvents(confirmAppointKingMenu, this);
 		 pluginManager.registerEvents(confirmStepDownMenu, this);
+		 pluginManager.registerEvents(executionMenuListener, this);
 		 
 		 
 		 new Pay(this);
@@ -1134,6 +1215,38 @@ public class Main extends JavaPlugin {
 		return allOnlinePlayers;
 	}
 	
+	public String getRaceString(int race) {
+		String raceString = "men";
+		switch (race) {
+			case 2:
+				raceString = "elf";
+				break;
+			case 3:
+				raceString = "dwarf";
+				break;
+			case 4:
+				raceString = "orc";
+				break;
+		}
+		return raceString;
+	}
 	
+	
+	
+	public int getRace(OfflinePlayer op) {
+		if (op.isOnline()) {
+			Player player = (Player)op;
+			if (player.getPersistentDataContainer().has(new NamespacedKey(this, "Race"), PersistentDataType.INTEGER)) {
+				return player.getPersistentDataContainer().get(new NamespacedKey(this, "Race"), PersistentDataType.INTEGER);
+			}
+			
+		} else {
+			File file = new File(this.getDataFolder() + File.separator + "inventoryData" + File.separator + op.getUniqueId() + ".yml");
+			FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+			
+			return config.getInt("Race Data");
+		}
+		return 0;
+	}
 	
 }

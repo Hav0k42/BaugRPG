@@ -8,9 +8,9 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/billy/Downloads/ProtocolLib.jar"/>
-	<classpathentry kind="lib" path="C:/Users/billy/Desktop/Buildtools/Spigot 1.18.1 remapped/spigot-1.18.1/META-INF/versions/spigot-1.18.1-R0.1-SNAPSHOT.jar" sourcepath="C:/Users/billy/Desktop/Buildtools/Spigot 1.18.1 remapped/work/mapped.e0c6d16a.jar"/>
-	<classpathentry kind="lib" path="C:/Users/billy/Desktop/Buildtools/Spigot 1.18.1 remapped/Spigot/Spigot-API/target/spigot-api-1.18.1-R0.1-SNAPSHOT-shaded.jar"/>
-	<classpathentry kind="lib" path="C:/Users/billy/Desktop/Buildtools/Spigot 1.18.1 remapped/spigot-1.18.1/META-INF/libraries/authlib-3.2.38.jar"/>
-	<classpathentry kind="lib" path="C:/Users/billy/Desktop/Buildtools/Spigot 1.18.1 remapped/spigot-1.18.1/META-INF/libraries/fastutil-8.5.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/billy/Desktop/Buildtools/Spigot 1.18.2/Spigot/Spigot-API/target/spigot-api-1.18.2-R0.1-SNAPSHOT-shaded.jar"/>
+	<classpathentry kind="lib" path="C:/Users/billy/Desktop/Buildtools/Spigot 1.18.2/spigot-1.18.2/META-INF/versions/spigot-1.18.2-R0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="C:/Users/billy/Desktop/Buildtools/Spigot 1.18.2/spigot-1.18.2/META-INF/libraries/authlib-3.3.39.jar"/>
+	<classpathentry kind="lib" path="C:/Users/billy/Desktop/Buildtools/Spigot 1.18.2/spigot-1.18.2/META-INF/libraries/fastutil-8.5.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

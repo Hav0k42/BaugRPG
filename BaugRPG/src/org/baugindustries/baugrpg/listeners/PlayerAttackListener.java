@@ -23,6 +23,11 @@ public class PlayerAttackListener implements Listener {
 		if (event.getDamager() instanceof Player) {
 			Player player = (Player) event.getDamager();
 			
+			if (plugin.orcVictim.equals(player.getUniqueId())) {
+				event.setCancelled(true);
+				return;
+			}
+			
 			File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
 		 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
 			
@@ -40,7 +45,7 @@ public class PlayerAttackListener implements Listener {
 		 	
 		 	if (event.getEntity() instanceof Player) {
 		 		Biome biome = player.getLocation().getBlock().getBiome();
-		 		
+		 		//TODO: terralith biomes not contined within these few ones. If players want to have buffs in terralith biomes, they'll need to be added.
 			 	if (skillsconfig.contains("menBuffBiomeOn") && skillsconfig.getBoolean("menBuffBiomeOn")) {
 			 		if (biome.equals(Biome.PLAINS) || biome.equals(Biome.SNOWY_PLAINS) || biome.equals(Biome.SNOWY_BEACH) || biome.equals(Biome.PLAINS) || biome.equals(Biome.SUNFLOWER_PLAINS) || biome.equals(Biome.MEADOW)) {
 			 			if (skillsconfig.contains("menBuffBiome")) {

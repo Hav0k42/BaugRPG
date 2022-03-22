@@ -29,6 +29,11 @@ public class PlayerJumpListener implements Listener {
 		Player player = event.getPlayer();
 	    Vector velocity = player.getVelocity();
 	    
+	    if (plugin.orcVictim != null && plugin.orcVictim.equals(player.getUniqueId())) {
+	    	File claimsFile = new File(plugin.getDataFolder() + File.separator + "claims.yml");
+			FileConfiguration claimsConfig = YamlConfiguration.loadConfiguration(claimsFile);
+	    	player.teleport(claimsConfig.getLocation("orcExecutionee"));
+	    }
 	    
 	    Location prevPos = plugin.positionData.get(player);
 	    if (prevPos != null) {

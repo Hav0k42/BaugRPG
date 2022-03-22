@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.baugindustries.baugrpg.Main;
 import org.bukkit.NamespacedKey;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -37,16 +38,69 @@ public class ScrollsOfBaugElvesInventoryListener implements Listener{
 		
 		ItemStack sharedInventoriesItem = plugin.itemManager.getCommunistHubItem();
 			
-			if (plugin.getServer().getPluginManager().isPluginEnabled("OpenInv")) {
 			
 				if (event.getCurrentItem().equals(sharedInventoriesItem)) {//Player clicked on the Shared Inventory Chest
-					player.openInventory(plugin.inventoryManager.getElvesCommunistHubMenuInventory());
+					if (plugin.getServer().getPluginManager().isPluginEnabled("OpenInv")) {
+						
+					ConfigurationSection guiltyElvesCooldown;
+					File leaderDataFile = new File(plugin.getDataFolder() + File.separator + "leaderData.yml");
+					FileConfiguration leaderConfig = YamlConfiguration.loadConfiguration(leaderDataFile);
+					if (leaderConfig.contains("guiltyElvesCooldown")) {
+						guiltyElvesCooldown = leaderConfig.getConfigurationSection("guiltyElvesCooldown");
+					} else {
+						guiltyElvesCooldown = leaderConfig.createSection("guiltyElvesCooldown");
+					}
+					
+					if (!guiltyElvesCooldown.contains(player.getUniqueId().toString())) {
+						player.openInventory(plugin.inventoryManager.getElvesCommunistHubMenuInventory());
+					} else {
+						long cooldown = guiltyElvesCooldown.getLong(player.getUniqueId().toString());
+						if (cooldown > System.currentTimeMillis()) {
+							//locked out
+							int minutesToMillis = 60000;
+							Long timeRemaining = cooldown - System.currentTimeMillis();
+							String timeString = "";
+							int timeValue;
+							if (timeRemaining > minutesToMillis * 60) {
+								//display in hours
+								timeValue = (int)(timeRemaining / (minutesToMillis * 60));
+								if (timeValue == 1) {
+									timeString = (timeValue + " hour remaining");
+								} else {
+									timeString = (timeValue + " hours remaining");
+								}
+							} else if (timeRemaining > minutesToMillis) {
+								//display in minutes
+								timeValue = (int)(timeRemaining / minutesToMillis);
+								if (timeValue == 1) {
+									timeString = (timeValue + " minute remaining");
+								} else {
+									timeString = (timeValue + " minutes remaining");
+								}
+							} else {
+								//display in seconds
+								timeValue = (int)(timeRemaining / 1000);
+								if (timeValue == 1) {
+									timeString = (timeValue + " second remaining");
+								} else {
+									timeString = (timeValue + " seconds remaining");
+								}
+							}
+							player.closeInventory();
+							player.sendMessage(ChatColor.RED + "You committed a crime, and as such have been restricted from accessing player's inventories. " + timeString + " until you can access them again.");
+						} else {
+							//not locked out
+							guiltyElvesCooldown.set(player.getUniqueId().toString(), null);
+							player.openInventory(plugin.inventoryManager.getElvesCommunistHubMenuInventory());
+						}
+					}
+				} else {
+					player.sendMessage(ChatColor.RED + "The supporting plugin for this feature is not installed.\nPlease contact the admins and ask them to install the OpenInv plugin.\n" + ChatColor.YELLOW + "https://dev.bukkit.org/projects/openinv");
 				}
-				
-				
-			} else {
-				player.sendMessage(ChatColor.RED + "The supporting plugin for this feature is not installed.\nPlease contact the admins and ask them to install the OpenInv plugin.\n" + ChatColor.YELLOW + "https://dev.bukkit.org/projects/openinv");
 			}
+				
+				
+			
 			
 			
 			ItemStack skillTreeItem = plugin.itemManager.getSkillTreeMenuItem();

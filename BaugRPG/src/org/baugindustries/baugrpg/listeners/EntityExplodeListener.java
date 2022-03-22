@@ -60,6 +60,24 @@ public class EntityExplodeListener implements Listener {
 			}
 			
 	 	}
+	 	
+	 	if (event.getEntityType().equals(EntityType.FIREBALL)) {
+	 		File file = new File(plugin.getDataFolder() + File.separator + "config.yml");
+		 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+		 	
+			if ((config.contains("allowGhastGriefing") && !config.getBoolean("allowGhastGriefing"))) {
+				List<Block> blocks = new ArrayList<Block>();
+
+				for (int i = 0; i < event.blockList().size(); i++) {
+					blocks.add(event.blockList().get(i));
+				}
+				
+				for (Block block : blocks) {
+					event.blockList().remove(block);
+				}
+			}
+			
+	 	}
 		
 	 	
 		ArrayList<Location> loc = new ArrayList<Location>();

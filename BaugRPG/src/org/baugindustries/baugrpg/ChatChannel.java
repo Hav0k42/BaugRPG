@@ -5,8 +5,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -35,8 +39,386 @@ public class ChatChannel implements Listener {
 	@EventHandler
 	public void onPlayerChat(AsyncPlayerChatEvent event) {
 		Player p = event.getPlayer();
+		int race = plugin.getRace(p);
 		
-		if (plugin.taxDwarvesEscape == p.getUniqueId()) {
+		if (plugin.leaderPunishEscape.containsKey(p.getUniqueId())) {
+			Integer index = plugin.leaderPunishEscape.get(p.getUniqueId());
+			if (event.getMessage().toLowerCase().equals("exit")) {
+				plugin.leaderPunishEscape.remove(p.getUniqueId());
+				p.sendMessage(ChatColor.GOLD + "Returning to the chat.");
+			} else if (event.getMessage().toLowerCase().equals("next")) {
+				File leaderDataFile = new File(plugin.getDataFolder() + File.separator + "leaderData.yml");
+				FileConfiguration leaderConfig = YamlConfiguration.loadConfiguration(leaderDataFile);
+				String crimeConfigString = plugin.getRaceString(race) + "GuiltyCrimes";
+				
+				ConfigurationSection crimes = leaderConfig.getConfigurationSection(crimeConfigString);
+				List<String> unvotedCrimes = new ArrayList<String>();
+				crimes.getKeys(false).forEach(crimeString -> {
+					unvotedCrimes.add(crimeString);
+				});
+				
+				index++;
+				if (index >= unvotedCrimes.size()) {
+					index = 0;
+				}
+				String crimeString = crimes.getConfigurationSection(unvotedCrimes.get(index)).getString("title");
+				String defendant = Bukkit.getOfflinePlayer(UUID.fromString(crimes.getConfigurationSection(unvotedCrimes.get(index)).getString("defendant"))).getName();
+				String plaintiff = Bukkit.getOfflinePlayer(UUID.fromString(crimes.getConfigurationSection(unvotedCrimes.get(index)).getString("plaintiff"))).getName();
+				
+				p.sendMessage("\n \n \n \n \n \n \n \n \n \n \n \n \n" + ChatColor.GOLD + "DEFENDANT: " + defendant + ",    PLAINTIFF: " + plaintiff
+						+ ChatColor.YELLOW + "\n \nCrime: " + crimeString + "\n ");
+				
+				String infoString = "";
+				switch (race) {
+				case 1:
+					infoString = ChatColor.GOLD + "\nHow many claim blocks do you want to revoke from " + defendant + "and award to" + plaintiff + "?";
+					infoString = infoString + ChatColor.GREEN + "\nEnter a number between 1-200. Enter NEXT to view next dispute, BACK to go back, or EXIT to return to the chat.";
+					break;
+				case 3:
+					infoString = ChatColor.GOLD + "\nWhat percentage of " + defendant + "'s wealth do you want to award " + plaintiff + "?";
+					infoString = infoString + ChatColor.GREEN + "\nEnter a number between 0-5. Enter NEXT to view next dispute, BACK to go back, or EXIT to return to the chat.";
+					break;
+				case 4:
+					infoString = ChatColor.GOLD + "\nHow many executions do you want to award " + plaintiff + "?";
+					infoString = infoString + ChatColor.GREEN + "\nEnter a number between 1-5. Enter NEXT to view next dispute, BACK to go back, or EXIT to return to the chat.";
+					break;
+				}
+				p.sendMessage(infoString);
+				
+				plugin.leaderPunishEscape.put(p.getUniqueId(), index);
+			} else if (event.getMessage().toLowerCase().equals("back")) {
+				File leaderDataFile = new File(plugin.getDataFolder() + File.separator + "leaderData.yml");
+				FileConfiguration leaderConfig = YamlConfiguration.loadConfiguration(leaderDataFile);
+				String crimeConfigString = plugin.getRaceString(race) + "GuiltyCrimes";
+				
+				ConfigurationSection crimes = leaderConfig.getConfigurationSection(crimeConfigString);
+				List<String> unvotedCrimes = new ArrayList<String>();
+				crimes.getKeys(false).forEach(crimeString -> {
+					unvotedCrimes.add(crimeString);
+				});
+				
+				index--;
+				if (index < 0) {
+					index = unvotedCrimes.size() - 1;
+				}
+				String crimeString = crimes.getConfigurationSection(unvotedCrimes.get(index)).getString("title");
+				String defendant = Bukkit.getOfflinePlayer(UUID.fromString(crimes.getConfigurationSection(unvotedCrimes.get(index)).getString("defendant"))).getName();
+				String plaintiff = Bukkit.getOfflinePlayer(UUID.fromString(crimes.getConfigurationSection(unvotedCrimes.get(index)).getString("plaintiff"))).getName();
+				
+				p.sendMessage("\n \n \n \n \n \n \n \n \n \n \n \n \n" + ChatColor.GOLD + "DEFENDANT: " + defendant + ",    PLAINTIFF: " + plaintiff
+						+ ChatColor.YELLOW + "\n \nCrime: " + crimeString + "\n ");
+				
+				String infoString = "";
+				switch (race) {
+				case 1:
+					infoString = ChatColor.GOLD + "\nHow many claim blocks do you want to revoke from " + defendant + "and award to" + plaintiff + "?";
+					infoString = infoString + ChatColor.GREEN + "\nEnter a number between 1-200. Enter NEXT to view next dispute, BACK to go back, or EXIT to return to the chat.";
+					break;
+				case 3:
+					infoString = ChatColor.GOLD + "\nWhat percentage of " + defendant + "'s wealth do you want to award " + plaintiff + "?";
+					infoString = infoString + ChatColor.GREEN + "\nEnter a number between 0-5. Enter NEXT to view next dispute, BACK to go back, or EXIT to return to the chat.";
+					break;
+				case 4:
+					infoString = ChatColor.GOLD + "\nHow many executions do you want to award " + plaintiff + "?";
+					infoString = infoString + ChatColor.GREEN + "\nEnter a number between 1-5. Enter NEXT to view next dispute, BACK to go back, or EXIT to return to the chat.";
+					break;
+				}
+				p.sendMessage(infoString);
+				
+				plugin.leaderPunishEscape.put(p.getUniqueId(), index);
+			} else if (plugin.isInteger(event.getMessage()) && ((race == 1 && Integer.parseInt(event.getMessage()) > 0 && Integer.parseInt(event.getMessage()) < 201) || (race == 4 && Integer.parseInt(event.getMessage()) > 0 && Integer.parseInt(event.getMessage()) < 6)) || (race == 3 && plugin.isDouble(event.getMessage()) && Double.parseDouble(event.getMessage()) > 0 && Double.parseDouble(event.getMessage()) <= 5)) {
+				String crimeConfigString = plugin.getRaceString(race) + "GuiltyCrimes";
+				
+				File leaderDataFile = new File(plugin.getDataFolder() + File.separator + "leaderData.yml");
+				FileConfiguration leaderConfig = YamlConfiguration.loadConfiguration(leaderDataFile);
+				
+				ConfigurationSection crimes = leaderConfig.getConfigurationSection(crimeConfigString);
+				
+				ConfigurationSection currentCrime = crimes.getConfigurationSection(crimes.getKeys(false).toArray(new String[crimes.getKeys(false).size()])[index]);//This is so many fucking steps. omg
+
+				String currentDefendantUUID = currentCrime.getString("defendant");
+				String currentPlaintiffUUID = currentCrime.getString("plaintiff");
+				switch (race) {
+				case 1:
+					ConfigurationSection claimBlocks;
+					if (leaderConfig.contains("claimBlocks")) {
+						claimBlocks = leaderConfig.getConfigurationSection("claimBlocks");
+					} else {
+						claimBlocks = leaderConfig.createSection("claimBlocks");
+					}
+					
+					if (claimBlocks.contains(currentPlaintiffUUID)) {
+						claimBlocks.set(currentPlaintiffUUID, claimBlocks.getInt(currentPlaintiffUUID) + Integer.parseInt(event.getMessage()));
+					} else {
+						claimBlocks.set(currentPlaintiffUUID, plugin.startingClaimBlocks + Integer.parseInt(event.getMessage()));
+					}
+					
+					if (claimBlocks.contains(currentDefendantUUID)) {
+						claimBlocks.set(currentDefendantUUID, claimBlocks.getInt(currentDefendantUUID) - Integer.parseInt(event.getMessage()));
+					} else {
+						claimBlocks.set(currentDefendantUUID, plugin.startingClaimBlocks - Integer.parseInt(event.getMessage()));
+					}
+					
+					if (Bukkit.getOfflinePlayer(UUID.fromString(currentPlaintiffUUID)).isOnline()) {
+				 		((Player)Bukkit.getOfflinePlayer(UUID.fromString(currentPlaintiffUUID))).sendMessage(ChatColor.GOLD + "The criminal you reported has been punished, and you have been awarded " + Integer.parseInt(event.getMessage()) + " claim blocks");
+				 	}
+				 	
+				 	if (Bukkit.getOfflinePlayer(UUID.fromString(currentDefendantUUID)).isOnline()) {
+				 		((Player)Bukkit.getOfflinePlayer(UUID.fromString(currentDefendantUUID))).sendMessage(ChatColor.RED + "You have been found guilty, and have been fined " + Integer.parseInt(event.getMessage()) + " claim blocks");
+				 	}
+					
+					break;
+				case 3:
+					File file = new File(plugin.getDataFolder() + File.separator + "bank.yml");
+				 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+				 	
+				 	int transferAmount = (int) (config.getInt(currentDefendantUUID) * (Double.parseDouble(event.getMessage()) / 100));
+				 	
+				 	config.set(currentPlaintiffUUID, config.getInt(currentPlaintiffUUID) + transferAmount);
+				 	config.set(currentDefendantUUID, config.getInt(currentDefendantUUID) - transferAmount);
+				 	
+				 	if (Bukkit.getOfflinePlayer(UUID.fromString(currentPlaintiffUUID)).isOnline()) {
+				 		((Player)Bukkit.getOfflinePlayer(UUID.fromString(currentPlaintiffUUID))).sendMessage(ChatColor.GOLD + "The criminal you reported has been punished, and you have been awarded " + transferAmount + " Dwarven Gold");
+				 	}
+				 	
+				 	if (Bukkit.getOfflinePlayer(UUID.fromString(currentDefendantUUID)).isOnline()) {
+				 		((Player)Bukkit.getOfflinePlayer(UUID.fromString(currentDefendantUUID))).sendMessage(ChatColor.RED + "You have been found guilty, and have been fined " + transferAmount + " Dwarven Gold");
+				 	}
+				 	
+				 	try {
+						config.save(file);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					break;
+				case 4:
+					ConfigurationSection executions;
+					if (leaderConfig.contains("executions")) {
+						executions = leaderConfig.getConfigurationSection("executions");
+					} else {
+						executions = leaderConfig.createSection("executions");
+					}
+					
+					ConfigurationSection plaintiffExecutions;
+					if (executions.contains(currentPlaintiffUUID)) {
+						plaintiffExecutions = executions.getConfigurationSection(currentPlaintiffUUID);
+					} else {
+						plaintiffExecutions = executions.createSection(currentPlaintiffUUID);
+					}
+					
+					if (plaintiffExecutions.contains(currentDefendantUUID)) {
+						plaintiffExecutions.set(currentDefendantUUID, plaintiffExecutions.getInt(currentDefendantUUID) + Integer.parseInt(event.getMessage()));
+					} else {
+						plaintiffExecutions.set(currentDefendantUUID, Integer.parseInt(event.getMessage()));
+					}
+					
+					if (Bukkit.getOfflinePlayer(UUID.fromString(currentPlaintiffUUID)).isOnline()) {
+				 		((Player)Bukkit.getOfflinePlayer(UUID.fromString(currentPlaintiffUUID))).sendMessage(ChatColor.GOLD + "You won the trial you reported, and have been awarded " + ChatColor.DARK_RED + Integer.parseInt(event.getMessage()) + " executions." + ChatColor.GOLD + " You can redeem them in the governemnt menu using /bs.");
+				 	}
+					
+					break;
+				}
+				
+				crimes.set(currentCrime.getName(), null);
+				
+				List<String> unvotedCrimes = new ArrayList<String>();
+				crimes.getKeys(false).forEach(crimeString -> {
+					unvotedCrimes.add(crimeString);
+				});
+				
+				
+				
+				if (unvotedCrimes.size() != 0) {
+					if (index >= unvotedCrimes.size()) {
+						index = 0;
+					}
+					
+					String crimeString = crimes.getConfigurationSection(unvotedCrimes.get(index)).getString("title");
+					String defendant = Bukkit.getOfflinePlayer(UUID.fromString(crimes.getConfigurationSection(unvotedCrimes.get(index)).getString("defendant"))).getName();
+					String plaintiff = Bukkit.getOfflinePlayer(UUID.fromString(crimes.getConfigurationSection(unvotedCrimes.get(index)).getString("plaintiff"))).getName();
+					
+					p.sendMessage("\n \n \n \n \n \n \n \n \n \n \n \n \n" + ChatColor.GOLD + "DEFENDANT: " + defendant + ",    PLAINTIFF: " + plaintiff
+							+ ChatColor.YELLOW + "\n \nCrime: " + crimeString + "\n ");
+					
+					String infoString = "";
+					switch (race) {
+						case 1:
+							infoString = ChatColor.GOLD + "\nHow many claim blocks do you want to revoke from " + defendant + "and award to" + plaintiff + "?";
+							infoString = infoString + ChatColor.GREEN + "\nEnter a number between 1-200. Enter NEXT to view next dispute, BACK to go back, or EXIT to return to the chat.";
+							break;
+						case 3:
+							infoString = ChatColor.GOLD + "\nWhat percentage of " + defendant + "'s wealth do you want to award " + plaintiff + "?";
+							infoString = infoString + ChatColor.GREEN + "\nEnter a number between 0-5. Enter NEXT to view next dispute, BACK to go back, or EXIT to return to the chat.";
+							break;
+						case 4:
+							infoString = ChatColor.GOLD + "\nHow many executions do you want to award " + plaintiff + "?";
+							infoString = infoString + ChatColor.GREEN + "\nEnter a number between 1-5. Enter NEXT to view next dispute, BACK to go back, or EXIT to return to the chat.";
+							break;
+					}
+					p.sendMessage(infoString);
+				} else {
+					p.sendMessage(ChatColor.RED + "There are currently no criminals to punish. Returning to the chat.");
+					plugin.leaderPunishEscape.remove(p.getUniqueId());
+				}
+				try {
+					leaderConfig.save(leaderDataFile);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} else {
+				switch (race) {
+					case 1:
+						p.sendMessage(ChatColor.RED + "Enter a number between 1-200. Enter NEXT to view next dispute, BACK to go back, or EXIT to return to the chat.");
+						break;
+					case 3:
+						p.sendMessage(ChatColor.RED + "Enter a number between 0-5. Enter NEXT to view next dispute, BACK to go back, or EXIT to return to the chat.");
+						break;
+					case 4:
+						p.sendMessage(ChatColor.RED + "Enter a number between 1-5. Enter NEXT to view next dispute, BACK to go back, or EXIT to return to the chat.");
+						break;
+					}
+			}
+				
+			event.setCancelled(true);
+		} else if (plugin.elfPunishEscape.containsKey(p.getUniqueId())) {
+			Integer index = plugin.elfPunishEscape.get(p.getUniqueId());
+			if (event.getMessage().toLowerCase().equals("exit")) {
+				plugin.elfPunishEscape.remove(p.getUniqueId());
+				p.sendMessage(ChatColor.GOLD + "Returning to the chat.");
+			} else if (event.getMessage().toLowerCase().equals("next")) {
+				File leaderDataFile = new File(plugin.getDataFolder() + File.separator + "leaderData.yml");
+				FileConfiguration leaderConfig = YamlConfiguration.loadConfiguration(leaderDataFile);
+				String crimeConfigString = plugin.getRaceString(race) + "GuiltyCrimes";
+				
+				ConfigurationSection crimes = leaderConfig.getConfigurationSection(crimeConfigString);
+				List<String> unvotedCrimes = new ArrayList<String>();
+				crimes.getKeys(false).forEach(crimeString -> {
+					if (!crimes.getConfigurationSection(crimeString).contains(p.getUniqueId().toString())) {
+						unvotedCrimes.add(crimeString);
+					}
+				});
+				
+				index++;
+				if (index >= unvotedCrimes.size()) {
+					index = 0;
+				}
+				String crimeString = crimes.getConfigurationSection(unvotedCrimes.get(index)).getString("title");
+				String defendant = Bukkit.getOfflinePlayer(UUID.fromString(crimes.getConfigurationSection(unvotedCrimes.get(index)).getString("defendant"))).getName();
+				String plaintiff = Bukkit.getOfflinePlayer(UUID.fromString(crimes.getConfigurationSection(unvotedCrimes.get(index)).getString("plaintiff"))).getName();
+				
+				p.sendMessage("\n \n \n \n \n \n \n \n \n \n \n \n \n" + ChatColor.GOLD + "DEFENDANT: " + defendant + ",    PLAINTIFF: " + plaintiff
+						+ ChatColor.YELLOW + "\n \nCrime: " + crimeString + "\n ");
+				
+				String infoString = ChatColor.GOLD + "\nHow many hours do you want to restrict " + defendant + "'s access to communal resources?";
+				infoString = infoString + ChatColor.GREEN + "\nEnter a number between 1-48. Enter NEXT to view next dispute, BACK to go back, or EXIT to return to the chat.";
+				
+				p.sendMessage(infoString);
+				plugin.elfPunishEscape.put(p.getUniqueId(), index);
+			} else if (event.getMessage().toLowerCase().equals("back")) {
+				File leaderDataFile = new File(plugin.getDataFolder() + File.separator + "leaderData.yml");
+				FileConfiguration leaderConfig = YamlConfiguration.loadConfiguration(leaderDataFile);
+				String crimeConfigString = plugin.getRaceString(race) + "GuiltyCrimes";
+				
+				ConfigurationSection crimes = leaderConfig.getConfigurationSection(crimeConfigString);
+				List<String> unvotedCrimes = new ArrayList<String>();
+				crimes.getKeys(false).forEach(crimeString -> {
+					if (!crimes.getConfigurationSection(crimeString).contains(p.getUniqueId().toString())) {
+						unvotedCrimes.add(crimeString);
+					}
+				});
+				
+				index--;
+				if (index < 0) {
+					index = unvotedCrimes.size() - 1;
+				}
+				String crimeString = crimes.getConfigurationSection(unvotedCrimes.get(index)).getString("title");
+				String defendant = Bukkit.getOfflinePlayer(UUID.fromString(crimes.getConfigurationSection(unvotedCrimes.get(index)).getString("defendant"))).getName();
+				String plaintiff = Bukkit.getOfflinePlayer(UUID.fromString(crimes.getConfigurationSection(unvotedCrimes.get(index)).getString("plaintiff"))).getName();
+				
+				p.sendMessage("\n \n \n \n \n \n \n \n \n \n \n \n \n" + ChatColor.GOLD + "DEFENDANT: " + defendant + ",    PLAINTIFF: " + plaintiff
+						+ ChatColor.YELLOW + "\n \nCrime: " + crimeString + "\n ");
+				
+				String infoString = ChatColor.GOLD + "\nHow many hours do you want to restrict " + defendant + "'s access to communal resources?";
+				infoString = infoString + ChatColor.GREEN + "\nEnter a number between 1-48. Enter NEXT to view next dispute, BACK to go back, or EXIT to return to the chat.";
+				
+				p.sendMessage(infoString);
+				plugin.elfPunishEscape.put(p.getUniqueId(), index);
+			} else if (plugin.isInteger(event.getMessage()) && Integer.parseInt(event.getMessage()) > 0  && Integer.parseInt(event.getMessage()) < 49) {
+				File leaderDataFile = new File(plugin.getDataFolder() + File.separator + "leaderData.yml");
+				FileConfiguration leaderConfig = YamlConfiguration.loadConfiguration(leaderDataFile);
+				String crimeConfigString = plugin.getRaceString(race) + "GuiltyCrimes";
+				
+				ConfigurationSection crimes = leaderConfig.getConfigurationSection(crimeConfigString);
+				ConfigurationSection currentCrime = crimes.getConfigurationSection(crimes.getKeys(false).toArray(new String[crimes.getKeys(false).size()])[index]);//This is so many fucking steps. omg
+
+				currentCrime.set(p.getUniqueId().toString(), Integer.parseInt(event.getMessage()));
+				
+				String currentDefendantUUID = currentCrime.getString("defendant");
+				
+				if (currentCrime.getKeys(false).size() - 2 > plugin.getAllEligibleElves().size()) {
+					String[] keys = currentCrime.getKeys(false).toArray(new String[currentCrime.getKeys(false).size()]);
+					int totalAmount = 0;
+					int c = 0;
+					for (String key : keys) {
+						if (!(key.equals("title") || key.equals("defendant") || key.equals("plaintiff"))) {
+							c++;
+							totalAmount += currentCrime.getInt(key);
+						}
+					}
+					
+					double punishmentHours = totalAmount / c;
+					ConfigurationSection guiltyElvesCooldown;
+					if (leaderConfig.contains("guiltyElvesCooldown")) {
+						guiltyElvesCooldown = leaderConfig.getConfigurationSection("guiltyElvesCooldown");
+					} else {
+						guiltyElvesCooldown = leaderConfig.createSection("guiltyElvesCooldown");
+					}
+					guiltyElvesCooldown.set(currentDefendantUUID, System.currentTimeMillis() + (3600000 * punishmentHours));
+					
+					if (Bukkit.getOfflinePlayer(UUID.fromString(currentDefendantUUID)).isOnline()) {
+				 		((Player)Bukkit.getOfflinePlayer(UUID.fromString(currentDefendantUUID))).sendMessage(ChatColor.RED + "You have been found guilty of a crime, and are now restricted from accessing communal resources for " + ChatColor.DARK_PURPLE + (int)punishmentHours + " hours.");
+				 	}
+					
+					crimes.set(currentCrime.getName(), null);
+				}
+				
+				List<String> unvotedCrimes = new ArrayList<String>();
+				crimes.getKeys(false).forEach(crimeString -> {
+					if (!crimes.getConfigurationSection(crimeString).contains(p.getUniqueId().toString())) {
+						unvotedCrimes.add(crimeString);
+					}
+				});
+				
+				if (unvotedCrimes.size() != 0) {
+					if (index >= unvotedCrimes.size()) {
+						index = 0;
+					}
+					String crimeString = crimes.getConfigurationSection(unvotedCrimes.get(index)).getString("title");
+					String defendant = Bukkit.getOfflinePlayer(UUID.fromString(crimes.getConfigurationSection(unvotedCrimes.get(index)).getString("defendant"))).getName();
+					String plaintiff = Bukkit.getOfflinePlayer(UUID.fromString(crimes.getConfigurationSection(unvotedCrimes.get(index)).getString("plaintiff"))).getName();
+					
+					p.sendMessage("\n \n \n \n \n \n \n \n \n \n \n \n \n" + ChatColor.GOLD + "DEFENDANT: " + defendant + ",    PLAINTIFF: " + plaintiff
+							+ ChatColor.YELLOW + "\n \nCrime: " + crimeString + "\n ");
+					
+					String infoString = ChatColor.GOLD + "\nHow long do you want to restrict " + defendant + "'s access to communal resources?";
+					infoString = infoString + ChatColor.GREEN + "\nEnter a number between 1-48. Enter NEXT to view next dispute, BACK to go back, or EXIT to return to the chat.";
+					
+					p.sendMessage(infoString);
+					plugin.elfPunishEscape.put(p.getUniqueId(), index);
+				} else {
+					p.sendMessage(ChatColor.RED + "There are no more criminals to decide punishments for. Returning to the chat.");
+					plugin.elfPunishEscape.remove(p.getUniqueId());
+				}
+				try {
+					leaderConfig.save(leaderDataFile);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} else {
+				p.sendMessage(ChatColor.RED + "Enter a number between 1-48. Enter NEXT to view next dispute, BACK to go back, or EXIT to return to the chat.");
+			}
+			event.setCancelled(true);
+		} else if (plugin.taxDwarvesEscape == p.getUniqueId()) {
 			if (plugin.isDouble(event.getMessage())) {
 				double taxAmount = Double.parseDouble(event.getMessage());
 				if (taxAmount > 5 || taxAmount < 0) {
@@ -98,12 +480,71 @@ public class ChatChannel implements Listener {
 					
 			}
 			event.setCancelled(true);
+		} else if (plugin.draftLawEscape.contains(p.getUniqueId())) {
+			File leaderDataFile = new File(plugin.getDataFolder() + File.separator + "leaderData.yml");
+			FileConfiguration leaderConfig = YamlConfiguration.loadConfiguration(leaderDataFile);
+
+			
+			String raceString = null;
+			switch (race) {
+				case 1:
+					raceString = "men";
+					break;
+				case 2:
+					raceString = "elfDraft";
+					break;
+				case 3:
+					raceString = "dwarf";
+					break;
+				case 4:
+					raceString = "orc";
+					break;
+			}
+			
+			if (race == 2) {
+				if (!leaderConfig.contains(raceString + "Laws")) {
+					ConfigurationSection elfDraftLaws = leaderConfig.createSection(raceString + "Laws");
+					ConfigurationSection bill = elfDraftLaws.createSection(event.getMessage().replaceAll("\\p{Punct}", ""));
+					bill.set("title", event.getMessage());
+				} else {
+					ConfigurationSection elfDraftLaws = leaderConfig.getConfigurationSection(raceString + "Laws");
+					ConfigurationSection bill = elfDraftLaws.createSection(event.getMessage().replaceAll("\\p{Punct}", ""));
+					bill.set("title", event.getMessage());
+				}
+			} else {
+			
+				if (!leaderConfig.contains(raceString + "Laws")) {
+					List<String> suggestionList = new ArrayList<String>();
+					suggestionList.add(event.getMessage());
+					leaderConfig.set(raceString + "Laws", suggestionList);
+				} else {
+					List<String> suggestionList = leaderConfig.getStringList(raceString + "Laws");
+					suggestionList.add(event.getMessage());
+					leaderConfig.set(raceString + "Laws", suggestionList);
+				}
+			}
+			
+			String optStr = "";
+			if (race == 2) {
+				optStr = "\nOnce this law gets enough votes, it will be passed.";
+			}
+			
+			p.sendMessage(ChatColor.GOLD + "You've drafted a new law: " + ChatColor.YELLOW + event.getMessage() + optStr);
+			
+			
+			
+			try {
+				leaderConfig.save(leaderDataFile);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			plugin.draftLawEscape.remove(p.getUniqueId());
+			
+			event.setCancelled(true);
 		} else if (plugin.lawSuggestionEscape.contains(p.getUniqueId())) {
 			File leaderDataFile = new File(plugin.getDataFolder() + File.separator + "leaderData.yml");
 			FileConfiguration leaderConfig = YamlConfiguration.loadConfiguration(leaderDataFile);
 
-			PersistentDataContainer data = p.getPersistentDataContainer();
-			int race = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
 			
 			String raceString = null;
 			switch (race) {
@@ -143,12 +584,10 @@ public class ChatChannel implements Listener {
 			plugin.lawSuggestionEscape.remove(p.getUniqueId());
 			
 			event.setCancelled(true);
-		} else if (plugin.reportCrimeEscape.contains(p.getUniqueId())) {
+		} else if (plugin.reportCrimeEscape.containsKey(p.getUniqueId())) {
 			File leaderDataFile = new File(plugin.getDataFolder() + File.separator + "leaderData.yml");
 			FileConfiguration leaderConfig = YamlConfiguration.loadConfiguration(leaderDataFile);
 
-			PersistentDataContainer data = p.getPersistentDataContainer();
-			int race = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
 			
 			String raceString = null;
 			switch (race) {
@@ -166,31 +605,79 @@ public class ChatChannel implements Listener {
 					break;
 			}
 			
-			if (!leaderConfig.contains(raceString + "ReportedCrimes")) {
-				List<String> suggestionList = new ArrayList<String>();
-				suggestionList.add(event.getMessage());
-				leaderConfig.set(raceString + "ReportedCrimes", suggestionList);
-			} else {
-				List<String> suggestionList = leaderConfig.getStringList(raceString + "ReportedCrimes");
-				suggestionList.add(event.getMessage());
-				leaderConfig.set(raceString + "ReportedCrimes", suggestionList);
+			
+			if (plugin.reportCrimeEscape.get(p.getUniqueId()) == 0) {
+				
+				plugin.reportCrimeMap.put(p.getUniqueId(), event.getMessage());
+					
+				p.sendMessage(ChatColor.GOLD + "<Reported Crime>: " + ChatColor.YELLOW + event.getMessage());
+				p.sendMessage(ChatColor.YELLOW + "Enter the username of the player that committed the alleged crime.");
+				
+				
+				plugin.reportCrimeEscape.put(p.getUniqueId(), 1);
+				
+			} else if (plugin.reportCrimeEscape.get(p.getUniqueId()) == 1) {
+				
+				
+				UUID reportedUUID = null;
+				for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
+					if (player.getName().equals(event.getMessage()) ) {
+						reportedUUID = player.getUniqueId();
+						break;
+					}
+				}
+				
+				if (reportedUUID == null) {
+					p.sendMessage(ChatColor.RED + "The username you entered does not exist. Please try again >");
+				} else {
+					
+					if (race != plugin.getRace(Bukkit.getOfflinePlayer(reportedUUID))) {
+						p.sendMessage(ChatColor.RED + "Reported player must be of the same race. Exiting crime reporting");
+						
+						plugin.reportCrimeEscape.remove(p.getUniqueId());
+						plugin.reportCrimeMap.remove(p.getUniqueId());
+						event.setCancelled(true);
+						return;
+					}
+					
+					p.sendMessage(ChatColor.GOLD + "Player reported.");ConfigurationSection allCrimes;
+					if (!leaderConfig.contains(raceString + "ReportedCrimes")) {
+						allCrimes = leaderConfig.createSection(raceString + "ReportedCrimes");
+					} else {
+						allCrimes = leaderConfig.getConfigurationSection(raceString + "ReportedCrimes");
+					}
+					ConfigurationSection crime = allCrimes.createSection(plugin.reportCrimeMap.get(p.getUniqueId()).replaceAll("\\p{Punct}", ""));
+					crime.set("title", plugin.reportCrimeMap.get(p.getUniqueId()));
+					crime.set("plaintiff", p.getUniqueId().toString());
+					crime.set("defendant", reportedUUID.toString());
+					
+					try {
+						leaderConfig.save(leaderDataFile);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+					plugin.reportCrimeEscape.remove(p.getUniqueId());
+					plugin.reportCrimeMap.remove(p.getUniqueId());
+					
+
+					File reportCrimeCooldownFile = new File(plugin.getDataFolder() + File.separator + "reportCrimeCooldownData.yml");
+					FileConfiguration reportCrimeCooldownConfig = YamlConfiguration.loadConfiguration(reportCrimeCooldownFile);
+					
+					reportCrimeCooldownConfig.set(p.getUniqueId().toString(), System.currentTimeMillis());
+					try {
+						reportCrimeCooldownConfig.save(reportCrimeCooldownFile);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				
 			}
-			
-			p.sendMessage(ChatColor.GOLD + "<Reported Crime>: " + ChatColor.YELLOW + event.getMessage());
-			
-			
-			
-			try {
-				leaderConfig.save(leaderDataFile);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			plugin.reportCrimeEscape.remove(p.getUniqueId());
-			
+				
 			event.setCancelled(true);
 		} else {
 			PersistentDataContainer data = p.getPersistentDataContainer();
-			int race = 0;
+			race = 0;
 			if (data.has(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER)) {
 				race = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
 			}

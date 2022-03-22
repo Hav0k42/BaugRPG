@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -26,6 +27,46 @@ public class CustomInventories {
 	Main plugin;
 	CustomInventories(Main plugin) {
 		this.plugin = plugin;
+	}
+	
+	
+	public Inventory getExecutionMenu(UUID uuid) {
+		File leaderDataFile = new File(plugin.getDataFolder() + File.separator + "leaderData.yml");
+		FileConfiguration leaderConfig = YamlConfiguration.loadConfiguration(leaderDataFile);
+		ConfigurationSection executions = leaderConfig.getConfigurationSection("executions");
+		
+		ConfigurationSection playerExecutions = executions.getConfigurationSection(uuid.toString());
+		String[] executionKeys = playerExecutions.getKeys(false).toArray(new String[playerExecutions.getKeys(false).size()]);
+		
+		int inventorySize = 18;
+		if (executionKeys.length > 18) {
+			inventorySize = 27;
+		}
+		
+		String inventoryName = ChatColor.DARK_RED + "Executions";
+		Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
+		
+		int i = 0;
+		for (String victimUUID : executionKeys) {
+			OfflinePlayer victim = Bukkit.getOfflinePlayer(UUID.fromString(victimUUID));
+			if (victim.isOnline()) {
+			
+				if (i > 17) {
+					break;
+				}
+				ItemStack victimHead =  new ItemStack(Material.PLAYER_HEAD);
+				SkullMeta victimHeadMeta = (SkullMeta)victimHead.getItemMeta();
+				victimHeadMeta.setOwningPlayer(victim);
+				victimHeadMeta.setDisplayName(ChatColor.DARK_RED + victim.getName() + " executions: " + playerExecutions.getInt(victimUUID));
+				
+				victimHead.setItemMeta(victimHeadMeta);
+				inventory.setItem(i, victimHead);
+				i++;
+			}
+		}
+		inventory.setItem(inventorySize - 9, plugin.itemManager.getBackItem());
+		
+		return inventory;
 	}
 	
 	
@@ -376,12 +417,24 @@ public class CustomInventories {
 				inventory.setItem(currentIndex, plugin.itemManager.getLeaderViewCrimesItem(race));
 				currentIndex++;
 				
+				if (race != 2) {
+					inventory.setItem(currentIndex, plugin.itemManager.getLeaderDecidePunishmentItem(race));
+				} else {
+					inventory.setItem(currentIndex, plugin.itemManager.getDecidePunishmentItem());
+				}
+				currentIndex++;
+				
 				if (race == 3) {
 					inventory.setItem(currentIndex, plugin.itemManager.getTaxDwarvesItem());
 					currentIndex++;
 					inventory.setItem(currentIndex, plugin.itemManager.getTaxDwarvesWeeklyItem());
 					currentIndex++;
 				}
+				
+				if (race == 4) {
+					inventory.setItem(currentIndex, plugin.itemManager.getExecutionItem());
+				}
+				currentIndex++;
 				
 			} else {
 				//Player is not the leader
@@ -427,10 +480,20 @@ public class CustomInventories {
 					currentIndex++;
 				}
 				
+				if (race == 2) {
+					inventory.setItem(currentIndex, plugin.itemManager.getDecidePunishmentItem());
+					currentIndex++;
+				}
+				
 				inventory.setItem(currentIndex, plugin.itemManager.getReportCrimeItem(race));
 				currentIndex++;
 				
+				if (race == 4) {
+					inventory.setItem(currentIndex, plugin.itemManager.getExecutionItem());
+				}
+				currentIndex++;
 			}
+			
 		} else {
 			//There is no leader
 			if (leaderConfig.getStringList("VotedPlayers").contains(player.getUniqueId().toString())) {
@@ -890,6 +953,56 @@ public class CustomInventories {
 	
 	
 	
+	
+	
+	
+	public Inventory getFeatureManagementInventory() {
+		File file = new File(plugin.getDataFolder() + File.separator + "config.yml");
+	 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+		
+	 	if (!config.contains("allowTpa")) {
+	 		config.set("allowTpa", true);
+	 	}
+	 	
+	 	if (!config.contains("allowRecipe")) {
+	 		config.set("allowRecipe", true);
+	 	}
+	 	
+	 	if (!config.contains("allowEndermanGriefing")) {
+	 		config.set("allowEndermanGriefing", false);
+	 	}
+	 	
+	 	if (!config.contains("allowCreeperGriefing")) {
+	 		config.set("allowCreeperGriefing", false);
+	 	}
+	 	
+	 	if (!config.contains("allowTntGriefing")) {
+	 		config.set("allowTntGriefing", false);
+	 	}
+	 	
+	 	if (!config.contains("allowGhastGriefing")) {
+	 		config.set("allowGhastGriefing", false);
+	 	}
+	 	
+
+ 		try {
+			config.save(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		int inventorySize = 54;
+		String inventoryName = "Feature Management";
+		Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
+		
+		inventory.setItem(10, plugin.itemManager.getTpaFeatureItem());
+		inventory.setItem(11, plugin.itemManager.getRecipeFeatureItem());
+		inventory.setItem(12, plugin.itemManager.getEndermanGriefItem());
+		inventory.setItem(13, plugin.itemManager.getCreeperGriefItem());
+		inventory.setItem(14, plugin.itemManager.getTntGriefItem());
+		inventory.setItem(15, plugin.itemManager.getGhastGriefItem());
+		return inventory;
+	}
 	
 	
 	

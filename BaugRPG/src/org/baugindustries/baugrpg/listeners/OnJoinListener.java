@@ -67,8 +67,10 @@ public class OnJoinListener implements Listener{
 			e.printStackTrace();
 		}
 	 	
-	 	player.setGameMode(GameMode.SURVIVAL);
-	 	
+	 	if (player.getGameMode().equals(GameMode.SPECTATOR)) {
+	 		player.setGameMode(GameMode.SURVIVAL);
+	 	}
+	 		
 	 	if (plugin.steeledResolveDisconnectedPlayers.contains(player.getUniqueId())) {
 	 		player.teleport(plugin.steeledResolveInitLoc.get(player.getUniqueId()));
 	 		plugin.steeledResolveDisconnectedPlayers.remove(player.getUniqueId());

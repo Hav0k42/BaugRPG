@@ -136,9 +136,11 @@ public class ArcaneJewelsListener implements Listener {
 					baseLoc.getWorld().getNearbyEntities(baseLoc, 8, 8, 8).forEach(entity -> {
 						if (entity instanceof Player) {
 							Player player = (Player) entity;
-							player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 200, 0));
-							player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 200, 0));
-							player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 60, 0));
+							if (plugin.getRace(player) == 3) {
+								player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 200, 0));
+								player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 200, 0));
+								player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 60, 0));
+							}
 						}
 					});
 				} else {

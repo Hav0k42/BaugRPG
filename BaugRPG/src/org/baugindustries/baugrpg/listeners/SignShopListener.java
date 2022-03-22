@@ -32,7 +32,6 @@ public class SignShopListener implements Listener{
 		this.plugin = plugin;
 	}
 	
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onClickSign(PlayerInteractEvent event) {
 		
@@ -73,7 +72,7 @@ public class SignShopListener implements Listener{
 		 	FileConfiguration econconfig = YamlConfiguration.loadConfiguration(econfile);
 		 	
 			if (plugin.signData.containsKey(player) && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-				if (player.getItemInHand() != null || !player.getItemInHand().equals(Material.AIR)) {
+				if (player.getItemInUse() != null || !player.getItemInUse().equals(Material.AIR)) {
 					
 					sign.setLine(0, ChatColor.DARK_PURPLE + "[Dwarven Shop]");
 					sign.setLine(1, plugin.signData.get(player).get(0));
@@ -83,7 +82,7 @@ public class SignShopListener implements Listener{
 					
 					
 				 	
-				 	signconfig.set(title, player.getItemInHand());
+				 	signconfig.set(title, player.getItemInUse());
 				 	signconfig.set(title + "owner", player.getUniqueId().toString());
 				 	signconfig.set(title + "chestX", blockBehindSign.getLocation().getBlockX());
 				 	signconfig.set(title + "chestY", blockBehindSign.getLocation().getBlockY());

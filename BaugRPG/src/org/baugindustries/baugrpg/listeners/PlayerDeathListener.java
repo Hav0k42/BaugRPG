@@ -42,7 +42,12 @@ public class PlayerDeathListener implements Listener{
 			if (killerRace == 3 && playerRace == 2) {//Dwarf killed an elf
 				killer.getWorld().dropItemNaturally(player.getLocation(), plugin.createItem(Material.GOLD_INGOT, 1 + (int)(Math.random() * 3)));
 			}
+			
+			if (plugin.orcVictim.equals(player.getUniqueId())) {
+				plugin.orcVictim = null;
+			}
 		}
+		
 		
 		int race = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
 	    

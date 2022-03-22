@@ -167,7 +167,7 @@ public class CustomItems {
 				Material.CHEST,
 				1,
 				ChatColor.GOLD + "Shared Inventories",
-				Arrays.asList(ChatColor.LIGHT_PURPLE + "Access fellow Elves' inventories and ender chests"));
+				Arrays.asList(ChatColor.LIGHT_PURPLE + "Access fellow Elves' ", "inventories and ender chests"));
 	}
 	
 	public ItemStack getDwarvenBankConversionItem() {
@@ -472,6 +472,21 @@ public class CustomItems {
 				ChatColor.RED + "TNT Griefing", 
 				Arrays.asList(ChatColor.LIGHT_PURPLE + "Allow TNT Griefing",
 						color + config.get("allowTntGriefing").toString().toUpperCase()));
+	}
+	
+	public ItemStack getGhastGriefItem() {
+		File file = new File(plugin.getDataFolder() + File.separator + "config.yml");
+	 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+	 	ChatColor color = ChatColor.RED;
+	 	if (config.getBoolean("allowGhastGriefing")) {
+	 		color = ChatColor.GREEN;
+	 	}
+		return plugin.createItem(
+				Material.FIRE_CHARGE, 
+				1, 
+				ChatColor.GRAY + "Ghast Griefing", 
+				Arrays.asList(ChatColor.LIGHT_PURPLE + "Allow Ghast Griefing",
+						color + config.get("allowGhastGriefing").toString().toUpperCase()));
 	}
 	
 	public ItemStack getStableMasterSkill1Item(Player player) {
@@ -1343,7 +1358,7 @@ public class CustomItems {
 		return plugin.createItem(
 				Material.WRITABLE_BOOK,
 				1,
-				getRaceColor(race) + "Draft a new laws.");
+				getRaceColor(race) + "Draft a new law.");
 	}
 
 	public ItemStack getViewLawSuggestionsItem(int race) {
@@ -1357,7 +1372,25 @@ public class CustomItems {
 		return plugin.createItem(
 				Material.BOOK,
 				1,
-				getRaceColor(race) + "View alleged crimes, and decide punishments.");
+				getRaceColor(race) + "View alleged crimes.");
+	}
+	
+	public ItemStack getLeaderDecidePunishmentItem(int race) {
+		ChatColor color = getRaceColor(race);
+		if (race == 2) {
+			color = ChatColor.WHITE;
+		}
+		return plugin.createItem(
+				Material.IRON_BARS,
+				1,
+				color + "Decide punishments for guilty citizens.");
+	}
+	
+	public ItemStack getDecidePunishmentItem() {
+		return plugin.createItem(
+				Material.IRON_BARS,
+				1,
+				ChatColor.DARK_GREEN + "Decide punishments for guilty citizens.");
 	}
 
 	public ItemStack getTaxDwarvesItem() {
@@ -1365,6 +1398,13 @@ public class CustomItems {
 				Material.GOLD_NUGGET,
 				1,
 				ChatColor.DARK_PURPLE + "Decide how much you'll tax your citizens.");
+	}
+	
+	public ItemStack getExecutionItem() {
+		return plugin.createItem(
+				Material.NETHERITE_AXE,
+				1,
+				ChatColor.DARK_RED + "View execution bounties you can redeem");
 	}
 	
 	public ItemStack getTaxDwarvesWeeklyItem() {

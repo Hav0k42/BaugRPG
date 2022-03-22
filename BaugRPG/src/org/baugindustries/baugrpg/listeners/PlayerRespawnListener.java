@@ -41,5 +41,27 @@ public class PlayerRespawnListener implements Listener {
 			player.setSaturatedRegenRate(plugin.onJoinListener.getSaturationSlownessMultiplier() * 10);
 			player.setUnsaturatedRegenRate(plugin.onJoinListener.getSaturationSlownessMultiplier() * 80);
 		}
+		
+
+		File claimsFile = new File(plugin.getDataFolder() + File.separator + "claims.yml");
+		FileConfiguration claimsConfig = YamlConfiguration.loadConfiguration(claimsFile);
+		int race = plugin.getRace(player);
+		
+		if (player.getBedSpawnLocation() == null) {
+			switch (race) {
+			case 1://Men
+				event.setRespawnLocation(claimsConfig.getLocation("menSpawn"));
+				break;
+			case 2://Elves
+				event.setRespawnLocation(claimsConfig.getLocation("elfSpawn"));
+				break;
+			case 3://Dwarves
+				event.setRespawnLocation(claimsConfig.getLocation("dwarfSpawn"));
+				break;
+			case 4://Orcs
+				event.setRespawnLocation(claimsConfig.getLocation("orcSpawn"));
+				break;
+			}
+		}
 	}
 }

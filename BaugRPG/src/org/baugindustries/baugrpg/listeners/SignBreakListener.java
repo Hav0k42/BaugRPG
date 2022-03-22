@@ -39,6 +39,10 @@ public class SignBreakListener implements Listener{
 		 			event.setCancelled(true);
 		 		} else {
 		 			signconfig.set(title, null);
+		 			signconfig.set(title + "owner", null);
+		 			signconfig.set(title + "chestX", null);
+		 			signconfig.set(title + "chestY", null);
+		 			signconfig.set(title + "chestZ", null);
 		 			try {
 						signconfig.save(signfile);
 					} catch (IOException e) {

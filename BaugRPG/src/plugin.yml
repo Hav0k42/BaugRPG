@@ -61,3 +61,6 @@ commands:
   setbal:
    usage: /setbal <Player> <Amount>
    description: Sets the amount of dwarven gold in a players wallet.
+  setpoi:
+   usage: /setpoi <poi>
+   description: sets a point of interest used to teleport players to on certain events. Required for plugin use.

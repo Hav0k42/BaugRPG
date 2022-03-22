@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.IOException;
 
 import org.baugindustries.baugrpg.Main;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -13,6 +15,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+
+
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -28,6 +32,14 @@ public class OnQuitListener implements Listener{
 		
 		//Save player's inventory to YML file
 		Player player = event.getPlayer();
+		
+		
+		
+		if (plugin.orcVictim != null && plugin.orcVictim.equals(player.getUniqueId())) {
+			player.setHealth(0);
+			Bukkit.broadcastMessage(player.getDisplayName() + ChatColor.WHITE + " tried to escape the inevitable.");
+		}
+		
 		
 		//create file with player's UUID
 		File file = new File(plugin.getDataFolder() + File.separator + "inventoryData" + File.separator + player.getUniqueId() + ".yml");

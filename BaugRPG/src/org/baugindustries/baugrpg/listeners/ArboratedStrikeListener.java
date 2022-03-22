@@ -104,7 +104,7 @@ public class ArboratedStrikeListener implements Listener {
  				break;
  			}
  		}
-		Location initLoc = new Location(event.getEntity().getLocation().getWorld(), event.getEntity().getLocation().getX(), yPos, event.getEntity().getLocation().getZ());
+		Location initLoc = new Location(event.getEntity().getLocation().getWorld(), event.getEntity().getLocation().getX(), yPos - 2, event.getEntity().getLocation().getZ());
 		runMoveTree(tree, initLoc);
 		
 	}
@@ -112,9 +112,9 @@ public class ArboratedStrikeListener implements Listener {
 	private void runMoveTree(ArmorStandEntity tree, Location initLoc) {
 		Runnable teleportPlayer = new Runnable() {
 			public void run() {
-				if (tree.getCenterLoc().getY() + 2 < initLoc.getY()) {
+				if (tree.getCenterLoc().getY() < initLoc.getY()) {
 					initLoc.getWorld().playSound(initLoc, Sound.BLOCK_GRASS_STEP, 2, 1);
-					tree.setLocation(tree.getCenterLoc().add(0, 2, 0));
+					tree.setLocation(tree.getCenterLoc().add(0, 1, 0));
 					if (initLoc.getY() - tree.getCenterLoc().getY() < 10) {
 						//Launch any nearby Entites: radius 2.5
 						initLoc.getWorld().getNearbyEntities(initLoc, 2, 2, 2).forEach(entity -> {

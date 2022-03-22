@@ -32,6 +32,11 @@ public class Tpa implements CommandExecutor {
 			return true;
 		}
 		Player player = (Player)sender;
+		
+		if (plugin.orcVictim != null && plugin.orcVictim.equals(player.getUniqueId())) {
+			player.sendMessage(ChatColor.RED + "Take your medicine.");
+		}
+		
 		List<Player> allOnlinePlayers = new ArrayList<Player>();
 		OfflinePlayer[] allOfflinePlayers = plugin.getServer().getOfflinePlayers();
 		for (int i = 0; i < allOfflinePlayers.length; i++) {
@@ -48,7 +53,6 @@ public class Tpa implements CommandExecutor {
 	 		try {
 				config.save(file);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	 	}

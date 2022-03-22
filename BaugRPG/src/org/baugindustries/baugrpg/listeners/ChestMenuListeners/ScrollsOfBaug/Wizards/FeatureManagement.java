@@ -33,17 +33,11 @@ public class FeatureManagement implements Listener{
 		ItemStack endermanGriefItem = plugin.itemManager.getEndermanGriefItem();
 		ItemStack creeperGriefItem = plugin.itemManager.getCreeperGriefItem();
 		ItemStack tntGriefItem = plugin.itemManager.getTntGriefItem();
+		ItemStack ghastGriefItem = plugin.itemManager.getGhastGriefItem();
 		
 		if (event.getCurrentItem().equals(tpaItem)) {
 			
 			config.set("allowTpa", !(Boolean)config.get("allowTpa"));
-			try {
-				config.save(file);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
 			ItemStack newTpaItem = plugin.itemManager.getTpaFeatureItem();;
 			event.getClickedInventory().setItem(event.getSlot(), newTpaItem);
 		}
@@ -52,13 +46,6 @@ public class FeatureManagement implements Listener{
 		if (event.getCurrentItem().equals(recipeItem)) {
 			
 			config.set("allowRecipe", !(Boolean)config.get("allowRecipe"));
-			try {
-				config.save(file);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
 			ItemStack newRecipeItem = plugin.itemManager.getRecipeFeatureItem();;
 			event.getClickedInventory().setItem(event.getSlot(), newRecipeItem);
 		}
@@ -66,13 +53,6 @@ public class FeatureManagement implements Listener{
 		if (event.getCurrentItem().equals(endermanGriefItem)) {
 			
 			config.set("allowEndermanGriefing", !(Boolean)config.get("allowEndermanGriefing"));
-			try {
-				config.save(file);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
 			ItemStack newEndermanGriefItem = plugin.itemManager.getEndermanGriefItem();
 			event.getClickedInventory().setItem(event.getSlot(), newEndermanGriefItem);
 		}
@@ -80,13 +60,6 @@ public class FeatureManagement implements Listener{
 		if (event.getCurrentItem().equals(creeperGriefItem)) {
 			
 			config.set("allowCreeperGriefing", !(Boolean)config.get("allowCreeperGriefing"));
-			try {
-				config.save(file);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
 			ItemStack newCreeperGriefItem = plugin.itemManager.getCreeperGriefItem();
 			event.getClickedInventory().setItem(event.getSlot(), newCreeperGriefItem);
 		}
@@ -94,16 +67,24 @@ public class FeatureManagement implements Listener{
 		if (event.getCurrentItem().equals(tntGriefItem)) {
 			
 			config.set("allowTntGriefing", !(Boolean)config.get("allowTntGriefing"));
-			try {
-				config.save(file);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
 			ItemStack newTntGriefItem = plugin.itemManager.getTntGriefItem();
 			event.getClickedInventory().setItem(event.getSlot(), newTntGriefItem);
 		}
+		
+		if (event.getCurrentItem().equals(ghastGriefItem)) {
+			
+			config.set("allowGhastGriefing", !(Boolean)config.get("allowGhastGriefing"));
+			ItemStack newGhastGriefItem = plugin.itemManager.getGhastGriefItem();
+			event.getClickedInventory().setItem(event.getSlot(), newGhastGriefItem);
+		}
+		
+
+		try {
+			config.save(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		
 		
 		event.setCancelled(true);

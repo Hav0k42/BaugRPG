@@ -1,9 +1,13 @@
 package org.baugindustries.baugrpg.listeners.ChestMenuListeners;
 
 
+import java.io.File;
+
 import org.baugindustries.baugrpg.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -51,19 +55,25 @@ public class ConfirmRaceInventoryListener implements Listener{
 							
 							player.closeInventory();
 							
+							File claimsFile = new File(plugin.getDataFolder() + File.separator + "claims.yml");
+							FileConfiguration claimsConfig = YamlConfiguration.loadConfiguration(claimsFile);
 							
 							int race = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
 							switch (race) {
 								case 1://Men
+									player.teleport(claimsConfig.getLocation("menSpawn"));
 									plugin.board.getTeam("Men").addPlayer(player);
 									break;
 								case 2://Elves
+									player.teleport(claimsConfig.getLocation("elfSpawn"));
 									plugin.board.getTeam("Elves").addPlayer(player);
 									break;
 								case 3://Dwarves
+									player.teleport(claimsConfig.getLocation("dwarfSpawn"));
 									plugin.board.getTeam("Dwarves").addPlayer(player);
 									break;
 								case 4://Orcs
+									player.teleport(claimsConfig.getLocation("orcSpawn"));
 									plugin.board.getTeam("Orcs").addPlayer(player);
 									break;
 								case 5://Wizards

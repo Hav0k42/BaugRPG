@@ -1,18 +1,11 @@
 package org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards;
 
-import java.io.File;
-import java.io.IOException;
-
 import org.baugindustries.baugrpg.Main;
-import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -43,70 +36,7 @@ public class ScrollsOfBaugWizardsInventoryListener implements Listener{
 					
 		if (event.getCurrentItem().equals(plugin.itemManager.getFeatureManagementItem())) {//Player clicked on the Feature Management Item
 			
-			File file = new File(plugin.getDataFolder() + File.separator + "config.yml");
-		 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-			
-		 	if (!config.contains("allowTpa")) {
-		 		config.set("allowTpa", true);
-		 		try {
-					config.save(file);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		 	}
-		 	
-		 	if (!config.contains("allowRecipe")) {
-		 		config.set("allowRecipe", true);
-		 		try {
-					config.save(file);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		 	}
-		 	
-		 	if (!config.contains("allowEndermanGriefing")) {
-		 		config.set("allowEndermanGriefing", true);
-		 		try {
-					config.save(file);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		 	}
-		 	
-		 	if (!config.contains("allowCreeperGriefing")) {
-		 		config.set("allowCreeperGriefing", true);
-		 		try {
-					config.save(file);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		 	}
-		 	
-		 	if (!config.contains("allowTntGriefing")) {
-		 		config.set("allowTntGriefing", true);
-		 		try {
-					config.save(file);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		 	}
-			
-			int inventorySize = 54;
-			String inventoryName = "Feature Management";
-			Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
-			
-			inventory.setItem(10, plugin.itemManager.getTpaFeatureItem());
-			inventory.setItem(11, plugin.itemManager.getRecipeFeatureItem());
-			inventory.setItem(12, plugin.itemManager.getEndermanGriefItem());
-			inventory.setItem(13, plugin.itemManager.getCreeperGriefItem());
-			inventory.setItem(14, plugin.itemManager.getTntGriefItem());
-			
-			event.getWhoClicked().openInventory(inventory);
+			event.getWhoClicked().openInventory(plugin.inventoryManager.getFeatureManagementInventory());
 			
 		} else if (event.getCurrentItem().equals(plugin.itemManager.getInventorySnoopingItem())) {//Player clicked on the Inventory Snooping Item
 			
