@@ -21,6 +21,9 @@ import org.baugindustries.baugrpg.commands.Tpa;
 import org.baugindustries.baugrpg.commands.Tpaccept;
 import org.baugindustries.baugrpg.commands.Tpdeny;
 import org.baugindustries.baugrpg.commands.Tphere;
+import org.baugindustries.baugrpg.commands.Warp;
+import org.baugindustries.baugrpg.commands.WarpAccept;
+import org.baugindustries.baugrpg.commands.WarpTabCompleter;
 import org.baugindustries.baugrpg.commands.econ.Balance;
 import org.baugindustries.baugrpg.commands.econ.BankBal;
 import org.baugindustries.baugrpg.commands.econ.Deposit;
@@ -138,6 +141,7 @@ public class Main extends JavaPlugin {
 	
 	public ChatChannelManager channelManager;
 	public HashMap<Player, Player> tpaHashMap = new HashMap<Player, Player>();
+	public HashMap<String, Player> warpHashMap = new HashMap<String, Player>();
 	public HashMap<Player, Player> tpahereHashMap = new HashMap<Player, Player>();
 	public HashMap<Player, Integer> signChatEscape = new HashMap<Player, Integer>();
 	public HashMap<Player, List<String>> signData = new HashMap<Player, List<String>>();
@@ -413,6 +417,10 @@ public class Main extends JavaPlugin {
 		 new Withdraw(this);
 		 new Deposit(this);
 		 new SetBal(this);
+		 
+		 new Warp(this);
+		 getCommand("warp").setTabCompleter(new WarpTabCompleter());
+		 new WarpAccept(this);
 		 
 		 protocolManager = ProtocolLibrary.getProtocolManager();
 		 itemManager = new CustomItems(this);

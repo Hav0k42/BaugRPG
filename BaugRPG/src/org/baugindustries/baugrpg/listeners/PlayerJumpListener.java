@@ -33,6 +33,7 @@ public class PlayerJumpListener implements Listener {
 	    	File claimsFile = new File(plugin.getDataFolder() + File.separator + "claims.yml");
 			FileConfiguration claimsConfig = YamlConfiguration.loadConfiguration(claimsFile);
 	    	player.teleport(claimsConfig.getLocation("orcExecutionee"));
+			player.setSwimming(true);
 	    }
 	    
 	    Location prevPos = plugin.positionData.get(player);

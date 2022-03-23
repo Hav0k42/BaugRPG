@@ -63,4 +63,10 @@ commands:
    description: Sets the amount of dwarven gold in a players wallet.
   setpoi:
    usage: /setpoi <poi>
-   description: sets a point of interest used to teleport players to on certain events. Required for plugin use.
+   description: Sets a point of interest used to teleport players to on certain events. Required for plugin use.
+  warp:
+   usage: /warp <Location>
+   description: Warp to important locations in the world.
+  warpaccept:
+   usage: /warpaccept
+   description: Accept a teleport request from a player.

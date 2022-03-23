@@ -35,6 +35,7 @@ public class Tpa implements CommandExecutor {
 		
 		if (plugin.orcVictim != null && plugin.orcVictim.equals(player.getUniqueId())) {
 			player.sendMessage(ChatColor.RED + "Take your medicine.");
+			return true;
 		}
 		
 		List<Player> allOnlinePlayers = new ArrayList<Player>();

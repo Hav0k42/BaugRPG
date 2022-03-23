@@ -23,7 +23,7 @@ public class PlayerAttackListener implements Listener {
 		if (event.getDamager() instanceof Player) {
 			Player player = (Player) event.getDamager();
 			
-			if (plugin.orcVictim.equals(player.getUniqueId())) {
+			if (plugin.orcVictim != null && plugin.orcVictim.equals(player.getUniqueId())) {
 				event.setCancelled(true);
 				return;
 			}

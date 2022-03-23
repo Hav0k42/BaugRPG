@@ -46,6 +46,8 @@ public class PlayerDeathListener implements Listener{
 			if (plugin.orcVictim.equals(player.getUniqueId())) {
 				plugin.orcVictim = null;
 			}
+		} else if (plugin.orcVictim.equals(player.getUniqueId())) {
+			event.setDeathMessage(ChatColor.DARK_RED + player.getDisplayName() + ChatColor.WHITE + " tried to escape the inevitable.");
 		}
 		
 		

@@ -37,7 +37,7 @@ public class OnQuitListener implements Listener{
 		
 		if (plugin.orcVictim != null && plugin.orcVictim.equals(player.getUniqueId())) {
 			player.setHealth(0);
-			Bukkit.broadcastMessage(player.getDisplayName() + ChatColor.WHITE + " tried to escape the inevitable.");
+			plugin.orcVictim = null;
 		}
 		
 		

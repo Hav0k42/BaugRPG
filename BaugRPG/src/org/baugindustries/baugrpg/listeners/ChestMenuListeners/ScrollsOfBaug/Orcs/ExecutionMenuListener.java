@@ -1,6 +1,7 @@
 package org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Orcs;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.baugindustries.baugrpg.Main;
 import org.bukkit.Bukkit;
@@ -61,8 +62,15 @@ public class ExecutionMenuListener implements Listener {
 				
 				player.teleport(claimsConfig.getLocation("orcExecutioner"));
 				victim.teleport(claimsConfig.getLocation("orcExecutionee"));
+				victim.setSwimming(true);
 				
-				Bukkit.broadcastMessage(victim.getDisplayName() + ChatColor.WHITE + " is being executed.");
+				Bukkit.broadcastMessage(ChatColor.DARK_RED + victim.getDisplayName() + ChatColor.WHITE + " is being executed.");
+				
+				try {
+					leaderConfig.save(leaderDataFile);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				
 				plugin.orcVictim = victim.getUniqueId();
 			} else if (plugin.orcVictim.equals(player.getUniqueId())) {
