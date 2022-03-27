@@ -11,6 +11,7 @@ commands:
    aliases: [rr]
    usage: /resetrace, /rr
    description: This resets race for debugging purposes
+   permission: minecraft.command.op
   setrace:
    aliases: [sr]
    usage: /setrace, /sr
@@ -22,6 +23,7 @@ commands:
    usage: /racewizard
    aliases: [rw]
    description: Assigns you to the wizard race (Op only)
+   permission: minecraft.command.op
   baugscroll:
    usage: /baugscroll, /scrollsofbaug, /bs, /sb
    aliases: [bs, scrollsofbaug, sb]
@@ -64,9 +66,20 @@ commands:
   setpoi:
    usage: /setpoi <poi>
    description: Sets a point of interest used to teleport players to on certain events. Required for plugin use.
+   permission: minecraft.command.op
   warp:
    usage: /warp <Location>
    description: Warp to important locations in the world.
   warpaccept:
    usage: /warpaccept
    description: Accept a teleport request from a player.
+  spawn:
+   usage: /spawn
+   description: Teleports you to your race's spawn.
+  chunkclaim:
+   usage: /chunkclaim <Radius>
+   description: Claims the chunks around the one you're standing in.
+   aliases: [cc]
+  map:
+   usage: /map
+   description: Displays a map of nearby chunks.

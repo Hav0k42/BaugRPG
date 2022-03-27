@@ -43,10 +43,10 @@ public class PlayerDeathListener implements Listener{
 				killer.getWorld().dropItemNaturally(player.getLocation(), plugin.createItem(Material.GOLD_INGOT, 1 + (int)(Math.random() * 3)));
 			}
 			
-			if (plugin.orcVictim.equals(player.getUniqueId())) {
+			if (plugin.orcVictim != null && plugin.orcVictim.equals(player.getUniqueId())) {
 				plugin.orcVictim = null;
 			}
-		} else if (plugin.orcVictim.equals(player.getUniqueId())) {
+		} else if (plugin.orcVictim != null && plugin.orcVictim.equals(player.getUniqueId())) {
 			event.setDeathMessage(ChatColor.DARK_RED + player.getDisplayName() + ChatColor.WHITE + " tried to escape the inevitable.");
 		}
 		

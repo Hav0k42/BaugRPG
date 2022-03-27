@@ -36,54 +36,38 @@ public class FeatureManagement implements Listener{
 		ItemStack ghastGriefItem = plugin.itemManager.getGhastGriefItem();
 		
 		if (event.getCurrentItem().equals(tpaItem)) {
-			
 			config.set("allowTpa", !(Boolean)config.get("allowTpa"));
-			ItemStack newTpaItem = plugin.itemManager.getTpaFeatureItem();;
-			event.getClickedInventory().setItem(event.getSlot(), newTpaItem);
 		}
 		
-		
 		if (event.getCurrentItem().equals(recipeItem)) {
-			
 			config.set("allowRecipe", !(Boolean)config.get("allowRecipe"));
-			ItemStack newRecipeItem = plugin.itemManager.getRecipeFeatureItem();;
-			event.getClickedInventory().setItem(event.getSlot(), newRecipeItem);
 		}
 		
 		if (event.getCurrentItem().equals(endermanGriefItem)) {
-			
 			config.set("allowEndermanGriefing", !(Boolean)config.get("allowEndermanGriefing"));
-			ItemStack newEndermanGriefItem = plugin.itemManager.getEndermanGriefItem();
-			event.getClickedInventory().setItem(event.getSlot(), newEndermanGriefItem);
 		}
 		
 		if (event.getCurrentItem().equals(creeperGriefItem)) {
-			
 			config.set("allowCreeperGriefing", !(Boolean)config.get("allowCreeperGriefing"));
-			ItemStack newCreeperGriefItem = plugin.itemManager.getCreeperGriefItem();
-			event.getClickedInventory().setItem(event.getSlot(), newCreeperGriefItem);
 		}
 		
 		if (event.getCurrentItem().equals(tntGriefItem)) {
-			
 			config.set("allowTntGriefing", !(Boolean)config.get("allowTntGriefing"));
-			ItemStack newTntGriefItem = plugin.itemManager.getTntGriefItem();
-			event.getClickedInventory().setItem(event.getSlot(), newTntGriefItem);
 		}
 		
 		if (event.getCurrentItem().equals(ghastGriefItem)) {
-			
 			config.set("allowGhastGriefing", !(Boolean)config.get("allowGhastGriefing"));
-			ItemStack newGhastGriefItem = plugin.itemManager.getGhastGriefItem();
-			event.getClickedInventory().setItem(event.getSlot(), newGhastGriefItem);
 		}
 		
-
 		try {
 			config.save(file);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		event.getWhoClicked().openInventory(plugin.inventoryManager.getFeatureManagementInventory());
+
+		
 		
 		
 		

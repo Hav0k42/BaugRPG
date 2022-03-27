@@ -25,7 +25,7 @@ public class PlayerAdvancementDoneListener implements Listener {
 	 	String name = event.getAdvancement().getKey().toString();
 		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
 	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
-	 	if (!(name.substring(0, 16).equals("minecraft:recipe"))) {
+	 	if (!(name.substring(0, 16).equals("minecraft:recipe") || name.substring(0, 19).equals("incendium:technical"))) {
 		 	skillsconfig.set("skillPoints", skillsconfig.getInt("skillPoints") + 1);
 		 	skillsconfig.set("totalSkillPoints", skillsconfig.getInt("totalSkillPoints") + 1);
 		 	
@@ -41,7 +41,6 @@ public class PlayerAdvancementDoneListener implements Listener {
 		 	try {
 				skillsconfig.save(skillsfile);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	 	}

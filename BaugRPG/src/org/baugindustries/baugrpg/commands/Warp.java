@@ -53,6 +53,13 @@ public class Warp implements CommandExecutor {
 	 	File claimsFile = new File(plugin.getDataFolder() + File.separator + "claims.yml");
 		FileConfiguration claimsConfig = YamlConfiguration.loadConfiguration(claimsFile);
 	 	
+		
+		if (args.length != 1) {
+			player.sendMessage(ChatColor.RED + "Incorrect Usage: Correct usage is /warp <Location>");
+			return true;
+		}
+		
+		
 	 	if (player.hasPermission("minecraft.command.op")) {
 	 		if (args[0].equals("menSpawn")) {
 	 			player.teleport(claimsConfig.getLocation("menSpawn"));

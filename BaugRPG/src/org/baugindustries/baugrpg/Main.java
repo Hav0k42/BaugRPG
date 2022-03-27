@@ -12,11 +12,14 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.baugindustries.baugrpg.commands.BaugScroll;
 import org.baugindustries.baugrpg.commands.Chat;
 import org.baugindustries.baugrpg.commands.ChatTabCompleter;
+import org.baugindustries.baugrpg.commands.ChunkClaim;
+import org.baugindustries.baugrpg.commands.Map;
 import org.baugindustries.baugrpg.commands.RaceWizard;
 import org.baugindustries.baugrpg.commands.ResetRace;
 import org.baugindustries.baugrpg.commands.SetPoi;
 import org.baugindustries.baugrpg.commands.SetRace;
 import org.baugindustries.baugrpg.commands.SetpoiTabCompleter;
+import org.baugindustries.baugrpg.commands.Spawn;
 import org.baugindustries.baugrpg.commands.Tpa;
 import org.baugindustries.baugrpg.commands.Tpaccept;
 import org.baugindustries.baugrpg.commands.Tpdeny;
@@ -58,6 +61,7 @@ import org.baugindustries.baugrpg.listeners.PlayerAttackListener;
 import org.baugindustries.baugrpg.listeners.PlayerCloseInventoryListener;
 import org.baugindustries.baugrpg.listeners.PlayerDamageListener;
 import org.baugindustries.baugrpg.listeners.PlayerDeathListener;
+import org.baugindustries.baugrpg.listeners.PlayerEnterChunkListener;
 import org.baugindustries.baugrpg.listeners.PlayerJumpListener;
 import org.baugindustries.baugrpg.listeners.PlayerMineListener;
 import org.baugindustries.baugrpg.listeners.PlayerRespawnListener;
@@ -92,6 +96,8 @@ import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wiz
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.PlayerSnooping.PlayerSnoopingEnderChestListListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.PlayerSnooping.PlayerSnoopingHubInventoryListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.PlayerSnooping.PlayerSnoopingInventoryListListener;
+import org.baugindustries.baugrpg.protection.ChunkProtection;
+import org.baugindustries.baugrpg.protection.SpawnProtection;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -225,6 +231,7 @@ public class Main extends JavaPlugin {
 	public DisableRecipeListener disableRecipeListener = new DisableRecipeListener(this);
 	public LavaFishingListener lavaFishingListener = new LavaFishingListener(this);
 	public ClickedTextCommandListener clickedTextCommandListener = new ClickedTextCommandListener(this);
+	public PlayerEnterChunkListener playerEnterChunkListener = new PlayerEnterChunkListener(this);
 	
 	public EndermanGriefingListener endermanGriefingListener = new EndermanGriefingListener(this);
 	public ChooseRaceInventoryListener chooseRaceInventoryListener = new ChooseRaceInventoryListener(this);
@@ -254,13 +261,16 @@ public class Main extends JavaPlugin {
 	public ConfirmAppointKingMenu confirmAppointKingMenu = new ConfirmAppointKingMenu(this);
 	public ConfirmStepDownMenu confirmStepDownMenu = new ConfirmStepDownMenu(this);
 	public ExecutionMenuListener executionMenuListener = new ExecutionMenuListener(this);
+	public SpawnProtection spawnProtection = new SpawnProtection(this);
+	public ChunkProtection chunkProtection = new ChunkProtection(this);
 	
 	
 	
 	
 	public String[] commandStrings = new String[17];
 	public final int startingClaimBlocks = 200;
-	public final int startingClaimChunks = 50;
+	public final int startingClaimChunks = 250;
+	public final int startingSeedChunks = 4;
 	
 	
 
@@ -269,6 +279,12 @@ public class Main extends JavaPlugin {
 	public void onEnable() {
 		 File defaultDir = new File(this.getDataFolder().getAbsolutePath());
 		 defaultDir.mkdir();
+		 
+		 File inventoryDir = new File(this.getDataFolder() + File.separator + "inventoryData");
+		 inventoryDir.mkdir();
+		 
+		 File skillsDir = new File(this.getDataFolder() + File.separator + "skillsData");
+		 skillsDir.mkdir();
 		 
 		 File claimsFile = new File(this.getDataFolder() + File.separator + "claims.yml");
 		 
@@ -399,6 +415,9 @@ public class Main extends JavaPlugin {
 		 pluginManager.registerEvents(confirmAppointKingMenu, this);
 		 pluginManager.registerEvents(confirmStepDownMenu, this);
 		 pluginManager.registerEvents(executionMenuListener, this);
+		 pluginManager.registerEvents(spawnProtection, this);
+		 pluginManager.registerEvents(chunkProtection, this);
+		 pluginManager.registerEvents(playerEnterChunkListener, this);
 		 
 		 
 		 new Pay(this);
@@ -417,10 +436,13 @@ public class Main extends JavaPlugin {
 		 new Withdraw(this);
 		 new Deposit(this);
 		 new SetBal(this);
+		 new ChunkClaim(this);
+		 new Map(this);
 		 
 		 new Warp(this);
 		 getCommand("warp").setTabCompleter(new WarpTabCompleter());
 		 new WarpAccept(this);
+		 new Spawn(this);
 		 
 		 protocolManager = ProtocolLibrary.getProtocolManager();
 		 itemManager = new CustomItems(this);
@@ -538,6 +560,7 @@ public class Main extends JavaPlugin {
 			 if (player.getVehicle() instanceof AbstractHorse) {
 				 mountedPlayers.add(player);
 			 }
+			 playerEnterChunkListener.updateLocation(player.getUniqueId());
 		 }
 		 
 		 File file = new File(this.getDataFolder() + File.separator + "econ.yml");
@@ -703,10 +726,8 @@ public class Main extends JavaPlugin {
 	Runnable miningBuffRunnable = new Runnable() {
 		 
 		  public void run() {
-			  Player[] OnlinePlayers = getServer().getOnlinePlayers().toArray(new Player[getServer().getOnlinePlayers().size()]);
-			     for (int i = 0; i < OnlinePlayers.length; i++) {
-			    	 Player player = OnlinePlayers[i];
-			    	 
+			  Player[] OnlinePlayers = miningState.keySet().toArray(new Player[miningState.keySet().size()]);
+			     for (Player player : OnlinePlayers) {
 			    	 File skillsfile = new File(getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
 					 FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
 					 
@@ -720,7 +741,7 @@ public class Main extends JavaPlugin {
 			    	 
 			    	 
 						 
-						 if (miningState.containsKey(player) && (miningState.get(player).equals("ABORT_DESTROY_BLOCK") || miningState.get(player).equals("DROP_ITEM") || miningState.get(player).equals("DROP_ALL_ITEMS"))) {
+						 if ((miningState.get(player).equals("ABORT_DESTROY_BLOCK") || miningState.get(player).equals("DROP_ITEM") || miningState.get(player).equals("DROP_ALL_ITEMS"))) {
 							 PacketContainer breakAnimation = protocolManager.createPacket(PacketType.Play.Server.BLOCK_BREAK_ANIMATION);
 							 breakAnimation.getBlockPositionModifier().write(0, miningPosition.get(player));
 							 breakAnimation.getIntegers().write(1, -1);
@@ -733,12 +754,11 @@ public class Main extends JavaPlugin {
 							  try {
 								  protocolManager.sendServerPacket(player, breakAnimation);
 							  } catch (InvocationTargetException e) {
-								  // TODO Auto-generated catch block
 								  e.printStackTrace();
 							  }
 						 }
 						 
-						 if (miningState.containsKey(player) && miningState.get(player).equals("START_DESTROY_BLOCK")) {
+						 if (miningState.get(player).equals("START_DESTROY_BLOCK")) {
 							  
 							  miningTicks.put(player, miningTicks.get(player) + 1);
 							  
@@ -768,7 +788,6 @@ public class Main extends JavaPlugin {
 							        sound = Sound.valueOf(nmsString.toString().replace(".", "_").toUpperCase().substring(10));
 							        
 								} catch (SecurityException | IllegalArgumentException e) {
-									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
 							        
@@ -785,7 +804,6 @@ public class Main extends JavaPlugin {
 								  
 								  protocolManager.sendServerPacket(player, breakAnimation);
 							  } catch (InvocationTargetException e) {
-								  // TODO Auto-generated catch block
 								  e.printStackTrace();
 							  }
 						  }
@@ -1008,7 +1026,6 @@ public class Main extends JavaPlugin {
 			ragecooldownDataconfig.save(ragecooldownDatafile);
 			greedyReinforcementcooldownDataconfig.save(greedyReinforcementcooldownDatafile);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -1239,6 +1256,22 @@ public class Main extends JavaPlugin {
 		return raceString;
 	}
 	
+	public int getRace(String str) {
+		if (str.toLowerCase().equals("men")) {
+			return 1;
+		}
+		if (str.toLowerCase().equals("elf")) {
+			return 2;
+		}
+		if (str.toLowerCase().equals("dwarf")) {
+			return 3;
+		}
+		if (str.toLowerCase().equals("orc")) {
+			return 4;
+		}
+		return 0;
+	}
+	
 	
 	
 	public int getRace(OfflinePlayer op) {
@@ -1255,6 +1288,12 @@ public class Main extends JavaPlugin {
 			return config.getInt("Race Data");
 		}
 		return 0;
+	}
+	
+	public double getDistanceFlat(Location loc1, Location loc2) {
+		double xDist = loc1.getX() - loc2.getX();
+		double zDist = loc1.getZ() - loc2.getZ();
+		return Math.sqrt((xDist * xDist) + (zDist * zDist));
 	}
 	
 }
