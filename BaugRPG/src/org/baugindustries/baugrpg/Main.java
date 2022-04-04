@@ -97,6 +97,7 @@ import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wiz
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.PlayerSnooping.PlayerSnoopingHubInventoryListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.PlayerSnooping.PlayerSnoopingInventoryListListener;
 import org.baugindustries.baugrpg.protection.ChunkProtection;
+import org.baugindustries.baugrpg.protection.Claiming;
 import org.baugindustries.baugrpg.protection.SpawnProtection;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -123,6 +124,8 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.scoreboard.Team;
+import org.bukkit.util.BlockIterator;
+import org.bukkit.util.Vector;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
@@ -263,6 +266,7 @@ public class Main extends JavaPlugin {
 	public ExecutionMenuListener executionMenuListener = new ExecutionMenuListener(this);
 	public SpawnProtection spawnProtection = new SpawnProtection(this);
 	public ChunkProtection chunkProtection = new ChunkProtection(this);
+	public Claiming claiming = new Claiming(this);
 	
 	
 	
@@ -418,6 +422,7 @@ public class Main extends JavaPlugin {
 		 pluginManager.registerEvents(spawnProtection, this);
 		 pluginManager.registerEvents(chunkProtection, this);
 		 pluginManager.registerEvents(playerEnterChunkListener, this);
+		 pluginManager.registerEvents(claiming, this);
 		 
 		 
 		 new Pay(this);
@@ -1294,6 +1299,33 @@ public class Main extends JavaPlugin {
 		double xDist = loc1.getX() - loc2.getX();
 		double zDist = loc1.getZ() - loc2.getZ();
 		return Math.sqrt((xDist * xDist) + (zDist * zDist));
+	}
+	
+	public org.bukkit.block.Block getTopBlock(org.bukkit.block.Block block) {
+		if (block.getType().isSolid()) {
+			BlockIterator iter = new BlockIterator(block.getWorld(), block.getLocation().toVector(), new Vector(0, 1, 0), 0, 0);
+			int yPos = block.getY();
+			while (iter.hasNext()) {
+				org.bukkit.block.Block currentBlock = iter.next();
+				if (!currentBlock.getType().isSolid()) {
+					yPos = currentBlock.getY() - 1;
+					break;
+				}
+			}
+			return block.getWorld().getBlockAt(block.getX(), yPos, block.getZ());
+		} else {
+			BlockIterator iter = new BlockIterator(block.getWorld(), block.getLocation().toVector(), new Vector(0, -1, 0), 0, 0);
+			int yPos = block.getY();
+			while (iter.hasNext()) {
+				org.bukkit.block.Block currentBlock = iter.next();
+				if (currentBlock.getType().isSolid()) {
+					yPos = currentBlock.getY();
+					break;
+				}
+			}
+			return block.getWorld().getBlockAt(block.getX(), yPos, block.getZ());
+		}
+		
 	}
 	
 }

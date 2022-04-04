@@ -41,7 +41,7 @@ public class Map implements CommandExecutor {
 		player.sendMessage(ChatColor.YELLOW + "Key: " + ownerStrings[0] + ": unowned, " + ownerStrings[1] + ": Men, " + ownerStrings[2] + ": Elves, " + ownerStrings[3] + ": Dwarves, " + ownerStrings[4] + ": Orcs");
 		
 		player.sendMessage("");
-		player.sendMessage(ChatColor.GOLD + "                    N");
+		player.sendMessage(ChatColor.GOLD + "                 N");
 		player.sendMessage("");
 		
 		Chunk currentChunk = player.getLocation().getChunk();
@@ -67,7 +67,7 @@ public class Map implements CommandExecutor {
 			player.sendMessage(line);
 		}
 		player.sendMessage("");
-		player.sendMessage(ChatColor.GOLD + "                    S");
+		player.sendMessage(ChatColor.GOLD + "                 S");
 		
 		return true;
 	}
