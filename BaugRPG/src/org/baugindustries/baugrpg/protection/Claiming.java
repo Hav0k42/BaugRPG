@@ -58,6 +58,9 @@ public class Claiming implements Listener {
 		
 		File claimsFile = new File(plugin.getDataFolder() + File.separator + "claims.yml");
 		FileConfiguration claimsConfig = YamlConfiguration.loadConfiguration(claimsFile);
+		if (!claimsConfig.contains("personalClaims")) {
+			claimsConfig.createSection("personalClaims");
+		}
 		
 		int dataIndex = -1;
 		for (int i = 0; i < claimingData.size(); i++) {
@@ -700,7 +703,9 @@ public class Claiming implements Listener {
 
 		File claimsFile = new File(plugin.getDataFolder() + File.separator + "claims.yml");
 		FileConfiguration claimsConfig = YamlConfiguration.loadConfiguration(claimsFile);
-		
+		if (!claimsConfig.contains("personalClaims")) {
+			claimsConfig.createSection("personalClaims");
+		}
 		
 		
 		int dataIndex = -1;
@@ -737,7 +742,7 @@ public class Claiming implements Listener {
 						claimData.setState(State.DISPLAYELSE);
 					}
 				} else {
-					player.sendMessage(ChatColor.YELLOW + "This block is not owned by anyone. Available claim blocks: " + getPlayerClaimBlocks(player));
+					player.sendMessage(ChatColor.YELLOW + "This block is not owned by anyone. Run /claim for more information. \nAvailable claim blocks: " + getPlayerClaimBlocks(player));
 				}
 				break;
 			case CLAIMING:
@@ -763,7 +768,7 @@ public class Claiming implements Listener {
 						claimData.setState(State.DISPLAYELSE);
 					}
 				} else {
-					player.sendMessage(ChatColor.YELLOW + "This block is not owned by anyone. Available claim blocks: " + getPlayerClaimBlocks(player));
+					player.sendMessage(ChatColor.YELLOW + "This block is not owned by anyone. Run /claim for more information. \nAvailable claim blocks: " + getPlayerClaimBlocks(player));
 				}
 				break;
 			case DISPLAYOWN:
@@ -785,7 +790,7 @@ public class Claiming implements Listener {
 						claimData.setState(State.DISPLAYELSE);
 					}
 				} else {
-					player.sendMessage(ChatColor.YELLOW + "This block is not owned by anyone. Available claim blocks: " + getPlayerClaimBlocks(player));
+					player.sendMessage(ChatColor.YELLOW + "This block is not owned by anyone. Run /claim for more information. \nAvailable claim blocks: " + getPlayerClaimBlocks(player));
 				}
 				break;
 			case CLAIMINGOVERLAPOWN:

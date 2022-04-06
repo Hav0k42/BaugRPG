@@ -13,6 +13,8 @@ import org.baugindustries.baugrpg.commands.BaugScroll;
 import org.baugindustries.baugrpg.commands.Chat;
 import org.baugindustries.baugrpg.commands.ChatTabCompleter;
 import org.baugindustries.baugrpg.commands.ChunkClaim;
+import org.baugindustries.baugrpg.commands.Claim;
+import org.baugindustries.baugrpg.commands.ClaimTabCompleter;
 import org.baugindustries.baugrpg.commands.Map;
 import org.baugindustries.baugrpg.commands.RaceWizard;
 import org.baugindustries.baugrpg.commands.ResetRace;
@@ -62,6 +64,7 @@ import org.baugindustries.baugrpg.listeners.PlayerCloseInventoryListener;
 import org.baugindustries.baugrpg.listeners.PlayerDamageListener;
 import org.baugindustries.baugrpg.listeners.PlayerDeathListener;
 import org.baugindustries.baugrpg.listeners.PlayerEnterChunkListener;
+import org.baugindustries.baugrpg.listeners.PlayerGetExperience;
 import org.baugindustries.baugrpg.listeners.PlayerJumpListener;
 import org.baugindustries.baugrpg.listeners.PlayerMineListener;
 import org.baugindustries.baugrpg.listeners.PlayerRespawnListener;
@@ -97,6 +100,7 @@ import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wiz
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.PlayerSnooping.PlayerSnoopingHubInventoryListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.PlayerSnooping.PlayerSnoopingInventoryListListener;
 import org.baugindustries.baugrpg.protection.ChunkProtection;
+import org.baugindustries.baugrpg.protection.ClaimProtection;
 import org.baugindustries.baugrpg.protection.Claiming;
 import org.baugindustries.baugrpg.protection.SpawnProtection;
 import org.bukkit.Bukkit;
@@ -266,7 +270,9 @@ public class Main extends JavaPlugin {
 	public ExecutionMenuListener executionMenuListener = new ExecutionMenuListener(this);
 	public SpawnProtection spawnProtection = new SpawnProtection(this);
 	public ChunkProtection chunkProtection = new ChunkProtection(this);
+	public ClaimProtection claimProtection = new ClaimProtection(this);
 	public Claiming claiming = new Claiming(this);
+	public PlayerGetExperience playerGetExperience = new PlayerGetExperience(this);
 	
 	
 	
@@ -421,8 +427,10 @@ public class Main extends JavaPlugin {
 		 pluginManager.registerEvents(executionMenuListener, this);
 		 pluginManager.registerEvents(spawnProtection, this);
 		 pluginManager.registerEvents(chunkProtection, this);
+		 pluginManager.registerEvents(claimProtection, this);
 		 pluginManager.registerEvents(playerEnterChunkListener, this);
 		 pluginManager.registerEvents(claiming, this);
+		 pluginManager.registerEvents(playerGetExperience, this);
 		 
 		 
 		 new Pay(this);
@@ -443,6 +451,9 @@ public class Main extends JavaPlugin {
 		 new SetBal(this);
 		 new ChunkClaim(this);
 		 new Map(this);
+		 
+		 new Claim(this);
+		 getCommand("claim").setTabCompleter(new ClaimTabCompleter(this));
 		 
 		 new Warp(this);
 		 getCommand("warp").setTabCompleter(new WarpTabCompleter());

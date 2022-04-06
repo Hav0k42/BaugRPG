@@ -1,8 +1,13 @@
 package org.baugindustries.baugrpg.listeners;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.baugindustries.baugrpg.Main;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -41,6 +46,40 @@ public class PlayerDeathListener implements Listener{
 			
 			if (killerRace == 3 && playerRace == 2) {//Dwarf killed an elf
 				killer.getWorld().dropItemNaturally(player.getLocation(), plugin.createItem(Material.GOLD_INGOT, 1 + (int)(Math.random() * 3)));
+			}
+			
+			if (playerRace > 0 && killerRace > 0 && playerRace != killerRace) {
+				
+				File claimsFile = new File(plugin.getDataFolder() + File.separator + "claims.yml");
+				FileConfiguration claimsConfig = YamlConfiguration.loadConfiguration(claimsFile);
+				
+				String killerRaceString = plugin.getRaceString(killerRace);
+				String playerRaceString = plugin.getRaceString(playerRace);
+				
+				int availableChunks;
+				if (claimsConfig.contains(killerRaceString + "TotalChunks")) {
+					availableChunks = claimsConfig.getInt(killerRaceString + "TotalChunks") + 1;
+				} else {
+					availableChunks = plugin.startingClaimChunks + 1;
+					claimsConfig.set(killerRaceString + "TotalChunks", availableChunks);
+					try {
+						claimsConfig.save(claimsFile);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				
+				if (claimsConfig.contains(playerRaceString + "TotalChunks")) {
+					availableChunks = claimsConfig.getInt(playerRaceString + "TotalChunks") + 1;
+				} else {
+					availableChunks = plugin.startingClaimChunks + 1;
+					claimsConfig.set(playerRaceString + "TotalChunks", availableChunks);
+					try {
+						claimsConfig.save(claimsFile);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 			
 			if (plugin.orcVictim != null && plugin.orcVictim.equals(player.getUniqueId())) {

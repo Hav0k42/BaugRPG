@@ -83,3 +83,6 @@ commands:
   map:
    usage: /map
    description: Displays a map of nearby chunks.
+  claim:
+   usage: /claim, /claim delete, /claim trust <Player>, /claim untrust <Player>
+   description: Controls various aspects around claiming.

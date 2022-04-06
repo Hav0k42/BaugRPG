@@ -46,6 +46,7 @@ public class Tpa implements CommandExecutor {
 			}
 		}
 		
+		
 		File file = new File(plugin.getDataFolder() + File.separator + "config.yml");
 	 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
 		

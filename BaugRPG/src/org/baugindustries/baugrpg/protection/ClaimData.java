@@ -17,7 +17,7 @@ public class ClaimData {
 	private long lastClick;//get this value from World.getGameTIme()
 	private String resizingKey;
 	
-	ClaimData(UUID uuid, Location loc) {
+	public ClaimData(UUID uuid, Location loc) {
 		playerUUID = uuid;
 		tempBlocks = new ArrayList<Block>();
 		lastClick = loc.getWorld().getGameTime();
