@@ -1,6 +1,7 @@
 package org.baugindustries.baugrpg.protection;
 
 import java.io.File;
+import java.util.List;
 import java.util.UUID;
 
 import org.baugindustries.baugrpg.Main;
@@ -119,6 +120,10 @@ public class ClaimProtection implements Listener {
 	
 	private Boolean isPositionIllegal(Location blockLoc, Player player) {
 		
+		if (player.hasPermission("minecraft.command.op")) {
+			return false;
+		}
+		
 		File claimsFile = new File(plugin.getDataFolder() + File.separator + "claims.yml");
 		FileConfiguration claimsConfig = YamlConfiguration.loadConfiguration(claimsFile);
 		if (!claimsConfig.contains("personalClaims")) {
@@ -129,12 +134,18 @@ public class ClaimProtection implements Listener {
 		if (claimID == null) return false;
 		ConfigurationSection currentClaim = claimsConfig.getConfigurationSection("personalClaims").getConfigurationSection(claimID);
 		UUID ownerUUID = UUID.fromString(currentClaim.getString("owner"));
-		if (!(ownerUUID.equals(player.getUniqueId()) || currentClaim.getStringList("trustedPlayers").contains(player.getUniqueId().toString()))) {
-			if (!player.hasPermission("minecraft.command.op")) {
-				player.sendMessage(ChatColor.RED + "You do not have permission to build in " + Bukkit.getOfflinePlayer(ownerUUID).getName() + "'s claim. Run /claim for more information.");
-				return true;
-			}
-			
+		
+		if (ownerUUID.equals(player.getUniqueId())) {
+			return false;
+		}
+		if (!(currentClaim.getConfigurationSection("trustedPlayers").contains(player.getUniqueId().toString()))) {
+			player.sendMessage(ChatColor.RED + "You do not have permission to build in " + Bukkit.getOfflinePlayer(ownerUUID).getName() + "'s claim. Run /claim for more information.");
+			return true;
+		}
+		List<Integer> range = currentClaim.getConfigurationSection("trustedPlayers").getIntegerList(player.getUniqueId().toString());
+		if (blockLoc.getBlockY() < range.get(0) || blockLoc.getBlockY() > range.get(1)) {
+			player.sendMessage(ChatColor.RED + "You only have permission to build between y levels " + range.get(0) + " and " + range.get(1) + " in this claim.");
+			return true;
 		}
 		return false;
 	}

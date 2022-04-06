@@ -119,17 +119,49 @@ public class Claim implements CommandExecutor {
 							return true;
 						}
 						
-						player.sendMessage(ChatColor.YELLOW + "You've trusted " + allOnlinePlayers[i].getName() + " to make changes in this claim.");
-						List<String> trustedUUIDs;
+						ConfigurationSection trustedUUIDs;
 						if (currentClaim.contains("trustedPlayers")) {
-							trustedUUIDs = currentClaim.getStringList("trustedPlayers");
+							trustedUUIDs = currentClaim.getConfigurationSection("trustedPlayers");
 						} else {
-							trustedUUIDs = new ArrayList<String>();
+							trustedUUIDs = currentClaim.createSection("trustedPlayers");
 						}
-						if (!trustedUUIDs.contains(allOnlinePlayers[i].getUniqueId().toString())) {
-							trustedUUIDs.add(allOnlinePlayers[i].getUniqueId().toString());
+						List<Integer> range = new ArrayList<Integer>();
+						if (args.length > 2) {
+							
+							if (args.length != 4) {
+								player.sendMessage(ChatColor.RED + "Incorrect usage. Correct usage is: /claim trust <Player> <yLevel> <yLevel>");
+								return true;
+							}
+							
+							if (!(plugin.isInteger(args[2]) && plugin.isInteger(args[3]))) {
+								player.sendMessage(ChatColor.RED + "Incorrect usage. yLevel values should be integers.");
+								return true;
+							}
+							
+							int lower = Integer.parseInt(args[2]);
+							int higher = Integer.parseInt(args[3]);
+							if (lower > higher) {
+								player.sendMessage(ChatColor.RED + "Incorrect usage. First number should be less than the second.");
+								return true;
+							}
+							if (lower > 255 || lower < -64) {
+								player.sendMessage(ChatColor.RED + "Incorrect usage. First number is outside buildable range.");
+								return true;
+							}
+							if (higher > 255 || higher < -64) {
+								player.sendMessage(ChatColor.RED + "Incorrect usage. Second number is outside buildable range.");
+								return true;
+							}
+							range.add(lower);
+							range.add(higher);
+							
+						} else {
+							range.add(-64);
+							range.add(255);
 						}
-						currentClaim.set("trustedPlayers", trustedUUIDs);
+						trustedUUIDs.set(allOnlinePlayers[i].getUniqueId().toString(), range);
+						
+						player.sendMessage(ChatColor.YELLOW + "You've trusted " + allOnlinePlayers[i].getName() + " to make changes in this claim.");
 						try {
 							claimsConfig.save(claimsFile);
 						} catch (IOException e) {
@@ -150,18 +182,17 @@ public class Claim implements CommandExecutor {
 						
 						player.sendMessage(ChatColor.YELLOW + "You've disallowed " + allOnlinePlayers[i].getName() + " from making changes in this claim.");
 						
-						List<String> trustedUUIDs;
+						ConfigurationSection trustedUUIDs;
 						if (currentClaim.contains("trustedPlayers")) {
-							trustedUUIDs = currentClaim.getStringList("trustedPlayers");
+							trustedUUIDs = currentClaim.getConfigurationSection("trustedPlayers");
 						} else {
 							return true;
 						}
 						
 						if (trustedUUIDs.contains(allOnlinePlayers[i].getUniqueId().toString())) {
-							trustedUUIDs.remove(allOnlinePlayers[i].getUniqueId().toString());
+							trustedUUIDs.set(allOnlinePlayers[i].getUniqueId().toString(), null);
 						}
 						
-						currentClaim.set("trustedPlayers", trustedUUIDs);
 						try {
 							claimsConfig.save(claimsFile);
 						} catch (IOException e) {
