@@ -36,7 +36,7 @@ public class ArcaneJewelsListener implements Listener {
 	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
 	 	
 	 	if (!(skillsconfig.contains("ArcaneJeweler1") && skillsconfig.getBoolean("ArcaneJeweler1"))) return;
-	 	double percentage = 0.04;
+	 	double percentage = 0.005;
 	 	if (Math.random() > percentage) return;
 	 	
 		List<ArmorStandEntity> jewels = new ArrayList<ArmorStandEntity>();

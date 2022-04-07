@@ -99,6 +99,11 @@ import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wiz
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.PlayerSnooping.PlayerSnoopingEnderChestListListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.PlayerSnooping.PlayerSnoopingHubInventoryListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.PlayerSnooping.PlayerSnoopingInventoryListListener;
+import org.baugindustries.baugrpg.listeners.Crafting.CraftingTableListener;
+import org.baugindustries.baugrpg.listeners.Crafting.DisplayedRecipeInventoryListener;
+import org.baugindustries.baugrpg.listeners.Crafting.EntityDropRecipeScroll;
+import org.baugindustries.baugrpg.listeners.Crafting.LearnedRecipesInventoryListener;
+import org.baugindustries.baugrpg.listeners.Crafting.PlayerPickUpRecipeScroll;
 import org.baugindustries.baugrpg.protection.ChunkProtection;
 import org.baugindustries.baugrpg.protection.ClaimProtection;
 import org.baugindustries.baugrpg.protection.Claiming;
@@ -273,6 +278,12 @@ public class Main extends JavaPlugin {
 	public ClaimProtection claimProtection = new ClaimProtection(this);
 	public Claiming claiming = new Claiming(this);
 	public PlayerGetExperience playerGetExperience = new PlayerGetExperience(this);
+
+	public EntityDropRecipeScroll entityDropRecipeScroll = new EntityDropRecipeScroll(this);
+	public PlayerPickUpRecipeScroll playerPickUpRecipeScroll = new PlayerPickUpRecipeScroll(this);
+	public LearnedRecipesInventoryListener learnedRecipesInventoryListener = new LearnedRecipesInventoryListener(this);
+	public DisplayedRecipeInventoryListener displayedRecipeInventoryListener = new DisplayedRecipeInventoryListener(this);
+	public CraftingTableListener craftingTableListener = new CraftingTableListener(this);
 	
 	
 	
@@ -431,6 +442,11 @@ public class Main extends JavaPlugin {
 		 pluginManager.registerEvents(playerEnterChunkListener, this);
 		 pluginManager.registerEvents(claiming, this);
 		 pluginManager.registerEvents(playerGetExperience, this);
+		 pluginManager.registerEvents(entityDropRecipeScroll, this);
+		 pluginManager.registerEvents(playerPickUpRecipeScroll, this);
+		 pluginManager.registerEvents(learnedRecipesInventoryListener, this);
+		 pluginManager.registerEvents(displayedRecipeInventoryListener, this);
+		 pluginManager.registerEvents(craftingTableListener, this);
 		 
 		 
 		 new Pay(this);
@@ -460,10 +476,17 @@ public class Main extends JavaPlugin {
 		 new WarpAccept(this);
 		 new Spawn(this);
 		 
+		
+		 
+		 
+		 
 		 protocolManager = ProtocolLibrary.getProtocolManager();
 		 itemManager = new CustomItems(this);
 		 inventoryManager = new CustomInventories(this);
 		 
+		 for (Recipes recipe : Recipes.values()) {
+			 Bukkit.addRecipe(recipe.getBukkitRecipe(this));
+		 }
 		 
 		 Runnable craftsmanRegen = new Runnable() {
 			  public void run() {

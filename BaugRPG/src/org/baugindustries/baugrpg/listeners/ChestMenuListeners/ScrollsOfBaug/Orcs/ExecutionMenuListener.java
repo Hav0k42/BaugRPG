@@ -28,6 +28,7 @@ public class ExecutionMenuListener implements Listener {
 	public void onInventoryClick(InventoryClickEvent event) {
 		if (!(event.getWhoClicked() instanceof Player)) return;
 		if (!(event.getClickedInventory() != null && event.getCurrentItem() != null)) return;
+		if (!(event.getView().getTopInventory().equals(event.getClickedInventory())) && event.getCursor() == null) return;
 		if (!event.getView().getTitle().equals(ChatColor.DARK_RED + "Executions")) return;
 		Player player = (Player)event.getWhoClicked();
 		

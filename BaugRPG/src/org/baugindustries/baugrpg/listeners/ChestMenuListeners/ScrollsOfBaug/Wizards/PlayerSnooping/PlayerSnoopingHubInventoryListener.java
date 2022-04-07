@@ -18,6 +18,7 @@ public class PlayerSnoopingHubInventoryListener implements Listener {
 		if (event.getWhoClicked() instanceof Player) {
 			Player player = (Player)event.getWhoClicked();
 			if (event.getClickedInventory() != null) {
+				if (!(event.getView().getTopInventory().equals(event.getClickedInventory())) && event.getCursor() == null) return;
 				if (event.getView().getTitle().equals("Inventory Snooping Hub")) {
 					
 						

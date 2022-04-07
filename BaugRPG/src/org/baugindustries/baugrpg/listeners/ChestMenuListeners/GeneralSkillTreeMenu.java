@@ -28,6 +28,7 @@ public class GeneralSkillTreeMenu implements Listener {
 		if (event.getWhoClicked() instanceof Player) {
 			Player player = (Player)event.getWhoClicked();
 			if (event.getClickedInventory() != null) {
+				if (!(event.getView().getTopInventory().equals(event.getClickedInventory())) && event.getCursor() == null) return;
 				if (event.getView().getTitle().equals("General Skills")) {
 					event.setCancelled(true);
 					File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");

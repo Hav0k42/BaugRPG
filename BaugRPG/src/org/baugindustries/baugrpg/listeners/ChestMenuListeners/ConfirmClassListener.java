@@ -28,7 +28,7 @@ public class ConfirmClassListener implements Listener {
 		if (!(event.getWhoClicked() instanceof Player)) return;
 		if (event.getClickedInventory() == null) return;
 		if (!event.getView().getTitle().equals("Confirm Class Selection")) return;
-		
+		if (!(event.getView().getTopInventory().equals(event.getClickedInventory())) && event.getCursor() == null) return;
 		Player player = (Player)event.getWhoClicked();
 		if (event.getSlot() == 15 && event.getCurrentItem().equals(plugin.itemManager.getNoItem())) {//No
 			player.openInventory(plugin.inventoryManager.getChooseRaceSkillTreeMenuInventory(player));
@@ -45,7 +45,6 @@ public class ConfirmClassListener implements Listener {
 		 	try {
 				skillsconfig.save(skillsfile);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			player.closeInventory();

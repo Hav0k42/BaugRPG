@@ -22,7 +22,7 @@ public class ChooseClassListener implements Listener{
 		if (!event.getView().getTitle().equals("Choose your Class")) return;
 		if (event.getClickedInventory().getLocation() != null) return;
 		if (event.getCurrentItem() == null) return;
-		if (!event.getView().getTopInventory().equals(event.getClickedInventory())) return;
+		if (!(event.getView().getTopInventory().equals(event.getClickedInventory())) && event.getCursor() == null) return;
 		
 		Player player = (Player)event.getWhoClicked();
  		

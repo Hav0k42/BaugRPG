@@ -26,6 +26,7 @@ public class SkillTreeMenu implements Listener{
 			File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
 		 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
 			if (event.getClickedInventory() != null) {
+				if (!(event.getView().getTopInventory().equals(event.getClickedInventory())) && event.getCursor() == null) return;
 				if (event.getView().getTitle().equals("Skill Trees")) {
 					ItemStack generalSkillsItem = plugin.itemManager.getGeneralSkillTreeMenuItem();
 					

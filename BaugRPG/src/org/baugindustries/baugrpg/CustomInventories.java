@@ -2,6 +2,8 @@ package org.baugindustries.baugrpg;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,6 +29,74 @@ public class CustomInventories {
 	Main plugin;
 	CustomInventories(Main plugin) {
 		this.plugin = plugin;
+	}
+	
+	
+	public Inventory getLearnedRecipesMenu(UUID uuid) {
+		List<Recipes> learnedRecipes = new ArrayList<Recipes>();
+		
+		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + uuid + ".yml");
+	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
+		
+		ConfigurationSection learnedRecipesSection = skillsconfig.getConfigurationSection("learnedRecipes");
+		
+		if (learnedRecipesSection.contains("BASIC")) {
+			learnedRecipesSection.getStringList("BASIC").forEach(recipeName -> {
+				learnedRecipes.add(Recipes.valueOf(recipeName));
+			});
+		}
+		
+		if (learnedRecipesSection.contains("INTERMEDIATE")) {
+			learnedRecipesSection.getStringList("INTERMEDIATE").forEach(recipeName -> {
+				learnedRecipes.add(Recipes.valueOf(recipeName));
+			});
+		}
+		
+		if (learnedRecipesSection.contains("ADVANCED")) {
+			learnedRecipesSection.getStringList("ADVANCED").forEach(recipeName -> {
+				learnedRecipes.add(Recipes.valueOf(recipeName));
+			});
+		}
+		
+		if (learnedRecipesSection.contains("EXPERT")) {
+			learnedRecipesSection.getStringList("EXPERT").forEach(recipeName -> {
+				learnedRecipes.add(Recipes.valueOf(recipeName));
+			});
+		}
+		
+		
+		
+		int inventorySize = 27;
+
+		if (learnedRecipes.size() > 21) {
+			inventorySize = 54;
+		} else if (learnedRecipes.size() > 14) {
+			inventorySize = 45;
+		} else if (learnedRecipes.size() > 7) {
+			inventorySize = 36;
+		}
+		
+		String inventoryName = ChatColor.GOLD + "Learned Recipes";
+		Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
+		
+		inventory.setItem(0, plugin.itemManager.getLearnedRecipesInfoItem());
+		
+		int i = 10;
+		for (Recipes recipe : learnedRecipes) {
+			try {
+				Method getResultItem = plugin.itemManager.getClass().getDeclaredMethod(recipe.getResultMethod(), null);
+				inventory.setItem(i, (ItemStack)getResultItem.invoke(plugin.itemManager, null));
+			} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				e.printStackTrace();
+			}
+			if (i % 9 == 7) {
+				i+=2;
+			}
+			i++;
+		}
+		
+		inventory.setItem(inventorySize - 9, plugin.itemManager.getBackItem());
+		return inventory;
 	}
 	
 	
@@ -885,6 +955,10 @@ public class CustomInventories {
 			currentSlot++;
 			
 			
+			if (skillsconfig.contains("learnedRecipes")) {
+				inventory.setItem(currentSlot, plugin.itemManager.getViewLearnedRecipesItem(race));
+			}
+			currentSlot++;
 			
 		} else if (race == 2) {//Elves
 			
@@ -901,7 +975,10 @@ public class CustomInventories {
 			inventory.setItem(currentSlot, plugin.itemManager.getCommunistHubItem());
 			currentSlot++;
 			
-			
+			if (skillsconfig.contains("learnedRecipes")) {
+				inventory.setItem(currentSlot, plugin.itemManager.getViewLearnedRecipesItem(race));
+			}
+			currentSlot++;
 			
 		} else if (race == 3) {//Dwarves
 			
@@ -918,6 +995,10 @@ public class CustomInventories {
 			inventory.setItem(currentSlot, plugin.itemManager.getDwarvenBankConversionItem());
 			currentSlot++;
 			
+			if (skillsconfig.contains("learnedRecipes")) {
+				inventory.setItem(currentSlot, plugin.itemManager.getViewLearnedRecipesItem(race));
+			}
+			currentSlot++;
 			
 		} else if (race == 4) {//Orcs
 			
@@ -931,7 +1012,10 @@ public class CustomInventories {
 			}
 			currentSlot++;
 
-			
+			if (skillsconfig.contains("learnedRecipes")) {
+				inventory.setItem(currentSlot, plugin.itemManager.getViewLearnedRecipesItem(race));
+			}
+			currentSlot++;
 			
 		} else if (race == 5) {//Wizards
 			

@@ -23,6 +23,7 @@ public class FeatureManagement implements Listener{
 	public void onInventoryClick(InventoryClickEvent event) {
 		if (!(event.getWhoClicked() instanceof Player)) return;
 		if (event.getClickedInventory() == null) return;
+		if (!(event.getView().getTopInventory().equals(event.getClickedInventory())) && event.getCursor() == null) return;
 		if (!event.getView().getTitle().equals("Feature Management")) return;
 		
 		File file = new File(plugin.getDataFolder() + File.separator + "config.yml");

@@ -27,6 +27,7 @@ public class ScrollsOfBaugMenInventoryListener implements Listener{
 	public void onInventoryClick(InventoryClickEvent event) {
 		if (!(event.getWhoClicked() instanceof Player)) return;
 		if (!(event.getClickedInventory() != null && event.getCurrentItem() != null)) return;
+		if (!(event.getView().getTopInventory().equals(event.getClickedInventory())) && event.getCursor() == null) return;
 		if (!event.getView().getTitle().equals(plugin.inventoryManager.getRaceColor(1) + "Scrolls of Baug")) return;
 		Player player = (Player)event.getWhoClicked();
 		PersistentDataContainer data = event.getWhoClicked().getPersistentDataContainer();
@@ -51,6 +52,8 @@ public class ScrollsOfBaugMenInventoryListener implements Listener{
 			
 		} else if (event.getCurrentItem().equals(plugin.itemManager.getGovernmentMenuItem(1))) {
 			player.openInventory(plugin.inventoryManager.getGovernmentMenuInventory(player));
+		} else if (event.getCurrentItem().equals(plugin.itemManager.getViewLearnedRecipesItem(1))) {
+			player.openInventory(plugin.inventoryManager.getLearnedRecipesMenu(player.getUniqueId()));
 		}
 		
 		event.setCancelled(true);

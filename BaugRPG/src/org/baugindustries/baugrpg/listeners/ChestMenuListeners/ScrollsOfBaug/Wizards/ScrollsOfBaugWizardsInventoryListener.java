@@ -24,6 +24,7 @@ public class ScrollsOfBaugWizardsInventoryListener implements Listener{
 	public void onInventoryClick(InventoryClickEvent event) {
 		if (!(event.getWhoClicked() instanceof Player)) return;
 		if (!(event.getClickedInventory() != null && event.getCurrentItem() != null)) return;
+		if (!(event.getView().getTopInventory().equals(event.getClickedInventory())) && event.getCursor() == null) return;
 		if (!event.getView().getTitle().equals(ChatColor.AQUA + "Scrolls of Baug")) return;
 		Player player = (Player)event.getWhoClicked();
 		PersistentDataContainer data = event.getWhoClicked().getPersistentDataContainer();

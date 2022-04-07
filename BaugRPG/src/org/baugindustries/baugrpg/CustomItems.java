@@ -15,6 +15,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.Statistic;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
@@ -1413,6 +1414,161 @@ public class CustomItems {
 				1,
 				ChatColor.DARK_PURPLE + "Collect the weekly tax.");
 	}
+	
+	public ItemStack getBasicRecipeScrollItem() {
+		ItemStack scroll = plugin.createItem(
+				Material.PAPER,
+				1,
+				ChatColor.GRAY + "Basic Recipe");
+		scroll.addUnsafeEnchantment(Enchantment.DURABILITY, 0);
+		return scroll;
+	}
+	
+	public ItemStack getIntermediateRecipeScrollItem() {
+		ItemStack scroll = plugin.createItem(
+				Material.PAPER,
+				1,
+				ChatColor.GRAY + "Intermediate Recipe");
+		scroll.addUnsafeEnchantment(Enchantment.DURABILITY, 0);
+		return scroll;
+	}
+	
+	public ItemStack getAdvancedRecipeScrollItem() {
+		ItemStack scroll = plugin.createItem(
+				Material.PAPER,
+				1,
+				ChatColor.GRAY + "Advanced Recipe");
+		scroll.addUnsafeEnchantment(Enchantment.DURABILITY, 0);
+		return scroll;
+	}
+	
+	public ItemStack getExpertRecipeScrollItem() {
+		ItemStack scroll = plugin.createItem(
+				Material.PAPER,
+				1,
+				ChatColor.GRAY + "Expert Recipe");
+		scroll.addUnsafeEnchantment(Enchantment.DURABILITY, 0);
+		return scroll;
+	}
+	
+	public ItemStack getViewLearnedRecipesItem(int race) {
+		return plugin.createItem(Material.CRAFTING_TABLE,
+				1,
+				getRaceColor(race) + "View recipes you've learned.");
+	}
+	
+	public ItemStack getLearnedRecipesInfoItem() {
+		return plugin.createItem(Material.NETHER_STAR,
+				1,
+				ChatColor.GOLD + "Click an item to view its recipe.");
+	}
+	
+	public ItemStack getCordovanLeatherItem() {
+		return plugin.createItem(Material.LEATHER,
+				1,
+				ChatColor.DARK_AQUA + "Cordovan Leather",
+				Arrays.asList("Man Made"));
+	}
+	
+	public ItemStack getIronPlateItem() {
+		return plugin.createItem(Material.IRON_INGOT,
+				1,
+				ChatColor.DARK_AQUA + "Iron Plate",
+				Arrays.asList("Man Made"));
+	}
+	
+	public ItemStack getMerinoWoolItem() {
+		return plugin.createItem(Material.WHITE_WOOL,
+				1,
+				ChatColor.DARK_AQUA + "Merino Wool",
+				Arrays.asList("Man Made"));
+	}
+	
+	public ItemStack getChaffItem() {
+		return plugin.createItem(Material.WHEAT,
+				1,
+				ChatColor.DARK_GREEN + "Chaff",
+				Arrays.asList("Elven Craft"));
+	}
+	
+	public ItemStack getElvenWeaveItem() {
+		return plugin.createItem(Material.STRING,
+				1,
+				ChatColor.DARK_GREEN + "Elven Weave",
+				Arrays.asList("Elven Craft"));
+	}
+	
+	public ItemStack getYewBranchesItem() {
+		return plugin.createItem(Material.STICK,
+				1,
+				ChatColor.DARK_GREEN + "Yew Branches",
+				Arrays.asList("Elven Craft"));
+	}
+	
+	public ItemStack getDwarvenSteelItem() {
+		return plugin.createItem(Material.IRON_INGOT,
+				1,
+				ChatColor.DARK_PURPLE + "Dwarven Steel",
+				Arrays.asList("Dwarven Forged"));
+	}
+	
+	public ItemStack getRubyItem() {
+		return plugin.createItem(Material.DIAMOND,
+				3,
+				ChatColor.DARK_PURPLE + "Ruby",
+				Arrays.asList("Dwarven Forged"));
+	}
+	
+	public ItemStack getSapphireItem() {
+		return plugin.createItem(Material.DIAMOND,
+				3,
+				ChatColor.DARK_PURPLE + "Sapphire",
+				Arrays.asList("Dwarven Forged"));
+	}
+	
+	public ItemStack getRoyalAzelItem() {
+		return plugin.createItem(Material.DIAMOND,
+				3,
+				ChatColor.DARK_PURPLE + "Royal Azel",
+				Arrays.asList("Dwarven Forged"));
+	}
+	
+	public ItemStack getOpalItem() {
+		return plugin.createItem(Material.DIAMOND,
+				3,
+				ChatColor.DARK_PURPLE + "Opal",
+				Arrays.asList("Dwarven Forged"));
+	}
+	
+	public ItemStack getHardenedStoneItem() {
+		return plugin.createItem(Material.STONE,
+				1,
+				ChatColor.DARK_PURPLE + "Hardened Stone",
+				Arrays.asList("Dwarven Forged"));
+	}
+	
+	public ItemStack getEssenceOfVengeanceItem() {
+		return plugin.createItem(Material.GLOWSTONE_DUST,
+				1,
+				ChatColor.DARK_RED + "Essence Of Vengeance",
+				Arrays.asList("Orc Contrived"));
+	}
+	
+	public ItemStack getBloodOfTheForsakenItem() {
+		return plugin.createItem(Material.REDSTONE,
+				1,
+				ChatColor.DARK_RED + "Blood of the Forsaken",
+				Arrays.asList("Orc Contrived"));
+	}
+	
+	public ItemStack getScrapItem() {
+		return plugin.createItem(Material.QUARTZ,
+				1,
+				ChatColor.DARK_RED + "Scrap",
+				Arrays.asList("Orc Contrived"));
+	}
+
+
 }
 
 

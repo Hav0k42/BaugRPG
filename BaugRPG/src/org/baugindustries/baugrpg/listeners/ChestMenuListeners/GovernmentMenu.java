@@ -40,6 +40,7 @@ public class GovernmentMenu implements Listener{
 		if (!(event.getWhoClicked() instanceof Player)) return;
 		if (!(event.getClickedInventory() != null && event.getCurrentItem() != null)) return;
 		if (!(event.getView().getTitle().equals(ChatColor.DARK_AQUA + "Kingdom Info") || event.getView().getTitle().equals(ChatColor.DARK_GREEN + "Commune Info") || event.getView().getTitle().equals(ChatColor.DARK_PURPLE + "Guild Info") || event.getView().getTitle().equals(ChatColor.DARK_RED + "Horde Info"))) return;
+		if (!(event.getView().getTopInventory().equals(event.getClickedInventory())) && event.getCursor() == null) return;
 		Player player = (Player)event.getWhoClicked();
 		PersistentDataContainer data = player.getPersistentDataContainer();
 		int race = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);

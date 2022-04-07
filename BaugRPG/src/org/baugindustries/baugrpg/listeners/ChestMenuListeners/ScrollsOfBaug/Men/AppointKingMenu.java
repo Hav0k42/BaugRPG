@@ -19,6 +19,7 @@ public class AppointKingMenu implements Listener {
 	public void onInventoryClick(InventoryClickEvent event) {
 		if (!(event.getWhoClicked() instanceof Player)) return;
 		if (!(event.getClickedInventory() != null && event.getCurrentItem() != null)) return;
+		if (!(event.getView().getTopInventory().equals(event.getClickedInventory())) && event.getCursor() == null) return;
 		if (!event.getView().getTitle().contains(ChatColor.DARK_AQUA + "Appoint King")) return;
 		Player player = (Player)event.getWhoClicked();
 

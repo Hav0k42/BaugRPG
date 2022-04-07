@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.baugindustries.baugrpg.Main;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -33,23 +34,14 @@ public class PlayerDeathListener implements Listener{
 		if (player.getKiller() != null) {
 			Player killer = (Player) player.getKiller();
 			
-			PersistentDataContainer playerData = player.getPlayer().getPersistentDataContainer();
-			PersistentDataContainer killerData = killer.getPlayer().getPersistentDataContainer();
-			int playerRace = -1;
-			int killerRace = -1;
-			if (playerData.has(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER)) {
-				playerRace = playerData.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
-			}
-			if (killerData.has(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER)) {
-				killerRace = killerData.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
-			}
+			int playerRace = plugin.getRace(player);
+			int killerRace = plugin.getRace(killer);
 			
 			if (killerRace == 3 && playerRace == 2) {//Dwarf killed an elf
 				killer.getWorld().dropItemNaturally(player.getLocation(), plugin.createItem(Material.GOLD_INGOT, 1 + (int)(Math.random() * 3)));
 			}
 			
 			if (playerRace > 0 && killerRace > 0 && playerRace != killerRace) {
-				
 				File claimsFile = new File(plugin.getDataFolder() + File.separator + "claims.yml");
 				FileConfiguration claimsConfig = YamlConfiguration.loadConfiguration(claimsFile);
 				
@@ -61,24 +53,22 @@ public class PlayerDeathListener implements Listener{
 					availableChunks = claimsConfig.getInt(killerRaceString + "TotalChunks") + 1;
 				} else {
 					availableChunks = plugin.startingClaimChunks + 1;
-					claimsConfig.set(killerRaceString + "TotalChunks", availableChunks);
-					try {
-						claimsConfig.save(claimsFile);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
 				}
+				claimsConfig.set(killerRaceString + "TotalChunks", availableChunks);
 				
 				if (claimsConfig.contains(playerRaceString + "TotalChunks")) {
-					availableChunks = claimsConfig.getInt(playerRaceString + "TotalChunks") + 1;
+					availableChunks = claimsConfig.getInt(playerRaceString + "TotalChunks") - 1;
 				} else {
-					availableChunks = plugin.startingClaimChunks + 1;
-					claimsConfig.set(playerRaceString + "TotalChunks", availableChunks);
-					try {
-						claimsConfig.save(claimsFile);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+					availableChunks = plugin.startingClaimChunks - 1;
+				}
+
+				
+				claimsConfig.set(playerRaceString + "TotalChunks", availableChunks);
+				
+				try {
+					claimsConfig.save(claimsFile);
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
 			}
 			

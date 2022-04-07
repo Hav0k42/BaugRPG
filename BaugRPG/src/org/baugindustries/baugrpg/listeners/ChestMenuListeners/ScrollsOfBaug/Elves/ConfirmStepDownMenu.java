@@ -23,6 +23,7 @@ public class ConfirmStepDownMenu implements Listener {
 		if (!(event.getWhoClicked() instanceof Player)) return;
 		if (!(event.getClickedInventory() != null && event.getCurrentItem() != null)) return;
 		if (!event.getView().getTitle().contains(ChatColor.DARK_GREEN + "Confirm Stepping Down")) return;
+		if (!(event.getView().getTopInventory().equals(event.getClickedInventory())) && event.getCursor() == null) return;
 		Player player = (Player)event.getWhoClicked();
 		
 		

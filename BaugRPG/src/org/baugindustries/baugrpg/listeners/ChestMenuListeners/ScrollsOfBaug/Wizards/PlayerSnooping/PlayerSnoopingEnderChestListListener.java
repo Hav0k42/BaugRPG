@@ -23,6 +23,7 @@ public class PlayerSnoopingEnderChestListListener implements Listener{
 		if (event.getWhoClicked() instanceof Player) {
 			Player player = (Player)event.getWhoClicked();
 			if (event.getClickedInventory() != null) {
+				if (!(event.getView().getTopInventory().equals(event.getClickedInventory())) && event.getCursor() == null) return;
 				if (event.getView().getTitle().equals("Players Ender Chests")) {
 						
 					int page = 0;

@@ -143,11 +143,11 @@ public class SpawnProtection implements Listener {
 		event.setCancelled(check);
 	}
 	
-	@EventHandler
-	public void BlockFade(BlockFadeEvent event) {
-		if (event.isCancelled()) return;
-		event.setCancelled(isPositionIllegal(event.getBlock().getLocation()));
-	}
+//	@EventHandler
+//	public void BlockFade(BlockFadeEvent event) {
+//		if (event.isCancelled()) return;
+//		event.setCancelled(isPositionIllegal(event.getBlock().getLocation()));
+//	}
 	
 	@EventHandler
 	public void BlockFlow(BlockFromToEvent event) {

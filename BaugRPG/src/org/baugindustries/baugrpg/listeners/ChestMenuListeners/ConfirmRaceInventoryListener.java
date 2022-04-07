@@ -32,6 +32,7 @@ public class ConfirmRaceInventoryListener implements Listener{
 		if (event.getWhoClicked() instanceof Player) {
 			Player player = (Player)event.getWhoClicked();
 			if (event.getClickedInventory() != null) {
+				if (!(event.getView().getTopInventory().equals(event.getClickedInventory())) && event.getCursor() == null) return;
 				if (event.getView().getTitle().equals(ChatColor.DARK_GRAY + "Confirm Selection")) {
 					
 						if (event.getSlot() == 15 && event.getCurrentItem().equals(plugin.itemManager.getNoItem())) {//No
