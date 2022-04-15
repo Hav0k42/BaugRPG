@@ -84,8 +84,8 @@ public class CustomInventories {
 		int i = 10;
 		for (Recipes recipe : learnedRecipes) {
 			try {
-				Method getResultItem = plugin.itemManager.getClass().getDeclaredMethod(recipe.getResultMethod(), null);
-				inventory.setItem(i, (ItemStack)getResultItem.invoke(plugin.itemManager, null));
+				Method getResultItem = plugin.itemManager.getClass().getDeclaredMethod(recipe.getResultMethod(), (Class<?>[])null);
+				inventory.setItem(i, (ItemStack)getResultItem.invoke(plugin.itemManager, (Object)null));
 			} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 				e.printStackTrace();
 			}
@@ -1068,6 +1068,14 @@ public class CustomInventories {
 	 		config.set("allowGhastGriefing", false);
 	 	}
 	 	
+	 	if (!config.contains("mediumCoreDeathOn")) {
+	 		config.set("mediumCoreDeathOn", true);
+	 	}
+	 	
+	 	if (!config.contains("hardcoreDeathOn")) {
+	 		config.set("hardcoreDeathOn", false);
+	 	}
+	 	
 
  		try {
 			config.save(file);
@@ -1081,10 +1089,12 @@ public class CustomInventories {
 		
 		inventory.setItem(10, plugin.itemManager.getTpaFeatureItem());
 		inventory.setItem(11, plugin.itemManager.getRecipeFeatureItem());
-		inventory.setItem(12, plugin.itemManager.getEndermanGriefItem());
-		inventory.setItem(13, plugin.itemManager.getCreeperGriefItem());
-		inventory.setItem(14, plugin.itemManager.getTntGriefItem());
-		inventory.setItem(15, plugin.itemManager.getGhastGriefItem());
+		inventory.setItem(13, plugin.itemManager.getEndermanGriefItem());
+		inventory.setItem(14, plugin.itemManager.getCreeperGriefItem());
+		inventory.setItem(15, plugin.itemManager.getTntGriefItem());
+		inventory.setItem(16, plugin.itemManager.getGhastGriefItem());
+		inventory.setItem(19, plugin.itemManager.getMediumCoreDeathItem());
+		inventory.setItem(20, plugin.itemManager.getHardcoreDeathItem());
 		return inventory;
 	}
 	

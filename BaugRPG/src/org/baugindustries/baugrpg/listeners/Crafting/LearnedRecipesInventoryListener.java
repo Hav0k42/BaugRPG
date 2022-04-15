@@ -57,8 +57,8 @@ public class LearnedRecipesInventoryListener implements Listener {
 		inventory.setItem(30, pattern[8]);
 		
 		try {
-			Method getResultItem = plugin.itemManager.getClass().getDeclaredMethod(recipe.getResultMethod(), null);
-			inventory.setItem(25, (ItemStack)getResultItem.invoke(plugin.itemManager, null));
+			Method getResultItem = plugin.itemManager.getClass().getDeclaredMethod(recipe.getResultMethod(), (Class<?>[])null);
+			inventory.setItem(25, (ItemStack)getResultItem.invoke(plugin.itemManager, (Object[])null));
 		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 		}

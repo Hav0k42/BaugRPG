@@ -15,6 +15,8 @@ import org.baugindustries.baugrpg.commands.ChatTabCompleter;
 import org.baugindustries.baugrpg.commands.ChunkClaim;
 import org.baugindustries.baugrpg.commands.Claim;
 import org.baugindustries.baugrpg.commands.ClaimTabCompleter;
+import org.baugindustries.baugrpg.commands.GetCustomItem;
+import org.baugindustries.baugrpg.commands.GetCustomItemTabCompleter;
 import org.baugindustries.baugrpg.commands.Map;
 import org.baugindustries.baugrpg.commands.RaceWizard;
 import org.baugindustries.baugrpg.commands.ResetRace;
@@ -123,6 +125,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_18_R2.CraftWorld;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -475,6 +478,9 @@ public class Main extends JavaPlugin {
 		 getCommand("warp").setTabCompleter(new WarpTabCompleter());
 		 new WarpAccept(this);
 		 new Spawn(this);
+		 
+		 new GetCustomItem(this);
+		 getCommand("GetCustomItem").setTabCompleter(new GetCustomItemTabCompleter(this));
 		 
 		
 		 

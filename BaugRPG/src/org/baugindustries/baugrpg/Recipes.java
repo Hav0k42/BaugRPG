@@ -4,7 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -12,7 +11,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public enum Recipes {
 	
@@ -20,15 +18,15 @@ public enum Recipes {
 	CORDOVAN_LEATHER (
 			RecipeTypes.BASIC, 
 			new ArrayList<Object> (Arrays.asList(
-				new ItemStack(Material.STRING),
+				null,
 				new ItemStack(Material.RABBIT_HIDE),
-				new ItemStack(Material.STRING),
+				null,
 				new ItemStack(Material.LEATHER),
-				new ItemStack(Material.STRING),
+				null,
 				new ItemStack(Material.LEATHER),
-				new ItemStack(Material.STRING),
+				null,
 				new ItemStack(Material.RABBIT_HIDE),
-				new ItemStack(Material.STRING)
+				null
 					)),
 			false,
 			"getCordovanLeatherItem"
@@ -323,8 +321,8 @@ public enum Recipes {
 	public ItemStack getResult(Main plugin) {
 		Method getResultItem;
 		try {
-			getResultItem = plugin.itemManager.getClass().getDeclaredMethod(getResultMethod(), null);
-			ItemStack tempItem = (ItemStack)getResultItem.invoke(plugin.itemManager, null);
+			getResultItem = plugin.itemManager.getClass().getDeclaredMethod(getResultMethod(), (Class<?>[])null);
+			ItemStack tempItem = (ItemStack)getResultItem.invoke(plugin.itemManager, (Object[])null);
 			return tempItem;
 		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
@@ -380,11 +378,21 @@ public enum Recipes {
 			ItemStack[] resolvedPattern = getPattern(plugin);
 			for (int i = 0; i < resolvedPattern.length; i++) {
 				if (resolvedPattern[i] != null) {
-					recipe.setIngredient((char)(i + 65), resolvedPattern[i].getData());
+					recipe.setIngredient((char)(i + 65), resolvedPattern[i].getType());
+					
 				}
 			}
 			return recipe;
 		}
+	}
+	
+	public boolean matches(Main plugin, ItemStack otherItem) {
+		ItemStack thisItem = getResult(plugin);
+		thisItem.setAmount(otherItem.getAmount());
+		if (thisItem.equals(otherItem)) {
+			return true;
+		}
+		return false;
 	}
 	
 }

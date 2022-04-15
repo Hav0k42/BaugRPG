@@ -2,9 +2,10 @@ package org.baugindustries.baugrpg.listeners;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import org.baugindustries.baugrpg.Main;
-import org.bukkit.Bukkit;
+import org.baugindustries.baugrpg.Recipes;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -14,7 +15,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.inventory.ItemFactory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.persistence.PersistentDataType;
 
 import net.md_5.bungee.api.ChatColor;
@@ -77,6 +80,39 @@ public class PlayerDeathListener implements Listener{
 			}
 		} else if (plugin.orcVictim != null && plugin.orcVictim.equals(player.getUniqueId())) {
 			event.setDeathMessage(ChatColor.DARK_RED + player.getDisplayName() + ChatColor.WHITE + " tried to escape the inevitable.");
+		}
+		
+		File file = new File(plugin.getDataFolder() + File.separator + "config.yml");
+	 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+		
+		List<ItemStack> drops = event.getDrops();
+		if (config.contains("hardcoreDeathOn") && config.getBoolean("hardcoreDeathOn")) {
+			drops.forEach(drop -> {
+				drops.remove(drop);
+			});
+		} else if (!config.contains("mediumCoreDeathOn") || config.getBoolean("mediumCoreDeathOn")) {
+			Recipes[] values = Recipes.values();
+			ItemFactory factory = plugin.getServer().getItemFactory();
+			for (int c = drops.size() - 1; c >= 0; c--) {
+				ItemStack drop = drops.get(c);
+				boolean passed = false;
+				if (drop.getType().getMaxDurability() > 10) {
+					passed = true;
+				} else {
+					for (int i = 0; i < values.length; i++) {
+						ItemStack customItem = values[i].getResult(plugin);
+						customItem.setAmount(drop.getAmount());
+						if (customItem.equals(drop)) {
+							passed = true;
+							break;
+						}
+					}
+				}
+				
+				if (!passed) {
+					drops.remove(c);
+				}
+			}
 		}
 		
 		

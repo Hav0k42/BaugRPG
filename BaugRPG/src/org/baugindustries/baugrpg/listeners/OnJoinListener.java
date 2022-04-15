@@ -17,7 +17,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-public class OnJoinListener implements Listener{
+public class OnJoinListener implements Listener {
 	private int saturationSlownessMultiplier = 40;
 	
 	private Main plugin;

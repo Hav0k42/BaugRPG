@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
 
 public class FeatureManagement implements Listener{
 	private Main plugin;
@@ -29,35 +28,37 @@ public class FeatureManagement implements Listener{
 		File file = new File(plugin.getDataFolder() + File.separator + "config.yml");
 	 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
 	 	
-		ItemStack tpaItem = plugin.itemManager.getTpaFeatureItem();
-		ItemStack recipeItem = plugin.itemManager.getRecipeFeatureItem();
-		ItemStack endermanGriefItem = plugin.itemManager.getEndermanGriefItem();
-		ItemStack creeperGriefItem = plugin.itemManager.getCreeperGriefItem();
-		ItemStack tntGriefItem = plugin.itemManager.getTntGriefItem();
-		ItemStack ghastGriefItem = plugin.itemManager.getGhastGriefItem();
 		
-		if (event.getCurrentItem().equals(tpaItem)) {
+		if (event.getCurrentItem().equals(plugin.itemManager.getTpaFeatureItem())) {
 			config.set("allowTpa", !(Boolean)config.get("allowTpa"));
 		}
 		
-		if (event.getCurrentItem().equals(recipeItem)) {
+		if (event.getCurrentItem().equals(plugin.itemManager.getRecipeFeatureItem())) {
 			config.set("allowRecipe", !(Boolean)config.get("allowRecipe"));
 		}
 		
-		if (event.getCurrentItem().equals(endermanGriefItem)) {
+		if (event.getCurrentItem().equals(plugin.itemManager.getEndermanGriefItem())) {
 			config.set("allowEndermanGriefing", !(Boolean)config.get("allowEndermanGriefing"));
 		}
 		
-		if (event.getCurrentItem().equals(creeperGriefItem)) {
+		if (event.getCurrentItem().equals(plugin.itemManager.getCreeperGriefItem())) {
 			config.set("allowCreeperGriefing", !(Boolean)config.get("allowCreeperGriefing"));
 		}
 		
-		if (event.getCurrentItem().equals(tntGriefItem)) {
+		if (event.getCurrentItem().equals(plugin.itemManager.getTntGriefItem())) {
 			config.set("allowTntGriefing", !(Boolean)config.get("allowTntGriefing"));
 		}
 		
-		if (event.getCurrentItem().equals(ghastGriefItem)) {
+		if (event.getCurrentItem().equals(plugin.itemManager.getGhastGriefItem())) {
 			config.set("allowGhastGriefing", !(Boolean)config.get("allowGhastGriefing"));
+		}
+		
+		if (event.getCurrentItem().equals(plugin.itemManager.getMediumCoreDeathItem())) {
+			config.set("mediumCoreDeathOn", !(Boolean)config.get("mediumCoreDeathOn"));
+		}
+		
+		if (event.getCurrentItem().equals(plugin.itemManager.getHardcoreDeathItem())) {
+			config.set("hardcoreDeathOn", !(Boolean)config.get("hardcoreDeathOn"));
 		}
 		
 		try {

@@ -490,6 +490,39 @@ public class CustomItems {
 						color + config.get("allowGhastGriefing").toString().toUpperCase()));
 	}
 	
+	public ItemStack getMediumCoreDeathItem() {
+		File file = new File(plugin.getDataFolder() + File.separator + "config.yml");
+	 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+	 	ChatColor color = ChatColor.RED;
+	 	if (config.getBoolean("mediumCoreDeathOn")) {
+	 		color = ChatColor.GREEN;
+	 	}
+		return plugin.createItem(
+				Material.SKELETON_SKULL, 
+				1, 
+				ChatColor.RED + "Medium Core Death", 
+				Arrays.asList(ChatColor.LIGHT_PURPLE + "All items get deleted on death except",
+						"for equipment and custom items.",
+						"Overriden by Hardcore Death option.",
+						color + config.get("mediumCoreDeathOn").toString().toUpperCase()));
+	}
+	
+	public ItemStack getHardcoreDeathItem() {
+		File file = new File(plugin.getDataFolder() + File.separator + "config.yml");
+	 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+	 	ChatColor color = ChatColor.RED;
+	 	if (config.getBoolean("hardcoreDeathOn")) {
+	 		color = ChatColor.GREEN;
+	 	}
+		return plugin.createItem(
+				Material.WITHER_SKELETON_SKULL, 
+				1, 
+				ChatColor.DARK_RED + "Hardcore Death", 
+				Arrays.asList(ChatColor.LIGHT_PURPLE + "All items get deleted on death",
+						"Overrides by Medium Core Death option.",
+						color + config.get("hardcoreDeathOn").toString().toUpperCase()));
+	}
+	
 	public ItemStack getStableMasterSkill1Item(Player player) {
 	 	return plugin.createItem(
 	 			Material.LEATHER_HORSE_ARMOR,
