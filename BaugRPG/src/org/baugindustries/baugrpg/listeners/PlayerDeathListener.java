@@ -15,9 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.inventory.ItemFactory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.persistence.PersistentDataType;
 
 import net.md_5.bungee.api.ChatColor;
@@ -92,7 +90,6 @@ public class PlayerDeathListener implements Listener{
 			});
 		} else if (!config.contains("mediumCoreDeathOn") || config.getBoolean("mediumCoreDeathOn")) {
 			Recipes[] values = Recipes.values();
-			ItemFactory factory = plugin.getServer().getItemFactory();
 			for (int c = drops.size() - 1; c >= 0; c--) {
 				ItemStack drop = drops.get(c);
 				boolean passed = false;

@@ -2,8 +2,8 @@ package org.baugindustries.baugrpg;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -951,8 +951,8 @@ public class CustomInventories {
 			
 			if (level > 5) {
 				inventory.setItem(currentSlot, plugin.itemManager.getSkillTreeMenuItem());
+				currentSlot++;
 			}
-			currentSlot++;
 			
 			
 			if (skillsconfig.contains("learnedRecipes")) {
@@ -969,16 +969,16 @@ public class CustomInventories {
 			
 			if (level > 5) {
 				inventory.setItem(currentSlot, plugin.itemManager.getSkillTreeMenuItem());
+				currentSlot++;
 			}
-			currentSlot++;
 			
 			inventory.setItem(currentSlot, plugin.itemManager.getCommunistHubItem());
 			currentSlot++;
 			
 			if (skillsconfig.contains("learnedRecipes")) {
 				inventory.setItem(currentSlot, plugin.itemManager.getViewLearnedRecipesItem(race));
+				currentSlot++;
 			}
-			currentSlot++;
 			
 		} else if (race == 3) {//Dwarves
 			
@@ -989,16 +989,16 @@ public class CustomInventories {
 			
 			if (level > 5) {
 				inventory.setItem(currentSlot, plugin.itemManager.getSkillTreeMenuItem());
+				currentSlot++;
 			}
-			currentSlot++;
 			
 			inventory.setItem(currentSlot, plugin.itemManager.getDwarvenBankConversionItem());
 			currentSlot++;
 			
 			if (skillsconfig.contains("learnedRecipes")) {
 				inventory.setItem(currentSlot, plugin.itemManager.getViewLearnedRecipesItem(race));
+				currentSlot++;
 			}
-			currentSlot++;
 			
 		} else if (race == 4) {//Orcs
 			
@@ -1009,13 +1009,13 @@ public class CustomInventories {
 			
 			if (level > 5) {
 				inventory.setItem(currentSlot, plugin.itemManager.getSkillTreeMenuItem());
+				currentSlot++;
 			}
-			currentSlot++;
 
 			if (skillsconfig.contains("learnedRecipes")) {
 				inventory.setItem(currentSlot, plugin.itemManager.getViewLearnedRecipesItem(race));
+				currentSlot++;
 			}
-			currentSlot++;
 			
 		} else if (race == 5) {//Wizards
 			

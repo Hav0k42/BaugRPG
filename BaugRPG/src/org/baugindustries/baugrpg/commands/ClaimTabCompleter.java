@@ -19,15 +19,15 @@ public class ClaimTabCompleter implements TabCompleter {
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args) {
 		if (args.length == 1) {
 			List<String> chatChannels = new ArrayList<String>();
-			chatChannels.add("delete");
-			chatChannels.add("trust");
-			chatChannels.add("untrust");
+			if ("delete".contains(args[0].toLowerCase())) chatChannels.add("delete");
+			if ("trust".contains(args[0].toLowerCase())) chatChannels.add("trust");
+			if ("untrust".contains(args[0].toLowerCase())) chatChannels.add("untrust");
 			return chatChannels;
 		}
 		if (args.length == 2) {
 			List<String> chatChannels = new ArrayList<String>();
 			plugin.getOnlinePlayers().forEach(player -> {
-				chatChannels.add(player.getName());
+				if (player.getName().toLowerCase().contains(args[0].toLowerCase())) chatChannels.add(player.getName());
 			});
 			return chatChannels;
 		}

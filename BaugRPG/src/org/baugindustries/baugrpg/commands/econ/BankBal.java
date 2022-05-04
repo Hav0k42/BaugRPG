@@ -1,11 +1,10 @@
 package org.baugindustries.baugrpg.commands.econ;
 
-import org.bukkit.command.CommandExecutor;
-
 import java.io.File;
 
 import org.baugindustries.baugrpg.Main;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

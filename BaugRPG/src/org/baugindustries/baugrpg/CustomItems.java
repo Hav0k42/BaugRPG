@@ -528,7 +528,7 @@ public class CustomItems {
 	 			Material.LEATHER_HORSE_ARMOR,
 	 			1,
 	 			ChatColor.DARK_AQUA + "Hermes Hooves",
-	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Increase mounted speed threefold",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Increase mounted speed threefold.",
 	 					getSecondDataSkillItemsString(player, "StableMaster1", "8 Points")));
 	}
 	
@@ -537,7 +537,7 @@ public class CustomItems {
 	 			Material.IRON_SWORD,
 	 			1,
 	 			ChatColor.DARK_AQUA + "Mounted Mania",
-	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Increased Damage when riding horses.",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Increased damage when riding horses.",
 	 					getSecondDataSkillItemsString(player, "StableMaster2", "9 Points")));
 	}
 	
@@ -546,7 +546,7 @@ public class CustomItems {
 	 			Material.APPLE,
 	 			1,
 	 			ChatColor.DARK_AQUA + "Healthy Horses",
-	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Increased Health when riding horses",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Increased health when riding horses.",
 	 					getSecondDataSkillItemsString(player, "StableMaster3", "8 Points")));
 	}
 	
@@ -671,7 +671,7 @@ public class CustomItems {
 	 	return plugin.createItem(
 	 			Material.GOLDEN_APPLE,
 	 			1,
-	 			ChatColor.DARK_GREEN + "Woodland Absoprtion",
+	 			ChatColor.DARK_GREEN + "Woodland Absorption",
 	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Slow Regen that is not dependent on hunger.",
 	 					getSecondDataSkillItemsString(player, "WoodlandCraftsman1", "10 Points")));
 	}
@@ -979,17 +979,7 @@ public class CustomItems {
 	 	
 	}
 
-	public ItemStack getBottledStarlightItem() {
-		ItemStack item = plugin.createItem(
-				Material.POTION,
-				1,
-				ChatColor.DARK_GREEN + "Bottled Starlight");
-		PotionMeta meta = (PotionMeta)item.getItemMeta();
-		meta.setColor(Color.WHITE);
-		meta.addCustomEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 400, 0), true);
-		item.setItemMeta(meta);
-		return item;
-	}
+	
 	
 	public ItemStack getMenBuffBiomeItem(Player player) {
 		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
@@ -1236,7 +1226,6 @@ public class CustomItems {
 				try {
 					leaderConfig.save(leaderDataFile);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
@@ -1256,7 +1245,6 @@ public class CustomItems {
 				try {
 					leaderConfig.save(leaderDataFile);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
@@ -1496,112 +1484,1932 @@ public class CustomItems {
 				ChatColor.GOLD + "Click an item to view its recipe.");
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//BEGIN LIST OF CRAFTABLE CUSTOM ITEMS
+	
+	
+	
+	
+	//Stable Master
+	
+	//Basic
+	
 	public ItemStack getCordovanLeatherItem() {
 		return plugin.createItem(Material.LEATHER,
 				1,
 				ChatColor.DARK_AQUA + "Cordovan Leather",
-				Arrays.asList("Man Made"));
+				Arrays.asList("Man Made", ChatColor.GREEN + "Basic Material"));
 	}
+	
+	public ItemStack getHorsehairItem() {
+		return plugin.createItem(Material.STRING,
+				1,
+				ChatColor.DARK_AQUA + "Horsehair",
+				Arrays.asList("Man Made", ChatColor.GREEN + "Basic Material"));
+	}
+	
+	public ItemStack getSharpenedHoofItem() {
+		return plugin.createItem(Material.FLINT,
+				1,
+				ChatColor.DARK_AQUA + "Sharpened Hoof",
+				Arrays.asList("Man Made", ChatColor.GREEN + "Basic Material"));
+	}
+	
+	public ItemStack getHorseshoeItem() {
+		return plugin.createItem(Material.GOLDEN_HORSE_ARMOR,
+				1,
+				ChatColor.DARK_AQUA + "Horseshoe",
+				Arrays.asList("Reduces fall damage taken by horses.", "Man Made", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	public ItemStack getMorralItem() {
+		return plugin.createItem(Material.IRON_HORSE_ARMOR,
+				1,
+				ChatColor.DARK_AQUA + "Morral",
+				Arrays.asList("Prevents your horse from wandering.", "Man Made", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	//Intermediate
+	
+	public ItemStack getRopeItem() {
+		return plugin.createItem(Material.STRING,
+				1,
+				ChatColor.DARK_AQUA + "Rope",
+				Arrays.asList("Man Made", ChatColor.YELLOW + "Intermediate Material"));
+	}
+	
+	public ItemStack getTemperedLeatherItem() {
+		return plugin.createItem(Material.LEATHER,
+				1,
+				ChatColor.DARK_AQUA + "Tempered Leather",
+				Arrays.asList("Man Made", ChatColor.YELLOW + "Intermediate Material"));
+	}
+	
+	public ItemStack getSpearItem() {
+		return plugin.createItem(Material.TRIDENT,
+				1,
+				ChatColor.DARK_AQUA + "Spear",
+				Arrays.asList("Temporarily paralyzes enemies when thrown.", "Man Made", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getWhistleItem() {
+		return plugin.createItem(Material.IRON_NUGGET,
+				1,
+				ChatColor.DARK_AQUA + "Whistle",
+				Arrays.asList("Calls your horse to you.", "Man Made", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getBridleItem() {
+		return plugin.createItem(Material.GOLDEN_HORSE_ARMOR,
+				1,
+				ChatColor.DARK_AQUA + "Bridle",
+				Arrays.asList("Increases your horse's jump height.", "Man Made", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	//Advanced
+	
+	public ItemStack getCordItem() {
+		return plugin.createItem(Material.STRING,
+				1,
+				ChatColor.DARK_AQUA + "Cord",
+				Arrays.asList("Man Made", ChatColor.GOLD + "Advanced Material"));
+	}
+	
+	public ItemStack getEnrichedLeatherItem() {
+		return plugin.createItem(Material.LEATHER,
+				1,
+				ChatColor.DARK_AQUA + "Enriched Leather",
+				Arrays.asList("Man Made", ChatColor.GOLD + "Advanced Material"));
+	}
+	
+	public ItemStack getRuggedSwordItem() {
+		return plugin.createItem(Material.STONE_SWORD,
+				1,
+				ChatColor.DARK_AQUA + "Rugged Sword",
+				Arrays.asList("Charge by holding while riding a horse.", "Shift right click to view charge.", "Man Made", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getRegenerativeHorseArmorItem() {
+		return plugin.createItem(Material.DIAMOND_HORSE_ARMOR,
+				1,
+				ChatColor.DARK_AQUA + "Regenerative Horse Armor",
+				Arrays.asList("Gives your horse regeneration.", "Man Made", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getEmblemOfTheStallionItem() {
+		return plugin.createItem(Material.CLAY_BALL,
+				1,
+				ChatColor.DARK_AQUA + "Emblem of the Stallion",
+				Arrays.asList("Increases your speed when carried.", "Man Made", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	//Expert
+	
+	public ItemStack getEnchantedWhistleItem() {
+		return plugin.createItem(Material.IRON_NUGGET,
+				1,
+				ChatColor.DARK_AQUA + "Enchanted Whistle",
+				Arrays.asList("Calls your horse from anywhere", "if it is wearing enchanted horse armor.", "Man Made", ChatColor.RED + "Expert Item"));
+	}
+	
+	public ItemStack getEnchantedHorseArmorItem() {
+		return plugin.createItem(Material.DIAMOND_HORSE_ARMOR,
+				1,
+				ChatColor.DARK_AQUA + "Enchanted Horse Armor",
+				Arrays.asList("Reciever for an enchanted whistle", "Man Made", ChatColor.RED + "Expert Item"));
+	}
+	
+	public ItemStack getSoulboundSwordItem() {
+		return plugin.createItem(Material.DIAMOND_SWORD,
+				1,
+				ChatColor.DARK_AQUA + "Soulbound Sword",
+				Arrays.asList("This item will be kept when you die.", "Man Made", ChatColor.RED + "Expert Item"));
+	}
+	
+	public ItemStack getSoulOfTheEquestrianItem() {
+		return plugin.createItem(Material.HEART_OF_THE_SEA,
+				1,
+				ChatColor.DARK_AQUA + "Soul of the Equestrian",
+				Arrays.asList("Saves you from death and", "summons a stampede.", "Only usable by Stable Masters.", "Shift right click to view cooldown.", "Man Made", ChatColor.RED + "Expert Item"));
+	}
+	
+	
+	
+	
+	
+	//Steeled Armorer
+	
+	//Basic
 	
 	public ItemStack getIronPlateItem() {
 		return plugin.createItem(Material.IRON_INGOT,
 				1,
 				ChatColor.DARK_AQUA + "Iron Plate",
-				Arrays.asList("Man Made"));
+				Arrays.asList("Man Made", ChatColor.GREEN + "Basic Material"));
 	}
+	
+	public ItemStack getScrewsItem() {
+		return plugin.createItem(Material.IRON_NUGGET,
+				1,
+				ChatColor.DARK_AQUA + "Screws",
+				Arrays.asList("Man Made", ChatColor.GREEN + "Basic Material"));
+	}
+	
+	public ItemStack getMeshItem() {
+		return plugin.createItem(Material.STRING,
+				1,
+				ChatColor.DARK_AQUA + "Mesh",
+				Arrays.asList("Man Made", ChatColor.GREEN + "Basic Material"));
+	}
+	
+	public ItemStack getIronHammerItem() {
+		return plugin.createItem(Material.IRON_AXE,
+				1,
+				ChatColor.DARK_AQUA + "Iron Hammer",
+				Arrays.asList("Knocks any nearby enemies back.", "Man Made", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	public ItemStack getFeatheredShoesItem() {
+		return plugin.createItem(Material.LEATHER_BOOTS,
+				1,
+				ChatColor.DARK_AQUA + "Feathered Shoes",
+				Arrays.asList("Reduces fall damage.", "Man Made", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	//Intermediate
+	
+	public ItemStack getHardenedPlateItem() {
+		return plugin.createItem(Material.IRON_INGOT,
+				1,
+				ChatColor.DARK_AQUA + "Hardened Plate",
+				Arrays.asList("Man Made", ChatColor.YELLOW + "Intermediate Material"));
+	}
+	
+	public ItemStack getHardenedMeshItem() {
+		return plugin.createItem(Material.STRING,
+				1,
+				ChatColor.DARK_AQUA + "Hardened Mesh",
+				Arrays.asList("Man Made", ChatColor.YELLOW + "Intermediate Material"));
+	}
+	
+	public ItemStack getKnockbackShieldItem() {
+		return plugin.createItem(Material.SHIELD,
+				1,
+				ChatColor.DARK_AQUA + "Knockback Shield",
+				Arrays.asList("Blocking with this shield will", "send the attacker flying back.", "Man Made", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getIronPlateHelmetItem() {
+		return plugin.createItem(Material.IRON_HELMET,
+				1,
+				ChatColor.DARK_AQUA + "Iron Plate Helmet",
+				Arrays.asList("Set Bonus: Drastically slows nearby enemies.", "Man Made", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getIronPlateChestpieceItem() {
+		return plugin.createItem(Material.IRON_CHESTPLATE,
+				1,
+				ChatColor.DARK_AQUA + "Iron Plate Chestpiece",
+				Arrays.asList("Set Bonus: Drastically slows nearby enemies.", "Man Made", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getIronPlateLeggingsItem() {
+		return plugin.createItem(Material.IRON_LEGGINGS,
+				1,
+				ChatColor.DARK_AQUA + "Iron Plate Leggings",
+				Arrays.asList("Set Bonus: Drastically slows nearby enemies.", "Man Made", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getIronPlateGreavesItem() {
+		return plugin.createItem(Material.IRON_BOOTS,
+				1,
+				ChatColor.DARK_AQUA + "Iron Plate Greaves",
+				Arrays.asList("Set Bonus: Drastically slows nearby enemies.", "Man Made", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	//Advanced
+	
+	public ItemStack getSteelPlateItem() {
+		return plugin.createItem(Material.IRON_INGOT,
+				1,
+				ChatColor.DARK_AQUA + "Steel Plate",
+				Arrays.asList("Man Made", ChatColor.GOLD + "Advanced Material"));
+	}
+	
+	public ItemStack getSteelMeshItem() {
+		return plugin.createItem(Material.STRING,
+				1,
+				ChatColor.DARK_AQUA + "Steel Mesh",
+				Arrays.asList("Man Made", ChatColor.GOLD + "Advanced Material"));
+	}
+	
+	public ItemStack getEmblemOfTheShieldItem() {
+		return plugin.createItem(Material.CLAY_BALL,
+				1,
+				ChatColor.DARK_AQUA + "Emblem of the Shield",
+				Arrays.asList("Gives knockback immunity when carried.", "Man Made", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getSteelPlateHelmetItem() {
+		return plugin.createItem(Material.DIAMOND_HELMET,
+				1,
+				ChatColor.DARK_AQUA + "Steel Plate Helmet",
+				Arrays.asList("Set Bonus: Recieve regeneration and strength", "when standing still.", "Man Made", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getSteelPlateChestpieceItem() {
+		return plugin.createItem(Material.DIAMOND_CHESTPLATE,
+				1,
+				ChatColor.DARK_AQUA + "Steel Plate Chestpiece",
+				Arrays.asList("Set Bonus: Recieve regeneration and strength", "when standing still.", "Man Made", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getSteelPlateLeggingsItem() {
+		return plugin.createItem(Material.DIAMOND_LEGGINGS,
+				1,
+				ChatColor.DARK_AQUA + "Steel Plate Leggings",
+				Arrays.asList("Set Bonus: Recieve regeneration and strength", "when standing still.", "Man Made", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getSteelPlateGreavesItem() {
+		return plugin.createItem(Material.DIAMOND_BOOTS,
+				1,
+				ChatColor.DARK_AQUA + "Steel Plate Greaves",
+				Arrays.asList("Set Bonus: Recieve regeneration and strength", "when standing still.", "Man Made", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	//Expert
+	
+	public ItemStack getSoulOfTheGuardianItem() {
+		return plugin.createItem(Material.HEART_OF_THE_SEA,
+				1,
+				ChatColor.DARK_AQUA + "Soul of the Guardian",
+				Arrays.asList("Doubles your defense when carried.", "Only usable by Steeled Armorers.", "Man Made", ChatColor.RED + "Expert Item"));
+	}
+	
+	public ItemStack getSoulboundChestpieceItem() {
+		return plugin.createItem(Material.DIAMOND_CHESTPLATE,
+				1,
+				ChatColor.DARK_AQUA + "Soulbound Chestpiece",
+				Arrays.asList("This item will be kept when you die.", "Man Made", ChatColor.RED + "Expert Item"));
+	}
+	
+	public ItemStack getVisageOfTheGorgonItem() {
+		return plugin.createItem(Material.IRON_HELMET,
+				1,
+				ChatColor.DARK_AQUA + "Visage of the Gorgon",
+				Arrays.asList("Anyone that gazes upon you when", "wearing this will be paralyzed", "Man Made", ChatColor.RED + "Expert Item"));
+	}
+	
+	
+	
+	
+	
+	//Verdant Shepherd
+	
+	//Basic
 	
 	public ItemStack getMerinoWoolItem() {
 		return plugin.createItem(Material.WHITE_WOOL,
 				1,
 				ChatColor.DARK_AQUA + "Merino Wool",
-				Arrays.asList("Man Made"));
+				Arrays.asList("Man Made", ChatColor.GREEN + "Basic Material"));
 	}
+	
+	public ItemStack getLanolinItem() {
+		return plugin.createItem(Material.ORANGE_DYE,
+				1,
+				ChatColor.DARK_AQUA + "Lanolin",
+				Arrays.asList("Man Made", ChatColor.GREEN + "Basic Material"));
+	}
+	
+	public ItemStack getDryGrassItem() {
+		return plugin.createItem(Material.GRASS,
+				1,
+				ChatColor.DARK_AQUA + "Dry Grass",
+				Arrays.asList("Man Made", ChatColor.GREEN + "Basic Material"));
+	}
+	
+	public ItemStack getVealItem() {
+		return plugin.createItem(Material.COOKED_MUTTON,
+				1,
+				ChatColor.DARK_AQUA + "Veal",
+				Arrays.asList("Able to tame dogs.", "Man Made", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	public ItemStack getHempItem() {
+		return plugin.createItem(Material.FERN,
+				1,
+				ChatColor.DARK_AQUA + "Hemp",
+				Arrays.asList(";)", "Man Made", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	//Intermediate
+	
+	public ItemStack getMerinoClothItem() {
+		return plugin.createItem(Material.PAPER,
+				1,
+				ChatColor.DARK_AQUA + "Merino Cloth",
+				Arrays.asList("Man Made", ChatColor.YELLOW + "Intermediate Material"));
+	}
+	
+	public ItemStack getWaxItem() {
+		return plugin.createItem(Material.YELLOW_DYE,
+				1,
+				ChatColor.DARK_AQUA + "Wax",
+				Arrays.asList("Man Made", ChatColor.YELLOW + "Intermediate Material"));
+	}
+	
+	public ItemStack getCrookItem() {
+		return plugin.createItem(Material.WOODEN_HOE,
+				1,
+				ChatColor.DARK_AQUA + "Crook",
+				Arrays.asList("Right click an animal to pick it up.", "Man Made", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getShepherdsCompassItem() {
+		return plugin.createItem(Material.COMPASS,
+				1,
+				ChatColor.DARK_AQUA + "Shepherds Compass",
+				Arrays.asList("Right click a block to anchor this compass.", "Displays HUD info.", "Man Made", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getCorruptedStaffItem() {
+		return plugin.createItem(Material.STICK,
+				1,
+				ChatColor.DARK_AQUA + "Corrupted Staff",
+				Arrays.asList("Converts grass to mycelium", "and cows to mooshrooms.", "Man Made", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	//Advanced
+	
+	public ItemStack getEssenceOfFaunaItem() {
+		return plugin.createItem(Material.GREEN_DYE,
+				1,
+				ChatColor.DARK_AQUA + "Essence of Fauna",
+				Arrays.asList("Man Made", ChatColor.GOLD + "Advanced Material"));
+	}
+	
+	public ItemStack getSteelWoolItem() {
+		return plugin.createItem(Material.GRAY_WOOL,
+				1,
+				ChatColor.DARK_AQUA + "Steel Wool",
+				Arrays.asList("Man Made", ChatColor.GOLD + "Advanced Material"));
+	}
+	
+	public ItemStack getVerdantMedallionItem() {
+		return plugin.createItem(Material.GOLDEN_CHESTPLATE,
+				1,
+				ChatColor.DARK_AQUA + "Verdant Medallion",
+				Arrays.asList("Wearing this causes all hearby animals to swarm you.", "Man Made", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getEmblemOfThePastureItem() {
+		return plugin.createItem(Material.CLAY_BALL,
+				1,
+				ChatColor.DARK_AQUA + "Emblem of the Pasture",
+				Arrays.asList("Increases your regeneration when carried.", "Man Made", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getGaiasWrathItem() {
+		return plugin.createItem(Material.STICK,
+				1,
+				ChatColor.DARK_AQUA + "Gaia's Wrath",
+				Arrays.asList("Fires an orb that damages", "enemies, and boosts allies.", "Man Made", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	//Expert
+	
+	public ItemStack getSoulOfTheCaretakerItem() {
+		return plugin.createItem(Material.HEART_OF_THE_SEA,
+				1,
+				ChatColor.DARK_AQUA + "Soul of the Caretaker",
+				Arrays.asList("Permanent saturation when carried.", "Only usable by Verdant Shepherds.", "Man Made", ChatColor.RED + "Expert Item"));
+	}
+	
+	public ItemStack getSoulboundHoeItem() {
+		return plugin.createItem(Material.DIAMOND_HOE,
+				1,
+				ChatColor.DARK_AQUA + "Soulbound Hoe",
+				Arrays.asList("This item will be kept when you die.", "Man Made", ChatColor.RED + "Expert Item"));
+	}
+	
+	public ItemStack getVeiledTotemItem() {
+		return plugin.createItem(Material.POLISHED_DEEPSLATE_WALL,
+				1,
+				ChatColor.DARK_AQUA + "Veiled Totem",
+				Arrays.asList("Right click an animal to disguise", "yourself as that type of animal.", "Sneak to exit.", "Man Made", ChatColor.RED + "Expert Item"));
+	}
+	
+	
+	
+	
+	
+	//Enchanted Botanist
+	
+	//Basic
 	
 	public ItemStack getChaffItem() {
 		return plugin.createItem(Material.WHEAT,
 				1,
 				ChatColor.DARK_GREEN + "Chaff",
-				Arrays.asList("Elven Craft"));
+				Arrays.asList("Elven Craft", ChatColor.GREEN + "Basic Material"));
 	}
 	
-	public ItemStack getElvenWeaveItem() {
+	public ItemStack getAssortedPetalsItem() {
+		return plugin.createItem(Material.POPPY,
+				1,
+				ChatColor.DARK_GREEN + "Assorted Petals",
+				Arrays.asList("Elven Craft", ChatColor.GREEN + "Basic Material"));
+	}
+	
+	public ItemStack getFloralRootsItem() {
+		return plugin.createItem(Material.HANGING_ROOTS,
+				1,
+				ChatColor.DARK_GREEN + "Floral Roots",
+				Arrays.asList("Elven Craft", ChatColor.GREEN + "Basic Material"));
+	}
+	
+	public ItemStack getFloralTransmuterItem() {
+		return plugin.createItem(Material.BAMBOO,
+				1,
+				ChatColor.DARK_GREEN + "Floral Transmuter",
+				Arrays.asList("Click a flower to change its type.", "Elven Craft", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	public ItemStack getCactusGreavesItem() {
+		return plugin.createItem(Material.CHAINMAIL_BOOTS,
+				1,
+				ChatColor.DARK_GREEN + "Cactus Greaves",
+				Arrays.asList("Increased speed on sand.", "Elven Craft", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	//Intermediate
+	
+	public ItemStack getFloralPoulticeItem() {
+		return plugin.createItem(Material.CYAN_DYE,
+				1,
+				ChatColor.DARK_GREEN + "Floral Poultice",
+				Arrays.asList("Elven Craft", ChatColor.YELLOW + "Intermediate Material"));
+	}
+	
+	public ItemStack getEnrichedSoilItem() {
+		return plugin.createItem(Material.FARMLAND,
+				1,
+				ChatColor.DARK_GREEN + "Enriched Soil",
+				Arrays.asList("Elven Craft", ChatColor.YELLOW + "Intermediate Material"));
+	}
+	
+	public ItemStack getEnrichedHoeItem() {
+		return plugin.createItem(Material.IRON_HOE,
+				1,
+				ChatColor.DARK_GREEN + "Enriched Hoe",
+				Arrays.asList("Crops drop experience when", "broken with this item.", "Elven Craft", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getDemetersBenevolenceItem() {
+		return plugin.createItem(Material.CHAINMAIL_BOOTS,
+				1,
+				ChatColor.DARK_GREEN + "Demeter's Benevolence",
+				Arrays.asList("Grows grass and flowers as you move.", "Elven Craft", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getPotentHoneyItem() {
+		return plugin.createItem(Material.HONEY_BOTTLE,
+				1,
+				ChatColor.DARK_GREEN + "Potent Honey",
+				Arrays.asList("Clears all debuffs.", "Elven Craft", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	//Advanced
+	
+	public ItemStack getAqueousSolutionItem() {
+		return plugin.createItem(Material.BLUE_DYE,
+				1,
+				ChatColor.DARK_GREEN + "Aqueous Solution",
+				Arrays.asList("Elven Craft", ChatColor.GOLD + "Advanced Material"));
+	}
+	
+	public ItemStack getCorruptedSoilItem() {
+		return plugin.createItem(Material.MYCELIUM,
+				1,
+				ChatColor.DARK_GREEN + "Corrupted Soil",
+				Arrays.asList("Elven Craft", ChatColor.GOLD + "Advanced Material"));
+	}
+	
+	public ItemStack getEmblemOfTheBlossomItem() {
+		return plugin.createItem(Material.CLAY_BALL,
+				1,
+				ChatColor.DARK_GREEN + "Emblem of the Blossom",
+				Arrays.asList("Nearby crops will grow faster when carried.", "Elven Craft", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getScytheItem() {
+		return plugin.createItem(Material.IRON_HOE,
+				1,
+				ChatColor.DARK_GREEN + "Scythe",
+				Arrays.asList("Crop drops broken with this item will be doubled.", "Elven Craft", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getGoldenFlowerItem() {
+		return plugin.createItem(Material.SUNFLOWER,
+				1,
+				ChatColor.DARK_GREEN + "Golden Flower",
+				Arrays.asList("Summons bees that will come to your aid.", "Elven Craft", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	//Expert
+	
+	public ItemStack getSoulOfTheFloristItem() {
+		return plugin.createItem(Material.HEART_OF_THE_SEA,
+				1,
+				ChatColor.DARK_GREEN + "Soul of the Florist",
+				Arrays.asList("Inflicts nausea on all nearby enemies when carried.", "Only usable by Enchanted Botanists", "Elven Craft", ChatColor.RED + "Expert Item"));
+	}
+	
+	public ItemStack getSoulboundShovelItem() {
+		return plugin.createItem(Material.DIAMOND_SHOVEL,
+				1,
+				ChatColor.DARK_AQUA + "Soulbound Shovel",
+				Arrays.asList("This item will be kept when you die.", "Man Made", ChatColor.RED + "Expert Item"));
+	}
+	
+	public ItemStack getStaffOfPersephoneItem() {
+		return plugin.createItem(Material.STICK,
+				1,
+				ChatColor.DARK_AQUA + "Staff of Persephone",
+				Arrays.asList("Summons nature's fallen warriors to come to your aid.", "Man Made", ChatColor.RED + "Expert Item"));
+	}
+	
+	
+	
+	
+	
+	//Woodland Craftsman
+	
+	//Basic
+	
+	public ItemStack getElvenThreadItem() {
 		return plugin.createItem(Material.STRING,
 				1,
-				ChatColor.DARK_GREEN + "Elven Weave",
-				Arrays.asList("Elven Craft"));
+				ChatColor.DARK_GREEN + "Elven Thread",
+				Arrays.asList("Elven Craft", ChatColor.GREEN + "Basic Material"));
 	}
 	
 	public ItemStack getYewBranchesItem() {
 		return plugin.createItem(Material.STICK,
 				1,
 				ChatColor.DARK_GREEN + "Yew Branches",
-				Arrays.asList("Elven Craft"));
+				Arrays.asList("Elven Craft", ChatColor.GREEN + "Basic Material"));
 	}
 	
-	public ItemStack getDwarvenSteelItem() {
+	public ItemStack getEnrichedLogsItem() {
+		return plugin.createItem(Material.OAK_LOG,
+				1,
+				ChatColor.DARK_GREEN + "Enriched Logs",
+				Arrays.asList("Elven Craft", ChatColor.GREEN + "Basic Material"));
+	}
+	
+	public ItemStack getSaplingTransmuterItem() {
+		return plugin.createItem(Material.STICK,
+				1,
+				ChatColor.DARK_GREEN + "Sapling Transmuter",
+				Arrays.asList("Click a sapling to change its type.", "Elven Craft", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	public ItemStack getSawItem() {
+		return plugin.createItem(Material.IRON_AXE,
+				1,
+				ChatColor.DARK_GREEN + "Saw",
+				Arrays.asList("Cuts down the whole tree.", "Elven Craft", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	//Intermediate
+	
+	public ItemStack getNailItem() {
+		return plugin.createItem(Material.IRON_NUGGET,
+				1,
+				ChatColor.DARK_GREEN + "Nail",
+				Arrays.asList("Elven Craft", ChatColor.YELLOW + "Intermediate Material"));
+	}
+	
+	public ItemStack getElvenWeaveItem() {
+		return plugin.createItem(Material.LIME_WOOL,
+				1,
+				ChatColor.DARK_GREEN + "Elven Weave",
+				Arrays.asList("Elven Craft", ChatColor.YELLOW + "Intermediate Material"));
+	}
+	
+	public ItemStack getToolbeltItem() {
+		return plugin.createItem(Material.CHAINMAIL_LEGGINGS,
+				1,
+				ChatColor.DARK_GREEN + "Toolbelt",
+				Arrays.asList("Extends your build distance", "Elven Craft", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getRustedStaffItem() {
+		return plugin.createItem(Material.LIGHTNING_ROD,
+				1,
+				ChatColor.DARK_GREEN + "Rusted Staff",
+				Arrays.asList("Right click copper to oxidize it.", "Left click copper to polish it.", "Elven Craft", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getEnrichedWoodHelmetItem() {
+		return plugin.createItem(Material.GOLDEN_HELMET,
+				1,
+				ChatColor.DARK_GREEN + "Enriched Wood Helmet",
+				Arrays.asList("Set Bonus: Increases how much experience you pick up.", "Elven Craft", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getEnrichedWoodChestpieceItem() {
+		return plugin.createItem(Material.GOLDEN_CHESTPLATE,
+				1,
+				ChatColor.DARK_GREEN + "Enriched Wood Chestpiece",
+				Arrays.asList("Set Bonus: Increases how much experience you pick up.", "Elven Craft", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getEnrichedWoodLeggingsItem() {
+		return plugin.createItem(Material.GOLDEN_LEGGINGS,
+				1,
+				ChatColor.DARK_GREEN + "Enriched Wood Leggings",
+				Arrays.asList("Set Bonus: Increases how much experience you pick up.", "Elven Craft", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getEnrichedWoodGreavesItem() {
+		return plugin.createItem(Material.GOLDEN_BOOTS,
+				1,
+				ChatColor.DARK_GREEN + "Enriched Wood Greaves",
+				Arrays.asList("Set Bonus: Increases how much experience you pick up.", "Elven Craft", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	//Advanced
+	
+	public ItemStack getElvenClothItem() {
+		return plugin.createItem(Material.PAPER,
+				1,
+				ChatColor.DARK_GREEN + "Elven Cloth",
+				Arrays.asList("Elven Craft", ChatColor.GOLD + "Advanced Material"));
+	}
+	
+	public ItemStack getParchmentItem() {
+		return plugin.createItem(Material.PAPER,
+				1,
+				ChatColor.DARK_GREEN + "Parchment",
+				Arrays.asList("Elven Craft", ChatColor.GOLD + "Advanced Material"));
+	}
+	
+	public ItemStack getEmblemOfTheForestItem() {
+		return plugin.createItem(Material.CLAY_BALL,
+				1,
+				ChatColor.DARK_GREEN + "Emblem of the Forest",
+				Arrays.asList("Nearby trees will grow faster when carried.", "Elven Craft", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getElvenHoodItem() {
+		return plugin.createItem(Material.CHAINMAIL_HELMET,
+				1,
+				ChatColor.DARK_GREEN + "Elven Hood",
+				Arrays.asList("Set Bonus: Grants speed and makes you silent.", "Elven Craft", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getElvenCloakItem() {
+		return plugin.createItem(Material.CHAINMAIL_CHESTPLATE,
+				1,
+				ChatColor.DARK_GREEN + "Elven Cloak",
+				Arrays.asList("Set Bonus: Grants speed and makes you silent.", "Elven Craft", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getElvenLeggingsItem() {
+		return plugin.createItem(Material.CHAINMAIL_LEGGINGS,
+				1,
+				ChatColor.DARK_GREEN + "Elven Leggings",
+				Arrays.asList("Set Bonus: Grants speed and makes you silent.", "Elven Craft", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getElvenGreavesItem() {
+		return plugin.createItem(Material.CHAINMAIL_BOOTS,
+				1,
+				ChatColor.DARK_GREEN + "Elven Greaves",
+				Arrays.asList("Set Bonus: Grants speed and makes you silent.", "Elven Craft", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	//Expert
+	
+	public ItemStack getSoulOfTheWoodsmanItem() {
+		return plugin.createItem(Material.HEART_OF_THE_SEA,
+				1,
+				ChatColor.DARK_GREEN + "Soul of the Woodsman",
+				Arrays.asList("Grants strength when carried", "Only usable by Woodland Craftsmen", "Elven Craft", ChatColor.RED + "Expert Item"));
+	}
+	
+	public ItemStack getSoulboundLeggingsItem() {
+		return plugin.createItem(Material.DIAMOND_LEGGINGS,
+				1,
+				ChatColor.DARK_GREEN + "Soulbound Leggings",
+				Arrays.asList("This item will be kept when you die.", "Elven Craft", ChatColor.RED + "Expert Item"));
+	}
+	
+	public ItemStack getWoodslingItem() {
+		return plugin.createItem(Material.DEAD_BUSH,
+				1,
+				ChatColor.DARK_GREEN + "Woodsling",
+				Arrays.asList("Right click to launch a block of wood.", "Uses wood as ammunition.", "Elven Craft", ChatColor.RED + "Expert Item"));
+	}
+	
+	
+	
+	
+	
+	//Lunar Artificer
+	
+	//Basic
+	
+	public ItemStack getBottledStarlightItem() {
+		ItemStack item = plugin.createItem(
+				Material.POTION,
+				1,
+				ChatColor.DARK_GREEN + "Bottled Starlight",
+				Arrays.asList("Elven Craft", ChatColor.GREEN + "Basic Material"));
+		PotionMeta meta = (PotionMeta)item.getItemMeta();
+		meta.setColor(Color.WHITE);
+		meta.addCustomEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 400, 0), true);
+		item.setItemMeta(meta);
+		return item;
+	}
+	
+	public ItemStack getLunarDebrisItem() {
+		return plugin.createItem(Material.COBBLED_DEEPSLATE,
+				1,
+				ChatColor.DARK_GREEN + "Lunar Debris",
+				Arrays.asList("Elven Craft", ChatColor.GREEN + "Basic Material"));
+	}
+	
+	public ItemStack getStardustItem() {
+		return plugin.createItem(Material.GLOWSTONE_DUST,
+				1,
+				ChatColor.DARK_GREEN + "Stardust",
+				Arrays.asList("Elven Craft", ChatColor.GREEN + "Basic Material"));
+	}
+	
+	public ItemStack getIlluminaOrbItem() {
+		return plugin.createItem(Material.LIGHT,
+				1,
+				ChatColor.DARK_GREEN + "Illumina Orb",
+				Arrays.asList("Can be placed.", "Elven Craft", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	public ItemStack getNebulousAuraItem() {
+		return plugin.createItem(Material.ORANGE_DYE,
+				1,
+				ChatColor.DARK_GREEN + "Nebulous Aura",
+				Arrays.asList("Immunity to blindness.", "Elven Craft", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	//Intermediate
+	
+	public ItemStack getMeteoriteItem() {
+		return plugin.createItem(Material.OBSIDIAN,
+				1,
+				ChatColor.DARK_GREEN + "Meteorite",
+				Arrays.asList("Elven Craft", ChatColor.YELLOW + "Intermediate Material"));
+	}
+	
+	public ItemStack getDarkMatterItem() {
+		return plugin.createItem(Material.DRIED_KELP,
+				1,
+				ChatColor.DARK_GREEN + "Dark Matter",
+				Arrays.asList("Elven Craft", ChatColor.YELLOW + "Intermediate Material"));
+	}
+	
+	public ItemStack getLightShieldItem() {
+		return plugin.createItem(Material.SHIELD,
+				1,
+				ChatColor.DARK_GREEN + "Light Shield",
+				Arrays.asList("Vaporizes projectiles that pass through it.", "Elven Craft", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getLightBowItem() {
+		return plugin.createItem(Material.BOW,
+				1,
+				ChatColor.DARK_GREEN + "Light Bow",
+				Arrays.asList("Does not require arrows. Inflicts glow.", "Elven Craft", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getVoidStoneItem() {
+		return plugin.createItem(Material.ENDERMITE_SPAWN_EGG,
+				1,
+				ChatColor.DARK_GREEN + "Void Stone",
+				Arrays.asList("Inflicts blindness on all nearby enemies.", "Elven Craft", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	//Advanced
+	
+	public ItemStack getBloodMoonFragmentItem() {
+		return plugin.createItem(Material.NETHER_BRICK,
+				1,
+				ChatColor.DARK_GREEN + "Blood Moon Fragment",
+				Arrays.asList("Elven Craft", ChatColor.GOLD + "Advanced Material"));
+	}
+	
+	public ItemStack getNewMoonFragmentItem() {
+		return plugin.createItem(Material.PRISMARINE_SHARD,
+				1,
+				ChatColor.DARK_GREEN + "New Moon Fragment",
+				Arrays.asList("Elven Craft", ChatColor.GOLD + "Advanced Material"));
+	}
+	
+	public ItemStack getLunarBoomerangItem() {
+		return plugin.createItem(Material.LEAD,
+				1,
+				ChatColor.DARK_GREEN + "Lunar Boomerang",
+				Arrays.asList("Enemies hit by this will be propelled towards you.", "Elven Craft", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getEmblemOfTheMoonItem() {
+		return plugin.createItem(Material.CLAY_BALL,
+				1,
+				ChatColor.DARK_GREEN + "Emblem of the Moon",
+				Arrays.asList("Gives all nearby entities glowing when carried.", "Elven Craft", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getStaffOfBalanceItem() {
+		return plugin.createItem(Material.STICK,
+				1,
+				ChatColor.DARK_GREEN + "Staff of Balance",
+				Arrays.asList("Shoots a bolt that will judge the player it hits.", "Elven Craft", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	//Expert
+	
+	public ItemStack getSoulOfTheAstrologerItem() {
+		return plugin.createItem(Material.HEART_OF_THE_SEA,
+				1,
+				ChatColor.DARK_GREEN + "Soul of the Astrologer",
+				Arrays.asList("Grants permanent night vision,", "and all entities appear glowing to you.", "Only usable by Lunar Artificers", "Elven Craft", ChatColor.RED + "Expert Item"));
+	}
+	
+	public ItemStack getAstralWrenchItem() {
+		return plugin.createItem(Material.STICK,
+				1,
+				ChatColor.DARK_GREEN + "Astral Wrench",
+				Arrays.asList("Used to link astral teleporter pads.", "Shift right click for more info.", "Elven Craft", ChatColor.RED + "Expert Item"));
+	}
+	
+	public ItemStack getSoulboundElytraItem() {
+		return plugin.createItem(Material.ELYTRA,
+				1,
+				ChatColor.DARK_GREEN + "Soulbound Elytra",
+				Arrays.asList("This item will be kept when you die.", "Elven Craft", ChatColor.RED + "Expert Item"));
+	}
+	
+	
+	
+	
+	
+	//Radiant Metallurgist
+	
+	//Basic
+	
+	public ItemStack getSteelItem() {
 		return plugin.createItem(Material.IRON_INGOT,
 				1,
-				ChatColor.DARK_PURPLE + "Dwarven Steel",
-				Arrays.asList("Dwarven Forged"));
+				ChatColor.DARK_PURPLE + "Steel",
+				Arrays.asList("Dwarven Forged", ChatColor.GREEN + "Basic Material"));
 	}
+	
+	public ItemStack getRhyoliteItem() {
+		return plugin.createItem(Material.SANDSTONE,
+				1,
+				ChatColor.DARK_PURPLE + "Rhyolite",
+				Arrays.asList("Dwarven Forged", ChatColor.GREEN + "Basic Material"));
+	}
+	
+	public ItemStack getPumiceItem() {
+		return plugin.createItem(Material.TUFF,
+				1,
+				ChatColor.DARK_PURPLE + "Pumice",
+				Arrays.asList("Dwarven Forged", ChatColor.GREEN + "Basic Material"));
+	}
+	
+	public ItemStack getForgersScrollItem() {
+		return plugin.createItem(Material.PAPER,
+				1,
+				ChatColor.DARK_PURPLE + "Forger's Scroll",
+				Arrays.asList("Anvils cost half as much experience to use.", "Dwarven Forged", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	public ItemStack getFerrousHarvesterItem() {
+		return plugin.createItem(Material.STONE_AXE,
+				1,
+				ChatColor.DARK_PURPLE + "Ferrous Harvester",
+				Arrays.asList("Mobs killed with this will drop iron", "nuggets instead of their normal drops.", "Dwarven Forged", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	//Intermediate
+	
+	public ItemStack getBrassItem() {
+		return plugin.createItem(Material.COPPER_INGOT,
+				1,
+				ChatColor.DARK_PURPLE + "Brass",
+				Arrays.asList("Dwarven Forged", ChatColor.YELLOW + "Intermediate Material"));
+	}
+	
+	public ItemStack getBronzeItem() {
+		return plugin.createItem(Material.COPPER_INGOT,
+				1,
+				ChatColor.DARK_PURPLE + "Bronze",
+				Arrays.asList("Dwarven Forged", ChatColor.YELLOW + "Intermediate Material"));
+	}
+	
+	public ItemStack getRadiantBoreItem() {
+		return plugin.createItem(Material.COPPER_INGOT,
+				1,
+				ChatColor.DARK_PURPLE + "Radiant Bore",
+				Arrays.asList("Tunnels through the earth if", "there is a cave close enough.", "Dwarven Forged", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getFlamelashItem() {
+		return plugin.createItem(Material.BLAZE_ROD,
+				1,
+				ChatColor.DARK_PURPLE + "Flamelash",
+				Arrays.asList("Tunnels through the earth if", "there is a cave close enough.", "Dwarven Forged", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getHandForgeItem() {
+		return plugin.createItem(Material.FURNACE,
+				1,
+				ChatColor.DARK_PURPLE + "Hand Forge",
+				Arrays.asList("Smelts ores as you pick them up.", "Consumes coal as fuel.", "Dwarven Forged", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	//Advanced
+	
+	public ItemStack getTitaniumItem() {
+		return plugin.createItem(Material.IRON_INGOT,
+				1,
+				ChatColor.DARK_PURPLE + "Titanium",
+				Arrays.asList("Dwarven Forged", ChatColor.GOLD + "Advanced Material"));
+	}
+	
+	public ItemStack getEssenceOfFireItem() {
+		return plugin.createItem(Material.BLAZE_POWDER,
+				1,
+				ChatColor.DARK_PURPLE + "Essence of Fire",
+				Arrays.asList("Dwarven Forged", ChatColor.GOLD + "Advanced Material"));
+	}
+	
+	public ItemStack getEmblemOfTheForgeItem() {
+		return plugin.createItem(Material.CLAY_BALL,
+				1,
+				ChatColor.DARK_PURPLE + "Emblem of the Forge",
+				Arrays.asList("Doubles furnace output when carried.", "Dwarven Forged", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getQuakeStaffItem() {
+		return plugin.createItem(Material.STICK,
+				1,
+				ChatColor.DARK_PURPLE + "Quake Staff",
+				Arrays.asList("Launches enemies into the air. May bury enemies.", "Dwarven Forged", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getDwarvenAxeItem() {
+		return plugin.createItem(Material.DIAMOND_AXE,
+				1,
+				ChatColor.DARK_PURPLE + "Dwarven Axe",
+				Arrays.asList("Slows enemies on hit while giving you a burst of speed.", "Enemies at low health take double damage.", "Dwarven Forged", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	//Expert
+	
+	public ItemStack getSoulOfTheBlacksmithItem() {
+		return plugin.createItem(Material.HEART_OF_THE_SEA,
+				1,
+				ChatColor.DARK_PURPLE + "Soul of the Blacksmith",
+				Arrays.asList("Permanent fire resistance when carried.", "Only usable by Radiant Metallurgists.", "Dwarven Forged", ChatColor.RED + "Expert Item"));
+	}
+	
+	public ItemStack getTotemOfTheMoleItem() {
+		return plugin.createItem(Material.RABBIT_HIDE,
+				1,
+				ChatColor.DARK_PURPLE + "Totem of the Mole",
+				Arrays.asList("Travel through the surface of the earth.", "Press shift to cancel, damaging enemies.", "Dwarven Forged", ChatColor.RED + "Expert Item"));
+	}
+	
+	public ItemStack getRadiantAxeItem() {
+		return plugin.createItem(Material.DIAMOND_AXE,
+				1,
+				ChatColor.DARK_PURPLE + "Radiant Axe",
+				Arrays.asList("Launches radioactive pieces of earth that", "will hit any other nearby enemies,", "damaging and poisoning them.", "Dwarven Forged", ChatColor.RED + "Expert Item"));
+	}
+	
+	
+	
+	
+	
+	//Arcane Jeweler
+	
+	//Basic
 	
 	public ItemStack getRubyItem() {
 		return plugin.createItem(Material.DIAMOND,
 				3,
 				ChatColor.DARK_PURPLE + "Ruby",
-				Arrays.asList("Dwarven Forged"));
+				Arrays.asList("Dwarven Forged", ChatColor.GREEN + "Basic Material"));
 	}
 	
 	public ItemStack getSapphireItem() {
 		return plugin.createItem(Material.DIAMOND,
 				3,
 				ChatColor.DARK_PURPLE + "Sapphire",
-				Arrays.asList("Dwarven Forged"));
+				Arrays.asList("Dwarven Forged", ChatColor.GREEN + "Basic Material"));
 	}
 	
 	public ItemStack getRoyalAzelItem() {
 		return plugin.createItem(Material.DIAMOND,
 				3,
 				ChatColor.DARK_PURPLE + "Royal Azel",
-				Arrays.asList("Dwarven Forged"));
+				Arrays.asList("Dwarven Forged", ChatColor.GREEN + "Basic Material"));
 	}
 	
 	public ItemStack getOpalItem() {
 		return plugin.createItem(Material.DIAMOND,
 				3,
 				ChatColor.DARK_PURPLE + "Opal",
-				Arrays.asList("Dwarven Forged"));
+				Arrays.asList("Dwarven Forged", ChatColor.GREEN + "Basic Material"));
 	}
+	
+	public ItemStack getReinforcedRingItem() {
+		return plugin.createItem(Material.COMPASS,
+				1,
+				ChatColor.DARK_PURPLE + "Reinforced Ring",
+				Arrays.asList("Slightly increases armor durability.", "Dwarven Forged", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	public ItemStack getGoldRingItem() {
+		return plugin.createItem(Material.CLOCK,
+				1,
+				ChatColor.DARK_PURPLE + "Gold Ring",
+				Arrays.asList("Mining gold ore gives half a heart of absorption.", "Dwarven Forged", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	//Intermediate
+	
+	public ItemStack getTopazItem() {
+		return plugin.createItem(Material.DIAMOND,
+				1,
+				ChatColor.DARK_PURPLE + "Topaz",
+				Arrays.asList("Dwarven Forged", ChatColor.YELLOW + "Intermediate Material"));
+	}
+	
+	public ItemStack getTurquoiseItem() {
+		return plugin.createItem(Material.DIAMOND,
+				1,
+				ChatColor.DARK_PURPLE + "Turquoise",
+				Arrays.asList("Dwarven Forged", ChatColor.YELLOW + "Intermediate Material"));
+	}
+	
+	public ItemStack getStuddedHelmetItem() {
+		return plugin.createItem(Material.GOLDEN_HELMET,
+				1,
+				ChatColor.DARK_PURPLE + "Studded Helmet",
+				Arrays.asList("Set Bonus: Because the gems on this armor", "shine so brightly, mobs cannot aggro you,", "and some enemies may catch fire.", "Dwarven Forged", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getStuddedChestpieceItem() {
+		return plugin.createItem(Material.GOLDEN_CHESTPLATE,
+				1,
+				ChatColor.DARK_PURPLE + "Studded Chestpiece",
+				Arrays.asList("Set Bonus: Because the gems on this armor", "shine so brightly, mobs cannot aggro you,", "and some enemies may catch fire.", "Dwarven Forged", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getStuddedLeggingsItem() {
+		return plugin.createItem(Material.GOLDEN_LEGGINGS,
+				1,
+				ChatColor.DARK_PURPLE + "Studded Leggings",
+				Arrays.asList("Set Bonus: Because the gems on this armor", "shine so brightly, mobs cannot aggro you,", "and some enemies may catch fire.", "Dwarven Forged", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getStuddedGreavesItem() {
+		return plugin.createItem(Material.GOLDEN_BOOTS,
+				1,
+				ChatColor.DARK_PURPLE + "Studded Greaves",
+				Arrays.asList("Set Bonus: Because the gems on this armor", "shine so brightly, mobs cannot aggro you,", "and some enemies may catch fire.", "Dwarven Forged", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getBejeweledCompassItem() {
+		return plugin.createItem(Material.COMPASS,
+				1,
+				ChatColor.DARK_PURPLE + "Bejeweled Compass",
+				Arrays.asList("Right click to point in the", "direction of any nearby treasure.", "Add diamonds to refine the purity", "of the treasure it points to.", "Dwarven Forged", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	//Advanced
+	
+	public ItemStack getGoldDustItem() {
+		return plugin.createItem(Material.GLOWSTONE_DUST,
+				1,
+				ChatColor.DARK_PURPLE + "Gold Dust",
+				Arrays.asList("Dwarven Forged", ChatColor.GOLD + "Advanced Material"));
+	}
+	
+	public ItemStack getGemClusterItem() {
+		return plugin.createItem(Material.AMETHYST_CLUSTER,
+				1,
+				ChatColor.DARK_PURPLE + "Gem Cluster",
+				Arrays.asList("Dwarven Forged", ChatColor.GOLD + "Advanced Material"));
+	}
+	
+	public ItemStack getEmblemOfTheWhirlwindItem() {
+		return plugin.createItem(Material.CLAY_BALL,
+				1,
+				ChatColor.DARK_PURPLE + "Emblem of the Whirlwind",
+				Arrays.asList("Creates an updraft where you're standing.", "Allies will recieve feather falling.", "Enemies will fall when they reach the top.", "Dwarven Forged", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getDwarvenHelmetItem() {
+		return plugin.createItem(Material.DIAMOND_HELMET,
+				1,
+				ChatColor.DARK_PURPLE + "Dwarven Helmet",
+				Arrays.asList("Set Bonus: Deal double damage to", "enemies below 50% health,", "but receive slowness 1.", "Dwarven Forged", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getDwarvenChestpieceItem() {
+		return plugin.createItem(Material.DIAMOND_CHESTPLATE,
+				1,
+				ChatColor.DARK_PURPLE + "Dwarven Chestpiece",
+				Arrays.asList("Set Bonus: Deal double damage to", "enemies below 50% health,", "but receive slowness 1.", "Dwarven Forged", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getDwarvenLeggingsItem() {
+		return plugin.createItem(Material.DIAMOND_LEGGINGS,
+				1,
+				ChatColor.DARK_PURPLE + "Dwarven Leggings",
+				Arrays.asList("Set Bonus: Deal double damage to", "enemies below 50% health,", "but receive slowness 1.", "Dwarven Forged", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getDwarvenGreavesItem() {
+		return plugin.createItem(Material.DIAMOND_BOOTS,
+				1,
+				ChatColor.DARK_PURPLE + "Dwarven Greaves",
+				Arrays.asList("Set Bonus: Deal double damage to", "enemies below 50% health,", "but receive slowness 1.", "Dwarven Forged", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	//Expert
+	
+	public ItemStack getSoulOfTheEngraverItem() {
+		return plugin.createItem(Material.HEART_OF_THE_SEA,
+				1,
+				ChatColor.DARK_PURPLE + "Soul of the Engraver",
+				Arrays.asList("Grants fall damage immunity when carried.", "Only usable by Arcane Jewelers.", "Dwarven Forged", ChatColor.RED + "Expert Item"));
+	}
+	
+	public ItemStack getSoulboundCrownItem() {
+		return plugin.createItem(Material.DIAMOND_HELMET,
+				1,
+				ChatColor.DARK_PURPLE + "Soulbound Crown",
+				Arrays.asList("This item will be kept when you die.", "Dwarven Forged", ChatColor.RED + "Expert Item"));
+	}
+	
+	public ItemStack getCompressiveWandItem() {
+		return plugin.createItem(Material.AMETHYST_SHARD,
+				1,
+				ChatColor.DARK_PURPLE + "Compressive Wand",
+				Arrays.asList("Right click coal ore to", "slowly turn it into diamond ore.", "Dwarven Forged", ChatColor.RED + "Expert Item"));
+	}
+	
+	
+	
+	
+	
+	//Gilded Miner
+	
+	//Basic
 	
 	public ItemStack getHardenedStoneItem() {
 		return plugin.createItem(Material.STONE,
 				1,
 				ChatColor.DARK_PURPLE + "Hardened Stone",
-				Arrays.asList("Dwarven Forged"));
+				Arrays.asList("Dwarven Forged", ChatColor.GREEN + "Basic Material"));
 	}
 	
-	public ItemStack getEssenceOfVengeanceItem() {
-		return plugin.createItem(Material.GLOWSTONE_DUST,
+	public ItemStack getAluminumItem() {
+		return plugin.createItem(Material.IRON_INGOT,
 				1,
-				ChatColor.DARK_RED + "Essence Of Vengeance",
-				Arrays.asList("Orc Contrived"));
+				ChatColor.DARK_PURPLE + "Aluminum",
+				Arrays.asList("Dwarven Forged", ChatColor.GREEN + "Basic Material"));
+	}
+	
+	public ItemStack getZincItem() {
+		return plugin.createItem(Material.IRON_INGOT,
+				1,
+				ChatColor.DARK_PURPLE + "Zinc",
+				Arrays.asList("Dwarven Forged", ChatColor.GREEN + "Basic Material"));
+	}
+	
+	public ItemStack getEnduranceRuneItem() {
+		return plugin.createItem(Material.PAPER,
+				1,
+				ChatColor.DARK_PURPLE + "Endurance Rune",
+				Arrays.asList("Reduces the effect sprinting has on hunger.", "Dwarven Forged", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	public ItemStack getRockyTransmuterItem() {
+		return plugin.createItem(Material.AMETHYST_SHARD,
+				1,
+				ChatColor.DARK_PURPLE + "Rocky Transmuter",
+				Arrays.asList("Click stone to cycle its variant", "Dwarven Forged", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	//Intermediate
+	
+	public ItemStack getBlankEmblemItem() {
+		return plugin.createItem(Material.CLAY_BALL,
+				1,
+				ChatColor.DARK_PURPLE + "Blank Emblem",
+				Arrays.asList("Dwarven Forged", ChatColor.YELLOW + "Intermediate Material"));
+	}
+	
+	public ItemStack getLeadItem() {
+		return plugin.createItem(Material.IRON_INGOT,
+				1,
+				ChatColor.DARK_PURPLE + "Lead",
+				Arrays.asList("Dwarven Forged", ChatColor.YELLOW + "Intermediate Material"));
+	}
+	
+	public ItemStack getDrillItem() {
+		return plugin.createItem(Material.AMETHYST_SHARD,
+				1,
+				ChatColor.DARK_PURPLE + "Drill",
+				Arrays.asList("Smelts non-ores as you pick them up.", "Consumes coal as fuel.", "Dwarven Forged", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getProtectorStoneItem() {
+		return plugin.createItem(Material.TURTLE_SPAWN_EGG,
+				1,
+				ChatColor.DARK_PURPLE + "Protector Stone",
+				Arrays.asList("Adds one second of resistance for", "every block that you mine when carried.", "Dwarven Forged", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getRobustRuneItem() {
+		return plugin.createItem(Material.PAPER,
+				1,
+				ChatColor.DARK_PURPLE + "Robust Rune",
+				Arrays.asList("Lowers the chance for tools to", "lose durability when carried.", "Dwarven Forged", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	//Advanced
+	
+	public ItemStack getEssenceOfEarthItem() {
+		return plugin.createItem(Material.BROWN_DYE,
+				1,
+				ChatColor.DARK_PURPLE + "Essence of Earth",
+				Arrays.asList("Dwarven Forged", ChatColor.GOLD + "Advanced Material"));
+	}
+	
+	public ItemStack getPlatinumItem() {
+		return plugin.createItem(Material.IRON_INGOT,
+				1,
+				ChatColor.DARK_PURPLE + "Platinum",
+				Arrays.asList("Dwarven Forged", ChatColor.GOLD + "Advanced Material"));
+	}
+	
+	public ItemStack getMagnetizedIdolItem() {
+		return plugin.createItem(Material.POLISHED_BLACKSTONE_WALL,
+				1,
+				ChatColor.DARK_PURPLE + "Magnetized Idol",
+				Arrays.asList("One of your active class skills are", "bestowed upon all nearby allies.", "Dwarven Forged", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getEmblemOfTheEarthItem() {
+		return plugin.createItem(Material.CLAY_BALL,
+				1,
+				ChatColor.DARK_PURPLE + "Emblem of the Earth",
+				Arrays.asList("Grants immunity to mining fatigue when carried.", "Dwarven Forged", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getGrapplingHookItem() {
+		return plugin.createItem(Material.TRIPWIRE_HOOK,
+				1,
+				ChatColor.DARK_PURPLE + "Grappling Hook",
+				Arrays.asList("Right click to use.", "Dwarven Forged", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	//Expert
+	
+	public ItemStack getSoulOfTheProspectorItem() {
+		return plugin.createItem(Material.HEART_OF_THE_SEA,
+				1,
+				ChatColor.DARK_PURPLE + "Soul of the Prospector",
+				Arrays.asList("Increases your mining plane to 3 by 3 when carried.", "Only usable by Gilded Miners.", "Dwarven Forged", ChatColor.RED + "Expert Item"));
+	}
+	
+	public ItemStack getSoulboundPickaxeItem() {
+		return plugin.createItem(Material.DIAMOND_PICKAXE,
+				1,
+				ChatColor.DARK_PURPLE + "Soulbound Pickaxe",
+				Arrays.asList("This item will be kept when you die.", "Dwarven Forged", ChatColor.RED + "Expert Item"));
+	}
+	
+	public ItemStack getMultitoolItem() {
+		return plugin.createItem(Material.DIAMOND_PICKAXE,
+				1,
+				ChatColor.DARK_PURPLE + "Multitool",
+				Arrays.asList("Mines every block. Enchantable with every", "applicable enchantment to all tools.", "Dwarven Forged", ChatColor.RED + "Expert Item"));
+	}
+	
+	
+	
+	
+	
+	//Dark Alchemist
+	
+	//Basic
+	
+	public ItemStack getFungalRootsItem() {
+		return plugin.createItem(Material.HANGING_ROOTS,
+				1,
+				ChatColor.DARK_RED + "Fungal Roots",
+				Arrays.asList("Orc Contrived", ChatColor.GREEN + "Basic Material"));
+	}
+	
+	public ItemStack getWarpedPowderItem() {
+		return plugin.createItem(Material.GUNPOWDER,
+				1,
+				ChatColor.DARK_RED + "Warped Powder",
+				Arrays.asList("Orc Contrived", ChatColor.GREEN + "Basic Material"));
+	}
+	
+	public ItemStack getCrimsonPowderItem() {
+		return plugin.createItem(Material.REDSTONE,
+				1,
+				ChatColor.DARK_RED + "Crimson Powder",
+				Arrays.asList("Orc Contrived", ChatColor.GREEN + "Basic Material"));
+	}
+	
+	public ItemStack getHypnoticRingItem() {
+		return plugin.createItem(Material.CLOCK,
+				1,
+				ChatColor.DARK_RED + "Hypnotic Ring",
+				Arrays.asList("Piglins will not attack you when carried.", "Orc Contrived", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	public ItemStack getFlamingBucketItem() {
+		return plugin.createItem(Material.BUCKET,
+				1,
+				ChatColor.DARK_RED + "Flaming Bucket",
+				Arrays.asList("Does not remove lava block when filling with lava.", "Orc Contrived", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	//Flaming Bucket Variants because using a bucket renames it to the default bucket name. I'm so annoyed I have to do this.
+	//I might not actually have to do this, I just am because I want to get any potential items registered before I have to deal with handling.
+	
+	public ItemStack getFlamingWaterBucketItem() {
+		return plugin.createItem(Material.WATER_BUCKET,
+				1,
+				ChatColor.DARK_RED + "Flaming Water Bucket",
+				Arrays.asList("Does not remove lava block when filling with lava.", "Orc Contrived", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	public ItemStack getFlamingLavaBucketItem() {
+		return plugin.createItem(Material.LAVA_BUCKET,
+				1,
+				ChatColor.DARK_RED + "Flaming Lava Bucket",
+				Arrays.asList("Does not remove lava block when filling with lava.", "Orc Contrived", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	public ItemStack getFlamingPowderSnowBucketItem() {
+		return plugin.createItem(Material.POWDER_SNOW_BUCKET,
+				1,
+				ChatColor.DARK_RED + "Flaming Powder Snow Bucket",
+				Arrays.asList("Does not remove lava block when filling with lava.", "Orc Contrived", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	public ItemStack getFlamingMilkBucketItem() {
+		return plugin.createItem(Material.MILK_BUCKET,
+				1,
+				ChatColor.DARK_RED + "Flaming Milks Bucket",
+				Arrays.asList("Does not remove lava block when filling with lava.", "Orc Contrived", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	public ItemStack getFlamingBucketOfPufferfishItem() {
+		return plugin.createItem(Material.PUFFERFISH_BUCKET,
+				1,
+				ChatColor.DARK_RED + "Flaming Bucket of Pufferfish",
+				Arrays.asList("Does not remove lava block when filling with lava.", "Orc Contrived", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	public ItemStack getFlamingBucketOfSalmonItem() {
+		return plugin.createItem(Material.SALMON_BUCKET,
+				1,
+				ChatColor.DARK_RED + "Flaming Bucket of Salmon",
+				Arrays.asList("Does not remove lava block when filling with lava.", "Orc Contrived", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	public ItemStack getFlamingBucketOfCodItem() {
+		return plugin.createItem(Material.COD_BUCKET,
+				1,
+				ChatColor.DARK_RED + "Flaming Bucket of Cod",
+				Arrays.asList("Does not remove lava block when filling with lava.", "Orc Contrived", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	public ItemStack getFlamingBucketOfTropicalFishItem() {
+		return plugin.createItem(Material.TROPICAL_FISH_BUCKET,
+				1,
+				ChatColor.DARK_RED + "Flaming Bucket of Tropical Fish",
+				Arrays.asList("Does not remove lava block when filling with lava.", "Orc Contrived", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	public ItemStack getFlamingBucketOfAxolotlItem() {
+		return plugin.createItem(Material.AXOLOTL_BUCKET,
+				1,
+				ChatColor.DARK_RED + "Flaming Bucket of Axolotl",
+				Arrays.asList("Does not remove lava block when filling with lava.", "Orc Contrived", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	//Intermediate
+	
+	public ItemStack getEtherealPowderItem() {
+		return plugin.createItem(Material.PHANTOM_MEMBRANE,
+				1,
+				ChatColor.DARK_RED + "Ethereal Powder",
+				Arrays.asList("Orc Contrived", ChatColor.YELLOW + "Intermediate Material"));
+	}
+	
+	public ItemStack getHoglinEyeItem() {
+		return plugin.createItem(Material.FERMENTED_SPIDER_EYE,
+				1,
+				ChatColor.DARK_RED + "Hoglin Eye",
+				Arrays.asList("Orc Contrived", ChatColor.YELLOW + "Intermediate Material"));
+	}
+	
+	public ItemStack getRodOfShadowsItem() {
+		return plugin.createItem(Material.STICK,
+				1,
+				ChatColor.DARK_RED + "Rod of Shadows",
+				Arrays.asList("Gives you invisibility and blindness", "for 30 seconds when used.", "Orc Contrived", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getWandOfDisplacementItem() {
+		return plugin.createItem(Material.END_ROD,
+				1,
+				ChatColor.DARK_RED + "Wand of Displacement",
+				Arrays.asList("Use when looking towards an", "enemy to swap places with them", "Orc Contrived", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getMagicMirrorItem() {
+		return plugin.createItem(Material.GLASS_PANE,
+				1,
+				ChatColor.DARK_RED + "Magic Mirror",
+				Arrays.asList("Teleports you to your spawn", "point outside of danger.", "Orc Contrived", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	//Advanced
+	
+	public ItemStack getEssenceOfVengeanceItem() {
+		return plugin.createItem(Material.RED_DYE,
+				1,
+				ChatColor.DARK_RED + "Essence of Vengeance",
+				Arrays.asList("Orc Contrived", ChatColor.GOLD + "Advanced Material"));
+	}
+	
+	public ItemStack getWitherPowderItem() {
+		return plugin.createItem(Material.GUNPOWDER,
+				1,
+				ChatColor.DARK_RED + "Wither Powder",
+				Arrays.asList("Orc Contrived", ChatColor.GOLD + "Advanced Material"));
+	}
+	
+	public ItemStack getEmblemOfTheElixirItem() {
+		return plugin.createItem(Material.CLAY_BALL,
+				1,
+				ChatColor.DARK_RED + "Emblem of the Elixir",
+				Arrays.asList("Gives you a random buff every", "minute that lasts a few seconds.", "Orc Contrived", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getBrewingWandItem() {
+		return plugin.createItem(Material.BLAZE_ROD,
+				1,
+				ChatColor.DARK_RED + "Brewing Wand",
+				Arrays.asList("Shift right click to load ingredients.", "Right click a filled cauldron to brew", "that ingredient into the potion.", "Orc Contrived", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getAnomalousPickaxeItem() {
+		return plugin.createItem(Material.BLAZE_ROD,
+				1,
+				ChatColor.DARK_RED + "Brewing Wand",
+				Arrays.asList("Drops overworld ores when used", "on nether ores and vice versa.", "Orc Contrived", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	//Expert
+	
+	public ItemStack getSoulOfTheScientistItem() {
+		return plugin.createItem(Material.HEART_OF_THE_SEA,
+				1,
+				ChatColor.DARK_RED + "Soul of the Scientist",
+				Arrays.asList("Greatly increases your luck when carried.", "Only usable by Dark Alchemists.", "Orc Contrived", ChatColor.RED + "Expert Item"));
+	}
+	
+	public ItemStack getWandOfDisfigurationItem() {
+		return plugin.createItem(Material.END_ROD,
+				1,
+				ChatColor.DARK_RED + "Wand of Disfiguration",
+				Arrays.asList("Right click a mob to change its type.", "Orc Contrived", ChatColor.RED + "Expert Item"));
+	}
+	
+	public ItemStack getVoodooDollItem() {
+		return plugin.createItem(Material.TOTEM_OF_UNDYING,
+				1,
+				ChatColor.DARK_RED + "Voodoo Doll",
+				Arrays.asList("Right click to briefly take control", "of another player. Leaves your body defenseless.", "Orc Contrived", ChatColor.RED + "Expert Item"));
+	}
+	
+	//Enraged Berserker
+	
+	//Basic
+	
+	public ItemStack getHellstoneItem() {
+		return plugin.createItem(Material.MAGMA_BLOCK,
+				1,
+				ChatColor.DARK_RED + "Hellstone",
+				Arrays.asList("Orc Contrived", ChatColor.GREEN + "Basic Material"));
+	}
+	
+	public ItemStack getEtherealWoodItem() {
+		return plugin.createItem(Material.OAK_LOG,
+				1,
+				ChatColor.DARK_RED + "Ethereal Wood",
+				Arrays.asList("Orc Contrived", ChatColor.GREEN + "Basic Material"));
+	}
+	
+	public ItemStack getHoglinTuskItem() {
+		return plugin.createItem(Material.BONE,
+				1,
+				ChatColor.DARK_RED + "Hoglin Tusk",
+				Arrays.asList("Orc Contrived", ChatColor.GREEN + "Basic Material"));
+	}
+	
+	public ItemStack getRageStoneItem() {
+		return plugin.createItem(Material.STRIDER_SPAWN_EGG,
+				1,
+				ChatColor.DARK_RED + "Rage Stone",
+				Arrays.asList("Players will drop player heads when carried.", "Orc Contrived", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	public ItemStack getSpectralWardItem() {
+		return plugin.createItem(Material.GHAST_TEAR,
+				1,
+				ChatColor.DARK_RED + "Spectral Ward",
+				Arrays.asList("Nearby ghasts will not attack you,", "and will be drawn to you when carried.", "Orc Contrived", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	//Intermediate
+	
+	public ItemStack getBoneMarrowItem() {
+		return plugin.createItem(Material.WHITE_DYE,
+				1,
+				ChatColor.DARK_RED + "Bone Marrow",
+				Arrays.asList("Orc Contrived", ChatColor.YELLOW + "Intermediate Material"));
+	}
+	
+	public ItemStack getPyroclasticIngotItem() {
+		return plugin.createItem(Material.NETHERITE_INGOT,
+				1,
+				ChatColor.DARK_RED + "Pyroclastic Ingot",
+				Arrays.asList("Orc Contrived", ChatColor.YELLOW + "Intermediate Material"));
+	}
+	
+	public ItemStack getBlazingFuryItem() {
+		return plugin.createItem(Material.IRON_AXE,
+				1,
+				ChatColor.DARK_RED + "Blazing Fury",
+				Arrays.asList("Ignites all nearby enemies when charged.", "Orc Contrived", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getSpectralHarnessItem() {
+		return plugin.createItem(Material.SADDLE,
+				1,
+				ChatColor.DARK_RED + "Spectral Harness",
+				Arrays.asList("Left click to ride a ghast. Right click to breed.", "Orc Contrived", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getTheShredderItem() {
+		return plugin.createItem(Material.IRON_AXE,
+				1,
+				ChatColor.DARK_RED + "The Shredder",
+				Arrays.asList("Deals massive durability damage to shields.", "Orc Contrived", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	//Advanced
+	
+	public ItemStack getEmptySoulItem() {
+		return plugin.createItem(Material.HEART_OF_THE_SEA,
+				1,
+				ChatColor.DARK_RED + "Empty Soul",
+				Arrays.asList("Orc Contrived", ChatColor.GOLD + "Advanced Material"));
 	}
 	
 	public ItemStack getBloodOfTheForsakenItem() {
-		return plugin.createItem(Material.REDSTONE,
+		return plugin.createItem(Material.SPIDER_EYE,
 				1,
 				ChatColor.DARK_RED + "Blood of the Forsaken",
-				Arrays.asList("Orc Contrived"));
+				Arrays.asList("Orc Contrived", ChatColor.GOLD + "Advanced Material"));
 	}
+	
+	public ItemStack getEmblemOfTheBladeItem() {
+		return plugin.createItem(Material.CLAY_BALL,
+				1,
+				ChatColor.DARK_RED + "Emblem of the Blade",
+				Arrays.asList("Attacking heals you for 10%", "of the damage dealt when carried.", "Orc Contrived", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getFleshCandleItem() {
+		return plugin.createItem(Material.CLAY_BALL,
+				1,
+				ChatColor.DARK_RED + "Flesh Candle",
+				Arrays.asList("Triples mob spawns in a", "radius around you when carried.", "Orc Contrived", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getCaliburnItem() {
+		return plugin.createItem(Material.DIAMOND_SWORD,
+				1,
+				ChatColor.DARK_RED + "Caliburn",
+				Arrays.asList("Lights enemies ablaze with Greek fire.", "Orc Contrived", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	//Expert
+	
+	public ItemStack getSoulOfTheWarriorItem() {
+		return plugin.createItem(Material.HEART_OF_THE_SEA,
+				1,
+				ChatColor.DARK_RED + "Soul of the Warrior",
+				Arrays.asList("Increases your base health when carried.", "Only usable by Enraged Berserkers.", "Orc Contrived", ChatColor.RED + "Expert Item"));
+	}
+	
+	public ItemStack getSoulboundAxeItem() {
+		return plugin.createItem(Material.DIAMOND_AXE,
+				1,
+				ChatColor.DARK_RED + "Soulbound Axe",
+				Arrays.asList("This item will be kept when you die.", "Orc Contrived", ChatColor.RED + "Expert Item"));
+	}
+	
+	public ItemStack getPhoenixAshesItem() {
+		return plugin.createItem(Material.DIAMOND_AXE,
+				1,
+				ChatColor.DARK_RED + "Phoenix Ashes",
+				Arrays.asList("Right click to become an enraged phoenix.", "Sneak to cancel.", "Orc Contrived", ChatColor.RED + "Expert Item"));
+	}
+	
+	
+	
+	
+	
+	//Greedy Scrapper
+	
+	//Basic
 	
 	public ItemStack getScrapItem() {
 		return plugin.createItem(Material.QUARTZ,
 				1,
 				ChatColor.DARK_RED + "Scrap",
-				Arrays.asList("Orc Contrived"));
+				Arrays.asList("Orc Contrived", ChatColor.GREEN + "Basic Material"));
+	}
+	
+	public ItemStack getWastelandGooItem() {
+		return plugin.createItem(Material.RAW_COPPER,
+				1,
+				ChatColor.DARK_RED + "Wasteland Goo",
+				Arrays.asList("Orc Contrived", ChatColor.GREEN + "Basic Material"));
+	}
+	
+	public ItemStack getPebblesItem() {
+		return plugin.createItem(Material.MELON_SEEDS,
+				1,
+				ChatColor.DARK_RED + "Pebbles",
+				Arrays.asList("Orc Contrived", ChatColor.GREEN + "Basic Material"));
+	}
+	
+	public ItemStack getMagmaStoneItem() {
+		return plugin.createItem(Material.SPIDER_SPAWN_EGG,
+				1,
+				ChatColor.DARK_RED + "Magma Stone",
+				Arrays.asList("Allows you to walk on lava when carried.", "Orc Contrived", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	public ItemStack getDemonicWrenchItem() {
+		return plugin.createItem(Material.NETHERITE_HOE,
+				1,
+				ChatColor.DARK_RED + "Demonic Wrench",
+				Arrays.asList("Right click a spawner to pick it up.", "Orc Contrived", ChatColor.GREEN + "Basic Item"));
+	}
+	
+	//Intermediate
+	
+	public ItemStack getBoltsItem() {
+		return plugin.createItem(Material.LEVER,
+				1,
+				ChatColor.DARK_RED + "Bolts",
+				Arrays.asList("Orc Contrived", ChatColor.YELLOW + "Intermediate Material"));
+	}
+	
+	public ItemStack getSteelFeatherItem() {
+		return plugin.createItem(Material.FEATHER,
+				1,
+				ChatColor.DARK_RED + "Steel Feather",
+				Arrays.asList("Orc Contrived", ChatColor.YELLOW + "Intermediate Material"));
+	}
+	
+	public ItemStack getFragmentedHelmetItem() {
+		return plugin.createItem(Material.CHAINMAIL_HELMET,
+				1,
+				ChatColor.DARK_RED + "Fragmented Helmet",
+				Arrays.asList("Set Bonus: Sends out fragments on hit.", "Hit enemies will be damaged and withered.", "Orc Contrived", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getFragmentedChestpieceItem() {
+		return plugin.createItem(Material.CHAINMAIL_CHESTPLATE,
+				1,
+				ChatColor.DARK_RED + "Fragmented Chestpiece",
+				Arrays.asList("Set Bonus: Sends out fragments on hit.", "Hit enemies will be damaged and withered.", "Orc Contrived", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getFragmentedLeggingsItem() {
+		return plugin.createItem(Material.CHAINMAIL_LEGGINGS,
+				1,
+				ChatColor.DARK_RED + "Fragmented Leggings",
+				Arrays.asList("Set Bonus: Sends out fragments on hit.", "Hit enemies will be damaged and withered.", "Orc Contrived", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getFragmentedGreavesItem() {
+		return plugin.createItem(Material.CHAINMAIL_BOOTS,
+				1,
+				ChatColor.DARK_RED + "Fragmented Greaves",
+				Arrays.asList("Set Bonus: Sends out fragments on hit.", "Hit enemies will be damaged and withered.", "Orc Contrived", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	public ItemStack getFlamedashBootsItem() {
+		return plugin.createItem(Material.GOLDEN_BOOTS,
+				1,
+				ChatColor.DARK_RED + "Flamedash Boots",
+				Arrays.asList("Leaves a trail of fire behind you when sprinting.", "Orc Contrived", ChatColor.YELLOW + "Intermediate Item"));
+	}
+	
+	//Advanced
+	
+	public ItemStack getMagmaCrystalItem() {
+		return plugin.createItem(Material.QUARTZ,
+				1,
+				ChatColor.DARK_RED + "Magma Crystal",
+				Arrays.asList("Orc Contrived", ChatColor.GOLD + "Advanced Material"));
+	}
+	
+	public ItemStack getGalvinizedAlloyItem() {
+		return plugin.createItem(Material.QUARTZ,
+				1,
+				ChatColor.DARK_RED + "Galvinized Alloy",
+				Arrays.asList("Orc Contrived", ChatColor.GOLD + "Advanced Material"));
+	}
+	
+	public ItemStack getScrappyHelmetItem() {
+		return plugin.createItem(Material.DIAMOND_HELMET,
+				1,
+				ChatColor.DARK_RED + "Scrappy Helmet",
+				Arrays.asList("Set Bonus: 10% chance to steal", "an item from an enemy on attack.", "Orc Contrived", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getScrappyChestpieceItem() {
+		return plugin.createItem(Material.DIAMOND_CHESTPLATE,
+				1,
+				ChatColor.DARK_RED + "Scrappy Chestpiece",
+				Arrays.asList("Set Bonus: 10% chance to steal", "an item from an enemy on attack.", "Orc Contrived", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getScrappyLeggingsItem() {
+		return plugin.createItem(Material.DIAMOND_LEGGINGS,
+				1,
+				ChatColor.DARK_RED + "Scrappy Leggings",
+				Arrays.asList("Set Bonus: 10% chance to steal", "an item from an enemy on attack.", "Orc Contrived", ChatColor.GOLD + "Advanced Item"));
 	}
 
-
+	public ItemStack getScrappyGreavesItem() {
+		return plugin.createItem(Material.DIAMOND_BOOTS,
+				1,
+				ChatColor.DARK_RED + "Scrappy Greaves",
+				Arrays.asList("Set Bonus: 10% chance to steal", "an item from an enemy on attack.", "Orc Contrived", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	public ItemStack getEmblemOfTheRavenItem() {
+		return plugin.createItem(Material.CLAY_BALL,
+				1,
+				ChatColor.DARK_RED + "Emblem of the Raven",
+				Arrays.asList("Items on the ground will be", "drawn to you when carried.", "Orc Contrived", ChatColor.GOLD + "Advanced Item"));
+	}
+	
+	//Expert
+	
+	public ItemStack getSoulOfTheThiefItem() {
+		return plugin.createItem(Material.HEART_OF_THE_SEA,
+				1,
+				ChatColor.DARK_RED + "Soul of the Thief",
+				Arrays.asList("10% chance to dodge damage when carried.", "Only usable by Greedy Scrappers.", "Orc Contrived", ChatColor.RED + "Expert Item"));
+	}
+	
+	public ItemStack getSoulboundGreavesItem() {
+		return plugin.createItem(Material.DIAMOND_BOOTS,
+				1,
+				ChatColor.DARK_RED + "Soulbound Greaves",
+				Arrays.asList("This item will be kept when you die.", "Orc Contrived", ChatColor.RED + "Expert Item"));
+	}
+	
+	public ItemStack getAberrantCompassItem() {
+		return plugin.createItem(Material.COMPASS,
+				1,
+				ChatColor.DARK_RED + "Aberrant Compass",
+				Arrays.asList("Points to the nearest rare structure.", "Right click to warp to it.", "Orc Contrived", ChatColor.RED + "Expert Item"));
+	}
+	
 }
 
 

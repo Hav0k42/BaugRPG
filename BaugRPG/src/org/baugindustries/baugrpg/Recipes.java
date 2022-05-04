@@ -14,6 +14,9 @@ import org.bukkit.inventory.ShapelessRecipe;
 
 public enum Recipes {
 	
+	//BASIC
+	
+	//Stable Master
 	
 	CORDOVAN_LEATHER (
 			RecipeTypes.BASIC, 
@@ -28,9 +31,74 @@ public enum Recipes {
 				new ItemStack(Material.RABBIT_HIDE),
 				null
 					)),
-			false,
-			"getCordovanLeatherItem"
+			false
 			),
+	
+	HORSEHAIR (
+			RecipeTypes.BASIC, 
+			new ArrayList<Object> (Arrays.asList(
+				null,
+				new ItemStack(Material.WHEAT),
+				new ItemStack(Material.STRING),
+				new ItemStack(Material.WHEAT),
+				new ItemStack(Material.STRING),
+				new ItemStack(Material.WHEAT),
+				new ItemStack(Material.STRING),
+				new ItemStack(Material.WHEAT),
+				null
+					)),
+			false
+			),
+	
+	SHARPENED_HOOF (
+			RecipeTypes.BASIC, 
+			new ArrayList<Object> (Arrays.asList(
+				null,
+				new ItemStack(Material.FLINT),
+				null,
+				new ItemStack(Material.FLINT),
+				new ItemStack(Material.GRINDSTONE),
+				new ItemStack(Material.FLINT),
+				null,
+				new ItemStack(Material.BONE),
+				null
+					)),
+			false
+			),
+	
+	HORSESHOE (
+			RecipeTypes.BASIC, 
+			new ArrayList<Object> (Arrays.asList(
+				new ItemStack(Material.RAW_GOLD),
+				new ItemStack(Material.RAW_GOLD),
+				new ItemStack(Material.RAW_GOLD),
+				new ItemStack(Material.RAW_GOLD),
+				null,
+				new ItemStack(Material.RAW_GOLD),
+				new ItemStack(Material.GOLD_NUGGET),
+				null,
+				new ItemStack(Material.GOLD_NUGGET)
+					)),
+			false
+			),
+	
+	MORRAL (
+			RecipeTypes.BASIC, 
+			new ArrayList<Object> (Arrays.asList(
+				new ItemStack(Material.WHEAT),
+				new ItemStack(Material.APPLE),
+				new ItemStack(Material.WHEAT),
+				new ItemStack(Material.LEAD),
+				new ItemStack(Material.CARROT),
+				new ItemStack(Material.LEAD),
+				new ItemStack(Material.IRON_NUGGET),
+				null,
+				new ItemStack(Material.IRON_NUGGET)
+					)),
+			false
+			),
+	
+	//Steeled Armorer
 	
 	IRON_PLATE (
 			RecipeTypes.BASIC, 
@@ -45,9 +113,74 @@ public enum Recipes {
 					new ItemStack(Material.IRON_INGOT),
 					new ItemStack(Material.HEAVY_WEIGHTED_PRESSURE_PLATE)
 					)), 
-			false, 
-			"getIronPlateItem"
+			false
 			),
+	
+	SCREWS (
+			RecipeTypes.BASIC, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					new ItemStack(Material.IRON_NUGGET),
+					null,
+					new ItemStack(Material.IRON_NUGGET),
+					new ItemStack(Material.RAW_IRON),
+					new ItemStack(Material.IRON_NUGGET),
+					null,
+					new ItemStack(Material.IRON_NUGGET),
+					null
+					)), 
+			false
+			),
+	
+	MESH (
+			RecipeTypes.BASIC, 
+			new ArrayList<Object> (Arrays.asList(
+					new ItemStack(Material.STRING),
+					null,
+					new ItemStack(Material.STRING),
+					null,
+					new ItemStack(Material.STRING),
+					null,
+					new ItemStack(Material.STRING),
+					null,
+					new ItemStack(Material.STRING)
+					)), 
+			false
+			),
+	
+	IRON_HAMMER (
+			RecipeTypes.BASIC, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					new ItemStack(Material.IRON_INGOT),
+					new ItemStack(Material.IRON_INGOT),
+					new ItemStack(Material.IRON_INGOT),
+					new ItemStack(Material.STICK),
+					new ItemStack(Material.IRON_INGOT),
+					new ItemStack(Material.STICK),
+					null,
+					null
+					)), 
+			false
+			),
+	
+	FEATHERED_SHOES (
+			RecipeTypes.BASIC, 
+			new ArrayList<Object> (Arrays.asList(
+					new ItemStack(Material.FEATHER),
+					null,
+					new ItemStack(Material.FEATHER),
+					new ItemStack(Material.FEATHER),
+					new ItemStack(Material.LEATHER_BOOTS),
+					new ItemStack(Material.FEATHER),
+					null,
+					null,
+					null
+					)), 
+			false
+			),
+	
+	//Verdant Shepherd
 	
 	MERINO_WOOL (
 			RecipeTypes.BASIC, 
@@ -62,9 +195,74 @@ public enum Recipes {
 					new ItemStack(Material.WHITE_WOOL),
 					new ItemStack(Material.STRING)
 					)), 
-			false, 
-			"getMerinoWoolItem"
+			false
 			),
+	
+	LANOLIN (
+			RecipeTypes.BASIC, 
+			new ArrayList<Object> (Arrays.asList(
+					new ItemStack(Material.LEATHER),
+					new ItemStack(Material.WHITE_WOOL),
+					new ItemStack(Material.LEATHER),
+					new ItemStack(Material.WHITE_WOOL),
+					new ItemStack(Material.HONEYCOMB),
+					new ItemStack(Material.WHITE_WOOL),
+					new ItemStack(Material.LEATHER),
+					new ItemStack(Material.WHITE_WOOL),
+					new ItemStack(Material.LEATHER)
+					)), 
+			false
+			),
+	
+	DRY_GRASS (
+			RecipeTypes.BASIC, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					new ItemStack(Material.GRASS),
+					null,
+					new ItemStack(Material.GRASS),
+					new ItemStack(Material.DEAD_BUSH),
+					new ItemStack(Material.GRASS),
+					null,
+					new ItemStack(Material.GRASS),
+					null
+					)), 
+			false
+			),
+	
+	VEAL (
+			RecipeTypes.BASIC, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					new ItemStack(Material.BEEF),
+					null,
+					new ItemStack(Material.BEEF),
+					new ItemStack(Material.LEATHER),
+					new ItemStack(Material.BEEF),
+					null,
+					new ItemStack(Material.BEEF),
+					null
+					)), 
+			false
+			),
+	
+	HEMP (
+			RecipeTypes.BASIC, 
+			new ArrayList<Object> (Arrays.asList(
+					new ItemStack(Material.PAPER),
+					new ItemStack(Material.GRASS),
+					new ItemStack(Material.PAPER),
+					new ItemStack(Material.GRASS),
+					new ItemStack(Material.FERN),
+					new ItemStack(Material.GRASS),
+					new ItemStack(Material.PAPER),
+					new ItemStack(Material.GRASS),
+					new ItemStack(Material.PAPER)
+					)), 
+			false
+			),
+	
+	//Enchanted Botanist
 			
 	CHAFF (
 			RecipeTypes.BASIC, 
@@ -73,11 +271,76 @@ public enum Recipes {
 					new ItemStack(Material.WHEAT_SEEDS),
 					new ItemStack(Material.WHEAT_SEEDS)
 			)), 
-			true, 
-			"getChaffItem"
+			true
 			),
 	
-	ELVEN_WEAVE (
+	ASSORTED_PETALS (
+			RecipeTypes.BASIC, 
+			new ArrayList<Object> (Arrays.asList(
+					new ItemStack(Material.DANDELION),
+					new ItemStack(Material.CORNFLOWER),
+					new ItemStack(Material.PEONY),
+					new ItemStack(Material.POPPY),
+					new ItemStack(Material.SUNFLOWER),
+					new ItemStack(Material.POPPY),
+					new ItemStack(Material.LILAC),
+					new ItemStack(Material.CORNFLOWER),
+					new ItemStack(Material.DANDELION)
+					)), 
+			false
+			),
+	
+	FLORAL_ROOTS (
+			RecipeTypes.BASIC, 
+			new ArrayList<Object> (Arrays.asList(
+					new ItemStack(Material.HANGING_ROOTS),
+					new ItemStack(Material.VINE),
+					new ItemStack(Material.HANGING_ROOTS),
+					new ItemStack(Material.VINE),
+					new ItemStack(Material.HANGING_ROOTS),
+					new ItemStack(Material.VINE),
+					null,
+					new ItemStack(Material.POPPY),
+					null
+					)), 
+			false
+			),
+	
+	FLORAL_TRANSMUTER (
+			RecipeTypes.BASIC, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					new ItemStack(Material.LILAC),
+					new ItemStack(Material.REDSTONE),
+					null,
+					new ItemStack(Material.STICK),
+					new ItemStack(Material.LILAC),
+					new ItemStack(Material.STICK),
+					null,
+					null
+					)), 
+			false
+			),
+	
+	CACTUS_BOOTS (
+			RecipeTypes.BASIC, 
+			new ArrayList<Object> (Arrays.asList(
+					new ItemStack(Material.CACTUS),
+					null,
+					new ItemStack(Material.CACTUS),
+					new ItemStack(Material.CACTUS),
+					null,
+					new ItemStack(Material.CACTUS),
+					new ItemStack(Material.SAND),
+					new ItemStack(Material.SAND),
+					new ItemStack(Material.SAND)
+					)), 
+			false
+			),
+	
+	//Woodland Craftsman
+	
+	ELVEN_THREAD (
 			RecipeTypes.BASIC, 
 			new ArrayList<Object> (Arrays.asList(
 					new ItemStack(Material.STRING),
@@ -90,8 +353,7 @@ public enum Recipes {
 					new ItemStack(Material.IRON_NUGGET),
 					new ItemStack(Material.STRING)
 					)), 
-			false, 
-			"getElvenWeaveItem"
+			false
 			),
 	
 	YEW_BRANCHES (
@@ -107,11 +369,64 @@ public enum Recipes {
 					new ItemStack(Material.GOLD_NUGGET),
 					new ItemStack(Material.STICK)
 					)), 
-			false, 
-			"getYewBranchesItem"
+			false
 			),
 	
-	DWARVEN_STEEL (
+	ENRICHED_LOGS (
+			RecipeTypes.BASIC, 
+			new ArrayList<Object> (Arrays.asList(
+					new ItemStack(Material.OAK_LOG),
+					new ItemStack(Material.DARK_OAK_LOG),
+					new ItemStack(Material.BIRCH_LOG),
+					new ItemStack(Material.OAK_LOG),
+					new ItemStack(Material.DARK_OAK_LOG),
+					new ItemStack(Material.BIRCH_LOG),
+					new ItemStack(Material.BONE_MEAL),
+					new ItemStack(Material.BONE_MEAL),
+					new ItemStack(Material.BONE_MEAL)
+					)), 
+			false
+			),
+	
+	SAPLING_TRANSMUTER (
+			RecipeTypes.BASIC, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					new ItemStack(Material.OAK_SAPLING),
+					new ItemStack(Material.REDSTONE),
+					null,
+					new ItemStack(Material.STICK),
+					new ItemStack(Material.BIRCH_SAPLING),
+					new ItemStack(Material.STICK),
+					null,
+					null
+					)), 
+			false
+			),
+	
+	SAW (
+			RecipeTypes.BASIC, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					new ItemStack(Material.GOLD_INGOT),
+					new ItemStack(Material.IRON_INGOT),
+					null,
+					new ItemStack(Material.IRON_AXE),
+					new ItemStack(Material.GOLD_INGOT),
+					new ItemStack(Material.STICK),
+					null,
+					null
+					)), 
+			false
+			),
+	
+	//Lunar Artificer
+	
+	
+	
+	//Radiant Metallurgist
+	
+	STEEL (
 			RecipeTypes.BASIC, 
 			new ArrayList<Object> (Arrays.asList(
 					new ItemStack(Material.COAL),
@@ -124,8 +439,7 @@ public enum Recipes {
 					new ItemStack(Material.IRON_INGOT),
 					new ItemStack(Material.COAL)
 					)), 
-			false, 
-			"getDwarvenSteelItem"
+			false
 			),
 	
 	RUBY (
@@ -141,8 +455,7 @@ public enum Recipes {
 					new ItemStack(Material.RED_DYE),
 					new ItemStack(Material.DIAMOND)
 					)), 
-			false, 
-			"getRubyItem"
+			false
 			),
 	
 	SAPPHIRE (
@@ -158,8 +471,7 @@ public enum Recipes {
 					new ItemStack(Material.BLUE_DYE),
 					new ItemStack(Material.DIAMOND)
 					)), 
-			false, 
-			"getSapphireItem"
+			false
 			),
 	
 	ROYAL_AZEL (
@@ -175,8 +487,7 @@ public enum Recipes {
 					new ItemStack(Material.PURPLE_DYE),
 					new ItemStack(Material.DIAMOND)
 			)), 
-			false, 
-			"getRoyalAzelItem"
+			false
 			),
 	
 	OPAL (
@@ -192,8 +503,7 @@ public enum Recipes {
 					new ItemStack(Material.WHITE_DYE),
 					new ItemStack(Material.DIAMOND)
 					)), 
-			false, 
-			"getOpalItem"
+			false
 			),
 	
 	HARDENED_STONE (
@@ -209,43 +519,9 @@ public enum Recipes {
 					new ItemStack(Material.STONE),
 					new ItemStack(Material.COBBLESTONE)
 					)), 
-			false, 
-			"getHardenedStoneItem"
+			false
 			),
 	
-	ESSENCE_OF_VENGEANCE (
-			RecipeTypes.BASIC, 
-			new ArrayList<Object> (Arrays.asList(
-					new ItemStack(Material.FERMENTED_SPIDER_EYE),
-					new ItemStack(Material.BLAZE_POWDER),
-					new ItemStack(Material.FERMENTED_SPIDER_EYE),
-					new ItemStack(Material.BLAZE_POWDER),
-					new ItemStack(Material.GHAST_TEAR),
-					new ItemStack(Material.BLAZE_POWDER),
-					new ItemStack(Material.POTION),
-					new ItemStack(Material.POTION),
-					new ItemStack(Material.POTION)
-			)), 
-			false, 
-			"getEssenceOfVengeanceItem"
-			),
-	
-	BLOOD_OF_THE_FORSAKEN (
-			RecipeTypes.BASIC, 
-			new ArrayList<Object> (Arrays.asList(
-					null,
-					new ItemStack(Material.NETHER_WART),
-					null,
-					new ItemStack(Material.NETHER_WART),
-					new ItemStack(Material.BEETROOT_SOUP),
-					new ItemStack(Material.NETHER_WART),
-					null,
-					new ItemStack(Material.SWEET_BERRIES),
-					null
-			)), 
-			false, 
-			"getBloodOfTheForsakenItem"
-			),
 	
 	SCRAP (
 			RecipeTypes.BASIC, 
@@ -260,8 +536,7 @@ public enum Recipes {
 					new ItemStack(Material.CHAIN),
 					null
 			)), 
-			false, 
-			"getScrapItem"
+			false
 			),
 	
 	;
@@ -270,11 +545,17 @@ public enum Recipes {
 	ArrayList<Object> pattern;
 	boolean shapeless;
 	String resultMethod;
-	Recipes(RecipeTypes recipeLevel, ArrayList<Object> pattern, boolean shapeless, String resultMethod) {
+	Recipes(RecipeTypes recipeLevel, ArrayList<Object> pattern, boolean shapeless) {
 		this.recipeLevel = recipeLevel;
 		this.pattern = pattern;
 		this.shapeless = shapeless;
-		this.resultMethod = resultMethod;
+		String[] words = name().toLowerCase().split("_");
+		resultMethod = "get";
+		for (String word : words) {
+			resultMethod = resultMethod + word.substring(0, 1).toUpperCase() + word.substring(1);
+		}
+		resultMethod = resultMethod + "Item";
+		
 		for (int i = 0; i < pattern.size(); i++) {
 			if (pattern.get(i) != null) {
 				if (pattern.get(i) instanceof ItemStack) {
@@ -389,7 +670,7 @@ public enum Recipes {
 	public boolean matches(Main plugin, ItemStack otherItem) {
 		ItemStack thisItem = getResult(plugin);
 		thisItem.setAmount(otherItem.getAmount());
-		if (thisItem.equals(otherItem)) {
+		if (thisItem.getItemMeta().getDisplayName().equals(otherItem.getItemMeta().getDisplayName()) && thisItem.getType().equals(otherItem.getType())) {
 			return true;
 		}
 		return false;

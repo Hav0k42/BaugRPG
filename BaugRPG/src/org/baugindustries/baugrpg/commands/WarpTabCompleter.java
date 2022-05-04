@@ -13,10 +13,10 @@ public class WarpTabCompleter implements TabCompleter {
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args) {
 		if (args.length == 1) {
 			List<String> pois = new ArrayList<String>();
-			pois.add("menSpawn");
-			pois.add("elfSpawn");
-			pois.add("dwarfSpawn");
-			pois.add("orcSpawn");
+			if ("menspawn".contains(args[0].toLowerCase())) pois.add("menSpawn");
+			if ("elfspawn".contains(args[0].toLowerCase())) pois.add("elfSpawn");
+			if ("dwarfspawn".contains(args[0].toLowerCase())) pois.add("dwarfSpawn");
+			if ("orcspawn".contains(args[0].toLowerCase())) pois.add("orcSpawn");
 			return pois;
 		}
 		return null;

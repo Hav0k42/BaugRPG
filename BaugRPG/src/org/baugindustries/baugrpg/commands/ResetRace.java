@@ -1,11 +1,9 @@
 package org.baugindustries.baugrpg.commands;
 
-import org.bukkit.command.CommandExecutor;
-
-
 import org.baugindustries.baugrpg.Main;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;

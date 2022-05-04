@@ -47,7 +47,7 @@ public enum Profession {
 	WOODLAND_CRAFTSMAN (
 			2,
 			new Recipes[] {
-				Recipes.ELVEN_WEAVE,
+				Recipes.ELVEN_THREAD,
 				Recipes.YEW_BRANCHES
 			},
 			new Recipes[] { },
@@ -57,7 +57,7 @@ public enum Profession {
 	RADIANT_METALLURGIST (
 			3,
 			new Recipes[] {
-				Recipes.DWARVEN_STEEL
+				Recipes.STEEL
 			},
 			new Recipes[] { },
 			new Recipes[] { },
@@ -87,7 +87,6 @@ public enum Profession {
 	DARK_ALCHEMIST (
 			4,
 			new Recipes[] {
-				Recipes.ESSENCE_OF_VENGEANCE
 			},
 			new Recipes[] { },
 			new Recipes[] { },
@@ -96,7 +95,6 @@ public enum Profession {
 	ENRAGED_BERSERKER (
 			4,
 			new Recipes[] {
-				Recipes.BLOOD_OF_THE_FORSAKEN
 			},
 			new Recipes[] { },
 			new Recipes[] { },

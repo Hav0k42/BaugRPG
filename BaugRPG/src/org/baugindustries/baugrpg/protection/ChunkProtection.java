@@ -10,6 +10,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -66,7 +67,7 @@ public class ChunkProtection implements Listener {
 	
 	@EventHandler
 	public void PlayerInteract(PlayerInteractEvent event) {
-		if (event.isCancelled()) return;
+		if (event.useInteractedBlock().equals(Event.Result.DENY) || event.useItemInHand().equals(Event.Result.DENY)) return;
 		if (event.getClickedBlock() != null) {
 			event.setCancelled(isPositionIllegal(event.getClickedBlock().getLocation(), event.getPlayer()));
 		}

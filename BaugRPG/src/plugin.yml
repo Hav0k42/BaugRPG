@@ -2,7 +2,7 @@ name: BaugRPG
 version: 1.0
 author: BaugIndustries
 main: org.baugindustries.baugrpg.Main
-api-version: 1.17
+api-version: 1.18
 description: A performance enhancing plugin that has absolutely no LOTR rpg elements dont check.
 depend: [ProtocolLib]
 

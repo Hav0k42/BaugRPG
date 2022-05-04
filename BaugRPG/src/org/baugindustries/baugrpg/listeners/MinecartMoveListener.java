@@ -18,12 +18,11 @@ public class MinecartMoveListener implements Listener{
 		this.plugin = plugin;
 	}
 	
-	@SuppressWarnings("deprecation")
 	@EventHandler
     public void enter(VehicleMoveEvent event) {
         if (event.getVehicle() instanceof Minecart) {
-        	if (event.getVehicle().getPassenger() != null && event.getVehicle().getPassenger() instanceof Player) {
-	            Player player = (Player) event.getVehicle().getPassenger();
+        	if (event.getVehicle().getPassengers().size() > 0 && event.getVehicle().getPassengers().get(0) instanceof Player) {
+	            Player player = (Player) event.getVehicle().getPassengers().get(0);
 	            Minecart minecart = (Minecart) event.getVehicle();
 	            
 	            File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");

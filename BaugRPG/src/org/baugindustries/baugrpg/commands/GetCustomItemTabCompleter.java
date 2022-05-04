@@ -25,7 +25,9 @@ public class GetCustomItemTabCompleter implements TabCompleter {
 			List<String> chatChannels = new ArrayList<String>();
 			for (Method method : CustomItems.class.getDeclaredMethods()) {
 				if (method.getReturnType().equals(ItemStack.class)) {
-					chatChannels.add(method.getName());
+					if (method.getName().toLowerCase().contains(args[0].toLowerCase())) {
+						chatChannels.add(method.getName());
+					}
 				}
 			}
 			return chatChannels;

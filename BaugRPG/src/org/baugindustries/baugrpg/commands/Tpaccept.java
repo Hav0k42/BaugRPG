@@ -12,7 +12,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-
 import net.md_5.bungee.api.ChatColor;
 
 public class Tpaccept implements CommandExecutor{

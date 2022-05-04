@@ -13,8 +13,10 @@ public class ChatTabCompleter implements TabCompleter {
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args) {
 		if (args.length == 1) {
 			List<String> chatChannels = new ArrayList<String>();
-			chatChannels.add("Global");
-			chatChannels.add("Race");
+			if ("global".contains(args[0].toLowerCase())) chatChannels.add("global");
+			
+			if ("race".contains(args[0].toLowerCase())) chatChannels.add("race");
+			
 			return chatChannels;
 		}
 		return null;

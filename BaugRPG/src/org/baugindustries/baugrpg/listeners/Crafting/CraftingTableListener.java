@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.baugindustries.baugrpg.Main;
+import org.baugindustries.baugrpg.RecipeTypes;
 import org.baugindustries.baugrpg.Recipes;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -20,6 +21,9 @@ import org.bukkit.inventory.ShapelessRecipe;
 
 public class CraftingTableListener implements Listener {
 	private Main plugin;
+	
+	private boolean classCraftingRestrictions = false;
+	
 	public CraftingTableListener(Main plugin) {
 		this.plugin = plugin;
 	}
@@ -80,31 +84,15 @@ public class CraftingTableListener implements Listener {
 			List<Recipes> learnedRecipes = new ArrayList<Recipes>();
 			ConfigurationSection learnedRecipesSection = skillsconfig.getConfigurationSection("learnedRecipes");
 			
-			if (learnedRecipesSection.contains("BASIC")) {
-				learnedRecipesSection.getStringList("BASIC").forEach(recipeName -> {
-					learnedRecipes.add(Recipes.valueOf(recipeName));
-				});
+			for (RecipeTypes recipeType : RecipeTypes.values()) {
+				if (learnedRecipesSection.contains(recipeType.name())) {
+					learnedRecipesSection.getStringList(recipeType.name()).forEach(recipeName -> {
+						learnedRecipes.add(Recipes.valueOf(recipeName));
+					});
+				}
 			}
 			
-			if (learnedRecipesSection.contains("INTERMEDIATE")) {
-				learnedRecipesSection.getStringList("INTERMEDIATE").forEach(recipeName -> {
-					learnedRecipes.add(Recipes.valueOf(recipeName));
-				});
-			}
-			
-			if (learnedRecipesSection.contains("ADVANCED")) {
-				learnedRecipesSection.getStringList("ADVANCED").forEach(recipeName -> {
-					learnedRecipes.add(Recipes.valueOf(recipeName));
-				});
-			}
-			
-			if (learnedRecipesSection.contains("EXPERT")) {
-				learnedRecipesSection.getStringList("EXPERT").forEach(recipeName -> {
-					learnedRecipes.add(Recipes.valueOf(recipeName));
-				});
-			}
-			
-			if (!learnedRecipes.contains(recipe)) {
+			if (classCraftingRestrictions && !learnedRecipes.contains(recipe)) {
 				 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 					  public void run() {
 							event.getInventory().setResult(new ItemStack(Material.AIR));

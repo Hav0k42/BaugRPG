@@ -4,8 +4,9 @@
 */
 package org.baugindustries.baugrpg;
 
-import net.minecraft.world.phys.AxisAlignedBB;
 import org.bukkit.util.Vector;
+
+import net.minecraft.world.phys.AxisAlignedBB;
 
 public class BoundingBox {
 

@@ -12,13 +12,13 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
-import org.bukkit.event.block.BlockFadeEvent;
 import org.bukkit.event.block.BlockFertilizeEvent;
 import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
@@ -79,7 +79,7 @@ public class SpawnProtection implements Listener {
 	
 	@EventHandler
 	public void PlayerInteract(PlayerInteractEvent event) {
-		if (event.isCancelled()) return;
+		if (event.useInteractedBlock().equals(Event.Result.DENY) || event.useItemInHand().equals(Event.Result.DENY)) return;
 		if (event.getClickedBlock() != null) {
 			if (event.getClickedBlock().getType().toString().contains("DOOR") && !event.getClickedBlock().getType().toString().contains("TRAPDOOR")) return;
 			event.setCancelled(isPositionIllegal(event.getClickedBlock().getLocation(), event.getPlayer()));

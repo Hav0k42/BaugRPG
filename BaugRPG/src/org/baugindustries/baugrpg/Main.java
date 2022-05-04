@@ -125,7 +125,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_18_R2.CraftWorld;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -301,6 +300,9 @@ public class Main extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
+		
+		 
+		
 		 File defaultDir = new File(this.getDataFolder().getAbsolutePath());
 		 defaultDir.mkdir();
 		 
@@ -383,6 +385,9 @@ public class Main extends JavaPlugin {
 		 pluginManager.registerEvents(playerDeathListener, this);
 		 pluginManager.registerEvents(playerRespawnListener, this);
 		 pluginManager.registerEvents(minecartMoveListener, this);
+		 
+		 
+		 
 		 pluginManager.registerEvents(elfEatMeat, this);
 		 pluginManager.registerEvents(orcEatMeat, this);
 		 pluginManager.registerEvents(signShopListener, this);

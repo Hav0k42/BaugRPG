@@ -1,7 +1,5 @@
 package org.baugindustries.baugrpg.listeners;
 
-
-
 import java.io.File;
 import java.io.IOException;
 
@@ -28,7 +26,7 @@ public class OnJoinListener implements Listener {
 	public int getSaturationSlownessMultiplier() {
 		return saturationSlownessMultiplier;
 	}
-	@SuppressWarnings("deprecation")
+	
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
@@ -153,19 +151,19 @@ public class OnJoinListener implements Listener {
 			int race = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
 			switch (race) {
 				case 1://Men
-					plugin.board.getTeam("Men").addPlayer(player);
+					plugin.board.getTeam("Men").addEntry(player.getName());
 					break;
 				case 2://Elves
-					plugin.board.getTeam("Elves").addPlayer(player);
+					plugin.board.getTeam("Elves").addEntry(player.getName());
 					break;
 				case 3://Dwarves
-					plugin.board.getTeam("Dwarves").addPlayer(player);
+					plugin.board.getTeam("Dwarves").addEntry(player.getName());
 					break;
 				case 4://Orcs
-					plugin.board.getTeam("Orcs").addPlayer(player);
+					plugin.board.getTeam("Orcs").addEntry(player.getName());
 					break;
 				case 5://Wizards
-					plugin.board.getTeam("Wizards").addPlayer(player);
+					plugin.board.getTeam("Wizards").addEntry(player.getName());
 					break;
 			}
 		}
