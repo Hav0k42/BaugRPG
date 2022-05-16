@@ -33,9 +33,7 @@ public class OrcEatMeat implements Listener {
 			    }
 		    }
 		    
-		    if (!acceptable) {
-		    	event.setCancelled(true);
-		    } else {
+		    if (acceptable) {
 		    	if (event.getItem().getType().equals(Material.ROTTEN_FLESH)) {
 		    		p.setFoodLevel(p.getFoodLevel() + 5);
 				    p.setSaturation(p.getSaturation() + 2.5f);
@@ -58,8 +56,9 @@ public class OrcEatMeat implements Listener {
 				    	p.getInventory().setItemInOffHand(newItem);
 			    	}
 			    }
-		    	event.setCancelled(true);
 		    }
+
+	    	event.setCancelled(true);
 		}
 	}
 }

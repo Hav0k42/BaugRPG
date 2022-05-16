@@ -56,7 +56,7 @@ public class StarlightHealingListener implements Listener {
         
         if (plugin.starlightHealingCooldown.containsKey(player.getUniqueId())) return;
         
-        if (!player.isSneaking()) {//player is not sneaking when the begin sneaking, so this value should be inverted
+        if (!player.isSneaking()) {//player is not sneaking when they begin sneaking, so this value should be inverted
         	plugin.sneakingLunarArtificers.put(player.getUniqueId(), Bukkit.getWorlds().get(0).getFullTime());
         	runGlowNearbyElves(player.getUniqueId());
         } else if (plugin.sneakingLunarArtificers.containsKey(player.getUniqueId())) {

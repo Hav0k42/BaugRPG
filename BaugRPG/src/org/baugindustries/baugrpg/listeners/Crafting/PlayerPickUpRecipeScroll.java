@@ -68,7 +68,7 @@ public class PlayerPickUpRecipeScroll implements Listener {
 		
 		List<Recipes> unlearnedRecipes = new ArrayList<Recipes>();
 		for (int i = 0; i < profession.getRecipes(type).length; i++) {
-			if (!learnedRecipesTYPE.contains(profession.getRecipes(type)[i].toString())) {
+			if (!learnedRecipesTYPE.contains(profession.getRecipes(type)[i].name())) {
 				unlearnedRecipes.add(profession.getRecipes(type)[i]);
 			}
 		}
@@ -79,19 +79,14 @@ public class PlayerPickUpRecipeScroll implements Listener {
 		}
 		
 		Recipes newRecipe = unlearnedRecipes.get((int)(Math.random() * unlearnedRecipes.size()));
-		learnedRecipesTYPE.add(newRecipe.toString());
+		learnedRecipesTYPE.add(newRecipe.name());
 		learnedRecipes.set(type.toString(), learnedRecipesTYPE);
 		try {
 			skillsconfig.save(skillsfile);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		String[] recipeWords = newRecipe.toString().toLowerCase().split("_");
-		String recipeName = "";
-		for (String word : recipeWords) {
-			recipeName = recipeName + " " +  word.substring(0, 1).toUpperCase() + word.substring(1);
-		}
-		player.sendMessage(ChatColor.GOLD + "You've learned the recipe for" + recipeName + ". View your learned recipes using /bs.");
+		player.sendMessage(ChatColor.GOLD + "You've learned the recipe for " + newRecipe.toString() + ". View your learned recipes using /bs.");
 		event.getItem().remove();
 		event.setCancelled(true);
 		

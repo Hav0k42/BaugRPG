@@ -32,6 +32,75 @@ public class CustomInventories {
 	}
 	
 	
+	
+	
+	public Inventory getAllCustomItemsClasses() {
+		int inventorySize = 27;
+		
+		String inventoryName = ChatColor.GOLD + "Class Recipes";
+		Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
+		
+		inventory.setItem(0, plugin.itemManager.getStableMasterItem());
+		inventory.setItem(1, plugin.itemManager.getSteeledArmorerItem());
+		inventory.setItem(2, plugin.itemManager.getVerdantShepherdItem());
+		inventory.setItem(3, plugin.itemManager.getEnchantedBotanistItem());
+		inventory.setItem(4, plugin.itemManager.getWoodlandCraftsmanItem());
+		inventory.setItem(5, plugin.itemManager.getLunarArtificerItem());
+		inventory.setItem(6, plugin.itemManager.getRadiantMetallurgistItem());
+		inventory.setItem(7, plugin.itemManager.getArcaneJewelerItem());
+		inventory.setItem(8, plugin.itemManager.getGildedMinerItem());
+		inventory.setItem(9, plugin.itemManager.getDarkAlchemistItem());
+		inventory.setItem(10, plugin.itemManager.getEnragedBerserkerItem());
+		inventory.setItem(11, plugin.itemManager.getGreedyScrapperItem());
+		
+		inventory.setItem(18, plugin.itemManager.getBackItem());
+		return inventory;
+	}
+	
+	public Inventory getAllRecipesMenu(Profession profession) {
+		int inventorySize = 54;
+		
+		String inventoryName = ChatColor.GOLD + profession.toString() +  " Recipes";
+		Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
+		
+		List<Recipes> recipes = new ArrayList<Recipes>();
+		for (Recipes recipe : profession.getBasicRecipes()) {
+			recipes.add(recipe);
+		}
+		
+		for (Recipes recipe : profession.getIntermediateRecipes()) {
+			recipes.add(recipe);
+		}
+		
+		for (Recipes recipe : profession.getAdvancedRecipes()) {
+			recipes.add(recipe);
+		}
+		
+		for (Recipes recipe : profession.getExpertRecipes()) {
+			recipes.add(recipe);
+		}
+		
+		int i = 10;
+		for (Recipes recipe : recipes) {
+			try {
+				Method getResultItem = plugin.itemManager.getClass().getDeclaredMethod(recipe.getResultMethod(), (Class<?>[])null);
+				ItemStack tempItem = (ItemStack)getResultItem.invoke(plugin.itemManager);
+				tempItem.setAmount(1);
+				inventory.setItem(i, tempItem);
+			} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				e.printStackTrace();
+			}
+			if (i % 9 == 7) {
+				i+=2;
+			}
+			i++;
+		}
+		
+		inventory.setItem(45, plugin.itemManager.getBackItem());
+		return inventory;
+	}
+	
+	
 	public Inventory getLearnedRecipesMenu(UUID uuid) {
 		List<Recipes> learnedRecipes = new ArrayList<Recipes>();
 		
@@ -85,7 +154,9 @@ public class CustomInventories {
 		for (Recipes recipe : learnedRecipes) {
 			try {
 				Method getResultItem = plugin.itemManager.getClass().getDeclaredMethod(recipe.getResultMethod(), (Class<?>[])null);
-				inventory.setItem(i, (ItemStack)getResultItem.invoke(plugin.itemManager, (Object)null));
+				ItemStack tempItem = (ItemStack)getResultItem.invoke(plugin.itemManager);
+				tempItem.setAmount(1);
+				inventory.setItem(i, tempItem);
 			} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 				e.printStackTrace();
 			}
@@ -1027,6 +1098,9 @@ public class CustomInventories {
 			currentSlot++;
 			
 			inventory.setItem(currentSlot, plugin.itemManager.getInventorySnoopingItem());
+			currentSlot++;
+			
+			inventory.setItem(currentSlot, plugin.itemManager.getViewAllCustomItemsItem());
 			currentSlot++;
 			
 			

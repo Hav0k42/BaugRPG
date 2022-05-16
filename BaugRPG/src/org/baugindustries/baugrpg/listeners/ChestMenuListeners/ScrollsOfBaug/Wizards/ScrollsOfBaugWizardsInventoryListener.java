@@ -37,7 +37,7 @@ public class ScrollsOfBaugWizardsInventoryListener implements Listener{
 					
 		if (event.getCurrentItem().equals(plugin.itemManager.getFeatureManagementItem())) {//Player clicked on the Feature Management Item
 			
-			event.getWhoClicked().openInventory(plugin.inventoryManager.getFeatureManagementInventory());
+			player.openInventory(plugin.inventoryManager.getFeatureManagementInventory());
 			
 		} else if (event.getCurrentItem().equals(plugin.itemManager.getInventorySnoopingItem())) {//Player clicked on the Inventory Snooping Item
 			
@@ -46,6 +46,8 @@ public class ScrollsOfBaugWizardsInventoryListener implements Listener{
 			} else {
 				player.sendMessage(ChatColor.RED + "The supporting plugin for this feature is not installed.\nPlease install the OpenInv plugin.\n" + ChatColor.YELLOW + "https://dev.bukkit.org/projects/openinv");
 			}
+		} else if (event.getCurrentItem().equals(plugin.itemManager.getViewAllCustomItemsItem())) {
+			player.openInventory(plugin.inventoryManager.getAllCustomItemsClasses());
 		}
 		
 		

@@ -22,7 +22,7 @@ import org.bukkit.inventory.ShapelessRecipe;
 public class CraftingTableListener implements Listener {
 	private Main plugin;
 	
-	private boolean classCraftingRestrictions = false;
+	private boolean classCraftingRestrictions = true;
 	
 	public CraftingTableListener(Main plugin) {
 		this.plugin = plugin;
@@ -92,7 +92,7 @@ public class CraftingTableListener implements Listener {
 				}
 			}
 			
-			if (classCraftingRestrictions && !learnedRecipes.contains(recipe)) {
+			if (classCraftingRestrictions && !learnedRecipes.contains(recipe)) {//Check if you know the recipe
 				 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 					  public void run() {
 							event.getInventory().setResult(new ItemStack(Material.AIR));
@@ -100,6 +100,36 @@ public class CraftingTableListener implements Listener {
 				 }, 1L);
 				return;
 			}
+			
+			
+			for (int i = 1; i < 10; i++) {
+				ItemStack currentItem = event.getInventory().getItem(i);
+				if (currentItem != null) {
+					if (recipe.getUnresolvedPattern().get(i - 1).getClass().equals(Recipes.class)) {//Current item needs to be a specific custom item.
+						if (!((Recipes)recipe.getUnresolvedPattern().get(i - 1)).matches(plugin, currentItem)) {
+							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+								  public void run() {
+										event.getInventory().setResult(new ItemStack(Material.AIR));
+								  }
+							 }, 1L);
+							return;
+						}
+					} else {//Current item needs to be a vanilla item
+						for (Recipes r : Recipes.values()) {
+							if (r.matches(plugin, currentItem)) {
+								plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+									  public void run() {
+											event.getInventory().setResult(new ItemStack(Material.AIR));
+									  }
+								 }, 1L);
+								return;
+							}
+						}
+					}
+				}
+			}
+			
+			
 		}
 		
 		

@@ -37,10 +37,97 @@ import org.baugindustries.baugrpg.commands.econ.Deposit;
 import org.baugindustries.baugrpg.commands.econ.Pay;
 import org.baugindustries.baugrpg.commands.econ.SetBal;
 import org.baugindustries.baugrpg.commands.econ.Withdraw;
+import org.baugindustries.baugrpg.customitems.CustomItemRenamingListener;
+import org.baugindustries.baugrpg.customitems.dwarves.arcane_jeweler.basic.GoldRingListener;
+import org.baugindustries.baugrpg.customitems.dwarves.arcane_jeweler.basic.ReinforcedRingListener;
+import org.baugindustries.baugrpg.customitems.dwarves.arcane_jeweler.intermediate.BejeweledCompassListener;
+import org.baugindustries.baugrpg.customitems.dwarves.arcane_jeweler.intermediate.StuddedSetListener;
+import org.baugindustries.baugrpg.customitems.dwarves.gilded_miner.basic.EnduranceRuneListener;
+import org.baugindustries.baugrpg.customitems.dwarves.gilded_miner.basic.HardenedStoneListener;
+import org.baugindustries.baugrpg.customitems.dwarves.gilded_miner.basic.RockyTransmuterListener;
+import org.baugindustries.baugrpg.customitems.dwarves.gilded_miner.intermediate.DrillListener;
+import org.baugindustries.baugrpg.customitems.dwarves.gilded_miner.intermediate.ProtectorStoneListener;
+import org.baugindustries.baugrpg.customitems.dwarves.gilded_miner.intermediate.RobustRuneListener;
+import org.baugindustries.baugrpg.customitems.dwarves.radiant_metallurgist.basic.FerrousHarvesterListener;
+import org.baugindustries.baugrpg.customitems.dwarves.radiant_metallurgist.basic.ForgersScrollListener;
+import org.baugindustries.baugrpg.customitems.dwarves.radiant_metallurgist.basic.PumiceListener;
+import org.baugindustries.baugrpg.customitems.dwarves.radiant_metallurgist.basic.RhyoliteListener;
+import org.baugindustries.baugrpg.customitems.dwarves.radiant_metallurgist.intermediate.FlamelashListener;
+import org.baugindustries.baugrpg.customitems.dwarves.radiant_metallurgist.intermediate.HandForgeListener;
+import org.baugindustries.baugrpg.customitems.dwarves.radiant_metallurgist.intermediate.RadiantBoreListener;
+import org.baugindustries.baugrpg.customitems.elves.enchanted_botanist.basic.AssortedPetalsListener;
+import org.baugindustries.baugrpg.customitems.elves.enchanted_botanist.basic.CactusGreavesListener;
+import org.baugindustries.baugrpg.customitems.elves.enchanted_botanist.basic.FloralRootsListener;
+import org.baugindustries.baugrpg.customitems.elves.enchanted_botanist.basic.FloralTransmuterListener;
+import org.baugindustries.baugrpg.customitems.elves.enchanted_botanist.intermediate.DemetersBenevolenceListener;
+import org.baugindustries.baugrpg.customitems.elves.enchanted_botanist.intermediate.EnrichedHoeListener;
+import org.baugindustries.baugrpg.customitems.elves.enchanted_botanist.intermediate.EnrichedSoilListener;
+import org.baugindustries.baugrpg.customitems.elves.enchanted_botanist.intermediate.FloralPoulticeListener;
+import org.baugindustries.baugrpg.customitems.elves.enchanted_botanist.intermediate.PotentHoneyListener;
+import org.baugindustries.baugrpg.customitems.elves.lunar_artificier.basic.LunarDebrisListener;
+import org.baugindustries.baugrpg.customitems.elves.lunar_artificier.basic.NebulousAuraListener;
+import org.baugindustries.baugrpg.customitems.elves.lunar_artificier.intermediate.DarkMatterListener;
+import org.baugindustries.baugrpg.customitems.elves.lunar_artificier.intermediate.LightBowListener;
+import org.baugindustries.baugrpg.customitems.elves.lunar_artificier.intermediate.LightShieldListener;
+import org.baugindustries.baugrpg.customitems.elves.lunar_artificier.intermediate.MeteoriteListener;
+import org.baugindustries.baugrpg.customitems.elves.lunar_artificier.intermediate.VoidStoneListener;
+import org.baugindustries.baugrpg.customitems.elves.woodland_craftsman.basic.ElvenThreadListener;
+import org.baugindustries.baugrpg.customitems.elves.woodland_craftsman.basic.EnrichedLogsListener;
+import org.baugindustries.baugrpg.customitems.elves.woodland_craftsman.basic.SaplingTransmuterListener;
+import org.baugindustries.baugrpg.customitems.elves.woodland_craftsman.basic.SawListener;
+import org.baugindustries.baugrpg.customitems.elves.woodland_craftsman.intermediate.ElvenWeaveListener;
+import org.baugindustries.baugrpg.customitems.elves.woodland_craftsman.intermediate.EnrichedWoodSetListener;
+import org.baugindustries.baugrpg.customitems.elves.woodland_craftsman.intermediate.RustedStaffListener;
+import org.baugindustries.baugrpg.customitems.elves.woodland_craftsman.intermediate.ToolbeltListener;
+import org.baugindustries.baugrpg.customitems.men.stable_master.basic.HorsehairListener;
+import org.baugindustries.baugrpg.customitems.men.stable_master.basic.HorseshoeListener;
+import org.baugindustries.baugrpg.customitems.men.stable_master.basic.MorralListener;
+import org.baugindustries.baugrpg.customitems.men.stable_master.intermediate.BridleListener;
+import org.baugindustries.baugrpg.customitems.men.stable_master.intermediate.RopeListener;
+import org.baugindustries.baugrpg.customitems.men.stable_master.intermediate.SpearListener;
+import org.baugindustries.baugrpg.customitems.men.stable_master.intermediate.WhistleListener;
+import org.baugindustries.baugrpg.customitems.men.steeled_armorer.basic.FeatheredShoesListener;
+import org.baugindustries.baugrpg.customitems.men.steeled_armorer.basic.IronHammerListener;
+import org.baugindustries.baugrpg.customitems.men.steeled_armorer.basic.MeshListener;
+import org.baugindustries.baugrpg.customitems.men.steeled_armorer.intermediate.HardenedMeshListener;
+import org.baugindustries.baugrpg.customitems.men.steeled_armorer.intermediate.IronPlateSetListener;
+import org.baugindustries.baugrpg.customitems.men.steeled_armorer.intermediate.KnockbackShieldListener;
+import org.baugindustries.baugrpg.customitems.men.verdant_shepherd.basic.DryGrassListener;
+import org.baugindustries.baugrpg.customitems.men.verdant_shepherd.basic.HempListener;
+import org.baugindustries.baugrpg.customitems.men.verdant_shepherd.basic.LanolinListener;
+import org.baugindustries.baugrpg.customitems.men.verdant_shepherd.basic.MerinoWoolListener;
+import org.baugindustries.baugrpg.customitems.men.verdant_shepherd.basic.VealListener;
+import org.baugindustries.baugrpg.customitems.men.verdant_shepherd.intermediate.CorruptedStaffListener;
+import org.baugindustries.baugrpg.customitems.men.verdant_shepherd.intermediate.CrookListener;
+import org.baugindustries.baugrpg.customitems.men.verdant_shepherd.intermediate.ShepherdsCompassListener;
+import org.baugindustries.baugrpg.customitems.men.verdant_shepherd.intermediate.WaxListener;
+import org.baugindustries.baugrpg.customitems.orcs.dark_alchemist.basic.CrimsonPowderListener;
+import org.baugindustries.baugrpg.customitems.orcs.dark_alchemist.basic.FlamingBucketListener;
+import org.baugindustries.baugrpg.customitems.orcs.dark_alchemist.basic.FungalRootsListener;
+import org.baugindustries.baugrpg.customitems.orcs.dark_alchemist.basic.HypnoticRingListener;
+import org.baugindustries.baugrpg.customitems.orcs.dark_alchemist.intermediate.BoneMarrowListener;
+import org.baugindustries.baugrpg.customitems.orcs.dark_alchemist.intermediate.MagicMirrorListener;
+import org.baugindustries.baugrpg.customitems.orcs.dark_alchemist.intermediate.RodOfShadowsListener;
+import org.baugindustries.baugrpg.customitems.orcs.dark_alchemist.intermediate.WandOfDisplacementListener;
+import org.baugindustries.baugrpg.customitems.orcs.enraged_berserker.basic.EtherealWoodListener;
+import org.baugindustries.baugrpg.customitems.orcs.enraged_berserker.basic.HellstoneListener;
+import org.baugindustries.baugrpg.customitems.orcs.enraged_berserker.basic.HoglinTuskListener;
+import org.baugindustries.baugrpg.customitems.orcs.enraged_berserker.basic.RageStoneListener;
+import org.baugindustries.baugrpg.customitems.orcs.enraged_berserker.basic.SpectralWardListener;
+import org.baugindustries.baugrpg.customitems.orcs.enraged_berserker.intermediate.BlazingFuryListener;
+import org.baugindustries.baugrpg.customitems.orcs.enraged_berserker.intermediate.SpectralHarnessListener;
+import org.baugindustries.baugrpg.customitems.orcs.enraged_berserker.intermediate.TheShredderListener;
+import org.baugindustries.baugrpg.customitems.orcs.greedy_scrapper.basic.DemonicWrenchListener;
+import org.baugindustries.baugrpg.customitems.orcs.greedy_scrapper.basic.MagmaStoneListener;
+import org.baugindustries.baugrpg.customitems.orcs.greedy_scrapper.basic.PebblesListener;
+import org.baugindustries.baugrpg.customitems.orcs.greedy_scrapper.intermediate.BoltsListener;
+import org.baugindustries.baugrpg.customitems.orcs.greedy_scrapper.intermediate.FlamedashBootsListener;
+import org.baugindustries.baugrpg.customitems.orcs.greedy_scrapper.intermediate.FragmentedSetListener;
 import org.baugindustries.baugrpg.listeners.AlchemistThrowPotionListener;
 import org.baugindustries.baugrpg.listeners.ArboratedStrikeListener;
 import org.baugindustries.baugrpg.listeners.ArcaneJewelsListener;
 import org.baugindustries.baugrpg.listeners.BlockExplodeListener;
+import org.baugindustries.baugrpg.listeners.BrewIllegalPotionListener;
 import org.baugindustries.baugrpg.listeners.ChestBreakListener;
 import org.baugindustries.baugrpg.listeners.ChestOpenListener;
 import org.baugindustries.baugrpg.listeners.ClickedTextCommandListener;
@@ -74,6 +161,7 @@ import org.baugindustries.baugrpg.listeners.RadiantAnvilListener;
 import org.baugindustries.baugrpg.listeners.SignBreakListener;
 import org.baugindustries.baugrpg.listeners.SignShopListener;
 import org.baugindustries.baugrpg.listeners.StarlightHealingListener;
+import org.baugindustries.baugrpg.listeners.UseBrewingStandListener;
 import org.baugindustries.baugrpg.listeners.WitheredBeheadingListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ChooseClassListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ChooseRaceInventoryListener;
@@ -96,6 +184,9 @@ import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Men
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Men.ScrollsOfBaugMenInventoryListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Orcs.ExecutionMenuListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Orcs.ScrollsOfBaugOrcsInventoryListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.AllRecipesInventoryListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.ClassDisplayedRecipeInventoryListener;
+import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.CustomItemClassListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.FeatureManagement;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.ScrollsOfBaugWizardsInventoryListener;
 import org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards.PlayerSnooping.PlayerSnoopingEnderChestListListener;
@@ -124,6 +215,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_18_R2.CraftWorld;
 import org.bukkit.entity.AbstractHorse;
+import org.bukkit.entity.Animals;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -246,6 +338,8 @@ public class Main extends JavaPlugin {
 	public LavaFishingListener lavaFishingListener = new LavaFishingListener(this);
 	public ClickedTextCommandListener clickedTextCommandListener = new ClickedTextCommandListener(this);
 	public PlayerEnterChunkListener playerEnterChunkListener = new PlayerEnterChunkListener(this);
+	public UseBrewingStandListener useBrewingStandListener = new UseBrewingStandListener(this);
+	public BrewIllegalPotionListener brewIllegalPotionListener = new BrewIllegalPotionListener(this);
 	
 	public EndermanGriefingListener endermanGriefingListener = new EndermanGriefingListener(this);
 	public ChooseRaceInventoryListener chooseRaceInventoryListener = new ChooseRaceInventoryListener(this);
@@ -263,6 +357,9 @@ public class Main extends JavaPlugin {
 	public PlayerSnoopingEnderChestListListener playerSnoopingEnderChestListListener = new PlayerSnoopingEnderChestListListener(this);
 	public PlayerSnoopingHubInventoryListener playerSnoopingHubInventoryListener = new PlayerSnoopingHubInventoryListener(this);
 	public PlayerSnoopingInventoryListListener playerSnoopingInventoryListListener = new PlayerSnoopingInventoryListListener(this);
+	public CustomItemClassListener customItemClassListener = new CustomItemClassListener(this);
+	public AllRecipesInventoryListener allRecipesInventoryListener = new AllRecipesInventoryListener(this);
+	public ClassDisplayedRecipeInventoryListener classDisplayedRecipeInventoryListener = new ClassDisplayedRecipeInventoryListener(this);
 	public SkillTreeMenu skillTreeMenu = new SkillTreeMenu(this);
 	public GeneralSkillTreeMenu generalSkillTreeMenu = new GeneralSkillTreeMenu(this);
 	public PlayerAdvancementDoneListener playerAdvancementDoneListener = new PlayerAdvancementDoneListener(this);
@@ -286,6 +383,108 @@ public class Main extends JavaPlugin {
 	public LearnedRecipesInventoryListener learnedRecipesInventoryListener = new LearnedRecipesInventoryListener(this);
 	public DisplayedRecipeInventoryListener displayedRecipeInventoryListener = new DisplayedRecipeInventoryListener(this);
 	public CraftingTableListener craftingTableListener = new CraftingTableListener(this);
+
+	
+	
+	
+	
+	//CustomItems
+	
+	public CustomItemRenamingListener customItemRenamingListener = new CustomItemRenamingListener(this);
+	
+	//Basic
+	
+	public HorsehairListener horsehairListener = new HorsehairListener(this);
+	public HorseshoeListener horseshoeListener = new HorseshoeListener(this);
+	public MorralListener morralListener = new MorralListener(this);
+	public MeshListener meshListener = new MeshListener(this);
+	public IronHammerListener ironHammerListener = new IronHammerListener(this);
+	public FeatheredShoesListener featheredShoesListener = new FeatheredShoesListener(this);
+	public MerinoWoolListener merinoWoolListener = new MerinoWoolListener(this);
+	public LanolinListener lanolinListener = new LanolinListener(this);
+	public DryGrassListener dryGrassListener = new DryGrassListener(this);
+	public VealListener vealListener = new VealListener(this);
+	public HempListener hempListener = new HempListener(this);
+	public AssortedPetalsListener assortedPetalsListener = new AssortedPetalsListener(this);
+	public FloralRootsListener floralRootsListener = new FloralRootsListener(this);
+	public FloralTransmuterListener floralTransmuterListener = new FloralTransmuterListener(this);
+	public CactusGreavesListener cactusGreavesListener = new CactusGreavesListener(this);
+	public ElvenThreadListener elvenThreadListener = new ElvenThreadListener(this);
+	public EnrichedLogsListener enrichedLogsListener = new EnrichedLogsListener(this);
+	public SaplingTransmuterListener saplingTransmuterListener = new SaplingTransmuterListener(this);
+	public SawListener sawListener = new SawListener(this);
+	public LunarDebrisListener lunarDebrisListener = new LunarDebrisListener(this);
+	public NebulousAuraListener nebulousAuraListener = new NebulousAuraListener(this);
+	public RhyoliteListener rhyoliteListener = new RhyoliteListener(this);
+	public PumiceListener pumiceListener = new PumiceListener(this);
+	public ForgersScrollListener forgersScrollListener = new ForgersScrollListener(this);
+	public FerrousHarvesterListener ferrousHarvesterListener = new FerrousHarvesterListener(this);
+	public ReinforcedRingListener reinforcedRingListener = new ReinforcedRingListener(this);
+	public GoldRingListener goldRingListener = new GoldRingListener(this);
+	public HardenedStoneListener hardenedStoneListener = new HardenedStoneListener(this);
+	public EnduranceRuneListener enduranceRuneListener = new EnduranceRuneListener(this);
+	public RockyTransmuterListener rockyTransmuterListener = new RockyTransmuterListener(this);
+	public FungalRootsListener fungalRootsListener = new FungalRootsListener(this);
+	public CrimsonPowderListener crimsonPowderListener = new CrimsonPowderListener(this);
+	public HypnoticRingListener hypnoticRingListener = new HypnoticRingListener(this);
+	public FlamingBucketListener flamingBucketListener = new FlamingBucketListener(this);
+	public HellstoneListener hellstoneListener = new HellstoneListener(this);
+	public EtherealWoodListener etherealWoodListener = new EtherealWoodListener(this);
+	public HoglinTuskListener hoglinTuskListener = new HoglinTuskListener(this);
+	public RageStoneListener rageStoneListener = new RageStoneListener(this);
+	public SpectralWardListener spectralWardListener = new SpectralWardListener(this);
+	public PebblesListener pebblesListener = new PebblesListener(this);
+	public MagmaStoneListener magmaStoneListener = new MagmaStoneListener(this);
+	public DemonicWrenchListener demonicWrenchListener = new DemonicWrenchListener(this);
+	
+	//Intermediate
+
+	public RopeListener ropeListener = new RopeListener(this);
+	public SpearListener spearListener = new SpearListener(this);
+	public WhistleListener whistleListener = new WhistleListener(this);
+	public BridleListener bridleListener = new BridleListener(this);
+	public HardenedMeshListener hardenedMeshListener = new HardenedMeshListener(this);
+	public KnockbackShieldListener knockbackShieldListener = new KnockbackShieldListener(this);
+	public IronPlateSetListener ironPlateSetListener = new IronPlateSetListener(this);
+	public WaxListener waxListener = new WaxListener(this);
+	public CrookListener crookListener = new CrookListener(this);
+	public ShepherdsCompassListener shepherdsCompassListener = new ShepherdsCompassListener(this);
+	public CorruptedStaffListener corruptedStaffListener = new CorruptedStaffListener(this);
+	public FloralPoulticeListener floralPoulticeListener = new FloralPoulticeListener(this);
+	public EnrichedSoilListener enrichedSoilListener = new EnrichedSoilListener(this);
+	public EnrichedHoeListener enrichedHoeListener = new EnrichedHoeListener(this);
+	public DemetersBenevolenceListener demetersBenevolenceListener = new DemetersBenevolenceListener(this);
+	public PotentHoneyListener potentHoneyListener = new PotentHoneyListener(this);
+	public ElvenWeaveListener elvenWeaveListener = new ElvenWeaveListener(this);
+	public ToolbeltListener toolbeltListener = new ToolbeltListener(this);
+	public RustedStaffListener rustedStaffListener = new RustedStaffListener(this);
+	public EnrichedWoodSetListener enrichedWoodSetListener = new EnrichedWoodSetListener(this);
+	public MeteoriteListener meteoriteListener = new MeteoriteListener(this);
+	public DarkMatterListener darkMatterListener = new DarkMatterListener(this);
+	public LightShieldListener lightShieldListener = new LightShieldListener(this);
+	public LightBowListener lightBowListener = new LightBowListener(this);
+	public VoidStoneListener voidStoneListener = new VoidStoneListener(this);
+	public RadiantBoreListener radiantBoreListener = new RadiantBoreListener(this);
+	public FlamelashListener flamelashListener = new FlamelashListener(this);
+	public HandForgeListener handForgeListener = new HandForgeListener(this);
+	public StuddedSetListener studdedSetListener = new StuddedSetListener(this);
+	public BejeweledCompassListener bejeweledCompassListener = new BejeweledCompassListener(this);
+	public DrillListener drillListener = new DrillListener(this);
+	public ProtectorStoneListener protectorStoneListener = new ProtectorStoneListener(this);
+	public RobustRuneListener robustRuneListener = new RobustRuneListener(this);
+	public RodOfShadowsListener rodOfShadowsListener = new RodOfShadowsListener(this);
+	public WandOfDisplacementListener wandOfDisplacementListener = new WandOfDisplacementListener(this);
+	public MagicMirrorListener magicMirrorListener = new MagicMirrorListener(this);
+	public BoneMarrowListener boneMarrowListener = new BoneMarrowListener(this);
+	public BlazingFuryListener blazingFuryListener = new BlazingFuryListener(this);
+	public SpectralHarnessListener spectralHarnessListener;
+	public TheShredderListener theShredderListener = new TheShredderListener(this);
+	public BoltsListener boltsListener = new BoltsListener(this);
+	public FragmentedSetListener fragmentedSetListener = new FragmentedSetListener(this);
+	public FlamedashBootsListener flamedashBootsListener = new FlamedashBootsListener(this);
+	
+	
+
 	
 	
 	
@@ -426,6 +625,9 @@ public class Main extends JavaPlugin {
 		 pluginManager.registerEvents(playerSnoopingEnderChestListListener, this);
 		 pluginManager.registerEvents(playerSnoopingHubInventoryListener, this);
 		 pluginManager.registerEvents(playerSnoopingInventoryListListener, this);
+		 pluginManager.registerEvents(customItemClassListener, this);
+		 pluginManager.registerEvents(allRecipesInventoryListener, this);
+		 pluginManager.registerEvents(classDisplayedRecipeInventoryListener, this);
 		 pluginManager.registerEvents(skillTreeMenu, this);
 		 pluginManager.registerEvents(generalSkillTreeMenu, this);
 		 pluginManager.registerEvents(chooseClassListener, this);
@@ -455,6 +657,110 @@ public class Main extends JavaPlugin {
 		 pluginManager.registerEvents(learnedRecipesInventoryListener, this);
 		 pluginManager.registerEvents(displayedRecipeInventoryListener, this);
 		 pluginManager.registerEvents(craftingTableListener, this);
+		 pluginManager.registerEvents(useBrewingStandListener, this);
+		 pluginManager.registerEvents(brewIllegalPotionListener, this);
+		 
+		 
+		 
+		 
+		 
+		 //Custom Items
+
+		 pluginManager.registerEvents(customItemRenamingListener, this);
+		 
+		 //Basic
+
+		 pluginManager.registerEvents(horsehairListener, this);
+		 pluginManager.registerEvents(horseshoeListener, this);
+		 pluginManager.registerEvents(morralListener, this);
+		 pluginManager.registerEvents(meshListener, this);
+		 pluginManager.registerEvents(ironHammerListener, this);
+		 pluginManager.registerEvents(featheredShoesListener, this);
+		 pluginManager.registerEvents(merinoWoolListener, this);
+		 pluginManager.registerEvents(lanolinListener, this);
+		 pluginManager.registerEvents(dryGrassListener, this);
+		 pluginManager.registerEvents(vealListener, this);
+		 pluginManager.registerEvents(hempListener, this);
+		 pluginManager.registerEvents(assortedPetalsListener, this);
+		 pluginManager.registerEvents(floralRootsListener, this);
+		 pluginManager.registerEvents(floralTransmuterListener, this);
+		 pluginManager.registerEvents(cactusGreavesListener, this);
+		 pluginManager.registerEvents(elvenThreadListener, this);
+		 pluginManager.registerEvents(enrichedLogsListener, this);
+		 pluginManager.registerEvents(saplingTransmuterListener, this);
+		 pluginManager.registerEvents(sawListener, this);
+		 pluginManager.registerEvents(lunarDebrisListener, this);
+		 pluginManager.registerEvents(nebulousAuraListener, this);
+		 pluginManager.registerEvents(rhyoliteListener, this);
+		 pluginManager.registerEvents(pumiceListener, this);
+		 pluginManager.registerEvents(forgersScrollListener, this);
+		 pluginManager.registerEvents(ferrousHarvesterListener, this);
+		 pluginManager.registerEvents(reinforcedRingListener, this);
+		 pluginManager.registerEvents(goldRingListener, this);
+		 pluginManager.registerEvents(hardenedStoneListener, this);
+		 pluginManager.registerEvents(enduranceRuneListener, this);
+		 pluginManager.registerEvents(rockyTransmuterListener, this);
+		 pluginManager.registerEvents(fungalRootsListener, this);
+		 pluginManager.registerEvents(crimsonPowderListener, this);
+		 pluginManager.registerEvents(hypnoticRingListener, this);
+		 pluginManager.registerEvents(flamingBucketListener, this);
+		 pluginManager.registerEvents(hellstoneListener, this);
+		 pluginManager.registerEvents(etherealWoodListener, this);
+		 pluginManager.registerEvents(hoglinTuskListener, this);
+		 pluginManager.registerEvents(rageStoneListener, this);
+		 pluginManager.registerEvents(spectralWardListener, this);
+		 pluginManager.registerEvents(pebblesListener, this);
+		 pluginManager.registerEvents(magmaStoneListener, this);
+		 pluginManager.registerEvents(demonicWrenchListener, this);
+		 
+		 //Intermediate
+
+		 pluginManager.registerEvents(ropeListener, this);
+		 pluginManager.registerEvents(spearListener, this);
+		 pluginManager.registerEvents(whistleListener, this);
+		 pluginManager.registerEvents(bridleListener, this);
+		 pluginManager.registerEvents(hardenedMeshListener, this);
+		 pluginManager.registerEvents(knockbackShieldListener, this);
+		 pluginManager.registerEvents(ironPlateSetListener, this);
+		 pluginManager.registerEvents(waxListener, this);
+		 pluginManager.registerEvents(crookListener, this);
+		 pluginManager.registerEvents(shepherdsCompassListener, this);
+		 pluginManager.registerEvents(corruptedStaffListener, this);
+		 pluginManager.registerEvents(floralPoulticeListener, this);
+		 pluginManager.registerEvents(enrichedSoilListener, this);
+		 pluginManager.registerEvents(enrichedHoeListener, this);
+		 pluginManager.registerEvents(demetersBenevolenceListener, this);
+		 pluginManager.registerEvents(potentHoneyListener, this);
+		 pluginManager.registerEvents(elvenWeaveListener, this);
+		 pluginManager.registerEvents(toolbeltListener, this);
+		 pluginManager.registerEvents(rustedStaffListener, this);
+		 pluginManager.registerEvents(enrichedWoodSetListener, this);
+		 pluginManager.registerEvents(meteoriteListener, this);
+		 pluginManager.registerEvents(darkMatterListener, this);
+		 pluginManager.registerEvents(lightShieldListener, this);
+		 pluginManager.registerEvents(lightBowListener, this);
+		 pluginManager.registerEvents(voidStoneListener, this);
+		 pluginManager.registerEvents(radiantBoreListener, this);
+		 pluginManager.registerEvents(flamelashListener, this);
+		 pluginManager.registerEvents(handForgeListener, this);
+		 pluginManager.registerEvents(studdedSetListener, this);
+		 pluginManager.registerEvents(bejeweledCompassListener, this);
+		 pluginManager.registerEvents(drillListener, this);
+		 pluginManager.registerEvents(protectorStoneListener, this);
+		 pluginManager.registerEvents(robustRuneListener, this);
+		 pluginManager.registerEvents(rodOfShadowsListener, this);
+		 pluginManager.registerEvents(wandOfDisplacementListener, this);
+		 pluginManager.registerEvents(magicMirrorListener, this);
+		 pluginManager.registerEvents(boneMarrowListener, this);
+		 pluginManager.registerEvents(blazingFuryListener, this);
+		 spectralHarnessListener = new SpectralHarnessListener(this);
+		 pluginManager.registerEvents(spectralHarnessListener, this);
+		 pluginManager.registerEvents(theShredderListener, this);
+		 pluginManager.registerEvents(boltsListener, this);
+		 pluginManager.registerEvents(fragmentedSetListener, this);
+		 pluginManager.registerEvents(flamedashBootsListener, this);
+		 
+		
 		 
 		 
 		 new Pay(this);
@@ -496,7 +802,28 @@ public class Main extends JavaPlugin {
 		 inventoryManager = new CustomInventories(this);
 		 
 		 for (Recipes recipe : Recipes.values()) {
-			 Bukkit.addRecipe(recipe.getBukkitRecipe(this));
+			 
+			 
+			 getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+				 public void run() {
+					 if (Bukkit.getCraftingRecipe(recipe.getPattern((Main) getServer().getPluginManager().getPlugin("BaugRPG")), getServer().getWorlds().get(0)) != null) {
+						 ItemStack duplicatedItem = Bukkit.getCraftingRecipe(recipe.getPattern((Main) getServer().getPluginManager().getPlugin("BaugRPG")), getServer().getWorlds().get(0)).getResult();
+						 String matchedString = duplicatedItem.getType().name();
+						 for (Recipes recipe : Recipes.values()) {
+							 if (duplicatedItem.equals(recipe.getResult((Main) getServer().getPluginManager().getPlugin("BaugRPG")))) {
+								 matchedString = recipe.toString();
+								 break;
+							 }
+						 }
+						 
+						 getLogger().severe("Duplicate recipe found for custom item: " + recipe.toString() + ". Matches with: " + matchedString);
+					 }
+					 if (!recipe.equals(Recipes.BOTTLED_STARLIGHT)) {
+						 Bukkit.addRecipe(recipe.getBukkitRecipe((Main) getServer().getPluginManager().getPlugin("BaugRPG")));
+					 }
+				 }
+			}, 1L);
+			 
 		 }
 		 
 		 Runnable craftsmanRegen = new Runnable() {
@@ -1080,6 +1407,14 @@ public class Main extends JavaPlugin {
 		}
 		
 		
+		for (Animals animal : crookListener.originalLoc.keySet()) {
+			animal.getLocation().getChunk().getEntities();
+			animal.teleport(crookListener.originalLoc.get(animal));
+			animal.setInvisible(false);
+			animal.setInvulnerable(false);
+			animal.setGravity(true);
+		}
+		
 	}
 	
 	public List<OfflinePlayer> getAllOfflineElves() {
@@ -1233,6 +1568,25 @@ public class Main extends JavaPlugin {
 	}
 	
 	
+	//For custom items digits encoded as such:
+	//First digit indicates race
+	//Second digit indicates what class in the race
+	//Third digit indicates item level
+	//Fourth digit indicates "this is the third intermediate item for X class."
+	
+	public ItemStack createItem(Material material, int amount, String displayName, List<String> loreInfo, int customModelData) {
+		
+		ItemStack item = new ItemStack(material);
+		item.setAmount(amount);
+		ItemMeta itemMeta = item.getItemMeta();
+		itemMeta.setDisplayName(displayName);
+		List<String> itemLore = loreInfo;
+		itemMeta.setLore(itemLore);
+		itemMeta.setCustomModelData(customModelData);
+		item.setItemMeta(itemMeta);
+		
+		return item;
+	}
 	
 	public ItemStack createItem(Material material, int amount, String displayName, List<String> loreInfo) {
 		

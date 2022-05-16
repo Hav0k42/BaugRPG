@@ -47,11 +47,11 @@ public class EntityDropRecipeScroll implements Listener {
 				mob.getWorld().dropItemNaturally(mob.getLocation(), plugin.itemManager.getAdvancedRecipeScrollItem());
 			}
 		} else if (rand < 0.007) {//Intermediate drop rate is 1/250
-			if (hasUnlearnedRecipes(player, RecipeTypes.ADVANCED, profession)) {
+			if (hasUnlearnedRecipes(player, RecipeTypes.INTERMEDIATE, profession)) {
 				mob.getWorld().dropItemNaturally(mob.getLocation(), plugin.itemManager.getIntermediateRecipeScrollItem());
 			}
 		} else if (rand < 0.017) {//Basic drop rate is 1/100
-			if (hasUnlearnedRecipes(player, RecipeTypes.ADVANCED, profession)) {
+			if (hasUnlearnedRecipes(player, RecipeTypes.BASIC, profession)) {
 				mob.getWorld().dropItemNaturally(mob.getLocation(), plugin.itemManager.getBasicRecipeScrollItem());
 			}
 		}

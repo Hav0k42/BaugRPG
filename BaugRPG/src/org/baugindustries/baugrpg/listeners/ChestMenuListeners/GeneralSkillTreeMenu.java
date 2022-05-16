@@ -38,6 +38,8 @@ public class GeneralSkillTreeMenu implements Listener {
 					
 					ItemStack infoItem = plugin.itemManager.getGeneralSkillTreeInfoItem();
 					
+					if (event.getClickedInventory().getItem(0) == null) return;
+					
 					if (event.getClickedInventory().getItem(0).equals(infoItem)) {
 						if (event.getClickedInventory().getType().equals(InventoryType.CHEST)) {
 							int clickedSlot = event.getSlot();

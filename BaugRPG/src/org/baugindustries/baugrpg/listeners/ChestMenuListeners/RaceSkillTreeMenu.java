@@ -40,9 +40,11 @@ public class RaceSkillTreeMenu implements Listener{
 			}
 		}
 		if (!nameCheck) return;
+
+		event.setCancelled(true);
+		if (event.getClickedInventory().getItem(0) == null) return;
 		if (!event.getClickedInventory().getItem(0).equals(plugin.itemManager.getRaceSkillTreeInfoItem())) return;
 		if (!(event.getView().getTopInventory().equals(event.getClickedInventory())) && event.getCursor() == null) return;
-		event.setCancelled(true);
 		if (event.getCurrentItem() == null) return;
 		
 		Player player = (Player)event.getWhoClicked();

@@ -1,7 +1,6 @@
 package org.baugindustries.baugrpg.listeners.Crafting;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.util.List;
 
 import org.baugindustries.baugrpg.Main;
 import org.baugindustries.baugrpg.Recipes;
@@ -12,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -34,7 +34,11 @@ public class LearnedRecipesInventoryListener implements Listener {
 			return;
 		}
 		
-		Recipes recipe = Recipes.valueOf(event.getCurrentItem().getItemMeta().getDisplayName().toUpperCase().replace(' ', '_').substring(2));
+		if (!event.getCurrentItem().getItemMeta().hasDisplayName()) return;
+		
+		if (event.getSlot() == 0) return;
+		
+		Recipes recipe = Recipes.valueOf(event.getCurrentItem().getItemMeta().getDisplayName().toUpperCase().replace(' ', '_').replace("'", "").substring(2));
 		if (recipe == null) {
 			player.sendMessage(event.getCurrentItem().getItemMeta().getDisplayName().toUpperCase().replace(' ', '_'));
 			return;
@@ -56,12 +60,15 @@ public class LearnedRecipesInventoryListener implements Listener {
 		inventory.setItem(29, pattern[7]);
 		inventory.setItem(30, pattern[8]);
 		
-		try {
-			Method getResultItem = plugin.itemManager.getClass().getDeclaredMethod(recipe.getResultMethod(), (Class<?>[])null);
-			inventory.setItem(25, (ItemStack)getResultItem.invoke(plugin.itemManager, (Object[])null));
-		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			e.printStackTrace();
-		}
+		ItemStack resultItem = recipe.getResult(plugin);
+		ItemMeta resultMeta = resultItem.getItemMeta();
+		List<String> lore = resultMeta.getLore();
+		lore.add("");
+		lore.add("Click for total vanilla ingredients.");
+		resultMeta.setLore(lore);
+		resultItem.setItemMeta(resultMeta);
+		
+		inventory.setItem(25, resultItem);
 		
 		for (int i = 5; i < 45; i += 9) {
 			inventory.setItem(i, plugin.itemManager.getBlankItem());

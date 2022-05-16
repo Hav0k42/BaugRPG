@@ -4,12 +4,15 @@ import java.io.File;
 import java.util.Collection;
 
 import org.baugindustries.baugrpg.Main;
+import org.baugindustries.baugrpg.Recipes;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -44,6 +47,11 @@ public class EfficientBotanyListener implements Listener {
     	
     	Ageable crop = (Ageable)block.getBlockData();
     	if (crop.getAge() == crop.getMaximumAge()) {
+
+    		if (Recipes.ENRICHED_HOE.matches(plugin, player.getInventory().getItemInMainHand())) {
+    			ExperienceOrb orb = (ExperienceOrb) player.getWorld().spawnEntity(event.getClickedBlock().getLocation(), EntityType.EXPERIENCE_ORB);
+    			orb.setExperience(1);
+    		}
     		crop.setAge(0);
     		Collection<ItemStack> drops = block.getDrops();
     		Material[] seeds = {Material.WHEAT_SEEDS, Material.BEETROOT_SEEDS, Material.CARROT, Material.POTATO, Material.NETHER_WART};
