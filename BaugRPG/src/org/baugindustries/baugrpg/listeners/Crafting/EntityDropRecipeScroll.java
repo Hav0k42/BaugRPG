@@ -54,6 +54,8 @@ public class EntityDropRecipeScroll implements Listener {
 			if (hasUnlearnedRecipes(player, RecipeTypes.BASIC, profession)) {
 				mob.getWorld().dropItemNaturally(mob.getLocation(), plugin.itemManager.getBasicRecipeScrollItem());
 			}
+		} else if (rand < 0.0172) {//Reset Race item drop rate is 1/5000
+			mob.getWorld().dropItemNaturally(mob.getLocation(), plugin.itemManager.getResetRaceItem());
 		}
 	}
 	

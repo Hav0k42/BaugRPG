@@ -27,26 +27,21 @@ public class SignBreakListener implements Listener{
 		Player player = event.getPlayer();
 		if (event.getBlock().getState() instanceof Sign) {
 			Sign sign = (Sign)event.getBlock().getState();
-			String title = sign.getLocation().getBlockX() + "" + sign.getLocation().getBlockY() + "" + sign.getLocation().getBlockZ();
+			String title = sign.getLocation().getBlockX() + "" + sign.getLocation().getBlockY() + "" + sign.getLocation().getBlockZ() + "" + sign.getWorld().getUID();
 			
 			File signfile = new File(plugin.getDataFolder() + File.separator + "shops.yml");
 		 	FileConfiguration signconfig = YamlConfiguration.loadConfiguration(signfile);
 		 	
 		 	if (signconfig.contains(title)) {//sign is a registered sign shop
-		 		OfflinePlayer player2 = plugin.getServer().getOfflinePlayer(UUID.fromString((String) signconfig.get(title+"owner")));
+		 		OfflinePlayer player2 = plugin.getServer().getOfflinePlayer(UUID.fromString((String) signconfig.getConfigurationSection(title).getString("owner")));
 		 		if (!player.getUniqueId().equals(player2.getUniqueId())) {
 		 			player.sendMessage(ChatColor.RED + "You cannot break this sign shop");
 		 			event.setCancelled(true);
 		 		} else {
 		 			signconfig.set(title, null);
-		 			signconfig.set(title + "owner", null);
-		 			signconfig.set(title + "chestX", null);
-		 			signconfig.set(title + "chestY", null);
-		 			signconfig.set(title + "chestZ", null);
 		 			try {
 						signconfig.save(signfile);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 		 		}

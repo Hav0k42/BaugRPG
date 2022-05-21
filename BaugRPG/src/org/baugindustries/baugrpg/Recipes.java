@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -2161,6 +2162,1132 @@ public enum Recipes {
 			),
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//Advanced
+	
+	//Stable Master
+	
+	CORD (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					HORSEHAIR,
+					ROPE,
+					HORSEHAIR,
+					BONE_MARROW,
+					HORSEHAIR,
+					ROPE,
+					HORSEHAIR,
+					null
+					)), 
+			false
+			),
+	
+	ENRICHED_LEATHER (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					CORDOVAN_LEATHER,
+					null,
+					CORDOVAN_LEATHER,
+					null,
+					TEMPERED_LEATHER,
+					null,
+					new ItemStack(Material.LEATHER),
+					ENRICHED_SOIL,
+					new ItemStack(Material.LEATHER)
+					)), 
+			false
+			),
+	
+	RUGGED_SWORD (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					null,
+					HARDENED_PLATE,
+					null,
+					HARDENED_PLATE,
+					null,
+					BOLTS,
+					null,
+					null
+					)), 
+			false
+			),
+	
+	REGENERATIVE_HORSE_ARMOR (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					MERINO_CLOTH,
+					ROPE,
+					MERINO_CLOTH,
+					new ItemStack(Material.DIAMOND_HORSE_ARMOR),
+					null,
+					null,
+					TURQUOISE,
+					null
+					)), 
+			false
+			),
+	
+	EMBLEM_OF_THE_STALLION (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					new ItemStack(Material.SADDLE),
+					null,
+					TEMPERED_LEATHER,
+					BLANK_EMBLEM,
+					ROPE,
+					null,
+					SHARPENED_HOOF,
+					null
+					)), 
+			false
+			),
+	
+	//Steeled Armorer
+	
+	STEEL_PLATE (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					STEEL,
+					IRON_PLATE,
+					null,
+					IRON_PLATE,
+					HARDENED_PLATE,
+					IRON_PLATE,
+					null,
+					IRON_PLATE,
+					STEEL
+					)), 
+			false
+			),
+	
+	STEEL_MESH (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					STEEL,
+					MESH,
+					null,
+					MESH,
+					HARDENED_MESH,
+					MESH,
+					null,
+					MESH,
+					STEEL
+					)), 
+			false
+			),
+	
+	EMBLEM_OF_THE_SHIELD (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					HARDENED_PLATE,
+					null,
+					SCREWS,
+					BLANK_EMBLEM,
+					new ItemStack(Material.SHIELD),
+					null,
+					HARDENED_MESH,
+					null
+					)), 
+			false
+			),
+	
+	STEEL_PLATE_HELMET (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					HARDENED_MESH,
+					STEEL,
+					HARDENED_MESH,
+					HARDENED_PLATE,
+					null,
+					HARDENED_PLATE,
+					null,
+					null,
+					null
+					)), 
+			false
+			),
+	
+	STEEL_PLATE_CHESTPIECE (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					HARDENED_PLATE,
+					null,
+					HARDENED_PLATE,
+					HARDENED_PLATE,
+					STEEL,
+					HARDENED_PLATE,
+					HARDENED_MESH,
+					HARDENED_PLATE,
+					HARDENED_MESH
+					)), 
+			false
+			),
+	
+	STEEL_PLATE_LEGGINGS (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					HARDENED_PLATE,
+					STEEL,
+					HARDENED_PLATE,
+					HARDENED_PLATE,
+					null,
+					HARDENED_PLATE,
+					HARDENED_MESH,
+					null,
+					HARDENED_MESH
+					)), 
+			false
+			),
+	
+	STEEL_PLATE_GREAVES (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					null,
+					null,
+					STEEL,
+					null,
+					STEEL,
+					HARDENED_MESH,
+					null,
+					HARDENED_MESH
+					)), 
+			false
+			),
+	
+	//Verdant Shepherd
+	
+	ESSENCE_OF_FAUNA (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					LANOLIN,
+					WAX,
+					MERINO_WOOL,
+					ETHEREAL_POWDER,
+					LANOLIN,
+					WAX,
+					MERINO_WOOL,
+					null
+					)), 
+			false
+			),
+	
+	STEEL_WOOL (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					MERINO_WOOL,
+					MERINO_CLOTH,
+					MERINO_WOOL,
+					STEEL_FEATHER,
+					MERINO_WOOL,
+					MERINO_CLOTH,
+					MERINO_WOOL,
+					null
+					)), 
+			false
+			),
+	
+	VERDANT_MEDALLION (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					new ItemStack(Material.GREEN_DYE),
+					null,
+					ROPE,
+					new ItemStack(Material.GOLD_NUGGET),
+					ROPE,
+					null,
+					DARK_MATTER,
+					null
+					)), 
+			false
+			),
+	
+	EMBLEM_OF_THE_PASTURE (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					CROOK,
+					null,
+					MERINO_CLOTH,
+					BLANK_EMBLEM,
+					DRY_GRASS,
+					null,
+					WAX,
+					null
+					)), 
+			false
+			),
+	
+	GAIAS_WRATH (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					DRY_GRASS,
+					WAX,
+					null,
+					YEW_BRANCHES,
+					DRY_GRASS,
+					YEW_BRANCHES,
+					null,
+					null
+					)), 
+			false
+			),
+	
+	//Enchanted Botanist
+	
+	AQUEOUS_SOLUTION (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					WAX,
+					ASSORTED_PETALS,
+					new ItemStack(Material.WATER_BUCKET),
+					FLORAL_POULTICE,
+					WAX,
+					ASSORTED_PETALS,
+					new ItemStack(Material.WATER_BUCKET),
+					null
+					)), 
+			false
+			),
+	
+	CORRUPTED_SOIL (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					FLORAL_ROOTS,
+					ENRICHED_SOIL,
+					FLORAL_ROOTS,
+					HOGLIN_EYE,
+					FLORAL_ROOTS,
+					ENRICHED_SOIL,
+					FLORAL_ROOTS,
+					null
+					)), 
+			false
+			),
+	
+	EMBLEM_OF_THE_BLOSSOM (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					new ItemStack(Material.DIAMOND_HOE),
+					null,
+					FLORAL_POULTICE,
+					BLANK_EMBLEM,
+					ASSORTED_PETALS,
+					null,
+					ENRICHED_SOIL,
+					null
+					)), 
+			false
+			),
+	
+	SCYTHE (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					BRONZE,
+					BRONZE,
+					ELVEN_THREAD,
+					null,
+					YEW_BRANCHES,
+					null,
+					YEW_BRANCHES,
+					null,
+					null
+					)), 
+			false
+			),
+	
+	GOLDEN_FLOWER (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					TOPAZ,
+					null,
+					ASSORTED_PETALS,
+					new ItemStack(Material.SUNFLOWER),
+					ASSORTED_PETALS,
+					null,
+					FLORAL_POULTICE,
+					null
+					)), 
+			false
+			),
+	
+	//Woodland Craftsman
+	
+	ELVEN_CLOTH (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					ELVEN_THREAD,
+					ELVEN_WEAVE,
+					ELVEN_THREAD,
+					MERINO_CLOTH,
+					ELVEN_THREAD,
+					ELVEN_WEAVE,
+					ELVEN_THREAD,
+					null
+					)), 
+			false
+			),
+	
+	PARCHMENT (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					new ItemStack(Material.FEATHER),
+					new ItemStack(Material.INK_SAC),
+					null,
+					ASSORTED_PETALS,
+					TEMPERED_LEATHER,
+					null,
+					new ItemStack(Material.PAPER),
+					new ItemStack(Material.PAPER),
+					new ItemStack(Material.PAPER)
+					)), 
+			false
+			),
+	
+	EMBLEM_OF_THE_FOREST (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					new ItemStack(Material.DIAMOND_AXE),
+					null,
+					ELVEN_WEAVE,
+					BLANK_EMBLEM,
+					NAIL,
+					null,
+					ENRICHED_LOGS,
+					null
+					)), 
+			false
+			),
+	
+	ELVEN_HOOD (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					ELVEN_WEAVE,
+					HARDENED_MESH,
+					ELVEN_WEAVE,
+					ELVEN_WEAVE,
+					null,
+					ELVEN_WEAVE,
+					null,
+					null,
+					null
+					)), 
+			false
+			),
+	
+	ELVEN_CLOAK (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					ELVEN_WEAVE,
+					null,
+					ELVEN_WEAVE,
+					ELVEN_WEAVE,
+					HARDENED_MESH,
+					ELVEN_WEAVE,
+					ELVEN_WEAVE,
+					ELVEN_WEAVE,
+					ELVEN_WEAVE
+					)), 
+			false
+			),
+	
+	ELVEN_LEGGINGS (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					ELVEN_WEAVE,
+					HARDENED_MESH,
+					ELVEN_WEAVE,
+					ELVEN_WEAVE,
+					null,
+					ELVEN_WEAVE,
+					ELVEN_WEAVE,
+					null,
+					ELVEN_WEAVE
+					)), 
+			false
+			),
+	
+	ELVEN_GREAVES (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					null,
+					null,
+					HARDENED_MESH,
+					null,
+					HARDENED_MESH,
+					ELVEN_WEAVE,
+					null,
+					ELVEN_WEAVE
+					)), 
+			false
+			),
+	
+	//Lunar Artificer
+	
+	BLOOD_MOON_FRAGMENT (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					DARK_MATTER,
+					METEORITE,
+					STARDUST,
+					PYROCLASTIC_INGOT,
+					DARK_MATTER,
+					METEORITE,
+					STARDUST,
+					null
+					)), 
+			false
+			),
+	
+	NEW_MOON_FRAGMENT (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					STARDUST,
+					LUNAR_DEBRIS,
+					DARK_MATTER,
+					ETHEREAL_POWDER,
+					STARDUST,
+					LUNAR_DEBRIS,
+					DARK_MATTER,
+					null
+					)), 
+			false
+			),
+	
+	LUNAR_BOOMERANG (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					LUNAR_DEBRIS,
+					LUNAR_DEBRIS,
+					METEORITE,
+					null,
+					BRASS,
+					null,
+					LUNAR_DEBRIS,
+					LUNAR_DEBRIS
+					)), 
+			false
+			),
+	
+	EMBLEM_OF_THE_MOON (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					LIGHT_BOW,
+					null,
+					DARK_MATTER,
+					BLANK_EMBLEM,
+					BOTTLED_STARLIGHT,
+					null,
+					METEORITE,
+					null
+					)), 
+			false
+			),
+	
+	STAFF_OF_BALANCE (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					STARDUST,
+					STARDUST,
+					OPAL,
+					STARDUST,
+					YEW_BRANCHES,
+					DARK_MATTER,
+					YEW_BRANCHES,
+					DARK_MATTER,
+					DARK_MATTER
+					)), 
+			false
+			),
+	
+	//Radiant Metallurgist
+	
+	TITANIUM (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					STEEL,
+					OPAL,
+					STEEL,
+					HARDENED_PLATE,
+					STEEL,
+					OPAL,
+					STEEL,
+					null
+					)), 
+			false
+			),
+	
+	ESSENCE_OF_FIRE (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					RHYOLITE,
+					BRONZE,
+					new ItemStack(Material.LAVA_BUCKET),
+					METEORITE,
+					PUMICE,
+					ALUMINUM,
+					BRONZE,
+					new ItemStack(Material.LAVA_BUCKET)
+					)), 
+			false
+			),
+	
+	EMBLEM_OF_THE_FORGE (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					HARDENED_PLATE,
+					null,
+					BRASS,
+					BLANK_EMBLEM,
+					STEEL,
+					null,
+					HAND_FORGE,
+					null
+					)), 
+			false
+			),
+	
+	QUAKE_STAFF (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					PUMICE,
+					ROPE,
+					null,
+					ALUMINUM,
+					RHYOLITE,
+					ALUMINUM,
+					null,
+					null
+					)), 
+			false
+			),
+	
+	DWARVEN_AXE (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					BRASS,
+					STEEL,
+					null,
+					YEW_BRANCHES,
+					BRONZE,
+					null,
+					YEW_BRANCHES,
+					null
+					)), 
+			false
+			),
+	
+	//Arcane Jeweler
+	
+	GOLD_DUST (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					BRASS,
+					new ItemStack(Material.GOLD_INGOT),
+					new ItemStack(Material.GOLD_INGOT),
+					new ItemStack(Material.GOLD_INGOT),
+					FLORAL_POULTICE,
+					new ItemStack(Material.GOLD_INGOT),
+					new ItemStack(Material.GOLD_INGOT),
+					new ItemStack(Material.GOLD_INGOT),
+					BRASS
+					)), 
+			false
+			),
+	
+	GEM_CLUSTER (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					ROYAL_AZEL,
+					TOPAZ,
+					SAPPHIRE,
+					null,
+					WAX,
+					null,
+					OPAL,
+					TURQUOISE,
+					RUBY
+					)), 
+			false
+			),
+	
+	EMBLEM_OF_THE_WHIRLWIND (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					GOLD_RING,
+					null,
+					TOPAZ,
+					BLANK_EMBLEM,
+					TURQUOISE,
+					null,
+					ELVEN_WEAVE,
+					null
+					)), 
+			false
+			),
+	
+	DWARVEN_HELMET (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					ZINC,
+					ELVEN_WEAVE,
+					ZINC,
+					STEEL,
+					null,
+					STEEL,
+					null,
+					null,
+					null
+					)), 
+			false
+			),
+	
+	DWARVEN_CHESTPIECE (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					STEEL,
+					null,
+					STEEL,
+					STEEL,
+					ELVEN_WEAVE,
+					STEEL,
+					STEEL,
+					ALUMINUM,
+					STEEL
+					)), 
+			false
+			),
+	
+	DWARVEN_LEGGINGS (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					STEEL,
+					ELVEN_WEAVE,
+					STEEL,
+					STEEL,
+					null,
+					STEEL,
+					STEEL,
+					null,
+					STEEL
+					)), 
+			false
+			),
+	
+	DWARVEN_GREAVES (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					null,
+					null,
+					STEEL,
+					null,
+					STEEL,
+					ELVEN_WEAVE,
+					null,
+					ELVEN_WEAVE
+					)), 
+			false
+			),
+	
+	//Gilded Miner
+	
+	ESSENCE_OF_EARTH (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					PUMICE,
+					HARDENED_STONE,
+					RHYOLITE,
+					HARDENED_STONE,
+					ETHEREAL_POWDER,
+					HARDENED_STONE,
+					RHYOLITE,
+					HARDENED_STONE,
+					PUMICE
+					)), 
+			false
+			),
+	
+	PLATINUM (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					LEAD,
+					new ItemStack(Material.IRON_INGOT),
+					LEAD,
+					new ItemStack(Material.IRON_INGOT),
+					STARDUST,
+					new ItemStack(Material.IRON_INGOT),
+					LEAD,
+					new ItemStack(Material.IRON_INGOT),
+					LEAD
+					)), 
+			false
+			),
+	
+	MAGNETIZED_IDOL (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					new ItemStack(Material.BLUE_DYE),
+					null,
+					new ItemStack(Material.RED_DYE),
+					new ItemStack(Material.IRON_INGOT),
+					DARK_MATTER,
+					new ItemStack(Material.IRON_INGOT),
+					STEEL,
+					new ItemStack(Material.IRON_BLOCK),
+					STEEL
+					)), 
+			false
+			),
+	
+	EMBLEM_OF_THE_EARTH (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					ENRICHED_SOIL,
+					null,
+					ALUMINUM,
+					BLANK_EMBLEM,
+					ZINC,
+					null,
+					HARDENED_STONE,
+					null
+					)), 
+			false
+			),
+	
+	GRAPPLING_HOOK (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					null,
+					new ItemStack(Material.TRIPWIRE_HOOK),
+					ROPE,
+					ROPE,
+					ROPE,
+					ROPE,
+					null,
+					null
+					)), 
+			false
+			),
+	
+	//Dark Alchemist
+	
+	ESSENCE_OF_VENGEANCE (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					ETHEREAL_POWDER,
+					null,
+					HOGLIN_EYE,
+					null,
+					RUBY,
+					null,
+					HOGLIN_EYE,
+					null,
+					ETHEREAL_POWDER
+					)), 
+			false
+			),
+	
+	WITHER_POWDER (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					new ItemStack(Material.COAL_BLOCK),
+					DARK_MATTER,
+					new ItemStack(Material.COAL_BLOCK),
+					ETHEREAL_POWDER,
+					new ItemStack(Material.COAL_BLOCK),
+					DARK_MATTER,
+					new ItemStack(Material.COAL_BLOCK),
+					null
+					)), 
+			false
+			),
+	
+	EMBLEM_OF_THE_ELIXIR (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					ETHEREAL_POWDER,
+					null,
+					MAGIC_MIRROR,
+					BLANK_EMBLEM,
+					HOGLIN_EYE,
+					null,
+					FUNGAL_ROOTS,
+					null
+					)), 
+			false
+			),
+	
+	BREWING_WAND (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					WARPED_POWDER,
+					FLORAL_POULTICE,
+					null,
+					new ItemStack(Material.BLAZE_ROD),
+					CRIMSON_POWDER,
+					ETHEREAL_POWDER,
+					null,
+					null
+					)), 
+			false
+			),
+	
+	ANOMALOUS_PICKAXE (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					LEAD,
+					ETHEREAL_POWDER,
+					LEAD,
+					null,
+					new ItemStack(Material.STICK),
+					null,
+					null,
+					new ItemStack(Material.STICK),
+					null
+					)), 
+			false
+			),
+	
+	//Enraged Berserker
+	
+	EMPTY_SOUL (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					ETHEREAL_POWDER,
+					DARK_MATTER,
+					BONE_MARROW,
+					HOGLIN_EYE,
+					new ItemStack(Material.HEART_OF_THE_SEA),
+					CRIMSON_POWDER,
+					DARK_MATTER,
+					WARPED_POWDER,
+					HOGLIN_TUSK
+					)), 
+			false
+			),
+	
+	BLOOD_OF_THE_FORSAKEN (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					new ItemStack(Material.RED_DYE),
+					new ItemStack(Material.RED_DYE),
+					new ItemStack(Material.RED_DYE),
+					new ItemStack(Material.RED_DYE),
+					HOGLIN_EYE,
+					new ItemStack(Material.RED_DYE),
+					WAX,
+					BONE_MARROW,
+					WAX
+					)), 
+			false
+			),
+	
+	EMBLEM_OF_THE_BLADE (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					new ItemStack(Material.DIAMOND_AXE),
+					null,
+					BONE_MARROW,
+					BLANK_EMBLEM,
+					PYROCLASTIC_INGOT,
+					null,
+					ETHEREAL_WOOD,
+					null
+					)), 
+			false
+			),
+	
+	FLESH_CANDLE (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					new ItemStack(Material.CANDLE),
+					null,
+					new ItemStack(Material.BEEF),
+					WAX,
+					new ItemStack(Material.CHICKEN),
+					new ItemStack(Material.PORKCHOP),
+					WAX,
+					new ItemStack(Material.MUTTON)
+					)), 
+			false
+			),
+	
+	CALIBURN (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					NAIL,
+					PYROCLASTIC_INGOT,
+					null,
+					PYROCLASTIC_INGOT,
+					NAIL,
+					new ItemStack(Material.STICK),
+					null,
+					null
+					)), 
+			false
+			),
+	
+	//Greedy Scrapper
+	
+	MAGMA_CRYSTAL (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					RHYOLITE,
+					SCRAP,
+					RHYOLITE,
+					SCRAP,
+					HELLSTONE,
+					SCRAP,
+					RHYOLITE,
+					SCRAP,
+					RHYOLITE
+					)), 
+			false
+			),
+	
+	GALVINIZED_ALLOY (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					SCRAP,
+					PYROCLASTIC_INGOT,
+					SCRAP,
+					PYROCLASTIC_INGOT,
+					HARDENED_PLATE,
+					PYROCLASTIC_INGOT,
+					SCRAP,
+					PYROCLASTIC_INGOT,
+					SCRAP
+					)), 
+			false
+			),
+	
+	SCRAPPY_HELMET (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					PYROCLASTIC_INGOT,
+					SCREWS,
+					PYROCLASTIC_INGOT,
+					SCRAP,
+					null,
+					SCRAP,
+					null,
+					null,
+					null
+					)), 
+			false
+			),
+	
+	SCRAPPY_CHESTPIECE (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					SCRAP,
+					null,
+					SCRAP,
+					SCRAP,
+					NAIL,
+					SCRAP,
+					PYROCLASTIC_INGOT,
+					BOLTS,
+					PYROCLASTIC_INGOT
+					)), 
+			false
+			),
+	
+	SCRAPPY_LEGGINGS (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					SCRAP,
+					PYROCLASTIC_INGOT,
+					SCRAP,
+					SCREWS,
+					null,
+					SCREWS,
+					SCRAP,
+					null,
+					SCRAP
+					)), 
+			false
+			),
+	
+	SCRAPPY_GREAVES (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					null,
+					null,
+					NAIL,
+					null,
+					NAIL,
+					SCRAP,
+					null,
+					SCRAP
+					)), 
+			false
+			),
+	
+	EMBLEM_OF_THE_RAVEN (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					STEEL_FEATHER,
+					null,
+					SCRAP,
+					BLANK_EMBLEM,
+					BOLTS,
+					null,
+					FLAMEDASH_BOOTS,
+					null
+					)), 
+			false
+			),
+	
 	;
 
 	RecipeTypes recipeLevel;
@@ -2310,6 +3437,19 @@ public enum Recipes {
 		if (otherItem.getItemMeta().hasCustomModelData() && thisItem.getItemMeta().getCustomModelData() == otherItem.getItemMeta().getCustomModelData() && thisItem.getType().name().toLowerCase().contains("bucket") && otherItem.getType().name().toLowerCase().contains("bucket")) return true;
 		
 		return false;
+	}
+	
+	public List<Recipes> getUses(Main plugin) {
+		List<Recipes> uses = new ArrayList<Recipes>();
+		for (Recipes recipe : Recipes.values()) {
+			for (Object item : recipe.getUnresolvedPattern()) {
+				if (item instanceof Recipes && this.equals((Recipes)item)) {
+					uses.add(recipe);
+					break;
+				}
+			}
+		}
+		return uses;
 	}
 	
 	public boolean playerIsCarrying(Player player, Main plugin) {

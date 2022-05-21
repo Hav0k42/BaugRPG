@@ -17,7 +17,13 @@ public enum Profession {
 				Recipes.WHISTLE,
 				Recipes.BRIDLE
 			},
-			new Recipes[] { },
+			new Recipes[] {
+				Recipes.CORD,
+				Recipes.ENRICHED_LEATHER,
+				Recipes.RUGGED_SWORD,
+				Recipes.REGENERATIVE_HORSE_ARMOR,
+				Recipes.EMBLEM_OF_THE_STALLION
+			},
 			new Recipes[] { }
 			),
 	STEELED_ARMORER (
@@ -38,7 +44,15 @@ public enum Profession {
 				Recipes.IRON_PLATE_LEGGINGS,
 				Recipes.IRON_PLATE_GREAVES
 			},
-			new Recipes[] { },
+			new Recipes[] {
+				Recipes.STEEL_PLATE,
+				Recipes.STEEL_MESH,
+				Recipes.EMBLEM_OF_THE_SHIELD,
+				Recipes.STEEL_PLATE_HELMET,
+				Recipes.STEEL_PLATE_CHESTPIECE,
+				Recipes.STEEL_PLATE_LEGGINGS,
+				Recipes.STEEL_PLATE_GREAVES
+			},
 			new Recipes[] { }
 			),
 	VERDANT_SHEPHERD (
@@ -57,7 +71,13 @@ public enum Profession {
 				Recipes.SHEPHERDS_COMPASS,
 				Recipes.CORRUPTED_STAFF
 			},
-			new Recipes[] { },
+			new Recipes[] {
+				Recipes.ESSENCE_OF_FAUNA,
+				Recipes.STEEL_WOOL,
+				Recipes.VERDANT_MEDALLION,
+				Recipes.EMBLEM_OF_THE_PASTURE,
+				Recipes.GAIAS_WRATH
+			},
 			new Recipes[] { }
 			),
 	ENCHANTED_BOTANIST (
@@ -76,7 +96,13 @@ public enum Profession {
 				Recipes.DEMETERS_BENEVOLENCE,
 				Recipes.POTENT_HONEY
 			},
-			new Recipes[] { },
+			new Recipes[] {
+				Recipes.AQUEOUS_SOLUTION,
+				Recipes.CORRUPTED_SOIL,
+				Recipes.EMBLEM_OF_THE_BLOSSOM,
+				Recipes.SCYTHE,
+				Recipes.GOLDEN_FLOWER
+			},
 			new Recipes[] { }
 			),
 	WOODLAND_CRAFTSMAN (
@@ -98,7 +124,15 @@ public enum Profession {
 				Recipes.ENRICHED_WOOD_LEGGINGS,
 				Recipes.ENRICHED_WOOD_GREAVES
 			},
-			new Recipes[] { },
+			new Recipes[] {
+				Recipes.ELVEN_CLOTH,
+				Recipes.PARCHMENT,
+				Recipes.EMBLEM_OF_THE_FOREST,
+				Recipes.ELVEN_HOOD,
+				Recipes.ELVEN_CLOAK,
+				Recipes.ELVEN_LEGGINGS,
+				Recipes.ELVEN_GREAVES
+			},
 			new Recipes[] { }
 			),
 	LUNAR_ARTIFICER (
@@ -116,7 +150,13 @@ public enum Profession {
 				Recipes.LIGHT_BOW,
 				Recipes.VOID_STONE
 			},
-			new Recipes[] { },
+			new Recipes[] {
+				Recipes.BLOOD_MOON_FRAGMENT,
+				Recipes.NEW_MOON_FRAGMENT,
+				Recipes.LUNAR_BOOMERANG,
+				Recipes.EMBLEM_OF_THE_MOON,
+				Recipes.STAFF_OF_BALANCE
+			},
 			new Recipes[] { }
 			),
 	RADIANT_METALLURGIST (
@@ -135,7 +175,13 @@ public enum Profession {
 				Recipes.FLAMELASH,
 				Recipes.HAND_FORGE
 			},
-			new Recipes[] { },
+			new Recipes[] {
+				Recipes.TITANIUM,
+				Recipes.ESSENCE_OF_FIRE,
+				Recipes.EMBLEM_OF_THE_FORGE,
+				Recipes.QUAKE_STAFF,
+				Recipes.DWARVEN_AXE
+			},
 			new Recipes[] { }
 			),
 	ARCANE_JEWELER (
@@ -157,7 +203,15 @@ public enum Profession {
 				Recipes.STUDDED_GREAVES,
 				Recipes.BEJEWELED_COMPASS
 			},
-			new Recipes[] { },
+			new Recipes[] {
+				Recipes.GOLD_DUST,
+				Recipes.GEM_CLUSTER,
+				Recipes.EMBLEM_OF_THE_WHIRLWIND,
+				Recipes.DWARVEN_HELMET,
+				Recipes.DWARVEN_CHESTPIECE,
+				Recipes.DWARVEN_LEGGINGS,
+				Recipes.DWARVEN_GREAVES
+			},
 			new Recipes[] { }
 			),
 	GILDED_MINER (
@@ -176,7 +230,13 @@ public enum Profession {
 				Recipes.PROTECTOR_STONE,
 				Recipes.ROBUST_RUNE
 			},
-			new Recipes[] { },
+			new Recipes[] {
+				Recipes.ESSENCE_OF_EARTH,
+				Recipes.PLATINUM,
+				Recipes.MAGNETIZED_IDOL,
+				Recipes.EMBLEM_OF_THE_EARTH,
+				Recipes.GRAPPLING_HOOK
+			},
 			new Recipes[] { }
 			),
 	DARK_ALCHEMIST (
@@ -195,7 +255,13 @@ public enum Profession {
 				Recipes.WAND_OF_DISPLACEMENT,
 				Recipes.MAGIC_MIRROR
 			},
-			new Recipes[] { },
+			new Recipes[] {
+				Recipes.ESSENCE_OF_VENGEANCE,
+				Recipes.WITHER_POWDER,
+				Recipes.EMBLEM_OF_THE_ELIXIR,
+				Recipes.BREWING_WAND,
+				Recipes.ANOMALOUS_PICKAXE
+			},
 			new Recipes[] { }
 			),
 	ENRAGED_BERSERKER (
@@ -209,13 +275,19 @@ public enum Profession {
 				
 			},
 			new Recipes[] {
-					Recipes.BONE_MARROW,
-					Recipes.PYROCLASTIC_INGOT,
-					Recipes.BLAZING_FURY,
-					Recipes.SPECTRAL_HARNESS,
-					Recipes.THE_SHREDDER
+				Recipes.BONE_MARROW,
+				Recipes.PYROCLASTIC_INGOT,
+				Recipes.BLAZING_FURY,
+				Recipes.SPECTRAL_HARNESS,
+				Recipes.THE_SHREDDER
 			},
-			new Recipes[] { },
+			new Recipes[] {
+				Recipes.EMPTY_SOUL,
+				Recipes.BLOOD_OF_THE_FORSAKEN,
+				Recipes.EMBLEM_OF_THE_BLADE,
+				Recipes.FLESH_CANDLE,
+				Recipes.CALIBURN
+			},
 			new Recipes[] { }
 			),
 	GREEDY_SCRAPPER (
@@ -236,7 +308,14 @@ public enum Profession {
 				Recipes.FRAGMENTED_GREAVES,
 				Recipes.FLAMEDASH_BOOTS
 			},
-			new Recipes[] { },
+			new Recipes[] {
+				Recipes.MAGMA_CRYSTAL,
+				Recipes.GALVINIZED_ALLOY,
+				Recipes.SCRAPPY_HELMET,
+				Recipes.SCRAPPY_CHESTPIECE,
+				Recipes.SCRAPPY_LEGGINGS,
+				Recipes.SCRAPPY_GREAVES
+			},
 			new Recipes[] { }
 			);
 

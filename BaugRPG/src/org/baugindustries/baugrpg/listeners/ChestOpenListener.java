@@ -39,11 +39,11 @@ public class ChestOpenListener implements Listener{
 		loc.add(event.getClickedBlock().getLocation().add(0, 0, -1));
 		loc.add(event.getClickedBlock().getLocation().add(0, 0, 1));
 		for (int i = 0; i < loc.size(); i++) {
-			String title = loc.get(i).getBlockX() + "" + loc.get(i).getBlockY() + "" + loc.get(i).getBlockZ();
+			String title = loc.get(i).getBlockX() + "" + loc.get(i).getBlockY() + "" + loc.get(i).getBlockZ() + loc.get(i).getWorld().getUID();
 			if (signconfig.contains(title)) {
-				Location chestLocation = new Location(player.getWorld(), (int)signconfig.get(title + "chestX"), (int)signconfig.get(title + "chestY"), (int)signconfig.get(title + "chestZ"));
+				Location chestLocation = signconfig.getConfigurationSection(title).getLocation("chestLoc");
 				if (chestLocation.equals(event.getClickedBlock().getLocation())) {
-					if (!player.getUniqueId().equals((UUID.fromString((String) signconfig.get(title+"owner"))))) {
+					if (!player.getUniqueId().equals((UUID.fromString((String) signconfig.getConfigurationSection(title).getString("owner"))))) {
 						player.sendMessage(ChatColor.RED + "This chest is locked.");
 						event.setCancelled(true);
 					}

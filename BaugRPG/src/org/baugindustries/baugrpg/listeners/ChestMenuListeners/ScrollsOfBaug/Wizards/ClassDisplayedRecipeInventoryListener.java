@@ -1,16 +1,22 @@
 package org.baugindustries.baugrpg.listeners.ChestMenuListeners.ScrollsOfBaug.Wizards;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.baugindustries.baugrpg.Main;
 import org.baugindustries.baugrpg.Profession;
+import org.baugindustries.baugrpg.RecipeTypes;
 import org.baugindustries.baugrpg.Recipes;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -62,6 +68,79 @@ public class ClassDisplayedRecipeInventoryListener implements Listener {
 			for (Material material : ingredients.keySet()) {
 				player.sendMessage(ChatColor.YELLOW + materialString(material.toString()) + " x " + ingredients.get(material));
 			}
+		} else {
+
+			Recipes recipe = null;
+			for (Recipes currentRecipe : Recipes.values()) {
+				if (currentRecipe.matches(plugin, event.getCurrentItem())) {
+					recipe = currentRecipe;
+					break;
+				}
+			}
+			if (recipe == null) return;
+			
+			if (event.getClick().equals(ClickType.LEFT)) {
+				String professionName = "";
+				for (Profession profession : Profession.values()) {
+					if (!professionName.equals("")) break;
+					for (RecipeTypes type : RecipeTypes.values()) {
+						if (!professionName.equals("")) break;
+						for (Recipes currentRecipe : profession.getRecipes(type)) {
+							if (currentRecipe.equals(recipe)) {
+								professionName = profession.toString() + " ";
+								break;
+							}
+						}
+					}
+				}
+				
+				String inventoryName = ChatColor.GOLD + professionName + "Recipe";
+				Inventory inventory = Bukkit.createInventory(null, 45, inventoryName);
+				
+				ItemStack[] pattern = recipe.getPattern(plugin);
+				
+				inventory.setItem(10, pattern[0]);
+				inventory.setItem(11, pattern[1]);
+				inventory.setItem(12, pattern[2]);
+				inventory.setItem(19, pattern[3]);
+				inventory.setItem(20, pattern[4]);
+				inventory.setItem(21, pattern[5]);
+				inventory.setItem(28, pattern[6]);
+				inventory.setItem(29, pattern[7]);
+				inventory.setItem(30, pattern[8]);
+				
+				ItemStack resultItem = recipe.getResult(plugin);
+				ItemMeta resultMeta = resultItem.getItemMeta();
+				List<String> lore = resultMeta.getLore();
+				lore.add("");
+				lore.add("Click for total vanilla ingredients.");
+				resultMeta.setLore(lore);
+				resultItem.setItemMeta(resultMeta);
+				
+				inventory.setItem(25, resultItem);
+				
+				for (int i = 5; i < 45; i += 9) {
+					inventory.setItem(i, plugin.itemManager.getBlankItem());
+				}
+				
+				inventory.setItem(36, plugin.itemManager.getBackItem());
+				player.openInventory(inventory);
+			} else if (event.getClick().equals(ClickType.RIGHT)) {
+				List<Recipes> uses = recipe.getUses(plugin);
+				
+				String inventoryName = ChatColor.GOLD + recipe.toString() + " Uses";
+				Inventory inventory = Bukkit.createInventory(null, ((uses.size() / 9) + 2) * 9, inventoryName);
+				
+				for (int i = 0; i < uses.size(); i++) {
+					ItemStack item = uses.get(i).getResult(plugin);
+					item.setAmount(1);
+					inventory.setItem(i, item);
+				}
+				
+				inventory.setItem(((uses.size() / 9) + 1) * 9, plugin.itemManager.getBackItem());
+				player.openInventory(inventory);
+			}
+			
 		}
 	}
 	

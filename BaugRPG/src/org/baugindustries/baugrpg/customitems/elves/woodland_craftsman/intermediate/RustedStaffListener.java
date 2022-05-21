@@ -26,6 +26,8 @@ public class RustedStaffListener implements Listener {
 	public void onClickCopper(PlayerInteractEvent event) {
 		
 		Player player = event.getPlayer();
+		if (event.getHand() == null) return;
+		
 		
 		if (event.getHand().equals(EquipmentSlot.HAND)) {
 			if (!(Recipes.RUSTED_STAFF.matches(plugin, player.getInventory().getItemInMainHand()))) return;

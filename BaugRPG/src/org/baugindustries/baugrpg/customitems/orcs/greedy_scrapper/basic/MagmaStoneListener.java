@@ -72,6 +72,8 @@ public class MagmaStoneListener  implements Listener {
 	
 	@EventHandler
 	public void onUseEgg(PlayerInteractEvent event) {
+		if (event.getHand() == null) return;
+		
 		if (event.getHand().equals(EquipmentSlot.HAND)) {
 			if (!(Recipes.MAGMA_STONE.matches(plugin, event.getPlayer().getInventory().getItemInMainHand()))) return;
 			event.getPlayer().sendMessage(ChatColor.RED + "This item cannot be used like that");

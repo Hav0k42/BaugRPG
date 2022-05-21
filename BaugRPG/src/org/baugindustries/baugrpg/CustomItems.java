@@ -1447,7 +1447,7 @@ public class CustomItems {
 	
 	public ItemStack getBasicRecipeScrollItem() {
 		ItemStack scroll = plugin.createItem(
-				Material.MAP,
+				Material.MOJANG_BANNER_PATTERN,
 				1,
 				ChatColor.GRAY + "Basic Recipe");
 		scroll.addUnsafeEnchantment(Enchantment.DURABILITY, 0);
@@ -1456,7 +1456,7 @@ public class CustomItems {
 	
 	public ItemStack getIntermediateRecipeScrollItem() {
 		ItemStack scroll = plugin.createItem(
-				Material.MAP,
+				Material.MOJANG_BANNER_PATTERN,
 				1,
 				ChatColor.GRAY + "Intermediate Recipe");
 		scroll.addUnsafeEnchantment(Enchantment.DURABILITY, 0);
@@ -1465,7 +1465,7 @@ public class CustomItems {
 	
 	public ItemStack getAdvancedRecipeScrollItem() {
 		ItemStack scroll = plugin.createItem(
-				Material.MAP,
+				Material.MOJANG_BANNER_PATTERN,
 				1,
 				ChatColor.GRAY + "Advanced Recipe");
 		scroll.addUnsafeEnchantment(Enchantment.DURABILITY, 0);
@@ -1474,7 +1474,7 @@ public class CustomItems {
 	
 	public ItemStack getExpertRecipeScrollItem() {
 		ItemStack scroll = plugin.createItem(
-				Material.MAP,
+				Material.MOJANG_BANNER_PATTERN,
 				1,
 				ChatColor.GRAY + "Expert Recipe");
 		scroll.addUnsafeEnchantment(Enchantment.DURABILITY, 0);
@@ -1502,7 +1502,17 @@ public class CustomItems {
 		return head;
 	}
 	
-	
+	public ItemStack getResetRaceItem() {
+		return plugin.createItem(Material.PAPER,
+				1,
+				ChatColor.AQUA + "Reset Race",
+				Arrays.asList(ChatColor.RED + "WARNING",
+						"Use this item to permanently reset your race.",
+						"You will restart with half your earned skill points.",
+						"Your achievements will not reset.",
+						"You will lose all learned recipes.",
+						"You may not use this item more than once."));
+	}
 	
 	
 	
@@ -1655,11 +1665,16 @@ public class CustomItems {
 	}
 	
 	public ItemStack getRuggedSwordItem() {
-		return plugin.createItem(Material.STONE_SWORD,
+		ItemStack ruggedSword = plugin.createItem(Material.STONE_SWORD,
 				1,
 				ChatColor.DARK_AQUA + "Rugged Sword",
 				Arrays.asList("Charge by holding while riding a horse.", "Shift right click to view charge.", "Man Made", ChatColor.GOLD + "Advanced Item"),
 				1133);
+		ItemMeta meta = ruggedSword.getItemMeta();
+		PersistentDataContainer data = meta.getPersistentDataContainer();
+		data.set(new NamespacedKey(plugin, "charge"), PersistentDataType.FLOAT, 0f);
+		ruggedSword.setItemMeta(meta);
+		return ruggedSword;
 	}
 	
 	public ItemStack getRegenerativeHorseArmorItem() {
@@ -2019,7 +2034,7 @@ public class CustomItems {
 		return plugin.createItem(Material.GOLDEN_CHESTPLATE,
 				1,
 				ChatColor.DARK_AQUA + "Verdant Medallion",
-				Arrays.asList("Wearing this causes all nearby animals to swarm you.", "Man Made", ChatColor.GOLD + "Advanced Item"),
+				Arrays.asList("Wearing this causes all", "nearby animals to swarm you.", "Man Made", ChatColor.GOLD + "Advanced Item"),
 				1333);
 	}
 	
@@ -2177,7 +2192,7 @@ public class CustomItems {
 		return plugin.createItem(Material.CLAY_BALL,
 				1,
 				ChatColor.DARK_GREEN + "Emblem of the Blossom",
-				Arrays.asList("Nearby crops will grow faster when carried.", "Elven Craft", ChatColor.GOLD + "Advanced Item"),
+				Arrays.asList("Nearby crops will grow", "faster when carried.", "Elven Craft", ChatColor.GOLD + "Advanced Item"),
 				2133);
 	}
 	
@@ -2185,7 +2200,7 @@ public class CustomItems {
 		return plugin.createItem(Material.IRON_HOE,
 				1,
 				ChatColor.DARK_GREEN + "Scythe",
-				Arrays.asList("Crop drops broken with this item will be doubled.", "Elven Craft", ChatColor.GOLD + "Advanced Item"),
+				Arrays.asList("Crop drops broken with this", "item will be doubled.", "Elven Craft", ChatColor.GOLD + "Advanced Item"),
 				2134);
 	}
 	
@@ -2193,7 +2208,7 @@ public class CustomItems {
 		return plugin.createItem(Material.SUNFLOWER,
 				1,
 				ChatColor.DARK_GREEN + "Golden Flower",
-				Arrays.asList("Summons bees that will come to your aid.", "Elven Craft", ChatColor.GOLD + "Advanced Item"),
+				Arrays.asList("Summons wasps that will come to your aid.", "Elven Craft", ChatColor.GOLD + "Advanced Item"),
 				2135);
 	}
 	

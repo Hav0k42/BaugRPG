@@ -103,7 +103,8 @@ public class GetCustomItem implements CommandExecutor {
 		
 		tempItem.setAmount(amount);
 		
-		player.getWorld().dropItem(player.getLocation(), tempItem);
+//		player.getWorld().dropItem(player.getLocation(), tempItem);
+		player.getInventory().addItem(tempItem);
 		return true;
 	}
 

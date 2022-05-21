@@ -3,13 +3,18 @@ package org.baugindustries.baugrpg.customitems.orcs.dark_alchemist.basic;
 import org.baugindustries.baugrpg.Main;
 import org.baugindustries.baugrpg.Recipes;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.CauldronLevelChangeEvent;
+import org.bukkit.event.block.CauldronLevelChangeEvent.ChangeReason;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketEntityEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+
+import net.md_5.bungee.api.ChatColor;
 
 public class FlamingBucketListener implements Listener {
 	private Main plugin;
@@ -76,6 +81,26 @@ public class FlamingBucketListener implements Listener {
 	public void onUseBucketEntity(PlayerBucketEntityEvent event) {
 		if (!Recipes.FLAMING_BUCKET.matches(plugin, event.getOriginalBucket())) return;
 		
+		event.setCancelled(true);
+	}
+	
+	@EventHandler
+	public void onFillCauldron(CauldronLevelChangeEvent event) {
+		if (!event.getReason().equals(ChangeReason.BUCKET_EMPTY)) return;
+		Player player = (Player) event.getEntity();
+		if (!(Recipes.FLAMING_BUCKET.matches(plugin, player.getInventory().getItemInMainHand()) || Recipes.FLAMING_BUCKET.matches(plugin, player.getInventory().getItemInOffHand()))) return;
+		
+		player.sendMessage(ChatColor.RED + "You cannot use flaming buckets with cauldrons");
+		event.setCancelled(true);
+	}
+	
+	@EventHandler
+	public void onEmptyCauldron(CauldronLevelChangeEvent event) {
+		if (!event.getReason().equals(ChangeReason.BUCKET_FILL)) return;
+		Player player = (Player) event.getEntity();
+		if (!(Recipes.FLAMING_BUCKET.matches(plugin, player.getInventory().getItemInMainHand()) || Recipes.FLAMING_BUCKET.matches(plugin, player.getInventory().getItemInOffHand()))) return;
+		
+		player.sendMessage(ChatColor.RED + "You cannot use flaming buckets with cauldrons");
 		event.setCancelled(true);
 	}
 

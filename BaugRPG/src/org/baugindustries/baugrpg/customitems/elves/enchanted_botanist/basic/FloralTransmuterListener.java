@@ -7,10 +7,12 @@ import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.Bisected.Half;
+import org.bukkit.entity.Panda;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
@@ -87,6 +89,23 @@ public class FloralTransmuterListener implements Listener {
 		event.setCancelled(true);
 		
 		
+		
+	}
+	
+	@EventHandler
+	public void onInventoryClick(PlayerInteractEntityEvent event) {
+		Player player = event.getPlayer();
+		
+		if (!(event.getRightClicked() instanceof Panda)) return;
+		
+		
+		if (event.getHand().equals(EquipmentSlot.HAND)) {
+			if (!Recipes.FLORAL_TRANSMUTER.matches(plugin, player.getInventory().getItemInMainHand())) return;
+		} else {
+			if (!Recipes.FLORAL_TRANSMUTER.matches(plugin, player.getInventory().getItemInOffHand())) return;
+		}
+
+		event.setCancelled(true);
 		
 	}
 

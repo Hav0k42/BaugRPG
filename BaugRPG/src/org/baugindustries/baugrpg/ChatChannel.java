@@ -41,7 +41,129 @@ public class ChatChannel implements Listener {
 		Player p = event.getPlayer();
 		int race = plugin.getRace(p);
 		
-		if (plugin.leaderPunishEscape.containsKey(p.getUniqueId())) {
+		if (plugin.resetRaceEscape.contains(p.getUniqueId())) {
+			event.setCancelled(true);
+			if (event.getMessage().toLowerCase().equals("exit")) {
+				plugin.resetRaceEscape.remove(p.getUniqueId());
+				p.sendMessage(ChatColor.GOLD + "Returning to the chat.");
+			} else if (event.getMessage().equals("CONFIRM " + p.getName())) {
+				p.sendMessage(ChatColor.GOLD + "Race Reset.");
+				
+				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+					  public void run() {
+							p.teleport(plugin.getServer().getWorlds().get(0).getSpawnLocation());
+							p.openInventory(plugin.inventoryManager.getSetRaceMenuInventory());
+					  }
+				 }, 1L);
+				
+				
+				
+				
+				PersistentDataContainer data = p.getPersistentDataContainer();
+				if (data.has(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER)) {
+					data.remove(new NamespacedKey(plugin, "Race"));
+					plugin.board.getTeam(plugin.board.getEntryTeam(p.getName()).getName()).removeEntry(p.getName());//removes player from team they're currently on
+				}
+				
+				
+				p.getInventory().clear();
+				p.getEnderChest().clear();
+				
+				
+				File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + p.getUniqueId() + ".yml");
+			 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
+			 	
+			 	int newPoints = 0;
+			 	if (skillsconfig.contains("skillPoints")) {
+			 		newPoints = skillsconfig.getInt("skillPoints") / 2;
+			 	}
+			 	
+			 	FileConfiguration newSkillsConfig = new YamlConfiguration();
+			 	newSkillsConfig.set("skillPoints", newPoints);
+			 	newSkillsConfig.set("totalSkillPoints", newPoints);
+			 	newSkillsConfig.set("racereset", true);
+			 	try {
+					newSkillsConfig.save(skillsfile);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			 	
+				p.setSaturatedRegenRate(plugin.onJoinListener.getSaturationSlownessMultiplier() * 10);
+				p.setUnsaturatedRegenRate(plugin.onJoinListener.getSaturationSlownessMultiplier() * 80);
+				p.setWalkSpeed(0.2f);
+				p.setFlySpeed(0.2f);
+				
+				
+				File bankfile = new File(plugin.getDataFolder() + File.separator + "bank.yml");
+			 	FileConfiguration bankconfig = YamlConfiguration.loadConfiguration(bankfile);
+			 	if (bankconfig.contains(p.getUniqueId().toString())) {
+			 		bankconfig.set(p.getUniqueId().toString(), 0);
+			 	}
+			 	try {
+					bankconfig.save(bankfile);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			 	
+			 	
+			 	File claimsfile = new File(plugin.getDataFolder() + File.separator + "claims.yml");
+			 	FileConfiguration claimsconfig = YamlConfiguration.loadConfiguration(claimsfile);
+			 	if (claimsconfig.contains("personalClaims")) {
+			 		ConfigurationSection claims = claimsconfig.getConfigurationSection("personalClaims");
+			 		for (String claimKey : claims.getKeys(false)) {
+			 			ConfigurationSection claim = claims.getConfigurationSection(claimKey);
+			 			if (claim.getString("owner").equals(p.getUniqueId().toString())) {
+			 				claims.set(claimKey, null);
+			 			}
+			 			
+			 		}
+			 	}
+			 	try {
+					claimsconfig.save(claimsfile);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			 	
+			 	
+			 	File econfile = new File(plugin.getDataFolder() + File.separator + "econ.yml");
+			 	FileConfiguration econconfig = YamlConfiguration.loadConfiguration(econfile);
+			 	if (econconfig.contains(p.getUniqueId().toString())) {
+			 		econconfig.set(p.getUniqueId().toString(), 0);
+			 	}
+			 	try {
+					econconfig.save(econfile);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			 	
+			 	File signfile = new File(plugin.getDataFolder() + File.separator + "shops.yml");
+			 	FileConfiguration signconfig = YamlConfiguration.loadConfiguration(signfile);
+			 	for (String shopName : signconfig.getKeys(false)) {
+			 		ConfigurationSection shop = signconfig.getConfigurationSection(shopName);
+			 		if (shop.getString("owner").equals(p.getUniqueId().toString())) {
+			 			signconfig.set(shopName, null);
+			 		}
+			 	}
+			 	try {
+					signconfig.save(signfile);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			 	
+			 	File toolsfile = new File(plugin.getDataFolder() + File.separator + "tools.yml");
+			 	FileConfiguration toolsconfig = YamlConfiguration.loadConfiguration(toolsfile);
+			 	if (toolsconfig.contains(p.getUniqueId().toString())) {
+			 		toolsconfig.set(p.getUniqueId().toString(), null);
+			 	}
+			 	try {
+			 		toolsconfig.save(toolsfile);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				
+			}
+		} else if (plugin.leaderPunishEscape.containsKey(p.getUniqueId())) {
 			Integer index = plugin.leaderPunishEscape.get(p.getUniqueId());
 			if (event.getMessage().toLowerCase().equals("exit")) {
 				plugin.leaderPunishEscape.remove(p.getUniqueId());

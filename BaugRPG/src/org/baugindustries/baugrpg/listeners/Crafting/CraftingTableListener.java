@@ -1,6 +1,7 @@
 package org.baugindustries.baugrpg.listeners.Crafting;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +40,14 @@ public class CraftingTableListener implements Listener {
 		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
 	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
 		
-	 	if (!skillsconfig.contains("learnedRecipes")) return;
+	 	if (!skillsconfig.contains("learnedRecipes")) {
+	 		skillsconfig.createSection("learnedRecipes");
+	 		try {
+				skillsconfig.save(skillsfile);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	 	}
 
 	 	
 		
@@ -62,7 +70,6 @@ public class CraftingTableListener implements Listener {
 				vanillaRecipe = true;
 			}
 		}
-		
 		if (vanillaRecipe) {
 			for (int i = 1; i < 10; i++) {
 				ItemStack currentItem = event.getInventory().getItem(i);
@@ -70,10 +77,10 @@ public class CraftingTableListener implements Listener {
 					for (Recipes r : Recipes.values()) {
 						if (r.matches(plugin, currentItem)) {
 							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-								  public void run() {
-										event.getInventory().setResult(new ItemStack(Material.AIR));
-								  }
-							 }, 1L);
+								public void run() {
+									event.getInventory().setResult(new ItemStack(Material.AIR));
+								}
+							}, 1L);
 							return;
 						}
 					}

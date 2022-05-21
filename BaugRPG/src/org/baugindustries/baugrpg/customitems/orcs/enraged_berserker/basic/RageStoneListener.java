@@ -35,6 +35,8 @@ public class RageStoneListener implements Listener {
 	
 	@EventHandler
 	public void onUseEgg(PlayerInteractEvent event) {
+		if (event.getHand() == null) return;
+		
 		if (event.getHand().equals(EquipmentSlot.HAND)) {
 			if (!(Recipes.RAGE_STONE.matches(plugin, event.getPlayer().getInventory().getItemInMainHand()))) return;
 	    } else {

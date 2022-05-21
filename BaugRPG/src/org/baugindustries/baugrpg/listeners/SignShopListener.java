@@ -5,14 +5,14 @@ import java.io.IOException;
 import java.util.UUID;
 
 import org.baugindustries.baugrpg.Main;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import org.baugindustries.baugrpg.Recipes;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.Directional;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -20,9 +20,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataType;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -35,14 +35,12 @@ public class SignShopListener implements Listener{
 	@EventHandler
 	public void onClickSign(PlayerInteractEvent event) {
 		
-		if (!(event.getAction().equals(Action.LEFT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK))) {
-			return;
-		}
+		if (!(event.getAction().equals(Action.LEFT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK))) return;
 		
 		Player player = (Player) event.getPlayer();
 		if (event.getClickedBlock().getState() instanceof Sign) {
 			Sign sign = (Sign)event.getClickedBlock().getState();
-			String title = sign.getLocation().getBlockX() + "" + sign.getLocation().getBlockY() + "" + sign.getLocation().getBlockZ();
+			String title = sign.getLocation().getBlockX() + "" + sign.getLocation().getBlockY() + "" + sign.getLocation().getBlockZ() + "" + sign.getLocation().getWorld().getUID();
 			
 			if (!(sign.getBlockData() instanceof Directional)) return;
 			
@@ -72,7 +70,15 @@ public class SignShopListener implements Listener{
 		 	FileConfiguration econconfig = YamlConfiguration.loadConfiguration(econfile);
 		 	
 			if (plugin.signData.containsKey(player) && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-				if (player.getItemInUse() != null || !player.getItemInUse().equals(Material.AIR)) {
+
+				ItemStack item = null;
+				if (event.getHand().equals(EquipmentSlot.HAND)) {
+					item = player.getInventory().getItemInMainHand();
+				} else {
+					item = player.getInventory().getItemInOffHand();
+				}
+				
+				if (item != null) {
 					
 					sign.setLine(0, ChatColor.DARK_PURPLE + "[Dwarven Shop]");
 					sign.setLine(1, plugin.signData.get(player).get(0));
@@ -80,18 +86,17 @@ public class SignShopListener implements Listener{
 					sign.setLine(3, plugin.signData.get(player).get(2));
 					sign.update();
 					
-					
+					ConfigurationSection signSection = signconfig.createSection(title);
 				 	
-				 	signconfig.set(title, player.getItemInUse());
-				 	signconfig.set(title + "owner", player.getUniqueId().toString());
-				 	signconfig.set(title + "chestX", blockBehindSign.getLocation().getBlockX());
-				 	signconfig.set(title + "chestY", blockBehindSign.getLocation().getBlockY());
-				 	signconfig.set(title + "chestZ", blockBehindSign.getLocation().getBlockZ());
+					
+					
+				 	signSection.set("item", item);
+				 	signSection.set("owner", player.getUniqueId().toString());
+				 	signSection.set("chestLoc", blockBehindSign.getLocation());
 					
 				 	try {
 						signconfig.save(signfile);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					plugin.signData.remove(player);
@@ -99,7 +104,7 @@ public class SignShopListener implements Listener{
 					player.sendMessage(ChatColor.GREEN + "Please click the sign with an item");
 				}
 			} else if (!signconfig.contains(title) && player.isSneaking() && !plugin.signChatEscape.containsKey(player) && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-				if (player.getPersistentDataContainer().has(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER) && player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER) == 3) {
+				if (plugin.getRace(player) == 3) {
 					player.sendMessage(ChatColor.GREEN + "What do you want to title the sign shop? >");
 					plugin.signChatEscape.put(player, 1);
 				}
@@ -109,9 +114,21 @@ public class SignShopListener implements Listener{
 					int buyPrice = Integer.parseInt(sign.getLine(2).substring(5));
 					int sellPrice = Integer.parseInt(sign.getLine(3).substring(6));
 					int customerBal = (int)econconfig.get(player.getUniqueId().toString());
-					OfflinePlayer player2 = plugin.getServer().getOfflinePlayer(UUID.fromString((String) signconfig.get(title+"owner")));
-					ItemStack goodsType = (ItemStack)signconfig.getItemStack
-							(title);
+					
+					ConfigurationSection signSection = signconfig.getConfigurationSection(title);
+					
+					OfflinePlayer player2 = plugin.getServer().getOfflinePlayer(UUID.fromString((String) signSection.get("owner")));
+					ItemStack goodsType = (ItemStack)signSection.getItemStack("item");
+					boolean match = false;
+					for (Recipes recipe : Recipes.values()) {
+						if (recipe.matches(plugin, goodsType)) {
+							match = true;
+							break;
+						}
+					}
+					if (!match) {
+						goodsType = new ItemStack(goodsType.getType());
+					}
 					int vendorBal = (int)econconfig.get(player2.getUniqueId().toString());
 					
 					
@@ -125,13 +142,14 @@ public class SignShopListener implements Listener{
 							player.sendMessage(ChatColor.RED + "You can't buy or sell items from your own shop.");
 						} else {
 							if (player.isSneaking()) {//shift to buy/sell 10 instead of 1
+								goodsType.setAmount(10);
 								if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {//Buy 10
 									if (customerBal > buyPrice * 10) {
 										if (chestShop.getInventory().containsAtLeast(goodsType, 10)) {
 											int goodsCount = 0;
 											while (goodsCount < 10) {
 												for (int i = 0; i < chestShop.getInventory().getSize(); i++) {
-													if (chestShop.getInventory().getItem(i) != null && chestShop.getInventory().getItem(i).getType().equals(goodsType.getType())) {
+													if (chestShop.getInventory().getItem(i) != null && chestShop.getInventory().getItem(i).isSimilar(goodsType)) {
 														if (chestShop.getInventory().getItem(i).getAmount() + goodsCount < 10) {
 															goodsCount += chestShop.getInventory().getItem(i).getAmount();
 															chestShop.getInventory().setItem(i, null);
@@ -156,10 +174,10 @@ public class SignShopListener implements Listener{
 											}
 											if (nullCount < 1) {
 												player.sendMessage(ChatColor.RED + "Your inventory is full");
-												chestShop.getInventory().addItem(plugin.createItem(goodsType.getType(), 10));
+												chestShop.getInventory().addItem(goodsType);
 												return;
 											} else {
-												player.getInventory().addItem(plugin.createItem(goodsType.getType(), 10));
+												player.getInventory().addItem(goodsType);
 											}
 											econconfig.set(player.getUniqueId().toString(), customerBal - (buyPrice * 10));
 											econconfig.set(player2.getUniqueId().toString(), vendorBal + (buyPrice * 10));
@@ -169,7 +187,6 @@ public class SignShopListener implements Listener{
 											try {
 												econconfig.save(econfile);
 											} catch (IOException e) {
-												// TODO Auto-generated catch block
 												e.printStackTrace();
 											}
 										} else {
@@ -184,7 +201,7 @@ public class SignShopListener implements Listener{
 											int goodsCount = 0;
 											while (goodsCount < 10) {
 												for (int i = 0; i < player.getInventory().getSize(); i++) {
-													if (player.getInventory().getItem(i) != null && player.getInventory().getItem(i).getType().equals(goodsType.getType())) {
+													if (player.getInventory().getItem(i) != null && player.getInventory().getItem(i).isSimilar(goodsType)) {
 														if (player.getInventory().getItem(i).getAmount() + goodsCount < 10) {
 															goodsCount += player.getInventory().getItem(i).getAmount();
 															player.getInventory().setItem(i, null);
@@ -209,10 +226,10 @@ public class SignShopListener implements Listener{
 											}
 											if (nullCount < 1) {
 												player.sendMessage(ChatColor.RED + "This chestshop is full");
-												player.getInventory().addItem(plugin.createItem(goodsType.getType(), 10));
+												player.getInventory().addItem(goodsType);
 												return;
 											} else {
-												chestShop.getInventory().addItem(plugin.createItem(goodsType.getType(), 10));
+												chestShop.getInventory().addItem(goodsType);
 											}
 											econconfig.set(player.getUniqueId().toString(), customerBal + (sellPrice * 10));
 											econconfig.set(player2.getUniqueId().toString(), vendorBal - (sellPrice * 10));
@@ -220,7 +237,6 @@ public class SignShopListener implements Listener{
 											try {
 												econconfig.save(econfile);
 											} catch (IOException e) {
-												// TODO Auto-generated catch block
 												e.printStackTrace();
 											}
 										} else {
@@ -231,11 +247,12 @@ public class SignShopListener implements Listener{
 									}
 								}
 							} else {
+								goodsType.setAmount(1);
 								if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {//Buy 1
 									if (customerBal > buyPrice) {
-										if (chestShop.getInventory().contains(goodsType.getType())) {
+										if (chestShop.getInventory().containsAtLeast(goodsType, 1)) {
 											for (int i = 0; i < chestShop.getInventory().getSize(); i++) {
-												if (chestShop.getInventory().getItem(i) != null && chestShop.getInventory().getItem(i).getType().equals(goodsType.getType())) {
+												if (chestShop.getInventory().getItem(i) != null && chestShop.getInventory().getItem(i).isSimilar(goodsType)) {
 													ItemStack newItem = chestShop.getInventory().getItem(i);
 													newItem.setAmount(newItem.getAmount() - 1);
 													chestShop.getInventory().setItem(i, newItem);
@@ -253,10 +270,10 @@ public class SignShopListener implements Listener{
 											}
 											if (nullCount < 1) {
 												player.sendMessage(ChatColor.RED + "Your inventory is full");
-												chestShop.getInventory().addItem(plugin.createItem(goodsType.getType(), 1));
+												chestShop.getInventory().addItem(goodsType);
 												return;
 											} else {
-												player.getInventory().addItem(plugin.createItem(goodsType.getType(), 1));
+												player.getInventory().addItem(goodsType);
 											}
 											
 											
@@ -266,7 +283,6 @@ public class SignShopListener implements Listener{
 											try {
 												econconfig.save(econfile);
 											} catch (IOException e) {
-												// TODO Auto-generated catch block
 												e.printStackTrace();
 											}
 										} else {
@@ -277,9 +293,9 @@ public class SignShopListener implements Listener{
 									}
 								} else if (event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {//Sell 1
 									if (vendorBal > sellPrice) {
-										if (player.getInventory().contains(goodsType.getType())) {
+										if (player.getInventory().containsAtLeast(goodsType, 1)) {
 												for (int i = 0; i < player.getInventory().getSize(); i++) {
-													if (player.getInventory().getItem(i) != null && player.getInventory().getItem(i).getType().equals(goodsType.getType())) {
+													if (player.getInventory().getItem(i) != null && player.getInventory().getItem(i).isSimilar(goodsType)) {
 														ItemStack newItem = player.getInventory().getItem(i);
 														newItem.setAmount(newItem.getAmount() - 1);
 														player.getInventory().setItem(i, newItem);
@@ -296,10 +312,10 @@ public class SignShopListener implements Listener{
 											}
 											if (nullCount < 1) {
 												player.sendMessage(ChatColor.RED + "This chestshop is full");
-												player.getInventory().addItem(plugin.createItem(goodsType.getType(), 1));
+												player.getInventory().addItem(goodsType);
 												return;
 											} else {
-												chestShop.getInventory().addItem(plugin.createItem(goodsType.getType(), 1));
+												chestShop.getInventory().addItem(goodsType);
 											}
 											
 											econconfig.set(player.getUniqueId().toString(), customerBal + sellPrice);
@@ -308,7 +324,6 @@ public class SignShopListener implements Listener{
 											try {
 												econconfig.save(econfile);
 											} catch (IOException e) {
-												// TODO Auto-generated catch block
 												e.printStackTrace();
 											}
 										} else {
@@ -330,13 +345,7 @@ public class SignShopListener implements Listener{
 						player.sendMessage(ChatColor.YELLOW + "This signshop doesn't have a chest.");
 					}
 					
-					
-					
-					
-					
-					
 				}
-				
 				
 			}
 		}

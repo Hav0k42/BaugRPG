@@ -38,6 +38,34 @@ public class PlayerDeathListener implements Listener{
 			int playerRace = plugin.getRace(player);
 			int killerRace = plugin.getRace(killer);
 			
+			File econFile = new File(plugin.getDataFolder() + File.separator + "econ.yml");
+		 	FileConfiguration econConfig = YamlConfiguration.loadConfiguration(econFile);
+		 	
+		 	int playerBal = 0;
+		 	int killerBal = 0;
+		 	if (econConfig.contains(player.getUniqueId().toString())) {
+		 		playerBal = econConfig.getInt(player.getUniqueId().toString());
+		 	}
+		 	if (econConfig.contains(killer.getUniqueId().toString())) {
+		 		killerBal = econConfig.getInt(killer.getUniqueId().toString());
+		 	}
+		 	
+		 	if (playerBal < 10) {
+		 		int transferAmount = (int) (playerBal * 0.1);
+		 		killerBal += transferAmount;
+		 		playerBal -= transferAmount;
+		 		econConfig.set(player.getUniqueId().toString(), playerBal);
+		 		econConfig.set(killer.getUniqueId().toString(), killerBal);
+		 		player.sendMessage(ChatColor.GOLD + "You lost " + ChatColor.RED + transferAmount + " Dwarven Gold " + ChatColor.GOLD + "to " + killer.getName() + ". Use /deposit to save your gold from being stolen.");
+		 		killer.sendMessage(ChatColor.GOLD + "You stole " + ChatColor.GREEN + transferAmount + " Dwarven Gold " + ChatColor.GOLD + "from " + player.getName() + ".");
+		 	
+		 		try {
+					econConfig.save(econFile);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		 	}
+			
 			if (killerRace == 3 && playerRace == 2) {//Dwarf killed an elf
 				killer.getWorld().dropItemNaturally(player.getLocation(), plugin.createItem(Material.GOLD_INGOT, 1 + (int)(Math.random() * 3)));
 			}

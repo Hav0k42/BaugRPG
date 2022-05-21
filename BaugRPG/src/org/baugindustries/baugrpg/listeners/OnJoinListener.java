@@ -122,7 +122,7 @@ public class OnJoinListener implements Listener {
 			float maxSpeed = 0.35f;
 			
 			if (skillsconfig.getBoolean("speedOn")) {
-				player.setWalkSpeed((((maxSpeed - 0.2f) / 10f) * skillsconfig.getInt("speed"))+ 0.2f);
+				player.setWalkSpeed((((maxSpeed - 0.2f) / 10f) * skillsconfig.getInt("speed")) + 0.2f);
 				player.setFlySpeed((((maxSpeed - 0.2f) / 10f) * skillsconfig.getInt("speed")) + 0.2f);
 			} else {
 				player.setWalkSpeed(0.2f);

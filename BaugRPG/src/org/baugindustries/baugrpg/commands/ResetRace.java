@@ -18,7 +18,6 @@ public class ResetRace implements CommandExecutor {
 		plugin.getCommand("resetrace").setExecutor(this);
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (!(sender instanceof Player)) {
@@ -35,7 +34,7 @@ public class ResetRace implements CommandExecutor {
 				
 				player.sendMessage("Your race has been reset");
 				
-				plugin.board.getTeam(plugin.board.getPlayerTeam(player).getName()).removePlayer(player);//removes player from team they're currently on
+				plugin.board.getEntryTeam(player.getName()).removeEntry(player.getName());//removes player from team they're currently on
 			} else {
 				player.sendMessage("You already didn't have a race assigned.");
 			}
