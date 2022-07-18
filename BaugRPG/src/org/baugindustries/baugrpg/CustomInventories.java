@@ -23,7 +23,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 
 public class CustomInventories {
 	Main plugin;
@@ -506,8 +506,8 @@ public class CustomInventories {
 			
 		}
 		
-		SkullMeta skullMeta = (SkullMeta)plugin.itemManager.getLeaderHeadItem(race).getItemMeta();
-		ItemStack tempItem = plugin.itemManager.getLeaderHeadItem(race);
+		SkullMeta skullMeta;
+		ItemStack tempItem;
 		if (!enableLeaders) {
 			String leaderTitle = "";
 			switch (race) {
@@ -525,6 +525,10 @@ public class CustomInventories {
 					break;
 			}
 			tempItem = plugin.createItem(Material.PLAYER_HEAD, 1, getRaceColor(race) + "UNKNOWN", Arrays.asList("You currently have no " + leaderTitle));
+			skullMeta = (SkullMeta)tempItem.getItemMeta();
+		} else {
+			tempItem = plugin.itemManager.getLeaderHeadItem(race);
+			skullMeta = (SkullMeta)tempItem.getItemMeta();
 		}
 		
 		inventory.setItem(2, tempItem);
@@ -637,12 +641,15 @@ public class CustomInventories {
 			
 		} else {
 			//There is no leader
-			if (leaderConfig.getStringList("VotedPlayers").contains(player.getUniqueId().toString())) {
-				inventory.setItem(11, plugin.itemManager.getAlreadyVotedItem());
-			} else {
-				inventory.setItem(11, plugin.itemManager.getVoteOnLeaderItem(race));
+			
+			if (race == 1 || race == 2) {
+				if (leaderConfig.getStringList("VotedPlayers").contains(player.getUniqueId().toString())) {
+					inventory.setItem(11, plugin.itemManager.getAlreadyVotedItem());
+				} else {
+					inventory.setItem(11, plugin.itemManager.getVoteOnLeaderItem(race));
+				}
+				inventory.setItem(12, plugin.itemManager.getNominateSelfItem(race));
 			}
-			inventory.setItem(12, plugin.itemManager.getNominateSelfItem(race));
 		}
 		
 		
@@ -1020,7 +1027,7 @@ public class CustomInventories {
 			inventory.setItem(currentSlot, plugin.itemManager.getGovernmentMenuItem(race));
 			currentSlot++;
 			
-			if (level > 5) {
+			if (level >= 5) {
 				inventory.setItem(currentSlot, plugin.itemManager.getSkillTreeMenuItem());
 				currentSlot++;
 			}
@@ -1038,7 +1045,7 @@ public class CustomInventories {
 			inventory.setItem(currentSlot, plugin.itemManager.getGovernmentMenuItem(race));
 			currentSlot++;
 			
-			if (level > 5) {
+			if (level >= 5) {
 				inventory.setItem(currentSlot, plugin.itemManager.getSkillTreeMenuItem());
 				currentSlot++;
 			}
@@ -1058,7 +1065,7 @@ public class CustomInventories {
 			inventory.setItem(currentSlot, plugin.itemManager.getGovernmentMenuItem(race));
 			currentSlot++;
 			
-			if (level > 5) {
+			if (level >= 5) {
 				inventory.setItem(currentSlot, plugin.itemManager.getSkillTreeMenuItem());
 				currentSlot++;
 			}
@@ -1078,7 +1085,7 @@ public class CustomInventories {
 			inventory.setItem(currentSlot, plugin.itemManager.getGovernmentMenuItem(race));
 			currentSlot++;
 			
-			if (level > 5) {
+			if (level >= 5) {
 				inventory.setItem(currentSlot, plugin.itemManager.getSkillTreeMenuItem());
 				currentSlot++;
 			}
@@ -1150,6 +1157,10 @@ public class CustomInventories {
 	 		config.set("hardcoreDeathOn", false);
 	 	}
 	 	
+	 	if (!config.contains("autoBalanceRaces")) {
+	 		config.set("autoBalanceRaces", true);
+	 	}
+	 	
 
  		try {
 			config.save(file);
@@ -1169,6 +1180,7 @@ public class CustomInventories {
 		inventory.setItem(16, plugin.itemManager.getGhastGriefItem());
 		inventory.setItem(19, plugin.itemManager.getMediumCoreDeathItem());
 		inventory.setItem(20, plugin.itemManager.getHardcoreDeathItem());
+		inventory.setItem(37, plugin.itemManager.getAutoBalanceItem());
 		return inventory;
 	}
 	

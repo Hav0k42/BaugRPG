@@ -33,6 +33,7 @@ public class ScrollsOfBaugDwarvesInventoryListener implements Listener{
 		PersistentDataContainer data = event.getWhoClicked().getPersistentDataContainer();
 		int race = data.get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
 		if (race != 3) return;
+		event.setCancelled(true);
 		
 		ItemStack depositItem = plugin.itemManager.getDwarvenBankConversionItem();
 		
@@ -57,6 +58,5 @@ public class ScrollsOfBaugDwarvesInventoryListener implements Listener{
 		} else if (event.getCurrentItem().equals(plugin.itemManager.getViewLearnedRecipesItem(3))) {
 			player.openInventory(plugin.inventoryManager.getLearnedRecipesMenu(player.getUniqueId()));
 		}
-		event.setCancelled(true);
 	}
 }

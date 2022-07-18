@@ -8,6 +8,8 @@ import org.baugindustries.baugrpg.Recipes;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Monster;
@@ -23,6 +25,10 @@ public class GaiasWrathListener implements Listener {
 	
 	HashMap<UUID, Long> cooldown = new HashMap<UUID, Long>();
 	int cooldownTime = 400;//half a second
+	
+	HashMap<UUID, Long> healCooldown = new HashMap<UUID, Long>();
+	int healCooldownTime = 400;//half a second
+	
 	double endIncrementAmount = 0.001;
 	double incrementDist = 0.05;
 	double timingIncrement = 0.02;
@@ -59,6 +65,7 @@ public class GaiasWrathListener implements Listener {
 		
 		
 		activateGaiasWrath(player, player.getEyeLocation(), 0, 1);
+		player.getWorld().playSound(player.getLocation(), Sound.ENTITY_GHAST_SHOOT, SoundCategory.MASTER, 2f, 1f);
 		cooldown.put(player.getUniqueId(), System.currentTimeMillis() + cooldownTime);
 		
 	}
@@ -75,17 +82,27 @@ public class GaiasWrathListener implements Listener {
 					loc.getWorld().spawnParticle(particle, loc, 2, 0, 0, 0, 0, options);
 					for (Entity entity : loc.getWorld().getNearbyEntities(loc, nearbyValue, nearbyValue, nearbyValue)) {
 						if (entity instanceof Monster) {
-							((Monster) entity).damage(1);
+							Monster monster = (Monster) entity;
+							monster.damage(plugin.damageArmorCalculation(monster, 2));
 						} else if (entity instanceof Player) {
 							Player otherPlayer = (Player) entity;
 							if (plugin.getRace(player) == plugin.getRace(otherPlayer)) {
-								double newHealth = otherPlayer.getHealth() + 0.4;
-								if (otherPlayer.getHealth() + 0.4 > otherPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()) {
-									newHealth = otherPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+								boolean doHeal = true;
+								if (healCooldown.containsKey(otherPlayer.getUniqueId())) {
+									if (healCooldown.get(otherPlayer.getUniqueId()) > System.currentTimeMillis()) {
+										doHeal = false;
+									}
 								}
-								otherPlayer.setHealth(newHealth);
+								if (doHeal) {
+									double newHealth = otherPlayer.getHealth() + 0.4;
+									if (otherPlayer.getHealth() + 0.4 > otherPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()) {
+										newHealth = otherPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+									}
+									otherPlayer.setHealth(newHealth);
+									healCooldown.put(otherPlayer.getUniqueId(), System.currentTimeMillis() + healCooldownTime);
+								}
 							} else {
-								otherPlayer.damage(1);
+								otherPlayer.damage(plugin.damageArmorCalculation(otherPlayer, 2));
 							}
 						}
 					}

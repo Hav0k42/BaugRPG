@@ -35,7 +35,7 @@ public class EfficientBotanyListener implements Listener {
 		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
 	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
 	 	
-        if (!(skillsconfig.contains("EnchantedBotanist1") && skillsconfig.getBoolean("EnchantedBotanist1"))) return;
+        if (!((skillsconfig.contains("EnchantedBotanist1") && skillsconfig.getBoolean("EnchantedBotanist1")) || plugin.magnetizedIdolListener.getActiveBestowedAbility(player.getUniqueId()).equals("EnchantedBotanist1"))) return;
     	if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) return;
     	if (event.getItem() == null) return;
     	

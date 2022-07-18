@@ -32,10 +32,10 @@ public class HorseListener implements Listener{
 	        Player player = (Player) event.getEntered();
 	        File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
 		 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
-	        if (skillsconfig.contains("StableMaster1") && skillsconfig.getBoolean("StableMaster1")) {
+	        if ((skillsconfig.contains("StableMaster1") && skillsconfig.getBoolean("StableMaster1")) || plugin.magnetizedIdolListener.getActiveBestowedAbility(player.getUniqueId()).equals("StableMaster1")) {
 	        	horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue() * buffedHorseSpeed);
 	        }
-	        if (skillsconfig.contains("StableMaster3") && skillsconfig.getBoolean("StableMaster3")) {
+	        if ((skillsconfig.contains("StableMaster3") && skillsconfig.getBoolean("StableMaster3")) || plugin.magnetizedIdolListener.getActiveBestowedAbility(player.getUniqueId()).equals("StableMaster3")) {
 	        	double healthPercentage = horse.getHealth() / horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
 	        	horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() * buffedHorseHealth);
 	        	horse.setHealth(horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() * healthPercentage);
@@ -53,10 +53,10 @@ public class HorseListener implements Listener{
             AbstractHorse horse = (AbstractHorse) event.getVehicle();
             File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
 		 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
-            if (skillsconfig.contains("StableMaster1") && skillsconfig.getBoolean("StableMaster1")) {
+		 	if ((skillsconfig.contains("StableMaster1") && skillsconfig.getBoolean("StableMaster1")) || plugin.magnetizedIdolListener.getActiveBestowedAbility(player.getUniqueId()).equals("StableMaster1")) {
             	horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue() / buffedHorseSpeed);
 	        }
-            if (skillsconfig.contains("StableMaster3") && skillsconfig.getBoolean("StableMaster3")) {
+		 	if ((skillsconfig.contains("StableMaster3") && skillsconfig.getBoolean("StableMaster3")) || plugin.magnetizedIdolListener.getActiveBestowedAbility(player.getUniqueId()).equals("StableMaster3")) {
             	double healthPercentage = horse.getHealth() / horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
             	horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() / buffedHorseHealth);
             	horse.setHealth(horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() * healthPercentage);

@@ -3,14 +3,13 @@ package org.baugindustries.baugrpg.commands.econ;
 import java.io.File;
 
 import org.baugindustries.baugrpg.Main;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-
-import net.md_5.bungee.api.ChatColor;
 
 public class BankBal implements CommandExecutor {
 	
@@ -31,11 +30,11 @@ public class BankBal implements CommandExecutor {
 		Player player = (Player)sender;
 		
 		if (player.hasPermission("minecraft.command.help")) {
-			File file = new File(plugin.getDataFolder() + File.separator + "bank.yml");
-		 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+			File bankfile = new File(plugin.getDataFolder() + File.separator + "bank.yml");
+		 	FileConfiguration bankconfig = YamlConfiguration.loadConfiguration(bankfile);
 		 	
 			
-			int balance = (int) config.get(player.getUniqueId().toString());
+			int balance = (int) bankconfig.get(player.getUniqueId().toString());
 			player.sendMessage(ChatColor.YELLOW + "Your bank balance is " + balance + ".");
 			return true;
 		} else {

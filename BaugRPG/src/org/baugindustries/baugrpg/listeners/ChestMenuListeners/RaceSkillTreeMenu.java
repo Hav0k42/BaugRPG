@@ -18,6 +18,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import org.bukkit.ChatColor;
+
 public class RaceSkillTreeMenu implements Listener{
 	private Main plugin;
 	public RaceSkillTreeMenu(Main plugin) {
@@ -91,7 +93,6 @@ public class RaceSkillTreeMenu implements Listener{
 	 		try {
 				skillsconfig.save(skillsfile);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	 		
@@ -115,7 +116,6 @@ public class RaceSkillTreeMenu implements Listener{
  			try {
 				skillsconfig.save(skillsfile);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	 		
@@ -205,6 +205,14 @@ public class RaceSkillTreeMenu implements Listener{
 				 		}
 			 			skillsconfig.set("skillPoints", skillsconfig.getInt("skillPoints") - skillPrice);
 			 			reloadBool = true;
+			 			
+			 			if (skill.equals("LunarArtificer1") || skill.equals("LunarArtificer3")) {
+			 				player.sendMessage(ChatColor.GOLD + "For info about how to use Lunar Transfusion, visit: https://github.com/Hav0k42/BaugRPG/wiki/Lunar-Transfusion");
+				 		}
+
+			 			if (skill.equals("LunarArtificer2")) {
+			 				player.sendMessage(ChatColor.GOLD + "To use starlight healing, walk while sneaking and stop sneaking while hovered over a teammate.");
+			 			}
 			 		}
 		 		}
 		 	}
@@ -212,7 +220,6 @@ public class RaceSkillTreeMenu implements Listener{
 			try {
 				skillsconfig.save(skillsfile);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	 	}

@@ -3,6 +3,8 @@ package org.baugindustries.baugrpg.customitems.elves.woodland_craftsman.intermed
 import org.baugindustries.baugrpg.Main;
 import org.baugindustries.baugrpg.Recipes;
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Slab;
 import org.bukkit.block.data.type.Stairs;
@@ -70,9 +72,11 @@ public class RustedStaffListener implements Listener {
 		if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
 			if (index == 3) return;
 			index++;
+			player.getWorld().playSound(player.getLocation(), Sound.ITEM_HONEYCOMB_WAX_ON, SoundCategory.MASTER, 2f, 1f);
 		} else if (event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
 			if (index == 0) return;
 			index--;
+			player.getWorld().playSound(player.getLocation(), Sound.ITEM_AXE_WAX_OFF, SoundCategory.MASTER, 2f, 1f);
 		}
 		BlockData tempData = event.getClickedBlock().getBlockData();
 		event.getClickedBlock().setType(copperType[index]);

@@ -121,7 +121,7 @@ public class PlayerDamageListener implements Listener {
 		 	}
 		 	
 		 	//Activate Steeled Armorer animation
-		 	if (skillsconfig.contains("SteeledArmorer1") && skillsconfig.getBoolean("SteeledArmorer1") && event.getDamage() > player.getHealth() && !plugin.steeledResolveCooldown.containsKey(player.getUniqueId())){
+		 	if (((skillsconfig.contains("SteeledArmorer1") && skillsconfig.getBoolean("SteeledArmorer1")) || plugin.magnetizedIdolListener.getActiveBestowedAbility(player.getUniqueId()).equals("SteeledArmorer1")) && event.getDamage() >= player.getHealth() && !plugin.steeledResolveCooldown.containsKey(player.getUniqueId())){
 		 		
 		 		plugin.steeledResolveCooldown.put(player.getUniqueId(), System.currentTimeMillis());
 		 		player.setGameMode(GameMode.SPECTATOR);
@@ -193,7 +193,7 @@ public class PlayerDamageListener implements Listener {
 		 	
 		 	
 		 	//Activate Verdant Shepherd Healing
-		 	if (skillsconfig.contains("VerdantShepherd1") && skillsconfig.getBoolean("VerdantShepherd1") && player.getHealth() - event.getDamage() < 5 && event.getDamage() < player.getHealth() && !plugin.shepherdsGraceCooldown.containsKey(player.getUniqueId())) {
+		 	if (((skillsconfig.contains("VerdantShepherd1") && skillsconfig.getBoolean("VerdantShepherd1")) || plugin.magnetizedIdolListener.getActiveBestowedAbility(player.getUniqueId()).equals("VerdantShepherd1")) && player.getHealth() - event.getDamage() < 5 && event.getDamage() < player.getHealth() && !plugin.shepherdsGraceCooldown.containsKey(player.getUniqueId())) {
 		 		plugin.shepherdsGraceCooldown.put(player.getUniqueId(), System.currentTimeMillis());
 		 		plugin.shepherdsGraceTicks.put(player.getUniqueId(), 0L);
 		 		runVerdantShepherdEffect(player.getUniqueId());
@@ -210,7 +210,7 @@ public class PlayerDamageListener implements Listener {
 		 	
 		 	
 		 	//Activate Greedy Scrapper Reinforcements
-		 	if (skillsconfig.contains("GreedyScrapper2") && skillsconfig.getBoolean("GreedyScrapper2") && player.getHealth() - event.getDamage() < 5 && event.getDamage() < player.getHealth() && !plugin.greedyReinforcementCooldown.containsKey(player.getUniqueId())) {
+		 	if (((skillsconfig.contains("GreedyScrapper2") && skillsconfig.getBoolean("GreedyScrapper2")) || plugin.magnetizedIdolListener.getActiveBestowedAbility(player.getUniqueId()).equals("GreedyScrapper2")) && player.getHealth() - event.getDamage() < 5 && event.getDamage() < player.getHealth() && !plugin.greedyReinforcementCooldown.containsKey(player.getUniqueId())) {
 		 		plugin.greedyReinforcementCooldown.put(player.getUniqueId(), System.currentTimeMillis());
 		 		plugin.greedyReinforcementTicks.put(player.getUniqueId(), 0L);
 		 		runGreedyScrapperEffect(player.getUniqueId());

@@ -48,7 +48,7 @@ public class LavaFishingListener implements Listener {
 		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
 	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
 	 	
-	 	if (!(skillsconfig.contains("GreedyScrapper1") && skillsconfig.getBoolean("GreedyScrapper1"))) return;
+	 	if (!((skillsconfig.contains("GreedyScrapper1") && skillsconfig.getBoolean("GreedyScrapper1")) || plugin.magnetizedIdolListener.getActiveBestowedAbility(player.getUniqueId()).equals("GreedyScrapper1"))) return;
 		
 		World world = player.getWorld();
 		if (primedHooks.contains(event.getHook())) {

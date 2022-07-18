@@ -14,7 +14,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 
 public class GeneralSkillTreeMenu implements Listener {
 	private Main plugin;
@@ -133,7 +133,7 @@ public class GeneralSkillTreeMenu implements Listener {
 					
 					String[] skillNames = {"speed", "jump", "damage", "resistance", "mining", "regen", "swim"};
 					for (int i = 0; i < currentItem.length; i++) {
-						if (event.getCurrentItem().equals(currentItem[i])) {
+						if (event.getCurrentItem() != null && event.getCurrentItem().equals(currentItem[i])) {
 							if (skillsconfig.getInt("skillPoints") > 0) {
 								skillsconfig.set("skillPoints", skillsconfig.getInt("skillPoints") - 1);
 								skillsconfig.set(skillNames[i], skillsconfig.getInt(skillNames[i]) + 1);

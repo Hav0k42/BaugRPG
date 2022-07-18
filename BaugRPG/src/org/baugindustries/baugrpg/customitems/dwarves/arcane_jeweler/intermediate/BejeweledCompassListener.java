@@ -23,14 +23,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 
 public class BejeweledCompassListener implements Listener {
 	private Main plugin;
 	
 	int distBounds = 7;
 	HashMap<UUID, Long> cooldown = new HashMap<UUID, Long>();
-	int cooldownTime = 25000;//25 seconds
+	int cooldownTime = 180000;//3 minutes
 	
 	public BejeweledCompassListener(Main plugin) {
 		this.plugin = plugin;
@@ -131,7 +131,7 @@ public class BejeweledCompassListener implements Listener {
 		Player player = event.getPlayer();
 		if (!Recipes.BEJEWELED_COMPASS.matches(plugin, player.getInventory().getItemInMainHand())) return;
 
-		if (!player.getInventory().getItemInOffHand().getType().equals(Material.DIAMOND)) return;
+		if (!player.getInventory().getItemInOffHand().getType().equals(Material.DIAMOND_BLOCK)) return;
 		
 		for (Recipes recipe : Recipes.values()) {
 			if (recipe.matches(plugin, player.getInventory().getItemInOffHand())) return;

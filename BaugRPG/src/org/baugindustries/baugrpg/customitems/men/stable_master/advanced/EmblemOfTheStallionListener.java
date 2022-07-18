@@ -19,12 +19,12 @@ public class EmblemOfTheStallionListener implements Listener {
 	
 	@EventHandler
 	public void run(PlayerMoveEvent event) {
+		if (event.getTo().getBlock().equals(event.getFrom().getBlock())) return;
 		Player player = event.getPlayer();
+		
 		if (!Recipes.EMBLEM_OF_THE_STALLION.playerIsCarrying(player, plugin)) return;
 
-
-		
-		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5, 2));
+		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20, 2));
 	}
 
 }

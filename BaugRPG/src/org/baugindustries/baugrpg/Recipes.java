@@ -3288,6 +3288,624 @@ public enum Recipes {
 			false
 			),
 	
+	//EXPERT
+	
+	//Stable Master
+	
+	ENCHANTED_WHISTLE (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					new ItemStack(Material.DIAMOND),
+					BOLTS,
+					new ItemStack(Material.DIAMOND),
+					PLATINUM,
+					WHISTLE,
+					NEW_MOON_FRAGMENT,
+					new ItemStack(Material.DIAMOND),
+					BOLTS,
+					new ItemStack(Material.DIAMOND)
+					)), 
+			false
+			),
+	
+	ENCHANTED_HORSE_ARMOR (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					new ItemStack(Material.DIAMOND),
+					TITANIUM,
+					new ItemStack(Material.DIAMOND),
+					GALVINIZED_ALLOY,
+					WHISTLE,
+					BLOOD_MOON_FRAGMENT,
+					new ItemStack(Material.DIAMOND),
+					TITANIUM,
+					new ItemStack(Material.DIAMOND)
+					)), 
+			false
+			),
+	
+	SOULBOUND_SWORD (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					new ItemStack(Material.AMETHYST_SHARD),
+					ESSENCE_OF_FAUNA,
+					new ItemStack(Material.AMETHYST_SHARD),
+					AQUEOUS_SOLUTION,
+					new ItemStack(Material.DIAMOND_SWORD),
+					ESSENCE_OF_VENGEANCE,
+					new ItemStack(Material.AMETHYST_SHARD),
+					ESSENCE_OF_EARTH,
+					new ItemStack(Material.AMETHYST_SHARD)
+					)), 
+			false
+			),
+	
+	SOUL_OF_THE_EQUESTRIAN (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					CORD,
+					ENRICHED_LEATHER,
+					ELVEN_CLOTH,
+					ENRICHED_LEATHER,
+					EMPTY_SOUL,
+					ENRICHED_LEATHER,
+					ESSENCE_OF_EARTH,
+					ENRICHED_LEATHER,
+					CORD
+					)), 
+			false
+			),
+	
+	//Steeled Armorer
+	
+	SOUL_OF_THE_GUARDIAN (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					STEEL_MESH,
+					STEEL_PLATE,
+					NEW_MOON_FRAGMENT,
+					STEEL_PLATE,
+					EMPTY_SOUL,
+					STEEL_PLATE,
+					GOLD_DUST,
+					STEEL_PLATE,
+					STEEL_MESH
+					)), 
+			false
+			),
+	
+	SOULBOUND_CHESTPIECE (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					new ItemStack(Material.AMETHYST_SHARD),
+					ESSENCE_OF_FAUNA,
+					new ItemStack(Material.AMETHYST_SHARD),
+					AQUEOUS_SOLUTION,
+					new ItemStack(Material.DIAMOND_CHESTPLATE),
+					ESSENCE_OF_VENGEANCE,
+					new ItemStack(Material.AMETHYST_SHARD),
+					ESSENCE_OF_EARTH,
+					new ItemStack(Material.AMETHYST_SHARD)
+					)), 
+			false
+			),
+	
+	VISAGE_OF_THE_GORGON (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					CORRUPTED_SOIL,
+					ESSENCE_OF_FIRE,
+					STEEL_WOOL,
+					BLOOD_OF_THE_FORSAKEN,
+					new ItemStack(Material.WITHER_SKELETON_SKULL),
+					BLOOD_OF_THE_FORSAKEN,
+					STEEL_WOOL,
+					ESSENCE_OF_FIRE,
+					CORRUPTED_SOIL
+					)), 
+			false
+			),
+	
+	//Verdant Shepherd
+	
+	SOUL_OF_THE_CARETAKER (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					ESSENCE_OF_FAUNA,
+					STEEL_WOOL,
+					CORRUPTED_SOIL,
+					STEEL_WOOL,
+					EMPTY_SOUL,
+					STEEL_WOOL,
+					GEM_CLUSTER,
+					STEEL_WOOL,
+					ESSENCE_OF_FAUNA
+					)), 
+			false
+			),
+	
+	SOULBOUND_HOE (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					new ItemStack(Material.AMETHYST_SHARD),
+					ESSENCE_OF_FAUNA,
+					new ItemStack(Material.AMETHYST_SHARD),
+					AQUEOUS_SOLUTION,
+					new ItemStack(Material.DIAMOND_HOE),
+					ESSENCE_OF_VENGEANCE,
+					new ItemStack(Material.AMETHYST_SHARD),
+					ESSENCE_OF_EARTH,
+					new ItemStack(Material.AMETHYST_SHARD)
+					)), 
+			false
+			),
+	
+	VEILED_TOTEM (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					ENRICHED_LEATHER,
+					ESSENCE_OF_FAUNA,
+					BLOOD_MOON_FRAGMENT,
+					ESSENCE_OF_FAUNA,
+					new ItemStack(Material.TOTEM_OF_UNDYING),
+					ESSENCE_OF_FAUNA,
+					WITHER_POWDER,
+					ESSENCE_OF_FAUNA,
+					ESSENCE_OF_EARTH
+					)), 
+			false
+			),
+	
+	//Enchanted Botanist
+	
+	SOUL_OF_THE_FLORIST (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					AQUEOUS_SOLUTION,
+					CORRUPTED_SOIL,
+					GOLD_DUST,
+					CORRUPTED_SOIL,
+					EMPTY_SOUL,
+					CORRUPTED_SOIL,
+					STEEL_MESH,
+					CORRUPTED_SOIL,
+					AQUEOUS_SOLUTION
+					)), 
+			false
+			),
+	
+	SOULBOUND_SHOVEL (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					new ItemStack(Material.AMETHYST_SHARD),
+					ESSENCE_OF_FAUNA,
+					new ItemStack(Material.AMETHYST_SHARD),
+					AQUEOUS_SOLUTION,
+					new ItemStack(Material.DIAMOND_SHOVEL),
+					ESSENCE_OF_VENGEANCE,
+					new ItemStack(Material.AMETHYST_SHARD),
+					ESSENCE_OF_EARTH,
+					new ItemStack(Material.AMETHYST_SHARD)
+					)), 
+			false
+			),
+	
+	STAFF_OF_PERSEPHONE (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					ESSENCE_OF_FAUNA,
+					GOLDEN_FLOWER,
+					null,
+					GALVINIZED_ALLOY,
+					ESSENCE_OF_EARTH,
+					GALVINIZED_ALLOY,
+					null,
+					null
+					)), 
+			false
+			),
+	
+	//Woodland Craftsman
+	
+	SOUL_OF_THE_WOODSMAN (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					ENRICHED_LOGS,
+					PARCHMENT,
+					TITANIUM,
+					ELVEN_CLOTH,
+					EMPTY_SOUL,
+					ELVEN_CLOTH,
+					ENRICHED_LEATHER,
+					PARCHMENT,
+					ENRICHED_LOGS
+					)), 
+			false
+			),
+	
+	SOULBOUND_LEGGINGS (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					new ItemStack(Material.AMETHYST_SHARD),
+					ESSENCE_OF_FAUNA,
+					new ItemStack(Material.AMETHYST_SHARD),
+					AQUEOUS_SOLUTION,
+					new ItemStack(Material.DIAMOND_LEGGINGS),
+					ESSENCE_OF_VENGEANCE,
+					new ItemStack(Material.AMETHYST_SHARD),
+					ESSENCE_OF_EARTH,
+					new ItemStack(Material.AMETHYST_SHARD)
+					)), 
+			false
+			),
+	
+	WOODSLING (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					GOLD_DUST,
+					LIGHT_BOW,
+					MAGMA_CRYSTAL,
+					CORD,
+					ENRICHED_LOGS,
+					CORD,
+					null,
+					CORD,
+					null
+					)), 
+			false
+			),
+	
+	//Woodland Craftsman
+	
+	SOUL_OF_THE_ASTROLOGER (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					BLOOD_MOON_FRAGMENT,
+					NEW_MOON_FRAGMENT,
+					GEM_CLUSTER,
+					NEW_MOON_FRAGMENT,
+					EMPTY_SOUL,
+					BLOOD_MOON_FRAGMENT,
+					STEEL_PLATE,
+					BLOOD_MOON_FRAGMENT,
+					NEW_MOON_FRAGMENT
+					)), 
+			false
+			),
+	
+	ASTRAL_WRENCH (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					NEW_MOON_FRAGMENT,
+					STEEL_MESH,
+					WITHER_POWDER,
+					null,
+					STAFF_OF_BALANCE,
+					STEEL_MESH,
+					PLATINUM,
+					null,
+					BLOOD_MOON_FRAGMENT
+					)), 
+			false
+			),
+	
+	SOULBOUND_ELYTRA (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					new ItemStack(Material.AMETHYST_SHARD),
+					ESSENCE_OF_FAUNA,
+					new ItemStack(Material.AMETHYST_SHARD),
+					AQUEOUS_SOLUTION,
+					new ItemStack(Material.ELYTRA),
+					ESSENCE_OF_VENGEANCE,
+					new ItemStack(Material.AMETHYST_SHARD),
+					ESSENCE_OF_EARTH,
+					new ItemStack(Material.AMETHYST_SHARD)
+					)), 
+			false
+			),
+	
+	//Radiant Metallurgist
+	
+	SOUL_OF_THE_BLACKSMITH (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					ESSENCE_OF_FIRE,
+					TITANIUM,
+					ELVEN_CLOTH,
+					TITANIUM,
+					EMPTY_SOUL,
+					TITANIUM,
+					STEEL_WOOL,
+					TITANIUM,
+					ESSENCE_OF_FIRE
+					)), 
+			false
+			),
+	
+	TOTEM_OF_THE_MOLE (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					ENRICHED_LEATHER,
+					MAGMA_CRYSTAL,
+					ENRICHED_LEATHER,
+					MAGMA_CRYSTAL,
+					RADIANT_BORE,
+					MAGMA_CRYSTAL,
+					CORRUPTED_SOIL,
+					CORRUPTED_SOIL,
+					CORRUPTED_SOIL
+					)), 
+			false
+			),
+	
+	RADIANT_AXE (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					WITHER_POWDER,
+					STEEL_PLATE,
+					STEEL_PLATE,
+					ESSENCE_OF_FIRE,
+					DWARVEN_AXE,
+					STEEL_PLATE,
+					BLOOD_MOON_FRAGMENT,
+					ESSENCE_OF_FIRE,
+					WITHER_POWDER
+					)), 
+			false
+			),
+	
+	//Arcane Jeweler
+	
+	SOUL_OF_THE_ENGRAVER (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					GOLD_DUST,
+					GEM_CLUSTER,
+					STEEL_WOOL,
+					GEM_CLUSTER,
+					EMPTY_SOUL,
+					GEM_CLUSTER,
+					PARCHMENT,
+					GEM_CLUSTER,
+					GOLD_DUST
+					)), 
+			false
+			),
+	
+	SOULBOUND_CROWN (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					new ItemStack(Material.AMETHYST_SHARD),
+					ESSENCE_OF_FAUNA,
+					new ItemStack(Material.AMETHYST_SHARD),
+					AQUEOUS_SOLUTION,
+					new ItemStack(Material.DIAMOND_HELMET),
+					ESSENCE_OF_VENGEANCE,
+					new ItemStack(Material.AMETHYST_SHARD),
+					ESSENCE_OF_EARTH,
+					new ItemStack(Material.AMETHYST_SHARD)
+					)), 
+			false
+			),
+	
+	COMPRESSIVE_WAND (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					GEM_CLUSTER,
+					new ItemStack(Material.NETHER_STAR),
+					CORD,
+					GALVINIZED_ALLOY,
+					GEM_CLUSTER,
+					PARCHMENT,
+					CORD,
+					null
+					)), 
+			false
+			),
+	
+	//Arcane Jeweler
+	
+	SOUL_OF_THE_PROSPECTOR (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					ESSENCE_OF_EARTH,
+					PLATINUM,
+					STEEL_MESH,
+					PLATINUM,
+					EMPTY_SOUL,
+					PLATINUM,
+					PARCHMENT,
+					PLATINUM,
+					ESSENCE_OF_EARTH
+					)), 
+			false
+			),
+	
+	SOULBOUND_PICKAXE (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					new ItemStack(Material.AMETHYST_SHARD),
+					ESSENCE_OF_FAUNA,
+					new ItemStack(Material.AMETHYST_SHARD),
+					AQUEOUS_SOLUTION,
+					new ItemStack(Material.DIAMOND_PICKAXE),
+					ESSENCE_OF_VENGEANCE,
+					new ItemStack(Material.AMETHYST_SHARD),
+					ESSENCE_OF_EARTH,
+					new ItemStack(Material.AMETHYST_SHARD)
+					)), 
+			false
+			),
+	
+	MULTITOOL (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					ANOMALOUS_PICKAXE,
+					null,
+					DWARVEN_AXE,
+					new ItemStack(Material.NETHER_STAR),
+					SCYTHE,
+					null,
+					GAIAS_WRATH,
+					null
+					)), 
+			false
+			),
+	
+	//Dark Alchemist
+	
+	SOUL_OF_THE_SCIENTIST (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					WITHER_POWDER,
+					ENRICHED_LEATHER,
+					WITHER_POWDER,
+					PARCHMENT,
+					EMPTY_SOUL,
+					GOLD_DUST,
+					ESSENCE_OF_VENGEANCE,
+					ESSENCE_OF_VENGEANCE,
+					ESSENCE_OF_VENGEANCE
+					)), 
+			false
+			),
+	
+	WAND_OF_DISFIGURATION (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					null,
+					ESSENCE_OF_FAUNA,
+					null,
+					BLOOD_MOON_FRAGMENT,
+					BREWING_WAND,
+					ESSENCE_OF_VENGEANCE,
+					null,
+					ESSENCE_OF_FIRE,
+					null
+					)), 
+			false
+			),
+	
+	VOODOO_DOLL (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					BLOOD_OF_THE_FORSAKEN,
+					null,
+					BLOOD_OF_THE_FORSAKEN,
+					BLOOD_MOON_FRAGMENT,
+					new ItemStack(Material.TOTEM_OF_UNDYING),
+					CORD,
+					BLOOD_OF_THE_FORSAKEN,
+					ESSENCE_OF_FIRE,
+					BLOOD_OF_THE_FORSAKEN
+					)), 
+			false
+			),
+	
+	//Enraged Berserker
+	
+	SOUL_OF_THE_WARRIOR (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					BLOOD_OF_THE_FORSAKEN,
+					NEW_MOON_FRAGMENT,
+					BLOOD_OF_THE_FORSAKEN,
+					STEEL_PLATE,
+					EMPTY_SOUL,
+					TITANIUM,
+					BLOOD_OF_THE_FORSAKEN,
+					BLOOD_OF_THE_FORSAKEN,
+					BLOOD_OF_THE_FORSAKEN
+					)), 
+			false
+			),
+	
+	SOULBOUND_AXE (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					new ItemStack(Material.AMETHYST_SHARD),
+					ESSENCE_OF_FAUNA,
+					new ItemStack(Material.AMETHYST_SHARD),
+					AQUEOUS_SOLUTION,
+					new ItemStack(Material.DIAMOND_AXE),
+					ESSENCE_OF_VENGEANCE,
+					new ItemStack(Material.AMETHYST_SHARD),
+					ESSENCE_OF_EARTH,
+					new ItemStack(Material.AMETHYST_SHARD)
+					)), 
+			false
+			),
+	
+	PHOENIX_ASHES (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					ESSENCE_OF_FIRE,
+					ESSENCE_OF_FAUNA,
+					ESSENCE_OF_FIRE,
+					BLOOD_MOON_FRAGMENT,
+					WITHER_POWDER,
+					BLOOD_MOON_FRAGMENT,
+					ESSENCE_OF_FIRE,
+					ESSENCE_OF_FAUNA,
+					ESSENCE_OF_FIRE
+					)), 
+			false
+			),
+	
+	//Greedy Scrapper
+	
+	SOUL_OF_THE_THIEF (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					MAGMA_CRYSTAL,
+					CORD,
+					MAGMA_CRYSTAL,
+					ELVEN_CLOTH,
+					EMPTY_SOUL,
+					GOLD_DUST,
+					GALVINIZED_ALLOY,
+					GALVINIZED_ALLOY,
+					GALVINIZED_ALLOY
+					)), 
+			false
+			),
+	
+	SOULBOUND_GREAVES (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					new ItemStack(Material.AMETHYST_SHARD),
+					ESSENCE_OF_FAUNA,
+					new ItemStack(Material.AMETHYST_SHARD),
+					AQUEOUS_SOLUTION,
+					new ItemStack(Material.DIAMOND_BOOTS),
+					ESSENCE_OF_VENGEANCE,
+					new ItemStack(Material.AMETHYST_SHARD),
+					ESSENCE_OF_EARTH,
+					new ItemStack(Material.AMETHYST_SHARD)
+					)), 
+			false
+			),
+	
+	ABERRANT_COMPASS (
+			RecipeTypes.EXPERT, 
+			new ArrayList<Object> (Arrays.asList(
+					STEEL_PLATE,
+					new ItemStack(Material.SHULKER_SHELL),
+					WITHER_POWDER,
+					new ItemStack(Material.SHULKER_SHELL),
+					BEJEWELED_COMPASS,
+					new ItemStack(Material.SHULKER_SHELL),
+					NEW_MOON_FRAGMENT,
+					new ItemStack(Material.SHULKER_SHELL),
+					PLATINUM
+					)), 
+			false
+			),
+	
 	;
 
 	RecipeTypes recipeLevel;
@@ -3430,7 +4048,7 @@ public enum Recipes {
 		}
 		if (!otherItem.hasItemMeta()) return false;
 		
-		if (thisItem.getItemMeta().getDisplayName().equals(otherItem.getItemMeta().getDisplayName()) && thisItem.getType().equals(otherItem.getType())) {
+		if (thisItem.getItemMeta().getDisplayName().equals(otherItem.getItemMeta().getDisplayName()) && (thisItem.getType().equals(otherItem.getType()) || this.equals(Recipes.MULTITOOL))) {
 			return true;
 		}
 		

@@ -7,6 +7,8 @@ import org.baugindustries.baugrpg.Main;
 import org.baugindustries.baugrpg.RayTrace;
 import org.baugindustries.baugrpg.Recipes;
 import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,7 +17,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.util.Vector;
 
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 
 public class WandOfDisplacementListener implements Listener {
 	private Main plugin;
@@ -42,6 +44,10 @@ public class WandOfDisplacementListener implements Listener {
 			if (!(Recipes.WAND_OF_DISPLACEMENT.matches(plugin, player.getInventory().getItemInOffHand()))) return;
 	    }
 		
+
+		if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) event.setCancelled(true);
+		if (event.getAction().equals(Action.LEFT_CLICK_BLOCK)) event.setCancelled(true);
+		
 		if (cooldown.containsKey(player.getUniqueId())) {
 			if (cooldown.get(player.getUniqueId()) > System.currentTimeMillis()) {
 				int secondsRemaining = (int) ((cooldown.get(player.getUniqueId()) - System.currentTimeMillis()) / 1000) + 1;
@@ -54,8 +60,6 @@ public class WandOfDisplacementListener implements Listener {
 			}
 		}
 		
-		if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) event.setCancelled(true);
-		if (event.getAction().equals(Action.LEFT_CLICK_BLOCK)) event.setCancelled(true);
 		
 		
 		RayTrace raytrace = new RayTrace(player.getLocation().toVector(), player.getLocation().getDirection());
@@ -77,6 +81,8 @@ public class WandOfDisplacementListener implements Listener {
 						
 						player.teleport(newLocPlayer);
 						bukkitPlayer.teleport(newLocBukkit);
+						player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, SoundCategory.MASTER, 2f, 1f);
+						player.getWorld().playSound(bukkitPlayer.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, SoundCategory.MASTER, 2f, 1f);
 						
 						cooldown.put(player.getUniqueId(), System.currentTimeMillis() + cooldownTime);
 						return;

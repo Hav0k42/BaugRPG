@@ -69,6 +69,8 @@ public class GoldenFlowerListener implements Listener {
 		for (int i = 0; i < beeCount; i++) {
 			if (!livingBees.containsKey(player.getUniqueId()) || livingBees.get(player.getUniqueId()) < maxBees) {
 				Bee bee = (Bee) player.getWorld().spawnEntity(player.getLocation(), EntityType.BEE);
+				bee.setCustomName("Wasp");
+				bee.setCustomNameVisible(false);
 				bee.getPersistentDataContainer().set(new NamespacedKey(plugin, "wasp"), PersistentDataType.INTEGER, 1);
 				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 					public void run() {

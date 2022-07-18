@@ -6,6 +6,8 @@ import java.util.UUID;
 import org.baugindustries.baugrpg.Main;
 import org.baugindustries.baugrpg.Recipes;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -39,6 +41,7 @@ public class BlazingFuryListener implements Listener {
 		
 		cooldown.put(player.getUniqueId(), System.currentTimeMillis() + cooldownTime);
 		player.getWorld().spawnParticle(Particle.FLAME, player.getLocation(), 400);
+		player.getWorld().playSound(player.getLocation(), Sound.ENTITY_GHAST_SHOOT, SoundCategory.MASTER, 2f, 1f);
 		player.getNearbyEntities(20, 20, 20).forEach(entity -> {
 			if (entity instanceof Monster) {
 				entity.setFireTicks(60);

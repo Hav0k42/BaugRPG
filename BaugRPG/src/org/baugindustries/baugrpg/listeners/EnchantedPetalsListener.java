@@ -3,6 +3,7 @@ package org.baugindustries.baugrpg.listeners;
 import java.io.File;
 
 import org.baugindustries.baugrpg.Main;
+import org.baugindustries.baugrpg.Recipes;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -29,7 +30,7 @@ public class EnchantedPetalsListener implements Listener {
 		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
 	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
 	 	
-        if (!(skillsconfig.contains("EnchantedBotanist2") && skillsconfig.getBoolean("EnchantedBotanist2"))) return;
+        if (!((skillsconfig.contains("EnchantedBotanist2") && skillsconfig.getBoolean("EnchantedBotanist2")) || plugin.magnetizedIdolListener.getActiveBestowedAbility(player.getUniqueId()).equals("EnchantedBotanist2"))) return;
     	if (!event.getAction().equals(Action.RIGHT_CLICK_AIR)) return;
     	if (event.getItem() == null) return;
     	if (plugin.petalTickTime.containsKey(player.getUniqueId()) && plugin.petalTickTime.get(player.getUniqueId()) + 4 == Bukkit.getWorlds().get(0).getFullTime()) {
@@ -40,6 +41,9 @@ public class EnchantedPetalsListener implements Listener {
     	
     	
     	ItemStack item = event.getItem();
+    	for (Recipes recipe : Recipes.values()) {
+    		if (recipe.matches(plugin, item)) return;
+    	}
     	Material itemMat = item.getType();
     	Boolean potCheck = false;
     	PotionEffect potEff = null;
@@ -86,10 +90,13 @@ public class EnchantedPetalsListener implements Listener {
     	} else if (itemMat.equals(Material.ROSE_BUSH)) {
     		potEff = new PotionEffect(PotionEffectType.SLOW, 400, 0);//Effect, Duration(ticks), Amplifier
     		potCheck = true;
-    	} else if (itemMat.equals(Material.GRASS)) {
-    		potEff = new PotionEffect(PotionEffectType.CONFUSION, 800, 0);//Effect, Duration(ticks), Amplifier
-    		potCheck = true;
     	}
+//    	else if (itemMat.equals(Material.GRASS)) {
+//    		potEff = new PotionEffect(PotionEffectType.CONFUSION, 800, 0);//Effect, Duration(ticks), Amplifier
+//    		potCheck = true;
+//    	}
+    	
+    	//Added weed as an item this isnt necessary anymore
     	
     	if (potCheck) {
     		player.addPotionEffect(potEff);

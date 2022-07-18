@@ -4,6 +4,8 @@ import org.baugindustries.baugrpg.Main;
 import org.baugindustries.baugrpg.Recipes;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -44,6 +46,7 @@ public class RockyTransmuterListener implements Listener {
 			if (block.getType().equals(stone)) {
 				block.setType(stones[(int)(Math.random() * stones.length)]);
 				player.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().add(0.5, 0.5, 0.5), 4, 0.5, 0.5, 0.5);
+				player.getWorld().playSound(player.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_HIT, SoundCategory.MASTER, 2f, 1f);
 				break;
 			}
 		}

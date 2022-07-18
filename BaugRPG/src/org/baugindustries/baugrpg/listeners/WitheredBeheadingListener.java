@@ -27,7 +27,7 @@ public class WitheredBeheadingListener implements Listener {
 		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + uuid + ".yml");
 	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
 	 	
-	 	if (!(skillsconfig.contains("EnragedBerserker2") && skillsconfig.getBoolean("EnragedBerserker2"))) return;
+	 	if (!((skillsconfig.contains("EnragedBerserker2") && skillsconfig.getBoolean("EnragedBerserker2")) || plugin.magnetizedIdolListener.getActiveBestowedAbility(killer.getUniqueId()).equals("EnragedBerserker2"))) return;
 	 	
 	 	event.getDrops().forEach(drop -> {
 	 		if (drop.getType().equals(Material.WITHER_SKELETON_SKULL)) return;

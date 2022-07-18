@@ -28,7 +28,7 @@ public class MinecartMoveListener implements Listener{
 	            File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
 	    	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
 	            
-	            if (skillsconfig.contains("GildedMiner2") && skillsconfig.getBoolean("GildedMiner2")) {//Check if the player is of the race of Dwarf
+	            if ((skillsconfig.contains("GildedMiner2") && skillsconfig.getBoolean("GildedMiner2")) || plugin.magnetizedIdolListener.getActiveBestowedAbility(player.getUniqueId()).equals("GildedMiner2")) {//Check if the player is of the race of Dwarf
 	            	Vector velocity = new Vector();
 	            	velocity.setX(10 * (minecart.getVelocity().getX()));
 	            	velocity.setY(minecart.getVelocity().getY());

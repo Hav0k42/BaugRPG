@@ -19,7 +19,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 
 public class ResetRaceListener implements Listener {
 	private Main plugin;
@@ -74,6 +74,9 @@ public class ResetRaceListener implements Listener {
 				File bankfile = new File(plugin.getDataFolder() + File.separator + "bank.yml");
 				FileConfiguration bankConfig = YamlConfiguration.loadConfiguration(bankfile);
 				
+				File econfile = new File(plugin.getDataFolder() + File.separator + "econ.yml");
+				FileConfiguration econConfig = YamlConfiguration.loadConfiguration(econfile);
+				
 				UUID emperorUUID = null;
 				
 				Set<String> banks = bankConfig.getKeys(false);
@@ -92,7 +95,7 @@ public class ResetRaceListener implements Listener {
 					if (playerRace == 3) {
 						if (emperorUUID == null) {
 							emperorUUID = uuid;
-						} else if (bankConfig.getInt(string) > bankConfig.getInt(emperorUUID.toString())) {
+						} else if (bankConfig.getInt(string) + econConfig.getInt(string) > bankConfig.getInt(emperorUUID.toString()) + econConfig.getInt(emperorUUID.toString())) {
 							emperorUUID = uuid;
 						}
 					}

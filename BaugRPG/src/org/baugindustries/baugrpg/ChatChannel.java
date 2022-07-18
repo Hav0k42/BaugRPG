@@ -21,7 +21,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 
 public class ChatChannel implements Listener {
 
@@ -161,6 +161,7 @@ public class ChatChannel implements Listener {
 					e.printStackTrace();
 				}
 				
+				plugin.resetRaceEscape.remove(p.getUniqueId());
 				
 			}
 		} else if (plugin.leaderPunishEscape.containsKey(p.getUniqueId())) {
@@ -291,13 +292,13 @@ public class ChatChannel implements Listener {
 					
 					break;
 				case 3:
-					File file = new File(plugin.getDataFolder() + File.separator + "bank.yml");
-				 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+					File bankfile = new File(plugin.getDataFolder() + File.separator + "bank.yml");
+				 	FileConfiguration bankconfig = YamlConfiguration.loadConfiguration(bankfile);
 				 	
-				 	int transferAmount = (int) (config.getInt(currentDefendantUUID) * (Double.parseDouble(event.getMessage()) / 100));
+				 	int transferAmount = (int) (bankconfig.getInt(currentDefendantUUID) * (Double.parseDouble(event.getMessage()) / 100));
 				 	
-				 	config.set(currentPlaintiffUUID, config.getInt(currentPlaintiffUUID) + transferAmount);
-				 	config.set(currentDefendantUUID, config.getInt(currentDefendantUUID) - transferAmount);
+				 	bankconfig.set(currentPlaintiffUUID, bankconfig.getInt(currentPlaintiffUUID) + transferAmount);
+				 	bankconfig.set(currentDefendantUUID, bankconfig.getInt(currentDefendantUUID) - transferAmount);
 				 	
 				 	if (Bukkit.getOfflinePlayer(UUID.fromString(currentPlaintiffUUID)).isOnline()) {
 				 		((Player)Bukkit.getOfflinePlayer(UUID.fromString(currentPlaintiffUUID))).sendMessage(ChatColor.GOLD + "The criminal you reported has been punished, and you have been awarded " + transferAmount + " Dwarven Gold");
@@ -308,7 +309,7 @@ public class ChatChannel implements Listener {
 				 	}
 				 	
 				 	try {
-						config.save(file);
+				 		bankconfig.save(bankfile);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -805,7 +806,7 @@ public class ChatChannel implements Listener {
 			}
 			switch (race) {
 			case 0:
-				event.setFormat("[Normie] " + ChatColor.YELLOW + p.getDisplayName() + ": " + ChatColor.WHITE + event.getMessage());
+				event.setFormat("[Undecided] " + ChatColor.YELLOW + p.getDisplayName() + ": " + ChatColor.WHITE + event.getMessage());
 				break;
 			case 1:
 				event.setFormat(ChatColor.GOLD + "[Global Chat] " + ChatColor.DARK_AQUA + "[Man] " + ChatColor.YELLOW + p.getDisplayName() + ": " + ChatColor.WHITE + event.getMessage());

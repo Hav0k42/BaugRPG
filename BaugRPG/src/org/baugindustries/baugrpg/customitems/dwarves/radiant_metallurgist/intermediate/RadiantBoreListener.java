@@ -6,6 +6,8 @@ import java.util.UUID;
 import org.baugindustries.baugrpg.Main;
 import org.baugindustries.baugrpg.Recipes;
 import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
 import org.bukkit.entity.MushroomCow;
 import org.bukkit.entity.Player;
@@ -19,7 +21,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.util.BlockIterator;
 
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 
 public class RadiantBoreListener implements Listener {
 	private Main plugin;
@@ -123,6 +125,7 @@ public class RadiantBoreListener implements Listener {
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 				  public void run() {
 						player.teleport(newLoc);
+						player.getWorld().playSound(newLoc, Sound.BLOCK_ROOTED_DIRT_BREAK, SoundCategory.MASTER, 2f, 1f);
 				  }
 			 }, i);
 		}

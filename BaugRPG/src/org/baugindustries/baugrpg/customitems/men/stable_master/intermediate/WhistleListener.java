@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import org.baugindustries.baugrpg.Main;
 import org.baugindustries.baugrpg.Recipes;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -16,7 +18,7 @@ import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.bukkit.event.world.EntitiesLoadEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 
 public class WhistleListener implements Listener {
 	private Main plugin;
@@ -65,8 +67,9 @@ public class WhistleListener implements Listener {
 		}
 		
 		horse.teleport(player.getLocation());
+		player.getWorld().playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_FLUTE, SoundCategory.MASTER, 2f, 2f);
 
-		player.sendMessage(ChatColor.GREEN + "called");
+		player.sendMessage(ChatColor.GREEN + "Called");
 		
 	}
 	

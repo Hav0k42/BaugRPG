@@ -40,7 +40,7 @@ public class AlchemistThrowPotionListener implements Listener {
 	 	PotionMeta meta = (PotionMeta) event.getItem().getItemMeta();
 	 	PotionData data = meta.getBasePotionData();
 	 	
-	 	if (skillsconfig.contains("DarkAlchemist1") && skillsconfig.getBoolean("DarkAlchemist1") && !(skillsconfig.contains("DarkAlchemist3") && skillsconfig.getBoolean("DarkAlchemist3"))) {
+	 	if ((skillsconfig.contains("DarkAlchemist1") && skillsconfig.getBoolean("DarkAlchemist1") && !(skillsconfig.contains("DarkAlchemist3") && skillsconfig.getBoolean("DarkAlchemist3"))) || plugin.magnetizedIdolListener.getActiveBestowedAbility(player.getUniqueId()).equals("DarkAlchemist1")) {
 	 		
 	 		for (int i = 0; i < meta.getCustomEffects().size(); i++) {
 	 			PotionEffect effect = meta.getCustomEffects().get(i);
@@ -56,7 +56,7 @@ public class AlchemistThrowPotionListener implements Listener {
 	 			meta.addCustomEffect(newEffect, false);
 	 		}
 	 		event.getItem().setItemMeta(meta);
-	 	} else if (skillsconfig.contains("DarkAlchemist3") && skillsconfig.getBoolean("DarkAlchemist3") && !(skillsconfig.contains("DarkAlchemist1") && skillsconfig.getBoolean("DarkAlchemist1"))) {
+	 	} else if ((skillsconfig.contains("DarkAlchemist3") && skillsconfig.getBoolean("DarkAlchemist3") && !(skillsconfig.contains("DarkAlchemist1") && skillsconfig.getBoolean("DarkAlchemist1"))) || plugin.magnetizedIdolListener.getActiveBestowedAbility(player.getUniqueId()).equals("DarkAlchemist3")) {
 	 		for (int i = 0; i < meta.getCustomEffects().size(); i++) {
 	 			PotionEffect effect = meta.getCustomEffects().get(i);
 	 			PotionEffect newEffect = new PotionEffect(effect.getType(), effect.getDuration() * 2, effect.getAmplifier());

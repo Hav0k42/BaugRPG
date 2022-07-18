@@ -8,6 +8,8 @@ import org.baugindustries.baugrpg.Recipes;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -22,7 +24,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 
 
 public class CrookListener implements Listener {
@@ -72,6 +74,7 @@ public class CrookListener implements Listener {
 		
 
 		player.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, event.getRightClicked().getLocation(), 4, 0.5, 0.5, 0.5);
+		player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, SoundCategory.MASTER, 2f, 1f);
 		
 		animal.setInvisible(true);
 		animal.setInvulnerable(true);
@@ -135,6 +138,7 @@ public class CrookListener implements Listener {
 		
 
 		player.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, tpLoc, 10, 0.5, 0.5, 0.5);
+		player.getWorld().playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, SoundCategory.MASTER, 2f, 1f);
 		
 		originalLoc.remove(animal);
 		crookedAnimals.remove(crookUUID);

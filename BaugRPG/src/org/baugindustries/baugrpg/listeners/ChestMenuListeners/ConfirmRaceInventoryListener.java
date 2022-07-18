@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -26,7 +27,6 @@ public class ConfirmRaceInventoryListener implements Listener{
 	}
 	
 	
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent event) {
 		if (event.getWhoClicked() instanceof Player) {
@@ -34,7 +34,7 @@ public class ConfirmRaceInventoryListener implements Listener{
 			if (event.getClickedInventory() != null) {
 				if (!(event.getView().getTopInventory().equals(event.getClickedInventory())) && event.getCursor() == null) return;
 				if (event.getView().getTitle().equals(ChatColor.DARK_GRAY + "Confirm Selection")) {
-					
+					event.setCancelled(true);
 						if (event.getSlot() == 15 && event.getCurrentItem().equals(plugin.itemManager.getNoItem())) {//No
 							player.openInventory(plugin.inventoryManager.getSetRaceMenuInventory());
 						} else if (event.getSlot() == 11 && event.getCurrentItem().equals(plugin.itemManager.getYesItem())) {//Yes
@@ -63,28 +63,38 @@ public class ConfirmRaceInventoryListener implements Listener{
 							switch (race) {
 								case 1://Men
 									player.teleport(claimsConfig.getLocation("menSpawn"));
-									plugin.board.getTeam("Men").addPlayer(player);
+									plugin.board.getTeam("Men").addEntry(player.getName());
 									break;
 								case 2://Elves
 									player.teleport(claimsConfig.getLocation("elfSpawn"));
-									plugin.board.getTeam("Elves").addPlayer(player);
+									plugin.board.getTeam("Elves").addEntry(player.getName());
 									break;
 								case 3://Dwarves
 									player.teleport(claimsConfig.getLocation("dwarfSpawn"));
-									plugin.board.getTeam("Dwarves").addPlayer(player);
+									plugin.board.getTeam("Dwarves").addEntry(player.getName());
 									break;
 								case 4://Orcs
 									player.teleport(claimsConfig.getLocation("orcSpawn"));
-									plugin.board.getTeam("Orcs").addPlayer(player);
+									plugin.board.getTeam("Orcs").addEntry(player.getName());
 									break;
 								case 5://Wizards
-									plugin.board.getTeam("Wizards").addPlayer(player);
+									plugin.board.getTeam("Wizards").addEntry(player.getName());
 									break;
 							}
-							
+
+							PermissionAttachment attachment = player.addAttachment(plugin);
+							plugin.onJoinListener.perms.put(player.getUniqueId(), attachment);
+							PermissionAttachment pperms = plugin.onJoinListener.perms.get(player.getUniqueId());
+							if (race == 2) {
+								pperms.setPermission("OpenInv.editinv", true);
+								pperms.setPermission("OpenInv.openinv", true);
+								pperms.setPermission("OpenInv.editender", true);
+								pperms.setPermission("OpenInv.openenderall", true);
+							} else {
+								pperms.setPermission("OpenInv.exempt", true);
+							}
 							
 						}
-						event.setCancelled(true);
 					}
 				}
 			}

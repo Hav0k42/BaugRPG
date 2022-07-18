@@ -5,6 +5,8 @@ import java.io.File;
 import org.baugindustries.baugrpg.Main;
 import org.baugindustries.baugrpg.Recipes;
 import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -14,7 +16,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 
 public class MagicMirrorListener implements Listener {
 	private Main plugin;
@@ -62,6 +64,8 @@ public class MagicMirrorListener implements Listener {
 			  public void run() {
 				  if (player.getLocation().getX() == coords.getX() && player.getLocation().getY() == coords.getY() && player.getLocation().getZ() == coords.getZ()) {
 					  player.teleport(finalSpawnLoc);
+						player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, SoundCategory.MASTER, 2f, 1f);
+						finalSpawnLoc.getWorld().playSound(finalSpawnLoc, Sound.ENTITY_ENDERMAN_TELEPORT, SoundCategory.MASTER, 2f, 1f);
 				  } else {
 					  player.sendMessage(ChatColor.RED + "You cretin, I said don't move.");
 				  }

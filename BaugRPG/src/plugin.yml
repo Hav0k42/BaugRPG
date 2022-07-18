@@ -91,3 +91,6 @@ commands:
    description: Gives you one of the many custom items used in game and in menus.
    aliases: [gci]
    permission: minecraft.command.op
+  level:
+   usage: /level
+   description: Tells you what level you are (How many skill points you've collected)

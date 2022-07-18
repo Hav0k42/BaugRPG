@@ -5,7 +5,6 @@ import java.util.List;
 import org.baugindustries.baugrpg.Main;
 import org.baugindustries.baugrpg.Recipes;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,7 +14,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 
 public class VoidStoneListener implements Listener {
 	private Main plugin;
@@ -43,7 +42,7 @@ public class VoidStoneListener implements Listener {
 		for (Entity entity : nearbyEntities) {
 			if (entity instanceof Player) {
 				if (plugin.getRace((Player)entity) != plugin.getRace(player)) {
-					((LivingEntity) entity).addPotionEffect(blind);
+					((Player) entity).addPotionEffect(blind);
 				}
 			}
 		}

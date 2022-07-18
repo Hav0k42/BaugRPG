@@ -35,7 +35,7 @@ public class ArcaneJewelsListener implements Listener {
 		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + attacker.getUniqueId() + ".yml");
 	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
 	 	
-	 	if (!(skillsconfig.contains("ArcaneJeweler1") && skillsconfig.getBoolean("ArcaneJeweler1"))) return;
+	 	if (!((skillsconfig.contains("ArcaneJeweler1") && skillsconfig.getBoolean("ArcaneJeweler1")) || plugin.magnetizedIdolListener.getActiveBestowedAbility(attacker.getUniqueId()).equals("ArcaneJeweler1"))) return;
 	 	double percentage = 0.005;
 	 	if (Math.random() > percentage) return;
 	 	

@@ -7,6 +7,8 @@ import org.baugindustries.baugrpg.Main;
 import org.baugindustries.baugrpg.Recipes;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Monster;
@@ -16,7 +18,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 
 public class FlamelashListener implements Listener {
 	private Main plugin;
@@ -78,6 +80,7 @@ public class FlamelashListener implements Listener {
 		
 		
 		if (Math.random() < splitChance) {
+			player.getWorld().playSound(loc, Sound.ENTITY_GHAST_SHOOT, SoundCategory.MASTER, 2f, 1f);
 			Location newLoc1 = incrementForward(loc, incrementDist, randOffsetBound);
 			Location newLoc2 = incrementForward(loc, incrementDist, randOffsetBound);
 			

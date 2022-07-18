@@ -29,7 +29,7 @@ public class GildedFortuneListener implements Listener{
 		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
 	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
         
-        if (!(skillsconfig.contains("GildedMiner1") && skillsconfig.getBoolean("GildedMiner1"))) return;
+        if (!((skillsconfig.contains("GildedMiner1") && skillsconfig.getBoolean("GildedMiner1")) || plugin.magnetizedIdolListener.getActiveBestowedAbility(player.getUniqueId()).equals("GildedMiner1"))) return;
         
        
 

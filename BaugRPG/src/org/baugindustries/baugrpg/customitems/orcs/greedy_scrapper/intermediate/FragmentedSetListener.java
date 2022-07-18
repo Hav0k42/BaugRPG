@@ -32,7 +32,7 @@ import it.unimi.dsi.fastutil.ints.IntArrayList;
 public class FragmentedSetListener implements Listener {
 	private Main plugin;
 	
-	private double fragChance = 0.35;
+	private double fragChance = 0.25;
 	private int fragCount = 20;
 	
 	public FragmentedSetListener(Main plugin) {
@@ -101,7 +101,7 @@ public class FragmentedSetListener implements Listener {
 		if (event.getHitEntity() != null) {//hit entity
 			if (!(event.getHitEntity() instanceof LivingEntity)) return;
 			LivingEntity hitEntity = (LivingEntity) event.getHitEntity();
-			hitEntity.damage(1);
+			hitEntity.damage(plugin.damageArmorCalculation(hitEntity, 2));
 			hitEntity.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 1));
 		}
 		frag.remove();

@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 
 public class MagmaStoneListener  implements Listener {
 	private Main plugin;
@@ -31,11 +31,12 @@ public class MagmaStoneListener  implements Listener {
 	public void onPlayerMove(PlayerMoveEvent event) {
 		Player player = event.getPlayer();
 		
-		if (event.getTo().equals(event.getFrom())) return;
+		if (event.getTo().getBlock().equals(event.getFrom().getBlock())) return;
+		
+		if (!(player.getLocation().getBlock().getRelative(0, -1, 0).getType().equals(Material.LAVA) || player.getLocation().getBlock().getRelative(0, -1, 0).getType().equals(Material.MAGMA_BLOCK))) return;
 		
 		if (!Recipes.MAGMA_STONE.playerIsCarrying(player, plugin)) return;
 		
-		if (!(player.getLocation().getBlock().getRelative(0, -1, 0).getType().equals(Material.LAVA) || player.getLocation().getBlock().getRelative(0, -1, 0).getType().equals(Material.MAGMA_BLOCK))) return;
 		
 		Block block = player.getLocation().getBlock().getRelative(0, -1, 0);
 		

@@ -25,40 +25,49 @@ public class FeatureManagement implements Listener{
 		if (!(event.getView().getTopInventory().equals(event.getClickedInventory())) && event.getCursor() == null) return;
 		if (!event.getView().getTitle().equals("Feature Management")) return;
 		
+
+		event.setCancelled(true);
+		
 		File file = new File(plugin.getDataFolder() + File.separator + "config.yml");
 	 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
 	 	
+	 	if (event.getCurrentItem() == null) return;
+	 	
 		
 		if (event.getCurrentItem().equals(plugin.itemManager.getTpaFeatureItem())) {
-			config.set("allowTpa", !(Boolean)config.get("allowTpa"));
+			config.set("allowTpa", !config.getBoolean("allowTpa"));
 		}
 		
 		if (event.getCurrentItem().equals(plugin.itemManager.getRecipeFeatureItem())) {
-			config.set("allowRecipe", !(Boolean)config.get("allowRecipe"));
+			config.set("allowRecipe", !config.getBoolean("allowRecipe"));
 		}
 		
 		if (event.getCurrentItem().equals(plugin.itemManager.getEndermanGriefItem())) {
-			config.set("allowEndermanGriefing", !(Boolean)config.get("allowEndermanGriefing"));
+			config.set("allowEndermanGriefing", !config.getBoolean("allowEndermanGriefing"));
 		}
 		
 		if (event.getCurrentItem().equals(plugin.itemManager.getCreeperGriefItem())) {
-			config.set("allowCreeperGriefing", !(Boolean)config.get("allowCreeperGriefing"));
+			config.set("allowCreeperGriefing", !config.getBoolean("allowCreeperGriefing"));
 		}
 		
 		if (event.getCurrentItem().equals(plugin.itemManager.getTntGriefItem())) {
-			config.set("allowTntGriefing", !(Boolean)config.get("allowTntGriefing"));
+			config.set("allowTntGriefing", !config.getBoolean("allowTntGriefing"));
 		}
 		
 		if (event.getCurrentItem().equals(plugin.itemManager.getGhastGriefItem())) {
-			config.set("allowGhastGriefing", !(Boolean)config.get("allowGhastGriefing"));
+			config.set("allowGhastGriefing", !config.getBoolean("allowGhastGriefing"));
 		}
 		
 		if (event.getCurrentItem().equals(plugin.itemManager.getMediumCoreDeathItem())) {
-			config.set("mediumCoreDeathOn", !(Boolean)config.get("mediumCoreDeathOn"));
+			config.set("mediumCoreDeathOn", !config.getBoolean("mediumCoreDeathOn"));
 		}
 		
 		if (event.getCurrentItem().equals(plugin.itemManager.getHardcoreDeathItem())) {
-			config.set("hardcoreDeathOn", !(Boolean)config.get("hardcoreDeathOn"));
+			config.set("hardcoreDeathOn", !config.getBoolean("hardcoreDeathOn"));
+		}
+		
+		if (event.getCurrentItem().equals(plugin.itemManager.getHardcoreDeathItem())) {
+			config.set("autoBalanceRaces", !config.getBoolean("autoBalanceRaces"));
 		}
 		
 		try {
@@ -73,6 +82,5 @@ public class FeatureManagement implements Listener{
 		
 		
 		
-		event.setCancelled(true);
 	}
 }

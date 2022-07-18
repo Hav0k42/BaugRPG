@@ -14,7 +14,10 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Bisected.Half;
 import org.bukkit.block.data.type.Slab;
+import org.bukkit.block.data.type.Stairs;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
@@ -44,7 +47,7 @@ public class LunarTransfusionListener implements Listener {
 		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
 	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
 	 	
-	 	if (!((skillsconfig.contains("LunarArtificer1") && skillsconfig.getBoolean("LunarArtificer1")) || (skillsconfig.contains("LunarArtificer3") && skillsconfig.getBoolean("LunarArtificer3")))) return;
+	 	if (!((skillsconfig.contains("LunarArtificer1") && skillsconfig.getBoolean("LunarArtificer1")) || plugin.magnetizedIdolListener.getActiveBestowedAbility(player.getUniqueId()).equals("LunarArtificer3") || plugin.magnetizedIdolListener.getActiveBestowedAbility(player.getUniqueId()).equals("LunarArtificer1") || (skillsconfig.contains("LunarArtificer3") && skillsconfig.getBoolean("LunarArtificer3")))) return;
 		
 	 	if (event.getItem() == null) return;
 	 	
@@ -84,7 +87,7 @@ public class LunarTransfusionListener implements Listener {
 		
 		HashMap<Material, Material> activeRecipes = new HashMap<Material, Material>();
 		
-		if (phase == 0 && (skillsconfig.contains("LunarArtificer1") && skillsconfig.getBoolean("LunarArtificer1"))) {//full moon recipes
+		if (phase == 0 && ((skillsconfig.contains("LunarArtificer1") && skillsconfig.getBoolean("LunarArtificer1")) || plugin.magnetizedIdolListener.getActiveBestowedAbility(player.getUniqueId()).equals("LunarArtificer1"))) {//full moon recipes
 			activeRecipes.put(Material.STONE, Material.PRISMARINE_BRICKS);
 			activeRecipes.put(Material.COBBLESTONE, Material.PRISMARINE);
 			activeRecipes.put(Material.DEEPSLATE, Material.DARK_PRISMARINE);
@@ -105,7 +108,7 @@ public class LunarTransfusionListener implements Listener {
 					}
 				}
 			}
-		} else if (phase == 4 && (skillsconfig.contains("LunarArtificer3") && skillsconfig.getBoolean("LunarArtificer3"))) {//new moon recipes
+		} else if (phase == 4 && ((skillsconfig.contains("LunarArtificer3") && skillsconfig.getBoolean("LunarArtificer3")) || plugin.magnetizedIdolListener.getActiveBestowedAbility(player.getUniqueId()).equals("LunarArtificer3"))) {//new moon recipes
 			activeRecipes.put(Material.STONE, Material.NETHERRACK);
 			activeRecipes.put(Material.COBBLESTONE, Material.SOUL_SAND);
 			activeRecipes.put(Material.DEEPSLATE, Material.NETHER_BRICKS);
@@ -540,7 +543,7 @@ public class LunarTransfusionListener implements Listener {
 		return 0;
 	}
 	
-	private Boolean checkBlockInit(Location center, int x, int y, int z, Material mat) {
+	public static Boolean checkBlockInit(Location center, int x, int y, int z, Material mat) {
 		Location newLoc = new Location(center.getWorld(), center.getBlockX() + x, center.getBlockY() + y, center.getBlockZ() + z);
 		if (newLoc.getWorld().getBlockAt(newLoc).getType().equals(mat)) {
 			return true;
@@ -548,7 +551,7 @@ public class LunarTransfusionListener implements Listener {
 		return false;
 	}
 	
-	private Boolean checkBlockRelative(Player player, Location center, int x, int y, int z, Material mat) {
+	public static Boolean checkBlockRelative(Player player, Location center, int x, int y, int z, Material mat) {
 		Location newLoc = new Location(center.getWorld(), center.getBlockX() + x, center.getBlockY() + y, center.getBlockZ() + z);
 		if (newLoc.getWorld().getBlockAt(newLoc).getType().equals(mat)) {
 			return true;
@@ -557,7 +560,7 @@ public class LunarTransfusionListener implements Listener {
 		return false;
 	}
 	
-	private Boolean checkBlockRelative(Player player, Location center, int x, int y, int z, Material mat, Slab.Type slabPos) {
+	public static Boolean checkBlockRelative(Player player, Location center, int x, int y, int z, Material mat, Slab.Type slabPos) {
 		Location newLoc = new Location(center.getWorld(), center.getBlockX() + x, center.getBlockY() + y, center.getBlockZ() + z);
 		if (newLoc.getWorld().getBlockAt(newLoc).getType().equals(mat)) {
 			if (newLoc.getWorld().getBlockAt(newLoc).getBlockData() instanceof Slab) {
@@ -573,7 +576,23 @@ public class LunarTransfusionListener implements Listener {
 		return false;
 	}
 	
-	private Boolean checkBlockRelative(Player player, Location center, int x, int y, int z, Material mat, int orientation) {//0 is default, so do nothing
+	public static Boolean checkBlockRelative(Player player, Location center, int x, int y, int z, Material mat, Stairs.Shape stairShape, Half half, BlockFace facing) {
+		Location newLoc = new Location(center.getWorld(), center.getBlockX() + x, center.getBlockY() + y, center.getBlockZ() + z);
+		if (newLoc.getWorld().getBlockAt(newLoc).getType().equals(mat)) {
+			if (newLoc.getWorld().getBlockAt(newLoc).getBlockData() instanceof Stairs) {
+				Stairs stairs = (Stairs) newLoc.getWorld().getBlockAt(newLoc).getBlockData();
+				if (stairs.getShape().equals(stairShape) && stairs.getHalf().equals(half) && stairs.getFacing().equals(facing)) {
+					return true;
+				}
+			} else {
+				return true;
+			}
+		}
+		player.sendMessage(ChatColor.YELLOW + "Missing block " + mat.name() + " " + stairShape.name() + " " + half.name() + " " + facing.name() + " at: " + newLoc.getBlockX() + ", " + newLoc.getBlockY() + ", " + newLoc.getBlockZ() + ".");
+		return false;
+	}
+	
+	public static Boolean checkBlockRelative(Player player, Location center, int x, int y, int z, Material mat, int orientation) {//0 is default, so do nothing
 		
 		int helper = x;
 		switch (orientation) {
@@ -600,7 +619,7 @@ public class LunarTransfusionListener implements Listener {
 		return false;
 	}
 	
-	private Boolean checkBlockRelative(Player player, Location center, int x, int y, int z, Material mat, Slab.Type slabPos, int orientation) {
+	public static Boolean checkBlockRelative(Player player, Location center, int x, int y, int z, Material mat, Slab.Type slabPos, int orientation) {
 		
 		int helper = x;
 		switch (orientation) {
@@ -635,7 +654,7 @@ public class LunarTransfusionListener implements Listener {
 		return false;
 	}
 	
-	private Boolean checkBlockRelative(Player player, Location center, int x, int y, int z, Material mat, Slab.Type slabPos, int orientation, boolean waterlogged) {
+	public static Boolean checkBlockRelative(Player player, Location center, int x, int y, int z, Material mat, Slab.Type slabPos, int orientation, boolean waterlogged) {
 		
 		int helper = x;
 		switch (orientation) {

@@ -38,7 +38,6 @@ public class ElvesCommunismEnderChestListListener implements Listener{
 							ItemStack selectedPlayerHead = event.getCurrentItem();
 							SkullMeta selectedPlayerHeadMeta = (SkullMeta)selectedPlayerHead.getItemMeta();
 							OfflinePlayer selectedOfflinePlayer = plugin.getServer().getOfflinePlayer(selectedPlayerHeadMeta.getOwningPlayer().getUniqueId());//theres a possibility this does not work.
-							
 							player.performCommand("oe " + selectedOfflinePlayer.getName());
 						}
 						if (event.getCurrentItem().equals(plugin.itemManager.getNextPageItem()) ) {

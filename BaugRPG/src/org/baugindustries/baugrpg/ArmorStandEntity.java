@@ -8,6 +8,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
 
@@ -121,6 +123,12 @@ public class ArmorStandEntity {
 	
 	public double getRotation() {
 		return rotation;
+	}
+	
+	public void glow(int ticks) {
+		armorStands.forEach(stand -> {
+			stand.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, ticks, 0));
+		});
 	}
 	
 	

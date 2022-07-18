@@ -322,7 +322,7 @@ public class GovernmentMenu implements Listener{
 					
 					try {
 						bankConfig.save(bankFile);
-						leaderConfig.save(bankFile);
+						leaderConfig.save(leaderDataFile);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -364,7 +364,7 @@ public class GovernmentMenu implements Listener{
 				
 				try {
 					bankConfig.save(bankFile);
-					leaderConfig.save(bankFile);
+					leaderConfig.save(leaderDataFile);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

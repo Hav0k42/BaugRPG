@@ -40,7 +40,7 @@ public class MagmaTransmutationListener implements Listener {
 		
 		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
 	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
-	 	if (!(skillsconfig.contains("DarkAlchemist2") && skillsconfig.getBoolean("DarkAlchemist2"))) return;
+	 	if (!((skillsconfig.contains("DarkAlchemist2") && skillsconfig.getBoolean("DarkAlchemist2")) || plugin.magnetizedIdolListener.getActiveBestowedAbility(player.getUniqueId()).equals("DarkAlchemist2"))) return;
 	 	
 	 	Location center = block.getLocation();
 	 	if (!checkBlockRelative(player, center, 0, -1, 0, Material.PACKED_ICE)) return;

@@ -26,7 +26,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 
 
 //Pretty much just the ItemStack version of a lang file. Trying to make the menus consistent so there arent two different types of back buttons or confirm buttons.
@@ -528,8 +528,24 @@ public class CustomItems {
 				1, 
 				ChatColor.DARK_RED + "Hardcore Death", 
 				Arrays.asList(ChatColor.LIGHT_PURPLE + "All items get deleted on death",
-						"Overrides by Medium Core Death option.",
+						"Overrides Medium Core Death option.",
 						color + config.get("hardcoreDeathOn").toString().toUpperCase()));
+	}
+	
+	public ItemStack getAutoBalanceItem() {
+		File file = new File(plugin.getDataFolder() + File.separator + "config.yml");
+	 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+	 	ChatColor color = ChatColor.RED;
+	 	if (config.getBoolean("autoBalanceRaces")) {
+	 		color = ChatColor.GREEN;
+	 	}
+		return plugin.createItem(
+				Material.LEVER, 
+				1, 
+				ChatColor.DARK_RED + "Auto Balance", 
+				Arrays.asList(ChatColor.LIGHT_PURPLE + "Automatically assign players to the least",
+						"played team if the teams are unbalanced.",
+						color + config.get("autoBalanceRaces").toString().toUpperCase()));
 	}
 	
 	public ItemStack getStableMasterSkill1Item(Player player) {
@@ -1206,6 +1222,9 @@ public class CustomItems {
 				File bankfile = new File(plugin.getDataFolder() + File.separator + "bank.yml");
 				FileConfiguration bankConfig = YamlConfiguration.loadConfiguration(bankfile);
 				
+				File econfile = new File(plugin.getDataFolder() + File.separator + "econ.yml");
+				FileConfiguration econConfig = YamlConfiguration.loadConfiguration(econfile);
+				
 				UUID emperorUUID = null;
 				
 				Set<String> banks = bankConfig.getKeys(false);
@@ -1224,7 +1243,7 @@ public class CustomItems {
 					if (playerRace == 3) {
 						if (emperorUUID == null) {
 							emperorUUID = uuid;
-						} else if (bankConfig.getInt(string) > bankConfig.getInt(emperorUUID.toString())) {
+						} else if (bankConfig.getInt(string) + econConfig.getInt(string) > bankConfig.getInt(emperorUUID.toString()) + econConfig.getInt(emperorUUID.toString())) {
 							emperorUUID = uuid;
 						}
 					}
@@ -1497,6 +1516,7 @@ public class CustomItems {
 		ItemStack head = plugin.createItem(Material.PLAYER_HEAD, 1, ChatColor.YELLOW + player.getName() + "'s Head");
 		SkullMeta meta = (SkullMeta) head.getItemMeta();
 		meta.setOwningPlayer(player);
+		meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "playerHead"), PersistentDataType.INTEGER, 1);
 		head.setItemMeta(meta);
 		
 		return head;
@@ -2060,7 +2080,7 @@ public class CustomItems {
 		return plugin.createItem(Material.HEART_OF_THE_SEA,
 				1,
 				ChatColor.DARK_AQUA + "Soul of the Caretaker",
-				Arrays.asList("Permanent saturation when carried.", "Only usable by Verdant Shepherds.", "Man Made", ChatColor.RED + "Expert Item"),
+				Arrays.asList("Immune to hunger when carried.", "Only usable by Verdant Shepherds.", "Man Made", ChatColor.RED + "Expert Item"),
 				1341);
 	}
 	
@@ -2076,7 +2096,7 @@ public class CustomItems {
 		return plugin.createItem(Material.POLISHED_DEEPSLATE_WALL,
 				1,
 				ChatColor.DARK_AQUA + "Veiled Totem",
-				Arrays.asList("Right click an animal to disguise", "yourself as that type of animal.", "Sneak to exit.", "Man Made", ChatColor.RED + "Expert Item"),
+				Arrays.asList("Right click an animal to disguise", "yourself as that type of animal.", "Sneak right click to exit.", "Man Made", ChatColor.RED + "Expert Item"),
 				1343);
 	}
 	
@@ -2218,14 +2238,14 @@ public class CustomItems {
 		return plugin.createItem(Material.HEART_OF_THE_SEA,
 				1,
 				ChatColor.DARK_GREEN + "Soul of the Florist",
-				Arrays.asList("Inflicts nausea on all nearby enemies when carried.", "Only usable by Enchanted Botanists", "Elven Craft", ChatColor.RED + "Expert Item"),
+				Arrays.asList("Inflicts nausea and a weak poison on all", "nearby enemies when carried.", "Only usable by Enchanted Botanists", "Elven Craft", ChatColor.RED + "Expert Item"),
 				2141);
 	}
 	
 	public ItemStack getSoulboundShovelItem() {
 		return plugin.createItem(Material.DIAMOND_SHOVEL,
 				1,
-				ChatColor.DARK_AQUA + "Soulbound Shovel",
+				ChatColor.DARK_GREEN + "Soulbound Shovel",
 				Arrays.asList("This item will be kept when you die.", "Man Made", ChatColor.RED + "Expert Item"),
 				2142);
 	}
@@ -2233,7 +2253,7 @@ public class CustomItems {
 	public ItemStack getStaffOfPersephoneItem() {
 		return plugin.createItem(Material.STICK,
 				1,
-				ChatColor.DARK_AQUA + "Staff of Persephone",
+				ChatColor.DARK_GREEN + "Staff of Persephone",
 				Arrays.asList("Summons nature's fallen warriors to come to your aid.", "Man Made", ChatColor.RED + "Expert Item"),
 				2143);
 	}
@@ -2554,7 +2574,7 @@ public class CustomItems {
 		return plugin.createItem(Material.LEAD,
 				1,
 				ChatColor.DARK_GREEN + "Lunar Boomerang",
-				Arrays.asList("Enemies hit by this will be propelled towards you.", "Elven Craft", ChatColor.GOLD + "Advanced Item"),
+				Arrays.asList("Enemies hit by this will" + "be propelled towards you.", "Elven Craft", ChatColor.GOLD + "Advanced Item"),
 				2333);
 	}
 	
@@ -2746,7 +2766,7 @@ public class CustomItems {
 		return plugin.createItem(Material.RABBIT_HIDE,
 				1,
 				ChatColor.DARK_PURPLE + "Totem of the Mole",
-				Arrays.asList("Travel through the surface of the earth.", "Press shift to cancel, damaging enemies.", "Dwarven Forged", ChatColor.RED + "Expert Item"),
+				Arrays.asList("Travel through the surface of the earth.", "Right click to cancel, damaging enemies.", "Dwarven Forged", ChatColor.RED + "Expert Item"),
 				3142);
 	}
 	
@@ -2868,7 +2888,7 @@ public class CustomItems {
 		return plugin.createItem(Material.COMPASS,
 				1,
 				ChatColor.DARK_PURPLE + "Bejeweled Compass",
-				Arrays.asList("Right click to point in the", "direction of any nearby treasure.", ChatColor.YELLOW + "Swap hands with a diamond", ChatColor.YELLOW + "to refine the purity", ChatColor.YELLOW + "of the treasure it points to.", "Purity Level: " + ChatColor.GREEN + "1", "Dwarven Forged", ChatColor.YELLOW + "Intermediate Item"),
+				Arrays.asList("Right click to point in the", "direction of any nearby treasure.", ChatColor.YELLOW + "Swap hands with a diamond block", ChatColor.YELLOW + "to refine the purity", ChatColor.YELLOW + "of the treasure it points to.", "Purity Level: " + ChatColor.GREEN + "1", "Dwarven Forged", ChatColor.YELLOW + "Intermediate Item"),
 				3227);
 	}
 	
@@ -3084,7 +3104,7 @@ public class CustomItems {
 		return plugin.createItem(Material.TRIPWIRE_HOOK,
 				1,
 				ChatColor.DARK_PURPLE + "Grappling Hook",
-				Arrays.asList("Right click to use.", "Dwarven Forged", ChatColor.GOLD + "Advanced Item"),
+				Arrays.asList("Left click to throw the hook", "Right click to reel it in", "Sneak to exit", "Dwarven Forged", ChatColor.GOLD + "Advanced Item"),
 				3335);
 	}
 	
@@ -3245,12 +3265,12 @@ public class CustomItems {
 		return plugin.createItem(Material.BLAZE_ROD,
 				1,
 				ChatColor.DARK_RED + "Brewing Wand",
-				Arrays.asList("Shift right click to load ingredients.", "Right click a filled cauldron to brew", "that ingredient into the potion.", "Orc Contrived", ChatColor.GOLD + "Advanced Item"),
+				Arrays.asList("Swap hands to load ingredients.", "Right click a filled cauldron to brew", "that ingredient into the potion.", ChatColor.YELLOW + "Current ingredient: ", "Orc Contrived", ChatColor.GOLD + "Advanced Item"),
 				4134);
 	}
 	
 	public ItemStack getAnomalousPickaxeItem() {
-		return plugin.createItem(Material.IRON_PICKAXE,
+		return plugin.createItem(Material.DIAMOND_PICKAXE,
 				1,
 				ChatColor.DARK_RED + "Anomalous Pickaxe",
 				Arrays.asList("Drops overworld ores when used", "on nether ores and vice versa.", "Orc Contrived", ChatColor.GOLD + "Advanced Item"),
@@ -3279,7 +3299,7 @@ public class CustomItems {
 		return plugin.createItem(Material.TOTEM_OF_UNDYING,
 				1,
 				ChatColor.DARK_RED + "Voodoo Doll",
-				Arrays.asList("Right click to briefly take control", "of another player. Leaves your body defenseless.", "Orc Contrived", ChatColor.RED + "Expert Item"),
+				Arrays.asList("Right click to briefly take control", "of another player. Leaves your body defenseless.", ChatColor.RED + "Bound to: " + ChatColor.YELLOW + "UNBOUND", "Swap hands with a player's head to", "bind to that player", "Orc Contrived", ChatColor.RED + "Expert Item"),
 				4143);
 	}
 	

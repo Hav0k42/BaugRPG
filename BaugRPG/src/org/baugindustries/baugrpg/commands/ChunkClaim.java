@@ -43,6 +43,7 @@ public class ChunkClaim implements CommandExecutor {
 		String raceString = plugin.getRaceString(race);
 		if (!(leaderConfig.contains(raceString + "LeaderUUID") && player.getUniqueId().toString().equals(leaderConfig.getString(raceString + "LeaderUUID")))) {
 			player.sendMessage(ChatColor.RED + "You must be the leader of your race to use this command.");
+			return true;
 		}
 		
 

@@ -4,6 +4,8 @@ import org.baugindustries.baugrpg.Main;
 import org.baugindustries.baugrpg.Recipes;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.Bisected.Half;
@@ -81,6 +83,7 @@ public class FloralTransmuterListener implements Listener {
 						block.setType(types[(int)(Math.random() * types.length)]);
 					}
 					player.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().add(0.5, 0.7, 0.5), 4, 0.2, 0.2, 0.2);
+					player.getWorld().playSound(player.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_HIT, SoundCategory.MASTER, 2f, 1f);
 					break;
 				}
 			}

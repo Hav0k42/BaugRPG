@@ -38,7 +38,7 @@ public class RadiantAnvilListener implements Listener {
 		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + attacker.getUniqueId() + ".yml");
 	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
 	 	
-	 	if (!(skillsconfig.contains("RadiantMetallurgist1") && skillsconfig.getBoolean("RadiantMetallurgist1"))) return;
+	 	if (!((skillsconfig.contains("RadiantMetallurgist1") && skillsconfig.getBoolean("RadiantMetallurgist1")) || plugin.magnetizedIdolListener.getActiveBestowedAbility(attacker.getUniqueId()).equals("RadiantMetallurgist1"))) return;
 	 	double percentage = 0.01;
 	 	if (Math.random() > percentage) return;
 	 	

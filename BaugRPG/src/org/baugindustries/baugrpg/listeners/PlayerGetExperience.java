@@ -29,7 +29,7 @@ public class PlayerGetExperience implements Listener {
 		if (!(race == 1 || race == 3)) return;
 		
 		if (event.getAmount() + (player.getExp() * player.getExpToLevel()) >= player.getExpToLevel() && player.getLevel() >= levelThreshold) {
-			setPlayerClaimBlocks(player, getPlayerClaimBlocks(player) + 1);
+			setPlayerClaimBlocks(player, getPlayerClaimBlocks(player) + 4);
 		}
 	}
 

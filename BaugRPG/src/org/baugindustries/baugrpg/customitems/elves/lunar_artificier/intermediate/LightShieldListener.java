@@ -7,6 +7,8 @@ import org.baugindustries.baugrpg.Recipes;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -43,6 +45,7 @@ public class LightShieldListener implements Listener {
 		
 		if (displayEffect) {
 			showEffect(player.getLocation());
+			player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_AMBIENT, SoundCategory.MASTER, 2f, 1f);
 		}
 		
 	}

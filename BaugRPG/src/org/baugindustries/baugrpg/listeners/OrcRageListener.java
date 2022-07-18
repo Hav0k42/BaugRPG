@@ -18,7 +18,7 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 
 public class OrcRageListener implements Listener {
-	private int rageCooldownTime = 10;
+	private int rageCooldownTime = 30;
 	
 	private Main plugin;
 	public OrcRageListener(Main plugin) {
@@ -38,7 +38,7 @@ public class OrcRageListener implements Listener {
 		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + killer.getUniqueId() + ".yml");
 	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
 	 	
-	 	if (!(skillsconfig.contains("EnragedBerserker1") && skillsconfig.getBoolean("EnragedBerserker1"))) return;
+	 	if (!((skillsconfig.contains("EnragedBerserker1") && skillsconfig.getBoolean("EnragedBerserker1")) || plugin.magnetizedIdolListener.getActiveBestowedAbility(killer.getUniqueId()).equals("EnragedBerserker1"))) return;
 	 	
 	 	if (plugin.rageCooldown.containsKey(killer.getUniqueId())) {
 	 		int minutesToMillis = 60000;

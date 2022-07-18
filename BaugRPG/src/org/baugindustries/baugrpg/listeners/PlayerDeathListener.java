@@ -7,7 +7,6 @@ import java.util.List;
 import org.baugindustries.baugrpg.Main;
 import org.baugindustries.baugrpg.Recipes;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -16,9 +15,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataType;
 
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 
 public class PlayerDeathListener implements Listener{
 
@@ -50,7 +48,7 @@ public class PlayerDeathListener implements Listener{
 		 		killerBal = econConfig.getInt(killer.getUniqueId().toString());
 		 	}
 		 	
-		 	if (playerBal < 10) {
+		 	if (playerBal > 10) {
 		 		int transferAmount = (int) (playerBal * 0.1);
 		 		killerBal += transferAmount;
 		 		playerBal -= transferAmount;
@@ -141,7 +139,7 @@ public class PlayerDeathListener implements Listener{
 		}
 		
 		
-		int race = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Race"), PersistentDataType.INTEGER);
+		int race = plugin.getRace(player);
 	    
 	    switch (race) {
 	    	case 0://normie

@@ -116,7 +116,7 @@ public class PlayerAttackListener implements Listener {
 			 	damageMultiplier = (1 + ((0.5 / 10) * skillsconfig.getInt("damage")));
 		 	}
 		 	
-		 	if ((skillsconfig.contains("StableMaster2") && skillsconfig.getBoolean("StableMaster2")) && plugin.mountedPlayers.contains(player)) {
+		 	if (((skillsconfig.contains("StableMaster2") && skillsconfig.getBoolean("StableMaster2")) || plugin.magnetizedIdolListener.getActiveBestowedAbility(player.getUniqueId()).equals("StableMaster2")) && plugin.mountedPlayers.contains(player)) {
 		 		damageMultiplier *= 1.5;
 		 	}
 		 	event.setDamage(initDamage * damageMultiplier);
@@ -165,6 +165,7 @@ public class PlayerAttackListener implements Listener {
 	}
 	
 	//Custom biome identification adapted from: https://www.spigotmc.org/threads/1-17-getting-custom-biomes-and-dimensions-by-namespace.513957/
+	//I'm pretty sure this code will error if the world has been generated in a version that isn't 1.18.2. NOT SURE. COULD BE THAT IT ONLY WORKS ON TERRALITH WORLDS. I HAVE NO IDEA. All that matters to me is that it works on the main server.
 	
 	public MinecraftKey getBiomeKey(Location location) {
 	    DedicatedServer dedicatedServer = ((CraftServer) Bukkit.getServer()).getServer();
@@ -176,13 +177,13 @@ public class PlayerAttackListener implements Listener {
 	
 	public Holder<BiomeBase> getBiomeBase(Location location) {
 	    // NMS position
-	    BlockPosition pos = new BlockPosition(location.getBlockX(), 0, location.getBlockZ());
+	    BlockPosition pos = new BlockPosition(location.getBlockX(), location.getBlockY(), location.getBlockZ());
 
 	    // NMS chunk from pos
 	    Chunk nmsChunk = ((CraftWorld)location.getWorld()).getHandle().l(pos);
 
 	    if (nmsChunk != null) {
-	        return nmsChunk.a().c(pos.u(), 0, pos.w());
+	        return nmsChunk.a().c(pos.u(), pos.v(), pos.w());
 	    }
 	    return null;
 	}

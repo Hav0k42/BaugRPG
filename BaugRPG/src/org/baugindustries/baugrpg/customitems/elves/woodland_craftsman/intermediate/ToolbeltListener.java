@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import org.baugindustries.baugrpg.Main;
 import org.baugindustries.baugrpg.Recipes;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -72,6 +74,7 @@ public class ToolbeltListener implements Listener {
 		}
 		
 		tools.set("slot", activeSlot);
+		player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, SoundCategory.MASTER, 2f, 1f);
 		
 		try {
 			toolsConfig.save(new File(plugin.getDataFolder() + File.separator + "tools.yml"));

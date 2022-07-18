@@ -45,7 +45,7 @@ public class StarlightHealingListener implements Listener {
 		File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
 	 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
 	 	
-        if (!(skillsconfig.contains("LunarArtificer2") && skillsconfig.getBoolean("LunarArtificer2"))) return;
+        if (!((skillsconfig.contains("LunarArtificer2") && skillsconfig.getBoolean("LunarArtificer2")) || plugin.magnetizedIdolListener.getActiveBestowedAbility(player.getUniqueId()).equals("LunarArtificer2"))) return;
         
         if (plugin.starlightHealingCooldown.containsKey(player.getUniqueId())) {
 	 		int minutesToMillis = 60000;
