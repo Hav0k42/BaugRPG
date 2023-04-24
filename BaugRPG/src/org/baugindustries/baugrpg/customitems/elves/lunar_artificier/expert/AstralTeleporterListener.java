@@ -280,7 +280,7 @@ public class AstralTeleporterListener implements Listener {
 			Location newLoc = new Location(loc2.getWorld(), loc2.getX() - 0.5, loc2.getY(), loc2.getZ() - 0.5, player.getLocation().getYaw(), player.getLocation().getPitch());
 			Location offset = player.getLocation().add(0.5, 0, 0.5).subtract(loc1);
 			Vector vel = player.getVelocity();
-			player.teleport(newLoc.add(offset));
+			player.teleport(newLoc.add(offset.getX(), offset.getY(), offset.getZ()));
 			player.setVelocity(vel);
 			
 			lastTeleported.put(player.getUniqueId(), System.currentTimeMillis());

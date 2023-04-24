@@ -42,16 +42,21 @@ public class EntityDropRecipeScroll implements Listener {
 		
 		if (mob.getPersistentDataContainer().has(new NamespacedKey(plugin, "spawner"), PersistentDataType.INTEGER) && Math.random() < 0.1) return;//reduce the odds of getting a drop by 10 if the mob was spawned in a spawner.
 		
+		int craftingXP = 0;
+		if (skillsconfig.contains("craftingExperience")) {
+			craftingXP = skillsconfig.getInt("craftingExperience");
+		}
+		
 		double rand = Math.random();
-		if (rand < 0.001) {//Expert drop rate is 1/1000
+		if (rand < 0.001 && craftingXP >= 1000) {//Expert drop rate is 1/1000
 			if (hasUnlearnedRecipes(player, RecipeTypes.EXPERT, profession)) {
 				mob.getWorld().dropItemNaturally(mob.getLocation(), plugin.itemManager.getExpertRecipeScrollItem());
 			}
-		} else if (rand < 0.003) {//Advanced drop rate is 1/500
+		} else if (rand < 0.003 && craftingXP >= 100) {//Advanced drop rate is 1/500
 			if (hasUnlearnedRecipes(player, RecipeTypes.ADVANCED, profession)) {
 				mob.getWorld().dropItemNaturally(mob.getLocation(), plugin.itemManager.getAdvancedRecipeScrollItem());
 			}
-		} else if (rand < 0.007) {//Intermediate drop rate is 1/250
+		} else if (rand < 0.007 && craftingXP >= 10) {//Intermediate drop rate is 1/250
 			if (hasUnlearnedRecipes(player, RecipeTypes.INTERMEDIATE, profession)) {
 				mob.getWorld().dropItemNaturally(mob.getLocation(), plugin.itemManager.getIntermediateRecipeScrollItem());
 			}
@@ -59,7 +64,7 @@ public class EntityDropRecipeScroll implements Listener {
 			if (hasUnlearnedRecipes(player, RecipeTypes.BASIC, profession)) {
 				mob.getWorld().dropItemNaturally(mob.getLocation(), plugin.itemManager.getBasicRecipeScrollItem());
 			}
-		} else if (rand < 0.0171) {//Reset Race item drop rate is 1/10000
+		} else if (rand < 0.0171 && craftingXP >= 5000) {//Reset Race item drop rate is 1/10000
 			mob.getWorld().dropItemNaturally(mob.getLocation(), plugin.itemManager.getResetRaceItem());
 		}
 	}

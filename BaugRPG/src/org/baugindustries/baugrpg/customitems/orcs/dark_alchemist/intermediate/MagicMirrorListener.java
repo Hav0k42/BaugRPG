@@ -5,6 +5,7 @@ import java.io.File;
 import org.baugindustries.baugrpg.Main;
 import org.baugindustries.baugrpg.Recipes;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -63,9 +64,14 @@ public class MagicMirrorListener implements Listener {
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 			  public void run() {
 				  if (player.getLocation().getX() == coords.getX() && player.getLocation().getY() == coords.getY() && player.getLocation().getZ() == coords.getZ()) {
-					  player.teleport(finalSpawnLoc);
+
 						player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, SoundCategory.MASTER, 2f, 1f);
+						player.getWorld().spawnParticle(Particle.REVERSE_PORTAL, player.getLocation(), 30, 0, 0, 0, 1);
+						player.getWorld().spawnParticle(Particle.PORTAL, player.getLocation(), 30, 0, 0, 0, 1);
+					    player.teleport(finalSpawnLoc);
 						finalSpawnLoc.getWorld().playSound(finalSpawnLoc, Sound.ENTITY_ENDERMAN_TELEPORT, SoundCategory.MASTER, 2f, 1f);
+						finalSpawnLoc.getWorld().spawnParticle(Particle.REVERSE_PORTAL, player.getLocation(), 30, 0, 0, 0, 1);
+						finalSpawnLoc.getWorld().spawnParticle(Particle.PORTAL, player.getLocation(), 30, 0, 0, 0, 1);
 				  } else {
 					  player.sendMessage(ChatColor.RED + "You cretin, I said don't move.");
 				  }

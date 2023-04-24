@@ -654,6 +654,26 @@ public class LunarTransfusionListener implements Listener {
 		return false;
 	}
 	
+	public static Boolean checkBlockRelative(Player player, Location center, int x, int y, int z, Material mat, BlockFace facing, Half half) {
+		
+		
+		Location newLoc = new Location(center.getWorld(), center.getBlockX() + x, center.getBlockY() + y, center.getBlockZ() + z);
+		
+		if (newLoc.getWorld().getBlockAt(newLoc).getType().equals(mat)) {
+			if (newLoc.getWorld().getBlockAt(newLoc).getBlockData() instanceof Stairs) {
+				Stairs data = (Stairs) newLoc.getWorld().getBlockAt(newLoc).getBlockData();
+				if (data.getFacing().equals(facing) && data.getHalf().equals(half)) {
+					return true;
+				}
+			} else {
+				return true;
+			}
+		}
+		
+		player.sendMessage(ChatColor.YELLOW + "Missing block " + mat.name() + " " + facing.name() + " " + half.name() + " at: " + newLoc.getBlockX() + ", " + newLoc.getBlockY() + ", " + newLoc.getBlockZ() + ".");
+		return false;
+	}
+	
 	public static Boolean checkBlockRelative(Player player, Location center, int x, int y, int z, Material mat, Slab.Type slabPos, int orientation, boolean waterlogged) {
 		
 		int helper = x;

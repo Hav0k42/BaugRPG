@@ -5,11 +5,13 @@ import java.util.List;
 
 import org.baugindustries.baugrpg.Main;
 import org.baugindustries.baugrpg.Recipes;
+import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,8 +29,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
-
-import org.bukkit.ChatColor;
 
 public class BrewingWandListener implements Listener {
 	private Main plugin;
@@ -465,8 +465,16 @@ public class BrewingWandListener implements Listener {
 		
 		if (!(event.getEntity() instanceof Player)) return;
 		Player player = (Player) event.getEntity();
+		event.setCancelled(true);
 		
-
+		Levelled cauldronData = (Levelled) cauldron.getBlockData();
+		if (cauldronData.getLevel() > 1) {
+			cauldronData.setLevel(Math.max(cauldronData.getLevel() - 1, 1));
+			event.getBlock().setBlockData(cauldronData);
+		} else {
+			event.getBlock().setType(Material.CAULDRON);
+		}
+		
 		ItemStack potion = new ItemStack(Material.POTION, 1);
 		PotionMeta potMeta = (PotionMeta) potion.getItemMeta();
 		potMeta.setBasePotionData(new PotionData(PotionType.valueOf(cauldron.getMetadata("potion").get(0).asString())));
@@ -475,21 +483,35 @@ public class BrewingWandListener implements Listener {
 		if (player.getInventory().getItemInMainHand().getType().equals(Material.GLASS_BOTTLE)) {
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 				public void run() {
-					player.getInventory().setItemInMainHand(potion);
+					ItemStack newItem = null;
+			    	newItem = player.getInventory().getItemInMainHand();
+			    	if (newItem.getAmount() == 1) {
+			    		player.getInventory().setItemInMainHand(null);
+			    	} else {
+				    	newItem.setAmount(newItem.getAmount() - 1);
+				    	player.getInventory().setItemInMainHand(newItem);
+			    	}
+			    	
+					player.getInventory().addItem(potion);
 				}
 			}, 1L);
 		} else {
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 				public void run() {
-					player.getInventory().setItemInOffHand(potion);
+					ItemStack newItem = null;
+			    	newItem = player.getInventory().getItemInOffHand();
+			    	if (newItem.getAmount() == 1) {
+			    		player.getInventory().setItemInOffHand(null);
+			    	} else {
+				    	newItem.setAmount(newItem.getAmount() - 1);
+				    	player.getInventory().setItemInOffHand(newItem);
+			    	}
+			    	
+					player.getInventory().addItem(potion);
 				}
 			}, 1L);
 		}
 		
-
-		
 	}
 	
-	
-
 }

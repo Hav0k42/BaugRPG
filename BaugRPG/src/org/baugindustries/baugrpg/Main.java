@@ -1,11 +1,14 @@
 package org.baugindustries.baugrpg;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 import java.util.UUID;
 
 import org.apache.commons.lang.RandomStringUtils;
@@ -15,6 +18,7 @@ import org.baugindustries.baugrpg.commands.ChatTabCompleter;
 import org.baugindustries.baugrpg.commands.ChunkClaim;
 import org.baugindustries.baugrpg.commands.Claim;
 import org.baugindustries.baugrpg.commands.ClaimTabCompleter;
+import org.baugindustries.baugrpg.commands.CraftingXP;
 import org.baugindustries.baugrpg.commands.GetCustomItem;
 import org.baugindustries.baugrpg.commands.GetCustomItemTabCompleter;
 import org.baugindustries.baugrpg.commands.Level;
@@ -95,6 +99,7 @@ import org.baugindustries.baugrpg.customitems.elves.lunar_artificier.advanced.Lu
 import org.baugindustries.baugrpg.customitems.elves.lunar_artificier.advanced.StaffOfBalanceListener;
 import org.baugindustries.baugrpg.customitems.elves.lunar_artificier.basic.LunarDebrisListener;
 import org.baugindustries.baugrpg.customitems.elves.lunar_artificier.basic.NebulousAuraListener;
+import org.baugindustries.baugrpg.customitems.elves.lunar_artificier.basic.Watch;
 import org.baugindustries.baugrpg.customitems.elves.lunar_artificier.expert.AstralTeleporterListener;
 import org.baugindustries.baugrpg.customitems.elves.lunar_artificier.expert.SoulOfTheAstrologerListener;
 import org.baugindustries.baugrpg.customitems.elves.lunar_artificier.intermediate.DarkMatterListener;
@@ -127,6 +132,7 @@ import org.baugindustries.baugrpg.customitems.men.stable_master.intermediate.Bri
 import org.baugindustries.baugrpg.customitems.men.stable_master.intermediate.RopeListener;
 import org.baugindustries.baugrpg.customitems.men.stable_master.intermediate.SpearListener;
 import org.baugindustries.baugrpg.customitems.men.stable_master.intermediate.WhistleListener;
+import org.baugindustries.baugrpg.customitems.men.steeled_armorer.advanced.BackpackListener;
 import org.baugindustries.baugrpg.customitems.men.steeled_armorer.advanced.EmblemOfTheShieldListener;
 import org.baugindustries.baugrpg.customitems.men.steeled_armorer.advanced.SteelMeshListener;
 import org.baugindustries.baugrpg.customitems.men.steeled_armorer.advanced.SteelPlateSetListener;
@@ -173,11 +179,13 @@ import org.baugindustries.baugrpg.customitems.orcs.enraged_berserker.advanced.Bl
 import org.baugindustries.baugrpg.customitems.orcs.enraged_berserker.advanced.CaliburnListener;
 import org.baugindustries.baugrpg.customitems.orcs.enraged_berserker.advanced.EmblemOfTheBladeListener;
 import org.baugindustries.baugrpg.customitems.orcs.enraged_berserker.advanced.FleshCandleListener;
+import org.baugindustries.baugrpg.customitems.orcs.enraged_berserker.advanced.PortableAccelerantListener;
 import org.baugindustries.baugrpg.customitems.orcs.enraged_berserker.basic.EtherealWoodListener;
 import org.baugindustries.baugrpg.customitems.orcs.enraged_berserker.basic.HellstoneListener;
 import org.baugindustries.baugrpg.customitems.orcs.enraged_berserker.basic.HoglinTuskListener;
 import org.baugindustries.baugrpg.customitems.orcs.enraged_berserker.basic.RageStoneListener;
 import org.baugindustries.baugrpg.customitems.orcs.enraged_berserker.basic.SpectralWardListener;
+import org.baugindustries.baugrpg.customitems.orcs.enraged_berserker.expert.PhoenixAshesListener;
 import org.baugindustries.baugrpg.customitems.orcs.enraged_berserker.expert.SoulOfTheWarriorListener;
 import org.baugindustries.baugrpg.customitems.orcs.enraged_berserker.intermediate.BlazingFuryListener;
 import org.baugindustries.baugrpg.customitems.orcs.enraged_berserker.intermediate.SpectralHarnessListener;
@@ -187,6 +195,7 @@ import org.baugindustries.baugrpg.customitems.orcs.greedy_scrapper.advanced.Scra
 import org.baugindustries.baugrpg.customitems.orcs.greedy_scrapper.basic.DemonicWrenchListener;
 import org.baugindustries.baugrpg.customitems.orcs.greedy_scrapper.basic.MagmaStoneListener;
 import org.baugindustries.baugrpg.customitems.orcs.greedy_scrapper.basic.PebblesListener;
+import org.baugindustries.baugrpg.customitems.orcs.greedy_scrapper.expert.SoulOfTheThiefListener;
 import org.baugindustries.baugrpg.customitems.orcs.greedy_scrapper.intermediate.BoltsListener;
 import org.baugindustries.baugrpg.customitems.orcs.greedy_scrapper.intermediate.FlamedashBootsListener;
 import org.baugindustries.baugrpg.customitems.orcs.greedy_scrapper.intermediate.FragmentedSetListener;
@@ -279,6 +288,10 @@ import org.baugindustries.baugrpg.protection.ChunkProtection;
 import org.baugindustries.baugrpg.protection.ClaimProtection;
 import org.baugindustries.baugrpg.protection.Claiming;
 import org.baugindustries.baugrpg.protection.SpawnProtection;
+import org.baugindustries.baugrpg.religion.BlockConversionListener;
+import org.baugindustries.baugrpg.religion.EnderDragonDeathListener;
+import org.baugindustries.baugrpg.religion.HeavenPortalsListener;
+import org.baugindustries.baugrpg.religion.VoidDamageListener;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -507,6 +520,7 @@ public class Main extends JavaPlugin {
 	public SawListener sawListener = new SawListener(this);
 	public LunarDebrisListener lunarDebrisListener = new LunarDebrisListener(this);
 	public NebulousAuraListener nebulousAuraListener = new NebulousAuraListener(this);
+	public Watch watch = new Watch(this);
 	public RhyoliteListener rhyoliteListener = new RhyoliteListener(this);
 	public PumiceListener pumiceListener = new PumiceListener(this);
 	public ForgersScrollListener forgersScrollListener = new ForgersScrollListener(this);
@@ -584,6 +598,7 @@ public class Main extends JavaPlugin {
 	public SteelMeshListener steelMeshListener = new SteelMeshListener(this);
 	public EmblemOfTheShieldListener emblemOfTheShieldListener = new EmblemOfTheShieldListener(this);
 	public SteelPlateSetListener steelPlateSetListener = new SteelPlateSetListener(this);
+	public BackpackListener backpackListener = new BackpackListener(this);
 	public EssenceOfFaunaListener essenceOfFaunaListener = new EssenceOfFaunaListener(this);
 	public SteelWoolListener steelWoolListener = new SteelWoolListener(this);
 	public VerdantMedallionListener verdantMedallionListener = new VerdantMedallionListener(this);
@@ -617,6 +632,7 @@ public class Main extends JavaPlugin {
 	public EmblemOfTheBladeListener emblemOfTheBladeListener = new EmblemOfTheBladeListener(this);
 	public FleshCandleListener fleshCandleListener = new FleshCandleListener(this);
 	public CaliburnListener caliburnListener = new CaliburnListener(this);
+	public PortableAccelerantListener portableAccelerantListener = new PortableAccelerantListener(this);
 	public ScrappySetListener scrappySetListener = new ScrappySetListener(this);
 	public EmblemOfTheRavenListener emblemOfTheRavenListener = new EmblemOfTheRavenListener(this);
 	public HopperPickUpRecipeScroll hopperPickUpRecipeScroll = new HopperPickUpRecipeScroll(this);
@@ -647,7 +663,22 @@ public class Main extends JavaPlugin {
 	public WandOfDisfigurationListener wandOfDisfigurationListener = new WandOfDisfigurationListener(this);
 	public VoodooDollListener voodooDollListener = new VoodooDollListener(this);
 	public SoulOfTheWarriorListener soulOfTheWarriorListener;
+	public PhoenixAshesListener phoenixAshesListener = new PhoenixAshesListener(this);
+	public SoulOfTheThiefListener soulOfTheThiefListener = new SoulOfTheThiefListener(this);
 	
+	
+	
+	
+	
+	
+	
+	
+	//Religion Listeners
+
+	public EnderDragonDeathListener enderDragonDeathListener = new EnderDragonDeathListener(this);
+	public HeavenPortalsListener heavenPortalsListener;
+	public VoidDamageListener voidDamageListener = new VoidDamageListener(this);
+	public BlockConversionListener blockConversionListener = new BlockConversionListener(this);
 	
 	
 	
@@ -877,6 +908,7 @@ public class Main extends JavaPlugin {
 		 pluginManager.registerEvents(sawListener, this);
 		 pluginManager.registerEvents(lunarDebrisListener, this);
 		 pluginManager.registerEvents(nebulousAuraListener, this);
+		 pluginManager.registerEvents(watch, this);
 		 pluginManager.registerEvents(rhyoliteListener, this);
 		 pluginManager.registerEvents(pumiceListener, this);
 		 pluginManager.registerEvents(forgersScrollListener, this);
@@ -955,6 +987,7 @@ public class Main extends JavaPlugin {
 		 pluginManager.registerEvents(steelMeshListener, this);
 		 pluginManager.registerEvents(emblemOfTheShieldListener, this);
 		 pluginManager.registerEvents(steelPlateSetListener, this);
+		 pluginManager.registerEvents(backpackListener, this);
 		 pluginManager.registerEvents(essenceOfFaunaListener, this);
 		 pluginManager.registerEvents(steelWoolListener, this);
 		 pluginManager.registerEvents(verdantMedallionListener, this);
@@ -989,6 +1022,7 @@ public class Main extends JavaPlugin {
 		 pluginManager.registerEvents(bloodOfTheForsakenListener, this);
 		 pluginManager.registerEvents(fleshCandleListener, this);
 		 pluginManager.registerEvents(caliburnListener, this);
+		 pluginManager.registerEvents(portableAccelerantListener, this);
 		 pluginManager.registerEvents(scrappySetListener, this);
 		 pluginManager.registerEvents(emblemOfTheRavenListener, this);
 		 pluginManager.registerEvents(hopperPickUpRecipeScroll, this);
@@ -1020,6 +1054,8 @@ public class Main extends JavaPlugin {
 		 pluginManager.registerEvents(wandOfDisfigurationListener, this);
 		 pluginManager.registerEvents(voodooDollListener, this);
 		 soulOfTheWarriorListener = new SoulOfTheWarriorListener(this);
+		 pluginManager.registerEvents(phoenixAshesListener, this);
+		 pluginManager.registerEvents(soulOfTheThiefListener, this);
 		 
 		 
 		 
@@ -1053,8 +1089,69 @@ public class Main extends JavaPlugin {
 		 new GetCustomItem(this);
 		 getCommand("GetCustomItem").setTabCompleter(new GetCustomItemTabCompleter(this));
 		 new Level(this);
+		 new CraftingXP(this);
 		 
-		
+		 
+		 String serverPropertiesPath = getServer().getWorldContainer().getAbsolutePath();
+		 serverPropertiesPath = serverPropertiesPath.substring(0, serverPropertiesPath.length() - 1) + "server.properties";
+		 
+		 String worldName = "";
+		 
+		 FileInputStream in = null;
+		 try {
+		     // Initially empty.
+		     Properties properties = new Properties();
+
+		     // You can read files using FileInputStream or FileReader.
+		     in = new FileInputStream(serverPropertiesPath);
+		     
+		     // This line reads the properties file.
+		     properties.load(in);
+
+		     worldName = properties.getProperty("level-name");
+		 } catch (FileNotFoundException ex) {
+		     // Handle missing properties file errors.
+		 } catch (IOException ex) {
+		     // Handle IO errors.
+		 } finally {
+		     // Need to do some work to close the stream.
+		     try {
+		         if (in != null) in.close();
+		     } catch (IOException ex) {
+		         // Handle IO errors or log a warning.
+		     }
+		 }
+		 
+		 
+		 String datapackFilePath = getServer().getWorldContainer().getAbsolutePath();
+		 datapackFilePath = datapackFilePath.substring(0, datapackFilePath.length() - 1) + worldName + File.separator + "datapacks" + File.separator + "BaugRPG_Religions.zip";
+		 File datapackFile = new File(datapackFilePath);
+		 if (datapackFile.exists()) {
+
+			 //Initialize all religion code
+
+			 File religionInfoFile = new File(this.getDataFolder() + File.separator + "religionInfo.yml");
+			 
+			 //Check to see if the file already exists. If not, create it.
+			 if (!religionInfoFile.exists()) {
+				 try {
+					 religionInfoFile.createNewFile();
+				 } catch (IOException e) {
+					 e.printStackTrace();
+				 }
+			 }
+			 
+			 pluginManager.registerEvents(enderDragonDeathListener, this);
+			 heavenPortalsListener = new HeavenPortalsListener(this);
+			 pluginManager.registerEvents(heavenPortalsListener, this);
+			 pluginManager.registerEvents(voidDamageListener, this);
+			 pluginManager.registerEvents(blockConversionListener, this);
+			 
+			 
+		 } else {
+			 this.getLogger().severe("If you want to play with the religions addon, make sure the religions datapack is installed, and is not unzipped with the name \"BaugRPG_Religions.zip\"");
+		 }
+		 
 		 
 		 
 		 
@@ -1253,6 +1350,17 @@ public class Main extends JavaPlugin {
 		 if (!configfile.exists()) {
 			 try {
 				 configfile.createNewFile();
+			 } catch (IOException e) {
+				 e.printStackTrace();
+			 }
+		 }
+		 
+		 File backpackfile = new File(this.getDataFolder() + File.separator + "backpackData.yml");
+		 
+		 //Check to see if the file already exists. If not, create it.
+		 if (!backpackfile.exists()) {
+			 try {
+				 backpackfile.createNewFile();
 			 } catch (IOException e) {
 				 e.printStackTrace();
 			 }

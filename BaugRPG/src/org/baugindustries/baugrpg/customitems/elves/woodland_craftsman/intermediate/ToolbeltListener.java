@@ -62,11 +62,17 @@ public class ToolbeltListener implements Listener {
 
 		tools.set("tool" + activeSlot, player.getInventory().getItemInOffHand());
 		
-		activeSlot++;
-		if (activeSlot > toolSlots) {
-			activeSlot = 1;
+		if (!player.isSneaking()) {
+			activeSlot++;
+			if (activeSlot > toolSlots) {
+				activeSlot = 1;
+			}
+		} else {
+			activeSlot--;
+			if (activeSlot < 1) {
+				activeSlot = toolSlots;
+			}
 		}
-		
 		if (tools.contains("tool" + activeSlot)) {
 			player.getInventory().setItemInOffHand(tools.getItemStack("tool" + activeSlot));
 		} else {

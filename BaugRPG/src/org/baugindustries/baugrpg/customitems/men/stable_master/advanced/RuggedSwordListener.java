@@ -23,6 +23,7 @@ public class RuggedSwordListener implements Listener {
 	private Main plugin;
 	float chargeIncrements = 0.0001f;
 	float dischargeIncrements = 0.03f;
+	final float damageMultiplier = 2.5f;
 	
 	public RuggedSwordListener(Main plugin) {
 		this.plugin = plugin;
@@ -97,7 +98,7 @@ public class RuggedSwordListener implements Listener {
 			PersistentDataContainer data = meta.getPersistentDataContainer();
 			float charge = data.get(new NamespacedKey(plugin, "charge"), PersistentDataType.FLOAT);
 			
-			event.setDamage(event.getDamage() * ((charge * 1.75) + 1));
+			event.setDamage(event.getDamage() * ((charge * damageMultiplier) + 1));
 			
 			if (charge - dischargeIncrements >= 0) {
 				charge -= dischargeIncrements;

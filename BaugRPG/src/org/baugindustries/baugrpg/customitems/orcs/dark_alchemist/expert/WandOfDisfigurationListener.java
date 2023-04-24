@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.baugindustries.baugrpg.Main;
 import org.baugindustries.baugrpg.Recipes;
 import org.bukkit.NamespacedKey;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Ageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -95,7 +96,11 @@ public class WandOfDisfigurationListener implements Listener {
 					lEntity.setGliding(entity.isGliding());
 					lEntity.setGlowing(entity.isGlowing());
 					lEntity.setGravity(entity.hasGravity());
-					lEntity.setHealth(entity.getHealth());
+					if (lEntity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() > entity.getHealth()) {
+						lEntity.setHealth(entity.getHealth());
+					} else {
+						lEntity.setHealth(lEntity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+					}
 					lEntity.setInvisible(entity.isInvisible());
 					lEntity.setInvulnerable(entity.isInvulnerable());
 					lEntity.setLastDamage(entity.getLastDamage());
@@ -118,7 +123,7 @@ public class WandOfDisfigurationListener implements Listener {
 					lEntity.setVelocity(entity.getVelocity());
 					lEntity.setVisualFire(entity.isVisualFire());
 					
-					if (lEntity instanceof Ageable) {
+					if (lEntity instanceof Ageable && entity instanceof Ageable) {
 						if (((Ageable)entity).isAdult()) {
 							((Ageable)lEntity).setAdult();
 						} else {

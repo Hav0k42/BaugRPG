@@ -94,3 +94,7 @@ commands:
   level:
    usage: /level
    description: Tells you what level you are (How many skill points you've collected)
+  craftingXP:
+   usage: /craftingXP
+   aliases: [cxp]
+   description: Tells you how much crafting experience you have.

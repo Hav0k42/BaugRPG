@@ -66,8 +66,16 @@ public class FeatureManagement implements Listener{
 			config.set("hardcoreDeathOn", !config.getBoolean("hardcoreDeathOn"));
 		}
 		
-		if (event.getCurrentItem().equals(plugin.itemManager.getHardcoreDeathItem())) {
+		if (event.getCurrentItem().equals(plugin.itemManager.getAutoBalanceItem())) {
 			config.set("autoBalanceRaces", !config.getBoolean("autoBalanceRaces"));
+		}
+		
+		if (event.getCurrentItem().equals(plugin.itemManager.getRestrictCraftingItem())) {
+			config.set("restrictCrafting", !config.getBoolean("restrictCrafting"));
+		}
+		
+		if (event.getCurrentItem().equals(plugin.itemManager.getRestrictMaterialCraftingItem())) {
+			config.set("restrictCraftingMaterials", !config.getBoolean("restrictCraftingMaterials"));
 		}
 		
 		try {

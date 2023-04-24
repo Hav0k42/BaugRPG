@@ -50,7 +50,18 @@ public class BuffEnderDragonListener implements Listener {
 		
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 			public void run() {
-				event.getEntity().getWorld().spawnEntity(loc, EntityType.ENDER_CRYSTAL);
+				
+				boolean dragonAlive = false;
+				for (Entity entity : event.getEntity().getWorld().getLivingEntities()) {
+					if (entity instanceof EnderDragon) {
+						dragonAlive = true;
+						break;
+					}
+				}
+				if (dragonAlive) {
+					event.getEntity().getWorld().spawnEntity(loc, EntityType.ENDER_CRYSTAL);
+					plugin.getServer().broadcastMessage(ChatColor.YELLOW + "An end crystal has respawned.");
+				}
 			}
 		}, respawnTime);
 		

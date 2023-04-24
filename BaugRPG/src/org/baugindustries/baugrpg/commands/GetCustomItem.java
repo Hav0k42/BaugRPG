@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.baugindustries.baugrpg.Main;
+import org.baugindustries.baugrpg.Recipes;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -96,9 +97,19 @@ public class GetCustomItem implements CommandExecutor {
 			return true;
 		}
 		
-		if (amount > 512) {
+		if (amount > 2048) {
 			player.sendMessage(ChatColor.RED + "Ayo??? Please enter a reasonable number for the amount of items you want.");
 			return true;
+		}
+		
+		if (Recipes.BACKPACK.matches(plugin, tempItem)) {
+			if (args.length > 1 && plugin.isInteger(args[1])) {
+				player.getInventory().addItem(plugin.itemManager.getBackpackItem(Integer.parseInt(args[1])));
+				return true;
+			} else {
+				player.sendMessage(ChatColor.RED + "Please enter an integer for the backpack ID you want.");
+				return true;
+			}
 		}
 		
 		tempItem.setAmount(amount);

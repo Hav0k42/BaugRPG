@@ -33,7 +33,8 @@ public enum Recipes {
 				new ItemStack(Material.RABBIT_HIDE),
 				null
 					)),
-			false
+			false,
+			true
 			),
 	
 	HORSEHAIR (
@@ -49,7 +50,8 @@ public enum Recipes {
 				new ItemStack(Material.WHEAT),
 				null
 					)),
-			false
+			false,
+			true
 			),
 	
 	SHARPENED_HOOF (
@@ -65,7 +67,8 @@ public enum Recipes {
 				new ItemStack(Material.BONE),
 				null
 					)),
-			false
+			false,
+			true
 			),
 	
 	HORSESHOE (
@@ -81,6 +84,7 @@ public enum Recipes {
 				null,
 				new ItemStack(Material.GOLD_NUGGET)
 					)),
+			false,
 			false
 			),
 	
@@ -97,6 +101,7 @@ public enum Recipes {
 				null,
 				new ItemStack(Material.IRON_NUGGET)
 					)),
+			false,
 			false
 			),
 	
@@ -115,7 +120,8 @@ public enum Recipes {
 					new ItemStack(Material.IRON_INGOT),
 					new ItemStack(Material.HEAVY_WEIGHTED_PRESSURE_PLATE)
 					)), 
-			false
+			false,
+			true
 			),
 	
 	SCREWS (
@@ -131,7 +137,8 @@ public enum Recipes {
 					new ItemStack(Material.IRON_NUGGET),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	MESH (
@@ -147,7 +154,8 @@ public enum Recipes {
 					null,
 					new ItemStack(Material.STRING)
 					)), 
-			false
+			false,
+			true
 			),
 	
 	IRON_HAMMER (
@@ -163,6 +171,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -179,6 +188,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -197,7 +207,8 @@ public enum Recipes {
 					new ItemStack(Material.WHITE_WOOL),
 					new ItemStack(Material.STRING)
 					)), 
-			false
+			false,
+			true
 			),
 	
 	LANOLIN (
@@ -213,7 +224,8 @@ public enum Recipes {
 					new ItemStack(Material.WHITE_WOOL),
 					new ItemStack(Material.LEATHER)
 					)), 
-			false
+			false,
+			true
 			),
 	
 	DRY_GRASS (
@@ -229,7 +241,8 @@ public enum Recipes {
 					new ItemStack(Material.GRASS),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	VEAL (
@@ -245,6 +258,7 @@ public enum Recipes {
 					new ItemStack(Material.BEEF),
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -261,6 +275,7 @@ public enum Recipes {
 					new ItemStack(Material.GRASS),
 					new ItemStack(Material.PAPER)
 					)), 
+			false,
 			false
 			),
 	
@@ -279,6 +294,7 @@ public enum Recipes {
 					null,
 					null
 			)), 
+			true,
 			true
 			),
 	
@@ -295,7 +311,8 @@ public enum Recipes {
 					new ItemStack(Material.CORNFLOWER),
 					new ItemStack(Material.DANDELION)
 					)), 
-			false
+			false,
+			true
 			),
 	
 	FLORAL_ROOTS (
@@ -311,7 +328,8 @@ public enum Recipes {
 					new ItemStack(Material.POPPY),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	FLORAL_TRANSMUTER (
@@ -327,6 +345,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -343,6 +362,7 @@ public enum Recipes {
 					new ItemStack(Material.SAND),
 					new ItemStack(Material.SAND)
 					)), 
+			false,
 			false
 			),
 	
@@ -361,7 +381,8 @@ public enum Recipes {
 					new ItemStack(Material.IRON_NUGGET),
 					new ItemStack(Material.STRING)
 					)), 
-			false
+			false,
+			true
 			),
 	
 	YEW_BRANCHES (
@@ -377,7 +398,8 @@ public enum Recipes {
 					new ItemStack(Material.GOLD_NUGGET),
 					new ItemStack(Material.STICK)
 					)), 
-			false
+			false,
+			true
 			),
 	
 	ENRICHED_LOGS (
@@ -393,7 +415,8 @@ public enum Recipes {
 					new ItemStack(Material.BONE_MEAL),
 					new ItemStack(Material.BONE_MEAL)
 					)), 
-			false
+			false,
+			true
 			),
 	
 	SAPLING_TRANSMUTER (
@@ -409,6 +432,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -425,6 +449,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -443,7 +468,8 @@ public enum Recipes {
 					null,
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	LUNAR_DEBRIS (
@@ -459,7 +485,8 @@ public enum Recipes {
 					new ItemStack(Material.CLAY_BALL),
 					new ItemStack(Material.COBBLESTONE)
 					)), 
-			false
+			false,
+			true
 			),
 	
 	STARDUST (
@@ -475,7 +502,8 @@ public enum Recipes {
 					new ItemStack(Material.GLOWSTONE_DUST),
 					new ItemStack(Material.SUGAR)
 					)), 
-			false
+			false,
+			true
 			),
 	
 	ILLUMINA_ORB (
@@ -491,6 +519,7 @@ public enum Recipes {
 					new ItemStack(Material.GLOW_INK_SAC),
 					new ItemStack(Material.TORCH)
 					)), 
+			false,
 			false
 			),
 	
@@ -507,6 +536,24 @@ public enum Recipes {
 					new ItemStack(Material.LAPIS_LAZULI),
 					new ItemStack(Material.GLOW_INK_SAC)
 					)), 
+			false,
+			false
+			),
+	
+	WATCH (
+			RecipeTypes.BASIC, 
+			new ArrayList<Object> (Arrays.asList(
+					new ItemStack(Material.PAPER),
+					new ItemStack(Material.CHAIN),
+					null,
+					new ItemStack(Material.CHAIN),
+					new ItemStack(Material.CLOCK),
+					new ItemStack(Material.CHAIN),
+					null,
+					new ItemStack(Material.CHAIN),
+					new ItemStack(Material.PAPER)
+					)), 
+			false,
 			false
 			),
 	
@@ -525,7 +572,8 @@ public enum Recipes {
 					new ItemStack(Material.IRON_INGOT),
 					new ItemStack(Material.COAL)
 					)), 
-			false
+			false,
+			true
 			),
 	
 	RHYOLITE (
@@ -541,7 +589,8 @@ public enum Recipes {
 					new ItemStack(Material.SANDSTONE),
 					new ItemStack(Material.RED_SAND)
 					)), 
-			false
+			false,
+			true
 			),
 	
 	PUMICE (
@@ -557,7 +606,8 @@ public enum Recipes {
 					new ItemStack(Material.CALCITE),
 					new ItemStack(Material.COBBLESTONE)
 					)), 
-			false
+			false,
+			true
 			),
 	
 	FORGERS_SCROLL (
@@ -573,6 +623,7 @@ public enum Recipes {
 					new ItemStack(Material.PAPER),
 					new ItemStack(Material.PAPER)
 					)), 
+			false,
 			false
 			),
 	
@@ -589,6 +640,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -607,7 +659,8 @@ public enum Recipes {
 					new ItemStack(Material.RED_DYE),
 					new ItemStack(Material.DIAMOND)
 					)), 
-			false
+			false,
+			true
 			),
 	
 	SAPPHIRE (
@@ -623,7 +676,8 @@ public enum Recipes {
 					new ItemStack(Material.BLUE_DYE),
 					new ItemStack(Material.DIAMOND)
 					)), 
-			false
+			false,
+			true
 			),
 	
 	ROYAL_AZEL (
@@ -639,7 +693,8 @@ public enum Recipes {
 					new ItemStack(Material.PURPLE_DYE),
 					new ItemStack(Material.DIAMOND)
 			)), 
-			false
+			false,
+			true
 			),
 	
 	OPAL (
@@ -655,7 +710,8 @@ public enum Recipes {
 					new ItemStack(Material.WHITE_DYE),
 					new ItemStack(Material.DIAMOND)
 					)), 
-			false
+			false,
+			true
 			),
 	
 	GOLD_RING (
@@ -671,6 +727,7 @@ public enum Recipes {
 					new ItemStack(Material.GOLD_INGOT),
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -687,6 +744,7 @@ public enum Recipes {
 					new ItemStack(Material.IRON_INGOT),
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -705,7 +763,8 @@ public enum Recipes {
 					new ItemStack(Material.STONE),
 					new ItemStack(Material.COBBLESTONE)
 					)), 
-			false
+			false,
+			true
 			),
 	
 	ALUMINUM (
@@ -721,7 +780,8 @@ public enum Recipes {
 					new ItemStack(Material.LIGHT_GRAY_DYE),
 					new ItemStack(Material.IRON_INGOT)
 					)), 
-			false
+			false,
+			true
 			),
 	
 	ZINC (
@@ -737,7 +797,8 @@ public enum Recipes {
 					new ItemStack(Material.GRAY_DYE),
 					new ItemStack(Material.IRON_INGOT)
 					)), 
-			false
+			false,
+			true
 			),
 	
 	ENDURANCE_RUNE (
@@ -753,6 +814,7 @@ public enum Recipes {
 					new ItemStack(Material.STONE_SLAB),
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -769,6 +831,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -787,7 +850,8 @@ public enum Recipes {
 					new ItemStack(Material.WARPED_ROOTS),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	WARPED_POWDER (
@@ -803,7 +867,8 @@ public enum Recipes {
 					new ItemStack(Material.WARPED_ROOTS),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	CRIMSON_POWDER (
@@ -819,7 +884,8 @@ public enum Recipes {
 					new ItemStack(Material.CRIMSON_ROOTS),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	HYPNOTIC_RING (
@@ -835,7 +901,8 @@ public enum Recipes {
 					new ItemStack(Material.GOLD_INGOT),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	FLAMING_BUCKET (
@@ -851,7 +918,8 @@ public enum Recipes {
 					new ItemStack(Material.MAGMA_BLOCK),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	//Enraged Berserker
@@ -869,7 +937,8 @@ public enum Recipes {
 					new ItemStack(Material.IRON_INGOT),
 					new ItemStack(Material.MAGMA_BLOCK)
 					)), 
-			false
+			false,
+			true
 			),
 	
 	ETHEREAL_WOOD (
@@ -885,7 +954,8 @@ public enum Recipes {
 					new ItemStack(Material.WARPED_STEM),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	HOGLIN_TUSK (
@@ -901,7 +971,8 @@ public enum Recipes {
 					new ItemStack(Material.BONE),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	RAGE_STONE (
@@ -917,6 +988,7 @@ public enum Recipes {
 					new ItemStack(Material.IRON_SWORD),
 					new ItemStack(Material.MAGMA_BLOCK)
 					)), 
+			false,
 			false
 			),
 	
@@ -933,6 +1005,7 @@ public enum Recipes {
 					new ItemStack(Material.GHAST_TEAR),
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -951,7 +1024,8 @@ public enum Recipes {
 					new ItemStack(Material.CHAIN),
 					null
 			)), 
-			false
+			false,
+			true
 			),
 	
 	WASTELAND_GOO (
@@ -967,7 +1041,8 @@ public enum Recipes {
 					new ItemStack(Material.NETHER_WART),
 					null
 			)), 
-			false
+			false,
+			true
 			),
 	
 	PEBBLES (
@@ -983,7 +1058,8 @@ public enum Recipes {
 					new ItemStack(Material.STONE_BUTTON),
 					null
 			)), 
-			false
+			false,
+			true
 			),
 	
 	MAGMA_STONE (
@@ -999,6 +1075,7 @@ public enum Recipes {
 					new ItemStack(Material.LAVA_BUCKET),
 					new ItemStack(Material.MAGMA_BLOCK)
 			)), 
+			false,
 			false
 			),
 	
@@ -1015,6 +1092,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -1048,7 +1126,8 @@ public enum Recipes {
 					new ItemStack(Material.STRING),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	TEMPERED_LEATHER (
@@ -1064,7 +1143,8 @@ public enum Recipes {
 					new ItemStack(Material.FLINT_AND_STEEL),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	SPEAR (
@@ -1080,6 +1160,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -1096,6 +1177,7 @@ public enum Recipes {
 					new ItemStack(Material.IRON_INGOT),
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -1112,6 +1194,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -1130,7 +1213,8 @@ public enum Recipes {
 					new ItemStack(Material.IRON_NUGGET),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	HARDENED_MESH (
@@ -1146,7 +1230,8 @@ public enum Recipes {
 					new ItemStack(Material.IRON_NUGGET),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	KNOCKBACK_SHIELD (
@@ -1162,6 +1247,7 @@ public enum Recipes {
 					new ItemStack(Material.LEATHER),
 					new ItemStack(Material.LEATHER)
 					)), 
+			false,
 			false
 			),
 	
@@ -1178,6 +1264,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -1194,6 +1281,7 @@ public enum Recipes {
 					IRON_PLATE,
 					IRON_PLATE
 					)), 
+			false,
 			false
 			),
 	
@@ -1210,6 +1298,7 @@ public enum Recipes {
 					null,
 					IRON_PLATE
 					)), 
+			false,
 			false
 			),
 	
@@ -1226,6 +1315,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -1244,7 +1334,8 @@ public enum Recipes {
 					new ItemStack(Material.WHITE_WOOL),
 					new ItemStack(Material.WHITE_WOOL)
 					)), 
-			false
+			false,
+			true
 			),
 	
 	WAX (
@@ -1260,7 +1351,8 @@ public enum Recipes {
 					new ItemStack(Material.HONEYCOMB),
 					new ItemStack(Material.YELLOW_DYE)
 					)), 
-			false
+			false,
+			true
 			),
 	
 	CROOK (
@@ -1276,6 +1368,7 @@ public enum Recipes {
 					new ItemStack(Material.STICK),
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -1292,6 +1385,7 @@ public enum Recipes {
 					new ItemStack(Material.WHITE_WOOL),
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -1308,6 +1402,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -1326,7 +1421,8 @@ public enum Recipes {
 					new ItemStack(Material.BLUE_DYE),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	ENRICHED_SOIL (
@@ -1342,7 +1438,8 @@ public enum Recipes {
 					FLORAL_ROOTS,
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	ENRICHED_HOE (
@@ -1358,6 +1455,7 @@ public enum Recipes {
 					new ItemStack(Material.STICK),
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -1374,6 +1472,7 @@ public enum Recipes {
 					null,
 					new ItemStack(Material.IRON_INGOT)
 					)), 
+			false,
 			false
 			),
 	
@@ -1390,6 +1489,7 @@ public enum Recipes {
 					null,
 					ASSORTED_PETALS
 					)), 
+			false,
 			false
 			),
 	
@@ -1408,7 +1508,8 @@ public enum Recipes {
 					new ItemStack(Material.IRON_NUGGET),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	ELVEN_WEAVE (
@@ -1424,7 +1525,8 @@ public enum Recipes {
 					new ItemStack(Material.LIME_DYE),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	TOOLBELT (
@@ -1440,6 +1542,7 @@ public enum Recipes {
 					ELVEN_THREAD,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -1456,6 +1559,7 @@ public enum Recipes {
 					new ItemStack(Material.STICK),
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -1472,6 +1576,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -1488,6 +1593,7 @@ public enum Recipes {
 					ENRICHED_LOGS,
 					ENRICHED_LOGS
 					)), 
+			false,
 			false
 			),
 	
@@ -1504,6 +1610,7 @@ public enum Recipes {
 					null,
 					ENRICHED_LOGS
 					)), 
+			false,
 			false
 			),
 	
@@ -1520,6 +1627,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -1538,7 +1646,8 @@ public enum Recipes {
 					new ItemStack(Material.GLOWSTONE_DUST),
 					new ItemStack(Material.OBSIDIAN)
 					)), 
-			false
+			false,
+			true
 			),
 	
 	DARK_MATTER (
@@ -1554,7 +1663,8 @@ public enum Recipes {
 					new ItemStack(Material.BLACK_DYE),
 					LUNAR_DEBRIS
 					)), 
-			false
+			false,
+			true
 			),
 	
 	LIGHT_SHIELD (
@@ -1570,6 +1680,7 @@ public enum Recipes {
 					new ItemStack(Material.GLOWSTONE_DUST),
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -1586,6 +1697,7 @@ public enum Recipes {
 					STARDUST,
 					new ItemStack(Material.STRING)
 					)), 
+			false,
 			false
 			),
 	
@@ -1602,6 +1714,7 @@ public enum Recipes {
 					LUNAR_DEBRIS,
 					new ItemStack(Material.BLACK_DYE)
 					)), 
+			false,
 			false
 			),
 	
@@ -1620,7 +1733,8 @@ public enum Recipes {
 					new ItemStack(Material.GOLD_INGOT),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	BRONZE (
@@ -1636,7 +1750,8 @@ public enum Recipes {
 					new ItemStack(Material.COPPER_INGOT),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	RADIANT_BORE (
@@ -1652,6 +1767,7 @@ public enum Recipes {
 					new ItemStack(Material.STICK),
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -1668,6 +1784,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -1684,6 +1801,7 @@ public enum Recipes {
 					PUMICE,
 					PUMICE
 					)), 
+			false,
 			false
 			),
 	
@@ -1702,7 +1820,8 @@ public enum Recipes {
 					RUBY,
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	TURQUOISE (
@@ -1718,7 +1837,8 @@ public enum Recipes {
 					OPAL,
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	STUDDED_HELMET (
@@ -1734,6 +1854,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -1750,6 +1871,7 @@ public enum Recipes {
 					new ItemStack(Material.GOLD_INGOT),
 					new ItemStack(Material.GOLD_INGOT)
 					)), 
+			false,
 			false
 			),
 	
@@ -1766,6 +1888,7 @@ public enum Recipes {
 					null,
 					new ItemStack(Material.GOLD_INGOT)
 					)), 
+			false,
 			false
 			),
 	
@@ -1782,6 +1905,7 @@ public enum Recipes {
 					null,
 					ROYAL_AZEL
 					)), 
+			false,
 			false
 			),
 	
@@ -1798,6 +1922,7 @@ public enum Recipes {
 					ROYAL_AZEL,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -1816,7 +1941,8 @@ public enum Recipes {
 					HARDENED_STONE,
 					STEEL
 					)), 
-			false
+			false,
+			true
 			),
 	
 	LEAD (
@@ -1832,7 +1958,8 @@ public enum Recipes {
 					new ItemStack(Material.GRAY_DYE),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	DRILL (
@@ -1848,6 +1975,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -1864,6 +1992,7 @@ public enum Recipes {
 					new ItemStack(Material.IRON_INGOT),
 					PUMICE
 					)), 
+			false,
 			false
 			),
 	
@@ -1880,6 +2009,7 @@ public enum Recipes {
 					new ItemStack(Material.EMERALD),
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -1898,7 +2028,8 @@ public enum Recipes {
 					new ItemStack(Material.WARPED_ROOTS),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	HOGLIN_EYE (
@@ -1914,7 +2045,8 @@ public enum Recipes {
 					CRIMSON_POWDER,
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	ROD_OF_SHADOWS (
@@ -1930,6 +2062,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -1946,6 +2079,7 @@ public enum Recipes {
 					new ItemStack(Material.STICK),
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -1962,6 +2096,7 @@ public enum Recipes {
 					new ItemStack(Material.SAND),
 					new ItemStack(Material.GLOWSTONE_DUST)
 					)), 
+			false,
 			false
 			),
 	
@@ -1980,7 +2115,8 @@ public enum Recipes {
 					new ItemStack(Material.BONE_MEAL),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	PYROCLASTIC_INGOT (
@@ -1996,7 +2132,8 @@ public enum Recipes {
 					new ItemStack(Material.IRON_INGOT),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	BLAZING_FURY (
@@ -2012,6 +2149,7 @@ public enum Recipes {
 					HOGLIN_TUSK,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -2028,6 +2166,7 @@ public enum Recipes {
 					new ItemStack(Material.GHAST_TEAR),
 					SCRAP
 					)), 
+			false,
 			false
 			),
 	
@@ -2044,6 +2183,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -2062,7 +2202,8 @@ public enum Recipes {
 					new ItemStack(Material.IRON_NUGGET),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	STEEL_FEATHER (
@@ -2078,7 +2219,8 @@ public enum Recipes {
 					new ItemStack(Material.IRON_INGOT),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	FRAGMENTED_HELMET (
@@ -2094,6 +2236,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -2110,6 +2253,7 @@ public enum Recipes {
 					ETHEREAL_WOOD,
 					new ItemStack(Material.QUARTZ)
 					)), 
+			false,
 			false
 			),
 	
@@ -2126,6 +2270,7 @@ public enum Recipes {
 					null,
 					SCRAP
 					)), 
+			false,
 			false
 			),
 	
@@ -2142,6 +2287,7 @@ public enum Recipes {
 					null,
 					SCRAP
 					)), 
+			false,
 			false
 			),
 	
@@ -2158,6 +2304,7 @@ public enum Recipes {
 					null,
 					HELLSTONE
 					)), 
+			false,
 			false
 			),
 	
@@ -2191,7 +2338,8 @@ public enum Recipes {
 					HORSEHAIR,
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	ENRICHED_LEATHER (
@@ -2207,7 +2355,8 @@ public enum Recipes {
 					ENRICHED_SOIL,
 					new ItemStack(Material.LEATHER)
 					)), 
-			false
+			false,
+			true
 			),
 	
 	RUGGED_SWORD (
@@ -2223,6 +2372,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -2239,6 +2389,7 @@ public enum Recipes {
 					TURQUOISE,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -2255,6 +2406,7 @@ public enum Recipes {
 					SHARPENED_HOOF,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -2273,7 +2425,8 @@ public enum Recipes {
 					IRON_PLATE,
 					STEEL
 					)), 
-			false
+			false,
+			true
 			),
 	
 	STEEL_MESH (
@@ -2289,7 +2442,8 @@ public enum Recipes {
 					MESH,
 					STEEL
 					)), 
-			false
+			false,
+			true
 			),
 	
 	EMBLEM_OF_THE_SHIELD (
@@ -2305,6 +2459,7 @@ public enum Recipes {
 					HARDENED_MESH,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -2321,6 +2476,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -2337,6 +2493,7 @@ public enum Recipes {
 					HARDENED_PLATE,
 					HARDENED_MESH
 					)), 
+			false,
 			false
 			),
 	
@@ -2353,6 +2510,7 @@ public enum Recipes {
 					null,
 					HARDENED_MESH
 					)), 
+			false,
 			false
 			),
 	
@@ -2369,6 +2527,24 @@ public enum Recipes {
 					null,
 					HARDENED_MESH
 					)), 
+			false,
+			false
+			),
+	
+	BACKPACK (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					ELVEN_THREAD,
+					null,
+					ELVEN_THREAD,
+					TEMPERED_LEATHER,
+					new ItemStack(Material.ENDER_CHEST),
+					TEMPERED_LEATHER,
+					CORDOVAN_LEATHER,
+					TEMPERED_LEATHER,
+					CORDOVAN_LEATHER
+					)), 
+			false,
 			false
 			),
 	
@@ -2387,7 +2563,8 @@ public enum Recipes {
 					MERINO_WOOL,
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	STEEL_WOOL (
@@ -2403,7 +2580,8 @@ public enum Recipes {
 					MERINO_WOOL,
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	VERDANT_MEDALLION (
@@ -2419,6 +2597,7 @@ public enum Recipes {
 					DARK_MATTER,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -2435,6 +2614,7 @@ public enum Recipes {
 					WAX,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -2451,6 +2631,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -2469,7 +2650,8 @@ public enum Recipes {
 					new ItemStack(Material.WATER_BUCKET),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	CORRUPTED_SOIL (
@@ -2485,7 +2667,8 @@ public enum Recipes {
 					FLORAL_ROOTS,
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	EMBLEM_OF_THE_BLOSSOM (
@@ -2501,6 +2684,7 @@ public enum Recipes {
 					ENRICHED_SOIL,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -2517,6 +2701,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -2533,6 +2718,7 @@ public enum Recipes {
 					FLORAL_POULTICE,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -2551,7 +2737,8 @@ public enum Recipes {
 					ELVEN_THREAD,
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	PARCHMENT (
@@ -2567,7 +2754,8 @@ public enum Recipes {
 					new ItemStack(Material.PAPER),
 					new ItemStack(Material.PAPER)
 					)), 
-			false
+			false,
+			true
 			),
 	
 	EMBLEM_OF_THE_FOREST (
@@ -2583,6 +2771,7 @@ public enum Recipes {
 					ENRICHED_LOGS,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -2599,6 +2788,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -2615,6 +2805,7 @@ public enum Recipes {
 					ELVEN_WEAVE,
 					ELVEN_WEAVE
 					)), 
+			false,
 			false
 			),
 	
@@ -2631,6 +2822,7 @@ public enum Recipes {
 					null,
 					ELVEN_WEAVE
 					)), 
+			false,
 			false
 			),
 	
@@ -2647,6 +2839,7 @@ public enum Recipes {
 					null,
 					ELVEN_WEAVE
 					)), 
+			false,
 			false
 			),
 	
@@ -2665,7 +2858,8 @@ public enum Recipes {
 					STARDUST,
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	NEW_MOON_FRAGMENT (
@@ -2681,7 +2875,8 @@ public enum Recipes {
 					DARK_MATTER,
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	LUNAR_BOOMERANG (
@@ -2697,6 +2892,7 @@ public enum Recipes {
 					LUNAR_DEBRIS,
 					LUNAR_DEBRIS
 					)), 
+			false,
 			false
 			),
 	
@@ -2713,6 +2909,7 @@ public enum Recipes {
 					METEORITE,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -2729,6 +2926,7 @@ public enum Recipes {
 					DARK_MATTER,
 					DARK_MATTER
 					)), 
+			false,
 			false
 			),
 	
@@ -2747,7 +2945,8 @@ public enum Recipes {
 					STEEL,
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	ESSENCE_OF_FIRE (
@@ -2763,7 +2962,8 @@ public enum Recipes {
 					BRONZE,
 					new ItemStack(Material.LAVA_BUCKET)
 					)), 
-			false
+			false,
+			true
 			),
 	
 	EMBLEM_OF_THE_FORGE (
@@ -2779,6 +2979,7 @@ public enum Recipes {
 					HAND_FORGE,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -2795,6 +2996,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -2811,6 +3013,7 @@ public enum Recipes {
 					YEW_BRANCHES,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -2829,7 +3032,8 @@ public enum Recipes {
 					new ItemStack(Material.GOLD_INGOT),
 					BRASS
 					)), 
-			false
+			false,
+			true
 			),
 	
 	GEM_CLUSTER (
@@ -2845,7 +3049,8 @@ public enum Recipes {
 					TURQUOISE,
 					RUBY
 					)), 
-			false
+			false,
+			true
 			),
 	
 	EMBLEM_OF_THE_WHIRLWIND (
@@ -2861,6 +3066,7 @@ public enum Recipes {
 					ELVEN_WEAVE,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -2877,6 +3083,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -2893,6 +3100,7 @@ public enum Recipes {
 					ALUMINUM,
 					STEEL
 					)), 
+			false,
 			false
 			),
 	
@@ -2909,6 +3117,7 @@ public enum Recipes {
 					null,
 					STEEL
 					)), 
+			false,
 			false
 			),
 	
@@ -2925,6 +3134,7 @@ public enum Recipes {
 					null,
 					ELVEN_WEAVE
 					)), 
+			false,
 			false
 			),
 	
@@ -2943,7 +3153,8 @@ public enum Recipes {
 					HARDENED_STONE,
 					PUMICE
 					)), 
-			false
+			false,
+			true
 			),
 	
 	PLATINUM (
@@ -2959,7 +3170,8 @@ public enum Recipes {
 					new ItemStack(Material.IRON_INGOT),
 					LEAD
 					)), 
-			false
+			false,
+			true
 			),
 	
 	MAGNETIZED_IDOL (
@@ -2975,6 +3187,7 @@ public enum Recipes {
 					new ItemStack(Material.IRON_BLOCK),
 					STEEL
 					)), 
+			false,
 			false
 			),
 	
@@ -2991,6 +3204,7 @@ public enum Recipes {
 					HARDENED_STONE,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -3007,6 +3221,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -3025,7 +3240,8 @@ public enum Recipes {
 					null,
 					ETHEREAL_POWDER
 					)), 
-			false
+			false,
+			true
 			),
 	
 	WITHER_POWDER (
@@ -3041,7 +3257,8 @@ public enum Recipes {
 					new ItemStack(Material.COAL_BLOCK),
 					null
 					)), 
-			false
+			false,
+			true
 			),
 	
 	EMBLEM_OF_THE_ELIXIR (
@@ -3057,6 +3274,7 @@ public enum Recipes {
 					FUNGAL_ROOTS,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -3073,6 +3291,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -3089,6 +3308,7 @@ public enum Recipes {
 					new ItemStack(Material.STICK),
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -3107,7 +3327,8 @@ public enum Recipes {
 					WARPED_POWDER,
 					HOGLIN_TUSK
 					)), 
-			false
+			false,
+			true
 			),
 	
 	BLOOD_OF_THE_FORSAKEN (
@@ -3123,7 +3344,8 @@ public enum Recipes {
 					BONE_MARROW,
 					WAX
 					)), 
-			false
+			false,
+			true
 			),
 	
 	EMBLEM_OF_THE_BLADE (
@@ -3139,6 +3361,7 @@ public enum Recipes {
 					ETHEREAL_WOOD,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -3155,6 +3378,7 @@ public enum Recipes {
 					WAX,
 					new ItemStack(Material.MUTTON)
 					)), 
+			false,
 			false
 			),
 	
@@ -3171,6 +3395,24 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
+			false
+			),
+	
+	PORTABLE_ACCELERANT (
+			RecipeTypes.ADVANCED, 
+			new ArrayList<Object> (Arrays.asList(
+					METEORITE,
+					ETHEREAL_POWDER,
+					CRIMSON_POWDER,
+					ETHEREAL_POWDER,
+					new ItemStack(Material.TNT),
+					ETHEREAL_POWDER,
+					CRIMSON_POWDER,
+					ETHEREAL_POWDER,
+					METEORITE
+					)), 
+			false,
 			false
 			),
 	
@@ -3189,7 +3431,8 @@ public enum Recipes {
 					SCRAP,
 					RHYOLITE
 					)), 
-			false
+			false,
+			true
 			),
 	
 	GALVINIZED_ALLOY (
@@ -3205,7 +3448,8 @@ public enum Recipes {
 					PYROCLASTIC_INGOT,
 					SCRAP
 					)), 
-			false
+			false,
+			true
 			),
 	
 	SCRAPPY_HELMET (
@@ -3221,6 +3465,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -3237,6 +3482,7 @@ public enum Recipes {
 					BOLTS,
 					PYROCLASTIC_INGOT
 					)), 
+			false,
 			false
 			),
 	
@@ -3253,6 +3499,7 @@ public enum Recipes {
 					null,
 					SCRAP
 					)), 
+			false,
 			false
 			),
 	
@@ -3269,6 +3516,7 @@ public enum Recipes {
 					null,
 					SCRAP
 					)), 
+			false,
 			false
 			),
 	
@@ -3285,6 +3533,7 @@ public enum Recipes {
 					FLAMEDASH_BOOTS,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -3305,6 +3554,7 @@ public enum Recipes {
 					BOLTS,
 					new ItemStack(Material.DIAMOND)
 					)), 
+			false,
 			false
 			),
 	
@@ -3321,6 +3571,7 @@ public enum Recipes {
 					TITANIUM,
 					new ItemStack(Material.DIAMOND)
 					)), 
+			false,
 			false
 			),
 	
@@ -3337,6 +3588,7 @@ public enum Recipes {
 					ESSENCE_OF_EARTH,
 					new ItemStack(Material.AMETHYST_SHARD)
 					)), 
+			false,
 			false
 			),
 	
@@ -3353,6 +3605,7 @@ public enum Recipes {
 					ENRICHED_LEATHER,
 					CORD
 					)), 
+			false,
 			false
 			),
 	
@@ -3371,6 +3624,7 @@ public enum Recipes {
 					STEEL_PLATE,
 					STEEL_MESH
 					)), 
+			false,
 			false
 			),
 	
@@ -3387,6 +3641,7 @@ public enum Recipes {
 					ESSENCE_OF_EARTH,
 					new ItemStack(Material.AMETHYST_SHARD)
 					)), 
+			false,
 			false
 			),
 	
@@ -3403,6 +3658,7 @@ public enum Recipes {
 					ESSENCE_OF_FIRE,
 					CORRUPTED_SOIL
 					)), 
+			false,
 			false
 			),
 	
@@ -3421,6 +3677,7 @@ public enum Recipes {
 					STEEL_WOOL,
 					ESSENCE_OF_FAUNA
 					)), 
+			false,
 			false
 			),
 	
@@ -3437,6 +3694,7 @@ public enum Recipes {
 					ESSENCE_OF_EARTH,
 					new ItemStack(Material.AMETHYST_SHARD)
 					)), 
+			false,
 			false
 			),
 	
@@ -3453,6 +3711,7 @@ public enum Recipes {
 					ESSENCE_OF_FAUNA,
 					ESSENCE_OF_EARTH
 					)), 
+			false,
 			false
 			),
 	
@@ -3471,6 +3730,7 @@ public enum Recipes {
 					CORRUPTED_SOIL,
 					AQUEOUS_SOLUTION
 					)), 
+			false,
 			false
 			),
 	
@@ -3487,6 +3747,7 @@ public enum Recipes {
 					ESSENCE_OF_EARTH,
 					new ItemStack(Material.AMETHYST_SHARD)
 					)), 
+			false,
 			false
 			),
 	
@@ -3503,6 +3764,7 @@ public enum Recipes {
 					null,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -3521,6 +3783,7 @@ public enum Recipes {
 					PARCHMENT,
 					ENRICHED_LOGS
 					)), 
+			false,
 			false
 			),
 	
@@ -3537,6 +3800,7 @@ public enum Recipes {
 					ESSENCE_OF_EARTH,
 					new ItemStack(Material.AMETHYST_SHARD)
 					)), 
+			false,
 			false
 			),
 	
@@ -3553,6 +3817,7 @@ public enum Recipes {
 					CORD,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -3571,6 +3836,7 @@ public enum Recipes {
 					BLOOD_MOON_FRAGMENT,
 					NEW_MOON_FRAGMENT
 					)), 
+			false,
 			false
 			),
 	
@@ -3587,6 +3853,7 @@ public enum Recipes {
 					null,
 					BLOOD_MOON_FRAGMENT
 					)), 
+			false,
 			false
 			),
 	
@@ -3603,6 +3870,7 @@ public enum Recipes {
 					ESSENCE_OF_EARTH,
 					new ItemStack(Material.AMETHYST_SHARD)
 					)), 
+			false,
 			false
 			),
 	
@@ -3621,6 +3889,7 @@ public enum Recipes {
 					TITANIUM,
 					ESSENCE_OF_FIRE
 					)), 
+			false,
 			false
 			),
 	
@@ -3637,6 +3906,7 @@ public enum Recipes {
 					CORRUPTED_SOIL,
 					CORRUPTED_SOIL
 					)), 
+			false,
 			false
 			),
 	
@@ -3653,6 +3923,7 @@ public enum Recipes {
 					ESSENCE_OF_FIRE,
 					WITHER_POWDER
 					)), 
+			false,
 			false
 			),
 	
@@ -3671,6 +3942,7 @@ public enum Recipes {
 					GEM_CLUSTER,
 					GOLD_DUST
 					)), 
+			false,
 			false
 			),
 	
@@ -3687,6 +3959,7 @@ public enum Recipes {
 					ESSENCE_OF_EARTH,
 					new ItemStack(Material.AMETHYST_SHARD)
 					)), 
+			false,
 			false
 			),
 	
@@ -3703,6 +3976,7 @@ public enum Recipes {
 					CORD,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -3721,6 +3995,7 @@ public enum Recipes {
 					PLATINUM,
 					ESSENCE_OF_EARTH
 					)), 
+			false,
 			false
 			),
 	
@@ -3737,6 +4012,7 @@ public enum Recipes {
 					ESSENCE_OF_EARTH,
 					new ItemStack(Material.AMETHYST_SHARD)
 					)), 
+			false,
 			false
 			),
 	
@@ -3753,6 +4029,7 @@ public enum Recipes {
 					GAIAS_WRATH,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -3771,6 +4048,7 @@ public enum Recipes {
 					ESSENCE_OF_VENGEANCE,
 					ESSENCE_OF_VENGEANCE
 					)), 
+			false,
 			false
 			),
 	
@@ -3787,6 +4065,7 @@ public enum Recipes {
 					ESSENCE_OF_FIRE,
 					null
 					)), 
+			false,
 			false
 			),
 	
@@ -3803,6 +4082,7 @@ public enum Recipes {
 					ESSENCE_OF_FIRE,
 					BLOOD_OF_THE_FORSAKEN
 					)), 
+			false,
 			false
 			),
 	
@@ -3821,6 +4101,7 @@ public enum Recipes {
 					BLOOD_OF_THE_FORSAKEN,
 					BLOOD_OF_THE_FORSAKEN
 					)), 
+			false,
 			false
 			),
 	
@@ -3837,6 +4118,7 @@ public enum Recipes {
 					ESSENCE_OF_EARTH,
 					new ItemStack(Material.AMETHYST_SHARD)
 					)), 
+			false,
 			false
 			),
 	
@@ -3853,6 +4135,7 @@ public enum Recipes {
 					ESSENCE_OF_FAUNA,
 					ESSENCE_OF_FIRE
 					)), 
+			false,
 			false
 			),
 	
@@ -3871,6 +4154,7 @@ public enum Recipes {
 					GALVINIZED_ALLOY,
 					GALVINIZED_ALLOY
 					)), 
+			false,
 			false
 			),
 	
@@ -3887,6 +4171,7 @@ public enum Recipes {
 					ESSENCE_OF_EARTH,
 					new ItemStack(Material.AMETHYST_SHARD)
 					)), 
+			false,
 			false
 			),
 	
@@ -3903,6 +4188,7 @@ public enum Recipes {
 					new ItemStack(Material.SHULKER_SHELL),
 					PLATINUM
 					)), 
+			false,
 			false
 			),
 	
@@ -3911,11 +4197,13 @@ public enum Recipes {
 	RecipeTypes recipeLevel;
 	ArrayList<Object> pattern;
 	boolean shapeless;
+	boolean material;
 	String resultMethod;
-	Recipes(RecipeTypes recipeLevel, ArrayList<Object> pattern, boolean shapeless) {
+	Recipes(RecipeTypes recipeLevel, ArrayList<Object> pattern, boolean shapeless, boolean material) {
 		this.recipeLevel = recipeLevel;
 		this.pattern = pattern;
 		this.shapeless = shapeless;
+		this.material = material;
 		String[] words = name().toLowerCase().split("_");
 		resultMethod = "get";
 		for (String word : words) {
@@ -3936,6 +4224,10 @@ public enum Recipes {
 	
 	public String getResultMethod() {
 		return resultMethod;
+	}
+	
+	public boolean isMaterial() {
+		return material;
 	}
 	
 	public boolean isShapeless() {

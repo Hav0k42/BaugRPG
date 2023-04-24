@@ -13,11 +13,13 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Vehicle;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.bukkit.event.world.EntitiesLoadEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -50,6 +52,7 @@ public class CrookListener implements Listener {
 		
 		Animals animal = (Animals) event.getRightClicked();
 		
+		if (animal instanceof Vehicle && !player.isSneaking()) return; 
 		
 		ItemStack crook = null;
 		if (event.getHand().equals(EquipmentSlot.HAND)) {
@@ -146,6 +149,7 @@ public class CrookListener implements Listener {
 		
 		
 	}
+	
 	
 	@EventHandler
 	public void onLoadAnimal(EntitiesLoadEvent event) {//This could very possibly become extremely laggy. Recommend semi-frequent server resets to deal with that, OR add a one hour timer to remove players from the horse map.

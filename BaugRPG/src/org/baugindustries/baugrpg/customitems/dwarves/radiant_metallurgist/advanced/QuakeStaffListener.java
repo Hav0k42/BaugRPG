@@ -94,12 +94,12 @@ public class QuakeStaffListener implements Listener {
 				  public void run() {
 						for (Entity entity : loc.getWorld().getNearbyEntities(loc, nearbyValue, nearbyValue, nearbyValue)) {
 							if (entity instanceof Monster) {
-								entity.setVelocity(new Vector(0, 1, 0));
+								entity.setVelocity(new Vector(0, 1.2, 0));
 							}
 							if (entity instanceof Player) {
 								Player otherPlayer = (Player) entity;
 								if (plugin.getRace(otherPlayer) != plugin.getRace(player)) {
-									entity.setVelocity(new Vector(0, 1, 0));
+									entity.setVelocity(new Vector(0, 1.2, 0));
 								}
 							}
 						}

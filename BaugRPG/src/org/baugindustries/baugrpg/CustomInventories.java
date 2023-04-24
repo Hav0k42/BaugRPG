@@ -1161,6 +1161,14 @@ public class CustomInventories {
 	 		config.set("autoBalanceRaces", true);
 	 	}
 	 	
+	 	if (!config.contains("restrictCrafting")) {
+	 		config.set("restrictCrafting", true);
+	 	}
+	 	
+	 	if (!config.contains("restrictCraftingMaterials")) {
+	 		config.set("restrictCraftingMaterials", true);
+	 	}
+	 	
 
  		try {
 			config.save(file);
@@ -1181,6 +1189,8 @@ public class CustomInventories {
 		inventory.setItem(19, plugin.itemManager.getMediumCoreDeathItem());
 		inventory.setItem(20, plugin.itemManager.getHardcoreDeathItem());
 		inventory.setItem(37, plugin.itemManager.getAutoBalanceItem());
+		inventory.setItem(43, plugin.itemManager.getRestrictCraftingItem());
+		inventory.setItem(52, plugin.itemManager.getRestrictMaterialCraftingItem());
 		return inventory;
 	}
 	
@@ -1647,7 +1657,7 @@ public class CustomInventories {
 		for (int i = 0; i < allOfflinePlayers.length; i++) {
 			ItemStack tempPlayerHead = new ItemStack(Material.PLAYER_HEAD);
 			SkullMeta tempPlayerHeadMeta = (SkullMeta)tempPlayerHead.getItemMeta();
-			List<String> tempPlayerHeadLore = Arrays.asList(ChatColor.YELLOW + "View " + allOfflinePlayers[i].getName() + "'s inventory");
+			List<String> tempPlayerHeadLore = Arrays.asList(ChatColor.YELLOW + "View " + allOfflinePlayers[i].getName() + "'s ender chest");
 			tempPlayerHeadMeta.setLore(tempPlayerHeadLore);
 			tempPlayerHeadMeta.setDisplayName(allOfflinePlayers[i].getName());
 			tempPlayerHeadMeta.setOwningPlayer(allOfflinePlayers[i]);

@@ -39,7 +39,7 @@ public class ConfirmClassListener implements Listener {
 			File skillsfile = new File(plugin.getDataFolder() + File.separator + "skillsData" + File.separator + player.getUniqueId() + ".yml");
 		 	FileConfiguration skillsconfig = YamlConfiguration.loadConfiguration(skillsfile);
 		 	
-		 	player.sendMessage(ChatColor.YELLOW + "You are now an apprentice " + selectedClass + ".\nYou have unlocked new skills and custom crafting items.");
+		 	player.sendMessage(ChatColor.YELLOW + "You are now an apprentice " + selectedClass + ".\nYou have unlocked new skills and custom crafting items. Your crafting xp is 0. Reach 10 crafting xp to gain intermediate recipes. Use /cxp to check your crafting xp.");
 		 	
 		 	skillsconfig.set("class", selectedClass);
 		 	try {

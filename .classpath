@@ -7,12 +7,12 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/billy/Downloads/ProtocolLib.jar"/>
-	<classpathentry kind="lib" path="C:/Users/billy/Desktop/Buildtools/Spigot 1.18.2/Spigot/Spigot-API/target/spigot-api-1.18.2-R0.1-SNAPSHOT-shaded.jar"/>
-	<classpathentry kind="lib" path="C:/Users/billy/Desktop/Buildtools/Spigot 1.18.2/spigot-1.18.2/META-INF/versions/spigot-1.18.2-R0.1-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="C:/Users/billy/Desktop/Buildtools/Spigot 1.18.2/spigot-1.18.2/META-INF/libraries/authlib-3.3.39.jar"/>
-	<classpathentry kind="lib" path="C:/Users/billy/Desktop/Buildtools/Spigot 1.18.2/spigot-1.18.2/META-INF/libraries/fastutil-8.5.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/billy/Desktop/Buildtools/Spigot 1.18.2/spigot-1.18.2/META-INF/libraries/slf4j-api-1.8.0-beta4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/billy/Desktop/Buildtools/Spigot 1.18.2/spigot-1.18.2/META-INF/libraries/datafixerupper-4.1.27.jar"/>
+	<classpathentry kind="lib" path="C:/Users/billy/Desktop/Games/Minecraft/Modding/ProtocolLib.jar"/>
+	<classpathentry kind="lib" path="C:/Users/billy/Desktop/Games/Minecraft/Modding/Spigot Buildtools/Spigot 1.18.2/Spigot/Spigot-API/target/spigot-api-1.18.2-R0.1-SNAPSHOT-shaded.jar"/>
+	<classpathentry kind="lib" path="C:/Users/billy/Desktop/Games/Minecraft/Modding/Spigot Buildtools/Spigot 1.18.2/spigot-1.18.2/META-INF/versions/spigot-1.18.2-R0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="C:/Users/billy/Desktop/Games/Minecraft/Modding/Spigot Buildtools/Spigot 1.18.2/spigot-1.18.2/META-INF/libraries/authlib-3.3.39.jar"/>
+	<classpathentry kind="lib" path="C:/Users/billy/Desktop/Games/Minecraft/Modding/Spigot Buildtools/Spigot 1.18.2/spigot-1.18.2/META-INF/libraries/fastutil-8.5.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/billy/Desktop/Games/Minecraft/Modding/Spigot Buildtools/Spigot 1.18.2/spigot-1.18.2/META-INF/libraries/slf4j-api-1.8.0-beta4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/billy/Desktop/Games/Minecraft/Modding/Spigot Buildtools/Spigot 1.18.2/spigot-1.18.2/META-INF/libraries/datafixerupper-4.1.27.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

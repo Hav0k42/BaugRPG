@@ -2,6 +2,7 @@ package org.baugindustries.baugrpg;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -548,6 +549,45 @@ public class CustomItems {
 						color + config.get("autoBalanceRaces").toString().toUpperCase()));
 	}
 	
+	public ItemStack getRestrictCraftingItem() {
+		File file = new File(plugin.getDataFolder() + File.separator + "config.yml");
+	 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+	 	ChatColor color = ChatColor.RED;
+	 	if (config.getBoolean("restrictCrafting")) {
+	 		color = ChatColor.GREEN;
+	 	}
+		return plugin.createItem(
+				Material.CRAFTING_TABLE, 
+				1, 
+				ChatColor.GOLD + "Restrict Crafting", 
+				Arrays.asList(ChatColor.LIGHT_PURPLE + "Restrict players to only be able to",
+						"craft items from within their class.",
+						"Otherwise, players will be able to craft",
+						"any item, provided they know the recipe.",
+						color + config.get("restrictCrafting").toString().toUpperCase()));
+	}
+	
+	
+	public ItemStack getRestrictMaterialCraftingItem() {
+		File file = new File(plugin.getDataFolder() + File.separator + "config.yml");
+	 	FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+	 	ChatColor color = ChatColor.RED;
+	 	if (config.getBoolean("restrictCraftingMaterials")) {
+	 		color = ChatColor.GREEN;
+	 	}
+		return plugin.createItem(
+				Material.CARTOGRAPHY_TABLE, 
+				1, 
+				ChatColor.GOLD + "Restrict Crafting Materials", 
+				Arrays.asList(ChatColor.LIGHT_PURPLE + "Restrict players to only be able to",
+						"craft items from within their class.",
+						"Otherwise, players will be able to craft",
+						"any material from any race, but will",
+						"not be able to craft functional items.",
+						"This setting overriden by " + ChatColor.GOLD + "Restrict Crafting.",
+						color + config.get("restrictCraftingMaterials").toString().toUpperCase()));
+	}
+	
 	public ItemStack getStableMasterSkill1Item(Player player) {
 	 	return plugin.createItem(
 	 			Material.LEATHER_HORSE_ARMOR,
@@ -1080,7 +1120,7 @@ public class CustomItems {
 	 			Material.WATER_BUCKET,
 	 			1,
 	 			ChatColor.DARK_GREEN + "Aqueous Insufflation",
-	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Increase drowning time.",
+	 			Arrays.asList(ChatColor.LIGHT_PURPLE + "Decreases drowning damage.",
 	 					secondString));
 	}
 	
@@ -1468,7 +1508,9 @@ public class CustomItems {
 		ItemStack scroll = plugin.createItem(
 				Material.MOJANG_BANNER_PATTERN,
 				1,
-				ChatColor.GRAY + "Basic Recipe");
+				ChatColor.GRAY + "Basic Recipe",
+				new ArrayList<String>(),
+				1001);
 		scroll.addUnsafeEnchantment(Enchantment.DURABILITY, 0);
 		return scroll;
 	}
@@ -1477,7 +1519,9 @@ public class CustomItems {
 		ItemStack scroll = plugin.createItem(
 				Material.MOJANG_BANNER_PATTERN,
 				1,
-				ChatColor.GRAY + "Intermediate Recipe");
+				ChatColor.GRAY + "Intermediate Recipe",
+				new ArrayList<String>(),
+				1002);
 		scroll.addUnsafeEnchantment(Enchantment.DURABILITY, 0);
 		return scroll;
 	}
@@ -1486,7 +1530,9 @@ public class CustomItems {
 		ItemStack scroll = plugin.createItem(
 				Material.MOJANG_BANNER_PATTERN,
 				1,
-				ChatColor.GRAY + "Advanced Recipe");
+				ChatColor.GRAY + "Advanced Recipe",
+				new ArrayList<String>(),
+				1003);
 		scroll.addUnsafeEnchantment(Enchantment.DURABILITY, 0);
 		return scroll;
 	}
@@ -1495,7 +1541,9 @@ public class CustomItems {
 		ItemStack scroll = plugin.createItem(
 				Material.MOJANG_BANNER_PATTERN,
 				1,
-				ChatColor.GRAY + "Expert Recipe");
+				ChatColor.GRAY + "Expert Recipe",
+				new ArrayList<String>(),
+				1004);
 		scroll.addUnsafeEnchantment(Enchantment.DURABILITY, 0);
 		return scroll;
 	}
@@ -1909,6 +1957,30 @@ public class CustomItems {
 				ChatColor.DARK_AQUA + "Steel Plate Greaves",
 				Arrays.asList("Set Bonus: Recieve regeneration and strength", "when standing still.", "Man Made", ChatColor.GOLD + "Advanced Item"),
 				1237);
+	}
+	
+	public ItemStack getBackpackItem() {
+		ItemStack backpack = plugin.createItem(Material.RABBIT_HIDE,
+				1,
+				ChatColor.DARK_AQUA + "Backpack",
+				Arrays.asList("Stores 18 items.", "Man Made", ChatColor.GOLD + "Advanced Item"),
+				1238);
+		return backpack;
+	}
+	
+	public ItemStack getBackpackItem(int id) {
+		ItemStack backpack = plugin.createItem(Material.RABBIT_HIDE,
+				1,
+				ChatColor.DARK_AQUA + "Backpack",
+				Arrays.asList("Stores 18 items.", "Man Made", ChatColor.GOLD + "Advanced Item"),
+				1238);
+		
+		ItemMeta backpackMeta = backpack.getItemMeta();
+		
+		backpackMeta.getPersistentDataContainer().set(new NamespacedKey(plugin, "backpackUUID"), PersistentDataType.INTEGER, id);
+		backpack.setItemMeta(backpackMeta);
+		
+		return backpack;
 	}
 	
 	//Expert
@@ -2328,7 +2400,7 @@ public class CustomItems {
 		return plugin.createItem(Material.CHAINMAIL_LEGGINGS,
 				1,
 				ChatColor.DARK_GREEN + "Toolbelt",
-				Arrays.asList("Expands your offhand slot.", "Press F to switch tool slot.", "Elven Craft", ChatColor.YELLOW + "Intermediate Item"),
+				Arrays.asList("Expands your offhand slot.", "Press F to switch tool slot.", "Sneak to switch directions.", "Elven Craft", ChatColor.YELLOW + "Intermediate Item"),
 				2223);
 	}
 	
@@ -2510,6 +2582,14 @@ public class CustomItems {
 				2315);
 	}
 	
+	public ItemStack getWatchItem() {
+		return plugin.createItem(Material.CLOCK,
+				1,
+				ChatColor.DARK_GREEN + "Watch",
+				Arrays.asList("Right click to show time of day and moon phase.", "Elven Craft", ChatColor.GREEN + "Basic Item"),
+				2316);
+	}
+	
 	//Intermediate
 	
 	public ItemStack getMeteoriteItem() {
@@ -2574,7 +2654,7 @@ public class CustomItems {
 		return plugin.createItem(Material.LEAD,
 				1,
 				ChatColor.DARK_GREEN + "Lunar Boomerang",
-				Arrays.asList("Enemies hit by this will" + "be propelled towards you.", "Elven Craft", ChatColor.GOLD + "Advanced Item"),
+				Arrays.asList("Enemies hit by this will", "be propelled towards you.", "Elven Craft", ChatColor.GOLD + "Advanced Item"),
 				2333);
 	}
 	
@@ -2766,7 +2846,7 @@ public class CustomItems {
 		return plugin.createItem(Material.RABBIT_HIDE,
 				1,
 				ChatColor.DARK_PURPLE + "Totem of the Mole",
-				Arrays.asList("Travel through the surface of the earth.", "Right click to cancel, damaging enemies.", "Dwarven Forged", ChatColor.RED + "Expert Item"),
+				Arrays.asList("Travel through the surface of the earth.", "Left click to cancel, damaging enemies.", "Dwarven Forged", ChatColor.RED + "Expert Item"),
 				3142);
 	}
 	
@@ -3431,6 +3511,14 @@ public class CustomItems {
 				4235);
 	}
 	
+	public ItemStack getPortableAccelerantItem() {
+		return plugin.createItem(Material.FIREWORK_STAR,
+				1,
+				ChatColor.DARK_RED + "Portable Accelerant",
+				Arrays.asList("Sacrifice yourself for a greater cause.", "Orc Contrived", ChatColor.GOLD + "Advanced Item"),
+				4236);
+	}
+	
 	//Expert
 	
 	public ItemStack getSoulOfTheWarriorItem() {
@@ -3453,7 +3541,7 @@ public class CustomItems {
 		return plugin.createItem(Material.BLAZE_POWDER,
 				1,
 				ChatColor.DARK_RED + "Phoenix Ashes",
-				Arrays.asList("Right click to become an enraged phoenix.", "Sneak to cancel.", "Orc Contrived", ChatColor.RED + "Expert Item"),
+				Arrays.asList("Right click to become an enraged phoenix.", "Left click to cancel, damaging enemies.", "Orc Contrived", ChatColor.RED + "Expert Item"),
 				4243);
 	}
 	
@@ -3627,7 +3715,7 @@ public class CustomItems {
 		return plugin.createItem(Material.HEART_OF_THE_SEA,
 				1,
 				ChatColor.DARK_RED + "Soul of the Thief",
-				Arrays.asList("10% chance to dodge damage when carried.", "Only usable by Greedy Scrappers.", "Orc Contrived", ChatColor.RED + "Expert Item"),
+				Arrays.asList("15% chance to dodge damage when carried.", "Only usable by Greedy Scrappers.", "Orc Contrived", ChatColor.RED + "Expert Item"),
 				4341);
 	}
 	

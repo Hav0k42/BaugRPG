@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 
 public class SawListener implements Listener {
 	
@@ -59,6 +60,13 @@ public class SawListener implements Listener {
 		});
 		
 		int stacks = totalLogs / 64;
+		
+		Damageable meta = (Damageable) player.getInventory().getItemInMainHand().getItemMeta();
+		
+		meta.setDamage(meta.getDamage() + (int)(totalLogs / 8));
+		
+		player.getInventory().getItemInMainHand().setItemMeta(meta);
+		
 		if (totalLogs % 64 != 0) {
 			player.getWorld().dropItem(block.getLocation(), new ItemStack(treeType, totalLogs % 64));
 		}

@@ -56,6 +56,7 @@ public class FragmentedSetListener implements Listener {
 		for (int i = 0; i < fragCount; i++) {
 			Arrow frag = player.launchProjectile(Arrow.class, new Vector((Math.random() * 2) - 1, (Math.random() * 2) - 1, (Math.random() * 2) - 1).normalize().multiply(1.4));
 			frag.getPersistentDataContainer().set(new NamespacedKey(plugin, "frag"), PersistentDataType.INTEGER, 1);
+			frag.getPersistentDataContainer().set(new NamespacedKey(plugin, "race"), PersistentDataType.INTEGER, plugin.getRace(player));
 			ArmorStand armorStand = (ArmorStand) player.getWorld().spawnEntity(frag.getLocation(), EntityType.ARMOR_STAND);
 			armorStand.setInvisible(true);
 			armorStand.setInvulnerable(true);
@@ -100,6 +101,7 @@ public class FragmentedSetListener implements Listener {
 		event.setCancelled(true);
 		if (event.getHitEntity() != null) {//hit entity
 			if (!(event.getHitEntity() instanceof LivingEntity)) return;
+			if (event.getHitEntity() instanceof Player && plugin.getRace((Player)event.getHitEntity()) == event.getEntity().getPersistentDataContainer().get(new NamespacedKey(plugin, "race"), PersistentDataType.INTEGER)) return;
 			LivingEntity hitEntity = (LivingEntity) event.getHitEntity();
 			hitEntity.damage(plugin.damageArmorCalculation(hitEntity, 2));
 			hitEntity.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 1));

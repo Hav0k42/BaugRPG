@@ -20,6 +20,7 @@ public class FlamedashBootsListener implements Listener {
 	public void onInventoryClick(PlayerMoveEvent event) {
 		if (event.getFrom().getBlock().equals(event.getTo().getBlock())) return;
 		Player player = event.getPlayer();
+		if (!player.isSprinting()) return;
 		if (!Recipes.FLAMEDASH_BOOTS.matches(plugin, player.getInventory().getBoots())) return;
 		if (!event.getFrom().getBlock().getType().equals(Material.AIR)) return;
 		event.getFrom().getBlock().setType(Material.FIRE);

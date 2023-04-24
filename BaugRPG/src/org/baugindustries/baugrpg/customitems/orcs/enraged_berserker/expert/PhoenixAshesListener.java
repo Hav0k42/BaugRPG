@@ -1,4 +1,4 @@
-package org.baugindustries.baugrpg.customitems.dwarves.radiant_metallurgist.expert;
+package org.baugindustries.baugrpg.customitems.orcs.enraged_berserker.expert;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +10,6 @@ import org.baugindustries.baugrpg.Recipes;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
@@ -21,9 +20,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.util.Vector;
 
-public class TotemOfTheMoleListener implements Listener {
+public class PhoenixAshesListener implements Listener {
 	private Main plugin;
 	
 	List<UUID> totemedPlayers = new ArrayList<UUID>();
@@ -33,11 +31,11 @@ public class TotemOfTheMoleListener implements Listener {
 	HashMap<UUID, Long> cooldown = new HashMap<UUID, Long>();
 	int cooldownTime = 180000;//three minutes
 	
-	final int maxTime = 45000;
+	final int maxTime = 25000;//less time than mole because it isnt restricted to ground.
 	
-	Particle particle = Particle.BLOCK_DUST;
+	Particle particle = Particle.FLAME;
 	
-	public TotemOfTheMoleListener(Main plugin) {
+	public PhoenixAshesListener(Main plugin) {
 		this.plugin = plugin;
 	}
 	
@@ -49,9 +47,9 @@ public class TotemOfTheMoleListener implements Listener {
 		if (event.getHand() == null) return;
 		
 		if (event.getHand().equals(EquipmentSlot.HAND)) {
-			if (!Recipes.TOTEM_OF_THE_MOLE.matches(plugin, player.getInventory().getItemInMainHand())) return;
+			if (!Recipes.PHOENIX_ASHES.matches(plugin, player.getInventory().getItemInMainHand())) return;
 		} else {
-			if (!Recipes.TOTEM_OF_THE_MOLE.matches(plugin, player.getInventory().getItemInOffHand())) return;
+			if (!Recipes.PHOENIX_ASHES.matches(plugin, player.getInventory().getItemInOffHand())) return;
 		}
 		
 		if (debounce.containsKey(player.getUniqueId()) && debounce.get(player.getUniqueId()) + 500 > System.currentTimeMillis()) return;
@@ -61,29 +59,24 @@ public class TotemOfTheMoleListener implements Listener {
 		
 		if (totemedPlayers.contains(player.getUniqueId())) {
 			player.setGameMode(GameMode.SURVIVAL);
-			Location endLoc = plugin.getTopBlock(player.getLocation().getBlock()).getLocation().add(0, 1.5, 0);
-			endLoc.setPitch(player.getLocation().getPitch());
-			endLoc.setYaw(player.getLocation().getYaw());
-			player.teleport(endLoc);
-			player.setVelocity(new Vector(0, 1.4, 0));
 			totemedPlayers.remove(player.getUniqueId());
 			safeLocs.remove(player.getUniqueId());
 			
 
-			player.getWorld().spawnParticle(particle, player.getEyeLocation(), 1000, 5, 5, 5, Material.DIRT.createBlockData());
+			player.getWorld().spawnParticle(particle, player.getEyeLocation(), 1000, 5, 5, 5, 0.2);
 			
 			for (Entity entity : player.getNearbyEntities(10,  10, 10)) {
 				if (entity instanceof Player) {
 					Player otherPlayer = (Player) entity;
 					if (plugin.getRace(player) != plugin.getRace(otherPlayer)) {
 						plugin.damageArmorCalculation(otherPlayer, 8);
-						otherPlayer.setVelocity(otherPlayer.getLocation().subtract(player.getLocation().add(0, -1, 0)).toVector().normalize());
+						otherPlayer.setFireTicks(200);
 					}
 				}
 				if (entity instanceof Monster) {
 					Monster monster = (Monster) entity;
 					plugin.damageArmorCalculation(monster, 8);
-					monster.setVelocity(monster.getLocation().subtract(player.getLocation().add(0, -1, 0)).toVector().normalize());
+					monster.setFireTicks(200);
 				}
 			}
 			cooldown.put(player.getUniqueId(), System.currentTimeMillis() + cooldownTime);
@@ -108,13 +101,6 @@ public class TotemOfTheMoleListener implements Listener {
 		
 		player.setGameMode(GameMode.SPECTATOR);
 		
-		Location startLoc = plugin.getTopBlock(player.getLocation().getBlock()).getLocation();
-		
-		startLoc.setPitch(player.getLocation().getPitch());
-		startLoc.setYaw(player.getLocation().getYaw());
-		
-		player.teleport(startLoc);
-		
 		totemedPlayers.add(player.getUniqueId());
 		safeLocs.put(player.getUniqueId(), player.getLocation());
 		
@@ -124,17 +110,16 @@ public class TotemOfTheMoleListener implements Listener {
 				if (System.currentTimeMillis() < time + maxTime && totemedPlayers.contains(player.getUniqueId())) {
 					
 					Location nextLoc = player.getLocation().add(player.getLocation().getDirection());
-					nextLoc.setY(plugin.getTopBlock(nextLoc.getBlock()).getY());
 					
-					if (Math.abs(player.getLocation().getY() - nextLoc.getY()) < 3) {
+					if (!nextLoc.getBlock().getType().isSolid()) {
 						safeLocs.put(player.getUniqueId(), player.getLocation());
 						player.setVelocity(nextLoc.subtract(player.getLocation()).toVector().normalize());
 					} else {
 						player.teleport(safeLocs.get(player.getUniqueId()));
 					}
 					
-					player.getWorld().spawnParticle(particle, player.getEyeLocation(), 4, Material.DIRT.createBlockData());
-					player.getWorld().playSound(player.getLocation(), Sound.BLOCK_GRASS_STEP, 1, 1);
+					player.getWorld().spawnParticle(particle, player.getEyeLocation(), 10, 0.3, 0.3, 0.3, 0.2);
+					player.getWorld().playSound(player.getLocation(), Sound.BLOCK_FURNACE_FIRE_CRACKLE, 1, 1);
 					
 					
 					if (player.getSpectatorTarget() != null) player.setSpectatorTarget(null);
@@ -142,32 +127,26 @@ public class TotemOfTheMoleListener implements Listener {
 					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, this, 1L);
 				} else {
 					player.setGameMode(GameMode.SURVIVAL);
-					Location endLoc = plugin.getTopBlock(player.getLocation().getBlock()).getLocation().add(0, 1.5, 0);
-					endLoc.setPitch(player.getLocation().getPitch());
-					endLoc.setYaw(player.getLocation().getYaw());
-					player.teleport(endLoc);
-					player.setVelocity(new Vector(0, 1.4, 0));
 					totemedPlayers.remove(player.getUniqueId());
 					safeLocs.remove(player.getUniqueId());
 					
 
-					player.getWorld().spawnParticle(particle, player.getEyeLocation(), 1000, 5, 5, 5, Material.DIRT.createBlockData());
+					player.getWorld().spawnParticle(particle, player.getEyeLocation(), 1000, 5, 5, 5, 0.2);
 					
 					for (Entity entity : player.getNearbyEntities(10,  10, 10)) {
 						if (entity instanceof Player) {
 							Player otherPlayer = (Player) entity;
 							if (plugin.getRace(player) != plugin.getRace(otherPlayer)) {
 								plugin.damageArmorCalculation(otherPlayer, 8);
-								otherPlayer.setVelocity(otherPlayer.getLocation().subtract(player.getLocation().add(0, -3, 0)).toVector().normalize());
+								otherPlayer.setFireTicks(200);
 							}
 						}
 						if (entity instanceof Monster) {
 							Monster monster = (Monster) entity;
 							plugin.damageArmorCalculation(monster, 8);
-							monster.setVelocity(monster.getLocation().subtract(player.getLocation().add(0, -3, 0)).toVector().normalize());
+							monster.setFireTicks(200);
 						}
 					}
-
 					cooldown.put(player.getUniqueId(), System.currentTimeMillis() + cooldownTime);
 				}
 			}
@@ -186,10 +165,6 @@ public class TotemOfTheMoleListener implements Listener {
 		if (!totemedPlayers.contains(player.getUniqueId())) return;
 		
 		player.setGameMode(GameMode.SURVIVAL);
-		Location endLoc = plugin.getTopBlock(player.getLocation().getBlock()).getLocation().add(0, 1.5, 0);
-		endLoc.setPitch(player.getLocation().getPitch());
-		endLoc.setYaw(player.getLocation().getYaw());
-		player.teleport(endLoc);
 		totemedPlayers.remove(player.getUniqueId());
 		safeLocs.remove(player.getUniqueId());
 		

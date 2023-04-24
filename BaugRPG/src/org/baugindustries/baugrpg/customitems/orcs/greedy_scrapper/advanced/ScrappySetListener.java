@@ -1,5 +1,8 @@
 package org.baugindustries.baugrpg.customitems.orcs.greedy_scrapper.advanced;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.baugindustries.baugrpg.Main;
 import org.baugindustries.baugrpg.Recipes;
 import org.bukkit.entity.Player;
@@ -33,7 +36,9 @@ public class ScrappySetListener implements Listener {
 		if (Math.random() > 0.1) return;
 		
 		
+		List<ItemStack> acceptableItems = new ArrayList<ItemStack>();
 		for (ItemStack item : otherPlayer.getInventory()) {
+			if (item == null) continue;
 			boolean match = false;
 			for (Recipes recipe : Recipes.values()) {
 				if (recipe.matches(plugin, item)) {
@@ -41,12 +46,16 @@ public class ScrappySetListener implements Listener {
 				}
 			}
 			if (item.getAmount() > 32 && !match) {
-				item.setAmount(item.getAmount() - 1);
-				player.getInventory().addItem(new ItemStack(item.getType(), 1));
-				return;
+				acceptableItems.add(item);
 			}
 		}
 		
+		
+		ItemStack finalItem = acceptableItems.get((int) (Math.random() * acceptableItems.size()));
+
+		finalItem.setAmount(finalItem.getAmount() - 1);
+		player.getInventory().addItem(new ItemStack(finalItem.getType(), 1));
+		return;
 		
 	}
 
